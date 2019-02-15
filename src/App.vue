@@ -1,14 +1,15 @@
 <template>
   <div id="vue">
-    <nav-bar />
-    <router-view />
+    <nav-bar/>
+    <br>
+    <router-view/>
   </div>
 </template>
 <script>
-import NavBar from '@/components/NavBar.vue'
+import NavBar from "@/components/NavBar.vue";
 export default {
   components: {
     NavBar
   }
-}
+};
 </script>
