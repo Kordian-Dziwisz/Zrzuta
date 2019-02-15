@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Main from "@/views/Main.vue";
-import SecondPage from "@/views/SecondPage.vue"
+import SecondPage from "@/views/FoundraisingDetails.vue";
 
 Vue.use(Router);
 
@@ -16,7 +16,7 @@ export default new Router({
     },
     {
       path: "/FoundraisingDetails",
-      name: 'SecondPage',
+      name: "SecondPage",
       component: SecondPage
     }
   ]
