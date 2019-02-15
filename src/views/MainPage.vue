@@ -28,7 +28,7 @@ export default {
         }
     },
     components: {
-        Input
+        Login
         //List
     }
 }
