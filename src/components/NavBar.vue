@@ -4,7 +4,7 @@
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
       <b-navbar-brand href="#" id="paddingCenter">
-        <img src="@/assets/logo.jpg" width="50">
+        <img src="@/assets/Logo.jpg" width="50">
       </b-navbar-brand>
       <!--https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvfuNsZHffYNmIn1UcFABUb6-GnknWFFrXIniz1R-Ocer4BMCMug -->
       <b-collapse is-nav id="nav_collapse">

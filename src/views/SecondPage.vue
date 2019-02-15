@@ -4,6 +4,7 @@
         @data="updateProjectData($event)" />
         <list-of-participants :list="this.listOfParticipants" @list="updateParticipantsList($event)" />
         <list-of-products :list='this.listOfProducts' @list="this.listOfProducts" />
+        <button @click="test">click me!</button>
     </div>
 </template>
 <script>
@@ -11,6 +12,7 @@
 import ProjectInfo from '@/components/ProjectInfo.vue'
 import ListOfParticipants from '@/components/ListOfParticipants.vue'
 import ListOfProducts from '@/components/ListOfProducts.vue'
+import ListOfPropositions from '@/components/ListOfPropositions.vue'
 
 export default {
     data(){
@@ -23,9 +25,16 @@ export default {
                 creationDate: new Date('December 17, 1995 03:24:00'),
                 endDate: new Date('December 17, 1995 03:24:00')
             },
-            //ListOfParticipants
+            //TODO ListOfParticipants should be a proper arr of obj with Name, Comment, paid, accepted
             listOfParticipants: ['Michal'],
             listOfProducts: [
+                {
+                    number: 1,
+                    name: 'Pizza',
+                    price: 12.4,
+                }
+            ],
+            listOfPropositions: [
                 {
                     number: 1,
                     name: 'Pizza',
@@ -35,6 +44,9 @@ export default {
         }
     },
     methods: {
+        test(){
+            this.listOfProducts.push({number: 2, name: 'Kebab', price: 12.2})
+        },
         updateParticipantsList(event){
             this.listOfParticipants = event;
             console.log(event);
@@ -47,6 +59,18 @@ export default {
         },
         updateListOfProducts(event){
             this.listOfProducts = event;
+        },
+        updateListOfPropositions(event){
+            this.listOfPropositions = event;
+            this.listOfPropositions.forEach(item => (acceptProposition(item)));
+        },
+        acceptProposition(){
+            if (item.accepted) {
+                delete item.likes;
+                delete item.dislikes;
+                delete item.accepted;
+                this.listOfProducts.push(item);
+            }
         }
     },
     components: {
