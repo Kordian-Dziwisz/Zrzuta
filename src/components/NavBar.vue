@@ -4,12 +4,9 @@
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
       <b-navbar-brand href="#" id="paddingCenter">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvfuNsZHffYNmIn1UcFABUb6-GnknWFFrXIniz1R-Ocer4BMCMug"
-          width="50"
-        >
+        <img src="@/assets/logo.jpg" width="50">
       </b-navbar-brand>
-
+      <!--https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvfuNsZHffYNmIn1UcFABUb6-GnknWFFrXIniz1R-Ocer4BMCMug -->
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
           <b-nav-item :to="{ name: 'MainPage'}">Home</b-nav-item>
@@ -18,8 +15,8 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-navbar-brand id="marginCenter" right>
-            <p>Oddajcie mi hajs</p>
+          <b-navbar-brand right>
+            <p id="marginCenter">Oddajcie mi hajs</p>
           </b-navbar-brand>
         </b-navbar-nav>
       </b-collapse>
