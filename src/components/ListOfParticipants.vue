@@ -5,6 +5,7 @@
 
         <ul>
             <li v-for="(item, index) in list"   :key="index">
+                <!-- create a new componen to display item -->
                 {{index}}: {{item}} |
                 <button @click="removeItem(index)" v-if="authenticate(item)"> remove item </button>
             </li>
