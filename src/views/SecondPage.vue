@@ -1,5 +1,5 @@
 <template>
-    <div class="Fundrais">
+    <div class="SecondPage">
         <ProjectInfo :projectData="fundraisData"
         @data="updateProjectData($event)" />
         <ListOfParticipants :list="this.listOfParticipants" @list="updateParticipantsList($event)" />

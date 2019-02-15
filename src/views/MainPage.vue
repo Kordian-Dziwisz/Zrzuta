@@ -3,12 +3,14 @@
         <Input @login='changeLogin' v-if="!logged" />
         <p>{{login}}</p>
         <!-- <List /> -->
+        <nav-bar v-if="logged" />
     </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import Input from '@/components/Input.vue'
+
 // import List from '@/components/List.vue'
 
 export default {
@@ -27,7 +29,7 @@ export default {
         }
     },
     components: {
-        Input,
+        Input
         //List
     }
 }

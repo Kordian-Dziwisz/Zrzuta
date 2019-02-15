@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import MainPage from "@/views/MainPage.vue";
-import Fundrais from "@/views/Fundrais.vue"
+import SecondPage from "@/views/SecondPage.vue"
 
 Vue.use(Router);
 
@@ -15,9 +15,9 @@ export default new Router({
       component: MainPage
     },
     {
-      path: "/Fundrais",
-      name: 'fundrais',
-      component: Fundrais
+      path: "/SecondPage",
+      name: 'SecondPage',
+      component: SecondPage
     }
   ]
 });

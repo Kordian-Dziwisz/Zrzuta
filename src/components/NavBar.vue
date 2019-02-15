@@ -12,8 +12,8 @@
 
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
-          <b-nav-item :to="{ name: 'home'}">Home</b-nav-item>
-          <b-nav-item :to="{ name: 'about'}">Nowa zbiórka</b-nav-item>
+          <b-nav-item :to="{ name: 'MainPage'}">Home</b-nav-item>
+          <b-nav-item :to="{ name: 'SecondPage'}">Nowa zbiórka</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -25,7 +25,6 @@
       </b-collapse>
     </b-navbar>
     <br>
-    <router-view/>
   </div>
 </template>
 <script>

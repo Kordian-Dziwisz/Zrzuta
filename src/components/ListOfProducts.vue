@@ -4,7 +4,7 @@
         <input type="number" v-model="newItem.number">
         <input type="text" v-model="newItem.name">
         <input type="number" v-model="newItem.price">
-        <button @click="addNewItem()">add new item</button>
+        <button @click="addNewItem">add new item</button>
         <ul>
             <li v-for="(item, index) in list"   :key="index">
                 {{item.number}} | {{item.name}} | {{item.price}} | {{item.price * item.number}}
