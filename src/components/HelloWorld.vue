@@ -1,6 +1,16 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>Lista aktywnych zbiórek</h1>
+      <div><p>lorem ipsumlorem ipsumlorem ipsum</p></div>
+
+    
+    
+    
+    
+    
+  </div>
+</template>
+    <!--- <h1>{{ msg }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br />
       check out the
@@ -90,9 +100,7 @@
           >awesome-vue</a
         >
       </li>
-    </ul>
-  </div>
-</template>
+    </ul> -->
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
@@ -105,9 +113,12 @@ export default class HelloWorld extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
+ h1 {
   margin: 40px 0 0;
-}
+  height: 40px;
+  width: 100px;
+  background-color: red;
+}/*
 ul {
   list-style-type: none;
   padding: 0;
@@ -118,5 +129,5 @@ li {
 }
 a {
   color: #42b983;
-}
-</style>
+} --> */
+</style> 
