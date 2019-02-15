@@ -23,7 +23,9 @@ export default {
   },
   methods: {
     changeLogin(login) {
-      this.logged = true;
+      if (login != "") {
+        this.logged = true;
+      }
       localStorage.setItem("login", login);
       this.login = localStorage.getItem("login");
     }
