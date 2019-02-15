@@ -1,9 +1,9 @@
 <template>
     <div class="SecondPage">
-        <ProjectInfo :projectData="fundraisData"
+        <project-info :projectData="fundraisData"
         @data="updateProjectData($event)" />
-        <ListOfParticipants :list="this.listOfParticipants" @list="updateParticipantsList($event)" />
-        <ListOfProducts :list='this.listOfProducts' @list="this.listOfProducts" />
+        <list-of-participants :list="this.listOfParticipants" @list="updateParticipantsList($event)" />
+        <list-of-products :list='this.listOfProducts' @list="this.listOfProducts" />
     </div>
 </template>
 <script>

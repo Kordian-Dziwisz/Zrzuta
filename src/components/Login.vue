@@ -1,5 +1,5 @@
 <template>
-    <div class="input">
+    <div class="Login">
         <label>Login Panel</label><br>
             <input @keydown.enter="returnLogin" v-model="login" placeholder="your login">
     </div>
