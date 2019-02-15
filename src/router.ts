@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import MainPage from "@/views/MainPage.vue";
+import Main from "@/views/Main.vue";
 import SecondPage from "@/views/SecondPage.vue"
 
 Vue.use(Router);
@@ -11,11 +11,11 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "MainPage",
-      component: MainPage
+      name: "Main",
+      component: Main
     },
     {
-      path: "/SecondPage",
+      path: "/FoundraisingDetails",
       name: 'SecondPage',
       component: SecondPage
     }
