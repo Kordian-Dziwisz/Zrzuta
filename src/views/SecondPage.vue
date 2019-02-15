@@ -2,9 +2,9 @@
     <div class="SecondPage">
         <project-info :projectData="fundraisData"
         @data="updateProjectData($event)" />
-        <list-of-participants :list="this.listOfParticipants" @list="updateParticipantsList($event)" />
-        <list-of-products :list='this.listOfProducts' @list="this.listOfProducts" />
-        <button @click="test">click me!</button>
+        <list-of-participants :list="listOfParticipants" @list="updateParticipantsList($event)" />
+        <list-of-products :list='listOfProducts' @list="updateListOfProducts()" />
+        <list-of-propositions :list="listOfPropositions" @list="updateListOfPropositions()"/>
     </div>
 </template>
 <script>
@@ -36,17 +36,18 @@ export default {
             ],
             listOfPropositions: [
                 {
+                    creator: 'Kordian',
+                    accepted: false,
                     number: 1,
                     name: 'Pizza',
                     price: 12.4,
+                    likes: 0,
+                    dislikes: 0,
                 }
             ]
         }
     },
     methods: {
-        test(){
-            this.listOfProducts.push({number: 2, name: 'Kebab', price: 12.2})
-        },
         updateParticipantsList(event){
             this.listOfParticipants = event;
             console.log(event);
@@ -64,19 +65,22 @@ export default {
             this.listOfPropositions = event;
             this.listOfPropositions.forEach(item => (acceptProposition(item)));
         },
-        acceptProposition(){
+        acceptProposition(item){
             if (item.accepted) {
+                delete item.creator;
                 delete item.likes;
                 delete item.dislikes;
                 delete item.accepted;
                 this.listOfProducts.push(item);
+                delete listOfPropositions.indexOf(item);
             }
         }
     },
     components: {
         ProjectInfo,
         ListOfParticipants,
-        ListOfProducts
+        ListOfProducts,
+        ListOfPropositions
     }
 }
 </script>

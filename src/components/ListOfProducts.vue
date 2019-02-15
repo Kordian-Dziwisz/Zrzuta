@@ -7,6 +7,7 @@
         <button @click="addNewItem">add new item</button>
         <ul>
             <li v-for="(item, index) in list"   :key="index">
+                <!-- create a new componen to display item -->
                 {{item.number}} | {{item.name}} | {{item.price}} | {{item.price * item.number}}
                 <button @click="removeItem(index)"> remove item </button>
             </li>
