@@ -5,6 +5,7 @@ import firebase from "firebase";
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+
 Vue.config.productionTip = false;
 
 var config = {

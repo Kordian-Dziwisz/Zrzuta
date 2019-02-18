@@ -1,26 +1,26 @@
 <template>
     <div class="Login">
-        <label>Login Panel</label><br>
-            <input @keydown.enter="returnLogin" v-model="login" placeholder="your login">
+        <label>Login Panel</label>
+        <br>
+        <input @keydown.enter="returnLogin" v-model="login" placeholder="your login">
     </div>
 </template>
 <script>
-
 export default {
-    data(){
-        return{
-            login: ''
-        }
+    data() {
+        return {
+            login: ""
+        };
     },
-    created(){
+    created() {
         this.login = localStorage.getItem("login");
     },
     methods: {
-        returnLogin(){
-            this.$emit('login', this.login)
+        returnLogin() {
+            this.$emit("login", this.login);
         }
-    },
-}
+    }
+};
 </script>
 <style scoped>
 </style>
