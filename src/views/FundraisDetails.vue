@@ -1,7 +1,11 @@
 <template>
     <div class="SecondPage">
         <project-info :projectData="fundraisData" @data="updateProjectData($event)"/>
-        <list-of-participants v-if="false" :list="listOfParticipants" @list="updateListOfParticipants($event)"/>
+        <list-of-participants
+            v-if="false"
+            :list="listOfParticipants"
+            @list="updateListOfParticipants($event)"
+        />
         <list-of-products :list="listOfProducts" @list="updateListOfProducts"/>
         <list-of-propositions :list="listOfPropositions" @list="updateListOfPropositions($event)"/>
     </div>
