@@ -1,7 +1,7 @@
 <template>
     <div class="ParticipantsListItem">
         {{item.index}}: {{item.name}} | {{item.comment}} | {{item.paid}} | {{item.accepted}}
-        <div class="control" v-if="authenticate(item.name)">
+        <div class="control" v-if="authenticate()">
             <button @click="setComment">Comment</button>
             <button @click="setPaid">Paid</button>
             <button @click="setAccepted">Accepted</button>
@@ -27,8 +27,8 @@ export default {
         removeItem() {
             this.$emit("remove", this.item.index);
         },
-        authenticate(login) {
-            return localStorage.getItem("login") == login;
+        authenticate() {
+            return localStorage.getItem("login") == this.item.name;
         }
     }
 };

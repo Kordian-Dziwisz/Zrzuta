@@ -2,13 +2,13 @@
     <div class="SecondPage">
         <project-info v-if="false" :projectData="fundraisData" @data="updateProjectData($event)"/>
         <list-of-participants
-            v-if="true"
+            v-if="false"
             :list="listOfParticipants"
             @list="updateListOfParticipants($event)"
         />
         <list-of-products v-if="false" :list="listOfProducts" @list="updateListOfProducts"/>
         <list-of-propositions
-            v-if="false"
+            v-if="true"
             :list="listOfPropositions"
             @list="updateListOfPropositions($event)"
         />
@@ -55,8 +55,8 @@ export default {
                     number: 1,
                     name: "Pizza",
                     price: 12.4,
-                    likes: 0,
-                    dislikes: 0
+                    likes: ["Adam"],
+                    dislikes: ["James"]
                 }
             ]
         };
@@ -76,18 +76,20 @@ export default {
         },
         updateListOfPropositions(list) {
             this.listOfPropositions = list;
-            this.listOfPropositions.forEach(item => acceptProposition(item));
-        },
-        acceptProposition(item) {
-            if (item.accepted) {
-                delete item.creator;
-                delete item.likes;
-                delete item.dislikes;
-                delete item.accepted;
-                this.listOfProducts.push(item);
-                delete listOfPropositions.indexOf(item);
-            }
+            //this.listOfPropositions.forEach(item =>
+            //    this.acceptProposition(item)
+            //);
         }
+        //acceptProposition(item) {
+        //    if (item.accepted) {
+        //        delete item.creator;
+        //        delete item.likes;
+        //        delete item.dislikes;
+        //        delete item.accepted;
+        //        this.listOfProducts.push(item);
+        //        delete listOfPropositions.indexOf(item);
+        //    }
+        //}
     },
     components: {
         ProjectInfo,
