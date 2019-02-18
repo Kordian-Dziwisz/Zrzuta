@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <login @login="changeLogin" v-if="!logged"/>
+    <login class="loginVisibility" @login="changeLogin" v-if="!logged"/>
     <fundraising-list v-if="logged" :list="list"></fundraising-list>
   </div>
 </template>
