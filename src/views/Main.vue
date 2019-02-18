@@ -9,8 +9,8 @@
 
 <script>
 import Vue from "vue";
-import Login from "@/components/Login.vue";
-import FundraisingList from "@/components/Fundraising.list.vue";
+import Login from "@/components/mainpage/Login.vue";
+import FundraisingList from "@/components/mainpage/Fundraising.list.vue";
 // import List from '@/components/List.vue'
 
 export default {

@@ -1,0 +1,66 @@
+<template>
+  <div class="ListOfParticipants">
+    <br>Add a new Participant:
+    <input type="text" v-model="newItem.name" @keypress.enter="addNewItem()">
+
+    <!-- displaying a list of Participant, create new component to Item bind -->
+    <ul>
+      <li v-for="(item, index) in list" :key="index">
+        <item
+          :item="{index: index, ...item}"
+          @comment="setComment($event)"
+          @paid="setPaid($event)"
+          @accepted="setAccepted($event)"
+          @remove="removeItem($event)"
+        />
+      </li>
+    </ul>
+  </div>
+</template>
+<script>
+import Item from "@/components/secondpage/Participants.list.item.vue";
+
+export default {
+  props: {
+    list: Array
+  },
+  data() {
+    return {
+      //just Object template
+      newItem: {
+        name: "",
+        comment: "",
+        accepted: false,
+        paid: false
+      }
+    };
+  },
+  watch: {
+    list() {
+      this.$emit("list", this.list);
+    }
+  },
+  methods: {
+    addNewItem() {
+      this.list.push({ ...this.newItem });
+      //reset template, only name is changing
+      this.newItem.name = "";
+    },
+    setComment(index) {
+      this.list[index].comment = prompt("set comment!");
+    },
+    setPaid(index) {
+      this.list[index].paid = !this.list[index].paid;
+    },
+    setAccepted(index) {
+      this.list[index].accepted = !this.list[index].accepted;
+    },
+    removeItem(index) {
+      this.list.splice(index, 1);
+    }
+  },
+  components: {
+    Item
+  }
+};
+</script>

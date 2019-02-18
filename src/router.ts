@@ -6,18 +6,18 @@ import FoundraisDetails from "@/views/FundraisDetails.vue";
 Vue.use(Router);
 
 export default new Router({
-	mode: "history",
-	base: process.env.BASE_URL,
-	routes: [
-		{
-			path: "/",
-			name: "Main",
-			component: Main,
-		},
-		{
-			path: "/FundraisDetails",
-			name: "FundraisDetails",
-			component: FoundraisDetails,
-		},
-	],
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes: [
+    {
+      path: "/",
+      name: "Main",
+      component: Main
+    },
+    {
+      path: "/FundraisDetails",
+      name: "FundraisDetails",
+      component: FoundraisDetails
+    }
+  ]
 });
