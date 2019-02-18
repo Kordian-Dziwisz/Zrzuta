@@ -1,5 +1,5 @@
 <template>
-    <div class="fundraises">
+    <div class="FundraisingList">
         <h1>List of fundraises</h1>
         <br>add a new item:
         <input type="text" v-model="newItem.name">
@@ -33,19 +33,20 @@ export default {
     methods: {
         addNewItem() {
             this.list.push(...newItem);
+        },
+        editItem() {
+            console.log("editing item");
+        },
+        removeItem(index) {
+            this.list.splice(index, 1);
         }
     },
     created() {
         this.newItem.creator = localStorage.getItem("login");
         this.newItem.creationDate = Date.now();
     },
-    editItem() {
-        console.log("editing item");
-    },
-    removeItem(index) {
-        this.list.splice(index, 1);
+    components: {
+        Item
     }
 };
 </script>
-<style scoped>
-</style>

@@ -17,9 +17,10 @@ export default {
         return {
             logged: false,
             login: "",
+            db: firebase.firestore().collection("Zrzuty"),
             list: [
                 {
-                    docID="uRLJNTchecAfASfPUKT5",
+                    docID: "uRLJNTchecAfASfPUKT5",
                     creator: "Kordian",
                     title: "title",
                     description: "Poor project",
@@ -27,12 +28,12 @@ export default {
                     endDate: new Date("December 17, 1995 03:24:00"),
                     ended: false
                 }
-            ],
-            db: firebase.firestore().collection("Zrzuty")
+            ]
         };
     },
     mounted() {
         this.login = localStorage.getItem("login");
+        this.getList();
     },
     methods: {
         changeLogin(login) {
@@ -40,6 +41,16 @@ export default {
                 this.logged = true;
             }
             localStorage.setItem("login", login);
+        },
+        async getList() {
+            (await this.db.get()).docs.map(item => {
+                this.mapItem(item);
+            });
+        },
+        mapItem(item) {
+            console.log(item.data().fundraisInfo);
+            console.log(item.id);
+            return { ...item.data().fundraisInfo, ...{ id: item.id } };
         }
     },
     components: {

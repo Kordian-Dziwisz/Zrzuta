@@ -21,6 +21,5 @@ Vue.use(BootstrapVue);
 
 new Vue({
 	router,
-	//fb,
 	render: h => h(App),
 }).$mount("#app");
