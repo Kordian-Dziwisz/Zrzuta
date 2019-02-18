@@ -43,12 +43,13 @@ export default {
             localStorage.setItem("login", login);
         },
         async getList() {
-            (await this.db.get()).docs.map(item => this.mapItem(item));
+            this.list = (await this.db.get()).docs.map(item =>
+                this.mapItem(item)
+            );
+            console.log(this.list);
         },
         mapItem(item) {
-            console.log(item.data().fundraisInfo);
-            console.log(item.id);
-            return { ...item.data().fundraisInfo, ...{ id: item.id } };
+            return { ...item.data().fundraisInfo, id: item.id };
         }
     },
     components: {
