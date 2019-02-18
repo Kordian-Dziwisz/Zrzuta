@@ -6,7 +6,7 @@
         <button @click="addNewItem"></button>
         <ul>
             <li v-for="(item, index) in list" :key="index">
-                <Item :item="{index: index, item}" @remove="removeItem" @edit="editItem"/>
+                <Item :item="{index: index, ...item}" @remove="removeItem" @edit="editItem"/>
             </li>
         </ul>
     </div>
