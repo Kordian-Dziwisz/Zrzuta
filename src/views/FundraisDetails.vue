@@ -91,12 +91,47 @@ export default {
                 this.listOfProducts.push(item);
             }
         }
+      ]
+    };
+  },
+  methods: {
+    updateProjectData(event) {
+      this.fundraisData = { ...event };
+      console.log(this.title);
+      console.log(this.description);
+      console.log(this.endDate);
     },
-    components: {
-        ProjectInfo,
-        ListOfParticipants,
-        ListOfProducts,
-        ListOfPropositions
+    updateListOfParticipants(list) {
+      this.listOfParticipants = list;
+    },
+    updateListOfProducts(list) {
+      this.listOfProducts = list;
+    },
+    updateListOfPropositions(list) {
+      this.listOfPropositions = list;
+      let accept = this.acceptProposition;
+      this.listOfPropositions.forEach(item => accept(item));
+    },
+    acceptProposition(item) {
+      if (item.accepted) {
+        delete item.creator;
+        delete item.likes;
+        delete item.dislikes;
+        delete item.accepted;
+        this.listOfProducts.push(item);
+      }
     }
+  },
+  components: {
+    ProjectInfo,
+    ListOfParticipants,
+    ListOfProducts,
+    ListOfPropositions
+  }
 };
 </script>
+<style scoped>
+.SecondPage {
+    padding-top: 80px;
+}
+</style>

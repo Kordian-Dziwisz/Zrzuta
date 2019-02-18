@@ -1,7 +1,6 @@
 <template>
   <div id="vue">
     <nav-bar/>
-    <br>
     <router-view/>
   </div>
 </template>
