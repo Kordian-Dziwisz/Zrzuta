@@ -14,6 +14,7 @@
                     @like="likeItem"
                     @dislike="dislikeItem"
                     @remove="removeItem"
+                    @accept="acceptItem"
                 />
             </li>
         </ul>
@@ -40,9 +41,6 @@ export default {
         };
     },
     watch: {
-        newItem() {
-            console.log(newItem);
-        },
         list() {
             this.$emit("list", this.list);
         }
@@ -53,6 +51,8 @@ export default {
             this.newItem.number = 0;
             this.newItem.name = "";
             this.newItem.price = 0.0;
+            this.newItem.likes = [];
+            this.newItem.dislikes = [];
         },
         removeItem(index) {
             this.list.splice(index, 1);
@@ -63,10 +63,11 @@ export default {
         dislikeItem(index) {
             this.list[index].dislikes.push(localStorage.getItem("login"));
         },
-        // acceptItem(index) {
-        //     this.list[index].accepted = true;
-        //     this.$emit("list", this.list);
-        // },
+        acceptItem(index) {
+            this.list[index].accepted = true;
+            this.$emit("list", this.list);
+            this.list.splice(index, 1);
+        },
         authenticate(login) {
             //TODO
         }

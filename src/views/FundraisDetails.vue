@@ -6,7 +6,7 @@
             :list="listOfParticipants"
             @list="updateListOfParticipants($event)"
         />
-        <list-of-products v-if="false" :list="listOfProducts" @list="updateListOfProducts"/>
+        <list-of-products v-if="true" :list="listOfProducts" @list="updateListOfProducts"/>
         <list-of-propositions
             v-if="true"
             :list="listOfPropositions"
@@ -76,20 +76,18 @@ export default {
         },
         updateListOfPropositions(list) {
             this.listOfPropositions = list;
-            //this.listOfPropositions.forEach(item =>
-            //    this.acceptProposition(item)
-            //);
+            let accept = this.acceptProposition;
+            this.listOfPropositions.forEach(item => accept(item));
+        },
+        acceptProposition(item) {
+            if (item.accepted) {
+                delete item.creator;
+                delete item.likes;
+                delete item.dislikes;
+                delete item.accepted;
+                this.listOfProducts.push(item);
+            }
         }
-        //acceptProposition(item) {
-        //    if (item.accepted) {
-        //        delete item.creator;
-        //        delete item.likes;
-        //        delete item.dislikes;
-        //        delete item.accepted;
-        //        this.listOfProducts.push(item);
-        //        delete listOfPropositions.indexOf(item);
-        //    }
-        //}
     },
     components: {
         ProjectInfo,
