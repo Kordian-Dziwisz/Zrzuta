@@ -47,9 +47,13 @@ export default {
     },
     methods: {
         addNewItem() {
-            this.list.push({ ...this.newItem });
-            //reset template, only name is changing
-            this.newItem.name = "";
+            if ((this.newItem.name.length = 0)) {
+                alert("name field can't be empty");
+            } else {
+                this.list.push({ ...this.newItem });
+                //reset template, only name is changing
+                this.newItem.name = "";
+            }
         },
         setComment(index) {
             this.list[index].comment = prompt("set comment!");

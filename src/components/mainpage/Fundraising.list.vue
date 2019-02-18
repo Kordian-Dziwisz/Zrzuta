@@ -1,39 +1,50 @@
 <template>
     <div class="fundraises">
-        <div id="fundList">
-            <div id="hardTitles">
-                <h1>Lista aktywnych zbiórek:</h1>
-            </div>
-            <div v-for="infokey in listInfo" :key="infokey">
-                <p>{{infokey.description}}</p>
-                <p>Utworzył: {{infokey.madeBy}}</p>
-                <p>Stan: {{infokey.paymentStatus}}</p>
-            </div>
-        </div>
+        <h1>List of fundraises</h1>
+        <br>add a new item:
+        <input type="text" v-model="newItem.name">
+        <button @click="addNewItem"></button>
+        <ul>
+            <li v-for="(item, index) in list" :key="index">
+                <Item :item="{index: index, item}" @remove="removeItem" @edit="editItem"/>
+            </li>
+        </ul>
     </div>
 </template>
 
 <script>
+import Item from "@/components/mainpage/Fundraising.list.item.vue";
 export default {
-    props: {},
+    props: {
+        list: Array
+    },
     data() {
         return {
-            listInfo: [
-                {
-                    description:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu leo velit. Etiam sollicitudin arcu turpis, sed placerat mi tincidunt a. Vivamus in lorem pulvinar,ultricies nibh nec, volutpat sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed hendrerit mi non elementum laoreet. Etiam at urna id libero rhoncus semper at quis est. Ut molestie gravida turpis a venenatis. Praesent viverra consectetur ante id efficitur. Sed placerat ex vel neque maximus, at tristique urna egestas. Suspendisse placerat, arcu non tincidunt finibus, augue velit vehicula lacus, id dapibus leo nisi a justo. ",
-                    madeBy: "Bartek",
-                    paymentStatus: "zapłacone"
-                },
-                {
-                    description: "coscoscos",
-                    madeBy: "Adam",
-                    paymentStatus: "niezapłacone"
-                }
-            ]
+            newItem: {
+                creator: "",
+                title: "NoTitle",
+                description: "",
+                creationDate: new Date("December 17, 1995 03:24:00"),
+                endDate: new Date("December 17, 1995 03:24:00"),
+                ended: false
+            }
         };
     },
-    methods: {}
+    methods: {
+        addNewItem() {
+            this.list.push(...newItem);
+        }
+    },
+    created() {
+        this.newItem.creator = localStorage.getItem("login");
+        this.newItem.creationDate = Date.now();
+    },
+    editItem() {
+        console.log("editing item");
+    },
+    removeItem(index) {
+        this.list.splice(index, 1);
+    }
 };
 </script>
 <style scoped>

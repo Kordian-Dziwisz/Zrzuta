@@ -22,7 +22,12 @@
 </template>
 <script>
 import Item from "@/components/secondpage/Propositions.list.item.vue";
-
+.list.push({ ...this.newItem });
+                this.newItem.number = 0;
+                this.newItem.name = "";
+                this.newItem.price = 0.0;
+                this.newItem.likes = [];
+                this
 export default {
     props: {
         list: Array
@@ -47,12 +52,16 @@ export default {
     },
     methods: {
         addNewItem() {
-            this.list.push({ ...this.newItem });
-            this.newItem.number = 0;
-            this.newItem.name = "";
-            this.newItem.price = 0.0;
-            this.newItem.likes = [];
-            this.newItem.dislikes = [];
+            if ((this.newItem.name.length = 0)) {
+                alert("name field can't be empty");
+            } else {
+                this.list.push({ ...this.newItem });
+                this.newItem.number = 0;
+                this.newItem.name = "";
+                this.newItem.price = 0.0;
+                this.newItem.likes = [];
+                this.newItem.dislikes = [];
+            }
         },
         removeItem(index) {
             this.list.splice(index, 1);

@@ -49,12 +49,14 @@ export default {
     },
     methods: {
         addNewItem() {
-            console.log(this.newItem);
-            this.list.push({ ...this.newItem });
-            console.log(this.list);
-            this.newItem.number = 0;
-            this.newItem.name = "";
-            this.newItem.price = 0.0;
+            if ((this.newItem.name.length = 0)) {
+                alert("name field can't be empty");
+            } else {
+                this.list.push({ ...this.newItem });
+                this.newItem.number = 0;
+                this.newItem.name = "";
+                this.newItem.price = 0.0;
+            }
         },
         setNumber(index) {
             do {

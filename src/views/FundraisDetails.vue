@@ -1,16 +1,16 @@
 <template>
     <div class="SecondPage">
-        <project-info v-if="false" :projectData="fundraisData" @data="updateProjectData($event)"/>
+        <project-info v-if="false" :projectData="fundraisInfo" @data="updateProjectData"/>
         <list-of-participants
             v-if="false"
             :list="listOfParticipants"
-            @list="updateListOfParticipants($event)"
+            @list="updateListOfParticipants"
         />
         <list-of-products v-if="true" :list="listOfProducts" @list="updateListOfProducts"/>
         <list-of-propositions
             v-if="true"
             :list="listOfPropositions"
-            @list="updateListOfPropositions($event)"
+            @list="updateListOfPropositions"
         />
     </div>
 </template>
@@ -20,17 +20,20 @@ import ProjectInfo from "@/components/secondpage/Fundraising.info.vue";
 import ListOfParticipants from "@/components/secondpage/Participants.list.vue";
 import ListOfProducts from "@/components/secondpage/Products.list.vue";
 import ListOfPropositions from "@/components/secondpage/Propositions.list.vue";
+import firebase, { database } from "firebase";
 
 export default {
     data() {
         return {
+            db: firebase.firestore().collection("Zrzuty"),
             //ProjectInfo elements
-            fundraisData: {
+            fundraisInfo: {
                 creator: "Kordian",
                 title: "title",
                 description: "Poor project",
                 creationDate: new Date("December 17, 1995 03:24:00"),
-                endDate: new Date("December 17, 1995 03:24:00")
+                endDate: new Date("December 17, 1995 03:24:00"),
+                ended: false
             },
             //TODO ListOfParticipants should be a proper arr of obj with Name, Comment, paid, accepted
             listOfParticipants: [
