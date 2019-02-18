@@ -6,11 +6,10 @@
         <input type="number" v-model="newItem.price">
         <button @click="addNewItem()">add new item</button>
         <ul>
-            <li v-for="(item, index) in list"   :key="index">
+            <p v-if="list.length==0">List is empty</p>
+            <li v-for="(item, index) in list" :key="index">
                 <!-- create a new componen to display item -->
-                {{item.creator}}: {{item.number}} | {{item.name}} | {{item.price}} | {{item.price * item.number}} | likes:{{item.likes}} | dislikes:{{item.dislikes}}
-                <button @click="removeItem(index)"> remove item </button>
-                <button @click="acceptItem(index)">accept item</button>
+                <Item :item="item"/>
             </li>
         </ul>
     </div>
@@ -20,46 +19,46 @@ export default {
     props: {
         list: Array
     },
-    data(){
-        return{
+    data() {
+        return {
             newItem: {
-                creator: '',
+                creator: "",
                 accepted: false,
                 number: 0,
-                name: '',
-                price: .0,
+                name: "",
+                price: 0.0,
                 likes: 0,
                 dislikes: 0
             }
-        }
+        };
     },
     watch: {
-        list(){
-            this.$emit('list', this.list);
+        list() {
+            this.$emit("list", this.list);
         }
     },
     methods: {
-        addNewItem(){
+        addNewItem() {
             this.list.push(this.newItem);
             this.newItem.number = 0;
-            this.newItem.name = '';
-            this.newItem.price = .0;
+            this.newItem.name = "";
+            this.newItem.price = 0.0;
         },
-        removeItem(index){
+        removeItem(index) {
             console.log(index);
             this.list.splice(index, 1);
         },
-        acceptItem(index){
+        acceptItem(index) {
             this.list[index].accepted = true;
-            this.$emit('list', this.list);
+            this.$emit("list", this.list);
         },
-        authenticate(login){
+        authenticate(login) {
             //TODO
         }
     },
-    created(){
-        this.newItem.ccreator = localStorage.getItem('login');
+    created() {
+        this.newItem.ccreator = localStorage.getItem("login");
     }
-}
+};
 </script>
 
