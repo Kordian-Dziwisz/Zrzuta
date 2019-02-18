@@ -1,17 +1,10 @@
 <template>
   <div class="Login">
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-      crossorigin="anonymous"
-    >
     <label>Login Panel</label>
     <br>
     <input @keydown.enter="returnLogin" v-model="login" placeholder="your login">
-    <b-alert variant="danger" dismissible :show="showAlert">
-      <i class="fas fa-exclamation-triangle"></i> Zaloguj się, aby przejść dalej!
-    </b-alert>
+    <b-alert variant="danger" dismissible :show="showAlert">Zaloguj się, aby przejść dalej!</b-alert>
+    <font-awesome-icon icon="coffee"/>
   </div>
 </template>
 <script>
