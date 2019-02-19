@@ -28,7 +28,8 @@
 import Item from "@/views/Fundrais/Propositions/item.vue";
 export default {
     props: {
-        list: Array
+        list: Array,
+        admin: false
     },
     data() {
         return {
@@ -74,9 +75,6 @@ export default {
             this.list[index].accepted = true;
             this.$emit("list", this.list);
             this.list.splice(index, 1);
-        },
-        authenticate(login) {
-            //TODO
         }
     },
     created() {

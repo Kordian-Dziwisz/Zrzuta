@@ -1,32 +1,51 @@
 <template>
     <div class="Fundrais">
-        <project-info v-if="false" :projectData="fundraisInfo" @data="updateProjectData"/>
+        <project-info
+            :admin="admin"
+            v-if="false"
+            :projectData="fundraisInfo"
+            @data="updateProjectData"
+        />
         <list-of-participants
             v-if="true"
             :list="listOfParticipants"
             @list="updateListOfParticipants"
         />
-        <list-of-products v-if="true" :list="listOfProducts" @list="updateListOfProducts"/>
+        <list-of-products
+            :admin="admin"
+            v-if="true"
+            :list="listOfProducts"
+            @list="updateListOfProducts"
+        />
         <list-of-propositions
+            :admin="admin"
             v-if="true"
             :list="listOfPropositions"
             @list="updateListOfPropositions"
         />
-        <button @click="updateDoc">Save all</button>
+        <p
+            v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length>0"
+        >Send all to this number: {{fundraisInfo.accountNumber}}</p>
+        <button @click="updateDoc" v-if="admin">Save all</button>
     </div>
 </template>
 <script>
 //import from firebase and save in localStorage import firebase from 'firebase'
 import ProjectInfo from "@/views/Fundrais/info.vue";
+import InfoAdmin from "@/views/Fundrais/admin.vue";
 import ListOfParticipants from "@/views/Fundrais/Participants/list.vue";
+import ParticipantsAdmin from "@/views/Fundrais/Participants/item.admin.vue";
 import ListOfProducts from "@/views/Fundrais/Products/list.vue";
+import ProductsAdmin from "@/views/Fundrais/Products/admin.vue";
 import ListOfPropositions from "@/views/Fundrais/Propositions/list.vue";
+import PropositionsAdmin from "@/views/Fundrais/Propositions/admin.vue";
 import firebase from "firebase";
 
 export default {
     data() {
         return {
             docID: "",
+            admin: false,
             db: firebase.firestore().collection("Zrzuty"),
             //ProjectInfo elements
             fundraisInfo: {},
@@ -77,12 +96,14 @@ export default {
                 listOfProducts: this.listOfProducts,
                 listOfPropositions: this.listOfPropositions
             });
-        }
+        },
+        authenticate() {}
     },
     mounted() {
         this.docID = this.$route.params.id;
         this.db = this.db.doc(this.docID);
         this.getDoc();
+        this.admin = this.fundraisInfo.creator == localStorage.getItem("login");
     },
     components: {
         ProjectInfo,

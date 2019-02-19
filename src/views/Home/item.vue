@@ -2,7 +2,6 @@
     <div>
         {{item.index}}: {{item.title}} | {{item.creator}} | {{item.description}} | {{item.endDate}}
         <button
-            v-if="authenticate"
             @click="removeItem"
         >removeMe!</button>
         <router-link :to="{name: 'Fundrais', params: {id: item.id}}">Edit</router-link>
@@ -22,13 +21,6 @@ export default {
                 index: this.item.index,
                 id: this.item.id
             });
-        },
-        authenticate() {
-            if (this.item.creator == localStorage.getItem("login")) {
-                return true;
-            } else {
-                return false;
-            }
         }
     }
 };
