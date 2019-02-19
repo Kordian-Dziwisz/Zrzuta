@@ -4,10 +4,7 @@
         {{item.index}}: {{item.creator}}: {{item.number}} | {{item.name}} | {{item.price}} | {{(item.price * item.number).toFixed(2)}} | {{item.likes.length}} | {{item.dislikes.length}}
         <div class="control">
             <button @click="likeItem" v-if="item.creator != localStorage.getItem('login')">like</button>
-            <button
-                @click="dislikeItem"
-                v-if="item.creator != localStorage.getItem('login')"
-            >dislike</button>
+            <button @click="dislikeItem" v-if="authenticate">dislike</button>
             <button
                 @click="removeItem"
                 v-if="item.creator == localStorage.getItem('login')"

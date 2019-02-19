@@ -14,13 +14,13 @@
         />
         <list-of-products
             :admin="admin"
-            v-if="true"
+            v-if="false"
             :list="listOfProducts"
             @list="updateListOfProducts"
         />
         <list-of-propositions
             :admin="admin"
-            v-if="false"
+            v-if="true"
             :list="listOfPropositions"
             @list="updateListOfPropositions"
         />

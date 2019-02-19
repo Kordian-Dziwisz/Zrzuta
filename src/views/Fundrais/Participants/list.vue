@@ -1,7 +1,7 @@
 <template>
     <div class="ListOfParticipants">
-        <p v-if="admin">Add a new Participant:</p>
-        <input v-if="admin" type="text" v-model="newItem.name" @keypress.enter="addNewItem()">
+        <p>Add a new Participant:</p>
+        <input type="text" v-model="newItem.name" @keypress.enter="addNewItem()">
         <!-- displaying a list of Participant, create new component to Item bind -->
         <ul>
             <p v-if="list.length==0">List is empty</p>
