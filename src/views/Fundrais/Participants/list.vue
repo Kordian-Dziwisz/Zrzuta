@@ -23,7 +23,7 @@
     </div>
 </template>
 <script>
-import Item from "@/components/secondpage/Participants.list.item.vue";
+import Item from "@/views/Fundrais/Participants/item.vue";
 
 export default {
     props: {

@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Main from "@/views/Main.vue";
-import FoundraisDetails from "@/views/FundraisDetails.vue";
+import Home from "@/views/Home.vue";
+import Fundrais from "@/views/Fundrais.vue";
 
 Vue.use(Router);
 
@@ -11,13 +11,13 @@ export default new Router({
 	routes: [
 		{
 			path: "/",
-			name: "Main",
-			component: Main,
+			name: "Home",
+			component: Home,
 		},
 		{
-			path: "/FundraisDetails/:id",
-			name: "FundraisDetails",
-			component: FoundraisDetails,
+			path: "/Zrzuta/szczegoly/:id",
+			name: "Fundrais",
+			component: Fundrais,
 		},
 	],
 });

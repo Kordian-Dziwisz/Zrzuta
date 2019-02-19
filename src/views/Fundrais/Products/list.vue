@@ -26,7 +26,7 @@
     </div>
 </template>
 <script>
-import Item from "@/components/secondpage/Products.list.item.vue";
+import Item from "@/views/Fundrais/Products/item.vue";
 
 export default {
     props: {

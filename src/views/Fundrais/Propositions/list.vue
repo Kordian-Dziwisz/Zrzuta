@@ -1,5 +1,5 @@
 <template>
-    <div class="ListOfPropositions">
+    <div>
         here add a new Proposition
         <input type="number" v-model="newItem.number">
         <input type="text" v-model="newItem.name">
@@ -21,7 +21,7 @@
     </div>
 </template>
 <script>
-import Item from "@/components/secondpage/Propositions.list.item.vue";
+import Item from "@/views/Fundrais/Propositions/item.vue";
 export default {
     props: {
         list: Array

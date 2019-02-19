@@ -7,8 +7,8 @@
 
 <script>
 import Vue from "vue";
-import Login from "@/components/mainpage/Login.vue";
-import FundraisingList from "@/views/FundraisDetails/lists/Fundraising.vue";
+import Login from "@/components/Login.vue";
+import FundraisingList from "@/views/Home/list.vue";
 import firebase from "firebase";
 // import List from '@/components/List.vue'
 
@@ -57,6 +57,10 @@ export default {
         mapItem(item) {
             return { ...item.data().fundraisInfo, id: item.id };
         }
+    },
+    components: {
+        Login,
+        FundraisingList
     }
 };
 </script>

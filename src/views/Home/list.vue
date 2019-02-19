@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Item from "@/components/mainpage/Fundraising.list.item.vue";
+import Item from "@/views/Home/item.vue";
 export default {
     props: {
         list: Array

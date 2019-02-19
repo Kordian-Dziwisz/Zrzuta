@@ -16,10 +16,10 @@
 </template>
 <script>
 //import from firebase and save in localStorage import firebase from 'firebase'
-import ProjectInfo from "@/views/FundraisDetails/lists/Fundraising.vue";
-import ListOfParticipants from "@/views/FundraisDetails/lists/Participants.vue";
-import ListOfProducts from "@/views/FundraisDetails/lists/Products.vue";
-import ListOfPropositions from "@/views/FundraisDetails/lists/Propositions.vue";
+import ProjectInfo from "@/views/Fundrais/info.vue";
+import ListOfParticipants from "@/views/Fundrais/Participants/list.vue";
+import ListOfProducts from "@/views/Fundrais/Products/list.vue";
+import ListOfPropositions from "@/views/Fundrais/Propositions/list.vue";
 import firebase, { database } from "firebase";
 
 export default {

@@ -9,8 +9,8 @@
             <!--https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvfuNsZHffYNmIn1UcFABUb6-GnknWFFrXIniz1R-Ocer4BMCMug -->
             <b-collapse is-nav id="nav_collapse">
                 <b-navbar-nav>
-                    <b-nav-item :to="{ name: 'Main'}">Home</b-nav-item>
-                    <b-nav-item :to="{ name: 'FundraisDetails', params: {id: 12345}}">Nowa zbiórka</b-nav-item>
+                    <b-nav-item :to="{ name: 'Home'}">Home</b-nav-item>
+                    <b-nav-item :to="{ name: 'Fundrais', params: {id: 12345}}">Nowa zbiórka</b-nav-item>
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->
