@@ -60,6 +60,7 @@ export default {
     },
     methods: {
         addNewItem() {
+            console.log(this.admin);
             if (this.newItem.name.length == 0) {
                 alert("name field can't be empty");
             } else {

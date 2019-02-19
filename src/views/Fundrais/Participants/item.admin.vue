@@ -2,7 +2,6 @@
     <div class="ParticipantsListItem">
         {{item.index}}: {{item.name}} | {{item.comment}} | {{item.paid}} | {{item.accepted}}
         <div class="control">
-            <button @click="setComment">Comment</button>
             <button @click="setAccepted">Accepted</button>
             <button @click="removeItem">removeMe!</button>
         </div>
@@ -14,9 +13,6 @@ export default {
         item: Object
     },
     methods: {
-        setComment() {
-            this.$emit("comment", this.item.index);
-        },
         setAccepted() {
             if (this.item.paid == true) {
                 this.$emit("accepted", this.item.index);

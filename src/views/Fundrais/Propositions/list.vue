@@ -14,6 +14,15 @@
             <li v-for="(item, index) in list" :key="index">
                 <!-- create a new componen to display item -->
                 <Item
+                    v-if="!admin"
+                    :item="{index: index, ...item}"
+                    @like="likeItem"
+                    @dislike="dislikeItem"
+                    @remove="removeItem"
+                    @accept="acceptItem"
+                />
+                <item-admin
+                    v-else
                     :item="{index: index, ...item}"
                     @like="likeItem"
                     @dislike="dislikeItem"
@@ -26,6 +35,8 @@
 </template>
 <script>
 import Item from "@/views/Fundrais/Propositions/item.vue";
+import ItemAdmin from "@/views/Fundrais/Propositions/item.admin.vue";
+
 export default {
     props: {
         list: Array,
@@ -81,7 +92,8 @@ export default {
         this.newItem.creator = localStorage.getItem("login");
     },
     components: {
-        Item
+        Item,
+        ItemAdmin
     }
 };
 </script>

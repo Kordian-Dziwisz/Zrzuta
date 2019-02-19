@@ -6,7 +6,6 @@
             v-model="newItem.name"
             @keypress.enter="addNewItem()"
         >
-
         <!-- displaying a list of Participant, create new component to Item bind -->
         <ul>
             <p v-if="list.length==0">List is empty</p>
@@ -14,7 +13,7 @@
                 <item
                     v-if="!admin"
                     :item="{index: index, ...item}"
-                    :you="item.name == localStorage.getItem('login')"
+                    :you="isYour(item.name)"
                     @comment="setComment($event)"
                     @paid="setPaid($event)"
                     @accepted="setAccepted($event)"
@@ -39,7 +38,7 @@ import ItemAdmin from "@/views/Fundrais/Participants/item.admin.vue";
 export default {
     props: {
         list: Array,
-        admin: false
+        admin: Boolean
     },
     data() {
         return {
@@ -78,6 +77,9 @@ export default {
         },
         removeItem(index) {
             this.list.splice(index, 1);
+        },
+        isYour(login) {
+            login == localStorage.getItem("login");
         }
     },
     components: {

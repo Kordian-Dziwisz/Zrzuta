@@ -7,19 +7,20 @@
             @data="updateProjectData"
         />
         <list-of-participants
+            :admin="admin"
             v-if="true"
             :list="listOfParticipants"
             @list="updateListOfParticipants"
         />
         <list-of-products
             :admin="admin"
-            v-if="true"
+            v-if="false"
             :list="listOfProducts"
             @list="updateListOfProducts"
         />
         <list-of-propositions
             :admin="admin"
-            v-if="true"
+            v-if="false"
             :list="listOfPropositions"
             @list="updateListOfPropositions"
         />
@@ -32,13 +33,10 @@
 <script>
 //import from firebase and save in localStorage import firebase from 'firebase'
 import ProjectInfo from "@/views/Fundrais/info.vue";
-import InfoAdmin from "@/views/Fundrais/admin.vue";
+import InfoAdmin from "@/views/Fundrais/info.admin.vue";
 import ListOfParticipants from "@/views/Fundrais/Participants/list.vue";
-import ParticipantsAdmin from "@/views/Fundrais/Participants/item.admin.vue";
 import ListOfProducts from "@/views/Fundrais/Products/list.vue";
-import ProductsAdmin from "@/views/Fundrais/Products/admin.vue";
 import ListOfPropositions from "@/views/Fundrais/Propositions/list.vue";
-import PropositionsAdmin from "@/views/Fundrais/Propositions/admin.vue";
 import firebase from "firebase";
 
 export default {
@@ -88,6 +86,9 @@ export default {
             this.listOfParticipants = tmpDoc.data().listOfParticipants;
             this.listOfProducts = tmpDoc.data().listOfProducts;
             this.listOfPropositions = tmpDoc.data().listOfPropositions;
+            this.admin =
+                tmpDoc.data().fundraisInfo.creator ==
+                localStorage.getItem("login");
         },
         updateDoc() {
             this.db.set({
@@ -96,14 +97,12 @@ export default {
                 listOfProducts: this.listOfProducts,
                 listOfPropositions: this.listOfPropositions
             });
-        },
-        authenticate() {}
+        }
     },
     mounted() {
         this.docID = this.$route.params.id;
         this.db = this.db.doc(this.docID);
         this.getDoc();
-        this.admin = this.fundraisInfo.creator == localStorage.getItem("login");
     },
     components: {
         ProjectInfo,
