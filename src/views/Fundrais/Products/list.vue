@@ -1,15 +1,12 @@
 <template>
     <div class="ListOfProducts">
-        here add a new Product:
-        <input
-            type="number"
-            v-model="newItem.number"
-            @keypress.enter="addNewItem"
-        >
-        <input type="text" v-model="newItem.name" @keypress.enter="addNewItem">
-        <input type="number" v-model="newItem.price" @keypress.enter="addNewItem">
-        <button @click="addNewItem">add new item</button>
-
+        <div v-if="admin">
+            <p>here add a new product</p>
+            <input type="number" v-model="newItem.number" @keypress.enter="addNewItem">
+            <input type="text" v-model="newItem.name" @keypress.enter="addNewItem">
+            <input type="number" v-model="newItem.price" @keypress.enter="addNewItem">
+            <button @click="addNewItem">add new item</button>
+        </div>
         <!-- displaying a list of Participant, create new component to Item bind -->
         <ul>
             <p v-if="list.length==0">List is empty</p>
@@ -60,7 +57,6 @@ export default {
     },
     methods: {
         addNewItem() {
-            console.log(this.admin);
             if (this.newItem.name.length == 0) {
                 alert("name field can't be empty");
             } else {

@@ -8,13 +8,13 @@
         />
         <list-of-participants
             :admin="admin"
-            v-if="true"
+            v-if="false"
             :list="listOfParticipants"
             @list="updateListOfParticipants"
         />
         <list-of-products
             :admin="admin"
-            v-if="false"
+            v-if="true"
             :list="listOfProducts"
             @list="updateListOfProducts"
         />
