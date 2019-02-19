@@ -2,9 +2,10 @@
     <div class="FundraisingList">
         <h1>List of fundraises</h1>
         <br>add a new item:
-        <input type="text" v-model="newItem.name">
+        <input type="text" v-model="newItem.title" @keypress.enter="addNewItem">
         <button @click="addNewItem"></button>
         <ul>
+            <p v-if="list.length == 0">Brak aktywnych zbiórek</p>
             <li v-for="(item, index) in list" :key="index">
                 <Item :item="{index: index, ...item}" @remove="removeItem" @edit="editItem"/>
             </li>
@@ -21,8 +22,9 @@ export default {
     data() {
         return {
             newItem: {
+                accountNumber: "",
                 creator: "",
-                title: "NoTitle",
+                title: "",
                 description: "",
                 creationDate: new Date("December 17, 1995 03:24:00"),
                 endDate: new Date("December 17, 1995 03:24:00"),
@@ -32,7 +34,9 @@ export default {
     },
     methods: {
         addNewItem() {
-            this.list.push(...newItem);
+            this.list.push({ ...this.newItem });
+            this.$emit("add", { ...this.newItem });
+            this.newItem.title = "";
         },
         editItem() {
             console.log("editing item");

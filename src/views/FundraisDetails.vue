@@ -28,6 +28,7 @@ export default {
             db: firebase.firestore().collection("Zrzuty"),
             //ProjectInfo elements
             fundraisInfo: {
+                accountNumber: "",
                 creator: "Kordian",
                 title: "title",
                 description: "Poor project",

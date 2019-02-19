@@ -5,7 +5,7 @@
             v-if="authenticate"
             @click="removeItem"
         >removeMe!</button>
-        <router-link :to="this.item.docID">Edit</router-link>
+        <router-link :to="this.item.id">Edit</router-link>
     </div>
 </template>
 <script>

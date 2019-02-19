@@ -49,7 +49,7 @@ export default {
     },
     methods: {
         addNewItem() {
-            if ((this.newItem.name.length = 0)) {
+            if (this.newItem.name.length == 0) {
                 alert("name field can't be empty");
             } else {
                 this.list.push({ ...this.newItem });

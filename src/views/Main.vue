@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <login @login="changeLogin" v-if="!logged"/>
-        <fundraising-list v-if="logged" :list="list"></fundraising-list>
+        <fundraising-list v-if="logged" :list="list" @add="addFundrais"></fundraising-list>
     </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
             db: firebase.firestore().collection("Zrzuty"),
             list: [
                 {
-                    docID: "uRLJNTchecAfASfPUKT5",
+                    id: "uRLJNTchecAfASfPUKT5",
                     creator: "Kordian",
                     title: "title",
                     description: "Poor project",
@@ -47,6 +47,12 @@ export default {
                 this.mapItem(item)
             );
             console.log(this.list);
+        },
+        async addFundrais(event) {
+            await this.db.add({ fundraisInfo: { ...event } });
+        },
+        async removeFundrais(event) {
+            this.db.doc(event.id).delete();
         },
         mapItem(item) {
             return { ...item.data().fundraisInfo, id: item.id };

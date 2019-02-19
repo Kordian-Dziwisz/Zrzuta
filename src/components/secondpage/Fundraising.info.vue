@@ -20,6 +20,8 @@
         {{endTime}}
         <br>
         isEnded: {{info.ended}}
+        here add your account number:
+        <input type="number" v-model="accountNumber">
     </div>
 </template>
 <script>
@@ -29,6 +31,7 @@ export default {
     },
     data() {
         return {
+            accountNumber: "",
             title: "",
             description: "",
             endTime: "",
@@ -72,6 +75,7 @@ export default {
             });
             //emit
             this.$emit("data", {
+                accountNumber: this.accountNumber,
                 title: this.title,
                 description: this.description,
                 endDate: new Date(
