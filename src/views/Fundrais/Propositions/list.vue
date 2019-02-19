@@ -79,10 +79,22 @@ export default {
             this.list.splice(index, 1);
         },
         likeItem(index) {
-            this.list[index].likes.push(localStorage.getItem("login"));
+            if (
+                !this.list[index].likes.includes(localStorage.getItem("login"))
+            ) {
+                this.list[index].likes.push(localStorage.getItem("login"));
+            }
+            this.$emit("list", this.list);
         },
         dislikeItem(index) {
-            this.list[index].dislikes.push(localStorage.getItem("login"));
+            if (
+                !this.list[index].dislikes.includes(
+                    localStorage.getItem("login")
+                )
+            ) {
+                this.list[index].dislikes.push(localStorage.getItem("login"));
+            }
+            this.$emit("list", this.list);
         },
         acceptItem(index) {
             this.list[index].accepted = true;

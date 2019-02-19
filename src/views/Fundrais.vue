@@ -14,7 +14,7 @@
         />
         <list-of-products
             :admin="admin"
-            v-if="false"
+            v-if="true"
             :list="listOfProducts"
             @list="updateListOfProducts"
         />

@@ -67,25 +67,31 @@ export default {
             }
         },
         setNumber(index) {
+            let tmp = 0;
             do {
-                this.list[index].number = parseInt(prompt("set new number"));
-            } while (
-                typeof this.list[index].number != "number" ||
-                this.list[index].number <= 0
-            );
+                tmp = parseInt(prompt("set new number"));
+            } while (typeof tmp != "number" || tmp <= 0);
+            if (tmp > 0) {
+                this.list[index].number = tmp;
+            }
         },
         setName(index) {
+            let tmp = "";
             do {
-                this.list[index].name = prompt("set new name");
-            } while ((this.list[index].name.length = 0));
+                tmp = prompt("set new name");
+            } while (tmp.length == 0);
+            if (tmp.length > 0) {
+                this.list[index].name = tmp;
+            }
         },
         setPrice(index) {
+            let tmp = 0;
             do {
-                this.list[index].price = parseFloat(prompt("set new price"));
-            } while (
-                typeof this.list[index].price != "number" ||
-                this.list[index].price <= 0
-            );
+                tmp = parseFloat(prompt("set new price"));
+            } while (typeof tmp != "number" || tmp <= 0);
+            if (typeof tmp == "number") {
+                this.list[index].price = tmp;
+            }
         },
         removeItem(index) {
             this.list.splice(index, 1);
