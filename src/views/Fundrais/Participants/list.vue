@@ -1,11 +1,7 @@
 <template>
     <div class="ListOfParticipants">
-        <br>Add a new Participant:
-        <input
-            type="text"
-            v-model="newItem.name"
-            @keypress.enter="addNewItem()"
-        >
+        <p v-if="admin">Add a new Participant:</p>
+        <input v-if="admin" type="text" v-model="newItem.name" @keypress.enter="addNewItem()">
         <!-- displaying a list of Participant, create new component to Item bind -->
         <ul>
             <p v-if="list.length==0">List is empty</p>
@@ -14,18 +10,18 @@
                     v-if="!admin"
                     :item="{index: index, ...item}"
                     :you="isYour(item.name)"
-                    @comment="setComment($event)"
-                    @paid="setPaid($event)"
-                    @accepted="setAccepted($event)"
-                    @remove="removeItem($event)"
+                    @comment="setComment"
+                    @paid="setPaid"
+                    @accepted="setAccepted"
+                    @remove="removeItem"
                 />
                 <item-admin
                     v-else
                     :item="{index: index, ...item}"
-                    @comment="setComment($event)"
-                    @paid="setPaid($event)"
-                    @accepted="setAccepted($event)"
-                    @remove="removeItem($event)"
+                    @comment="setComment"
+                    @paid="setPaid"
+                    @accepted="setAccepted"
+                    @remove="removeItem"
                 />
             </li>
         </ul>
@@ -79,7 +75,7 @@ export default {
             this.list.splice(index, 1);
         },
         isYour(login) {
-            login == localStorage.getItem("login");
+            return login == localStorage.getItem("login");
         }
     },
     components: {

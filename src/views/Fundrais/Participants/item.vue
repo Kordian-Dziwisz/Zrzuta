@@ -2,9 +2,9 @@
     <div class="ParticipantsListItem">
         {{item.index}}: {{item.name}} | {{item.comment}} | {{item.paid}} | {{item.accepted}}
         <div class="control">
-            <button @click="setComment">Comment</button>
-            <button @click="setPaid">Paid</button>
-            <button @click="removeItem">removeMe!</button>
+            <button @click="setComment" v-if="you">Comment</button>
+            <button @click="setPaid" v-if="you">Paid</button>
+            <button @click="removeItem" v-if="you">removeMe!</button>
         </div>
     </div>
 </template>
@@ -19,7 +19,7 @@ export default {
             this.$emit("comment", this.item.index);
         },
         setPaid() {
-            if (this.accepted == false) {
+            if (this.item.accepted == false) {
                 this.$emit("paid", this.item.index);
             }
         },
