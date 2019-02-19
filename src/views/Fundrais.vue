@@ -93,6 +93,9 @@ export default {
             }
         }
     },
+    created() {
+        console.log(this.$route.params.id);
+    },
     components: {
         ProjectInfo,
         ListOfParticipants,
