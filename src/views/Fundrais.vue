@@ -62,6 +62,7 @@ export default {
         },
         updateListOfParticipants(list) {
             this.listOfParticipants = list;
+            this.updateDoc();
         },
         updateListOfProducts(list) {
             this.listOfProducts = list;
@@ -70,6 +71,7 @@ export default {
             this.listOfPropositions = list;
             let accept = this.acceptProposition;
             this.listOfPropositions.forEach(item => accept(item));
+            this.updateDoc();
         },
         acceptProposition(item) {
             if (item.accepted) {

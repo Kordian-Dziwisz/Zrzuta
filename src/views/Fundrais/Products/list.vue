@@ -68,8 +68,6 @@ export default {
         },
         setNumber(index) {
             do {
-                console.log(this.list[index].number);
-                console.log(typeof this.list[index].number);
                 this.list[index].number = parseInt(prompt("set new number"));
             } while (
                 typeof this.list[index].number != "number" ||
@@ -77,7 +75,9 @@ export default {
             );
         },
         setName(index) {
-            this.list[index].name = prompt("new name");
+            do {
+                this.list[index].name = prompt("set new name");
+            } while ((this.list[index].name.length = 0));
         },
         setPrice(index) {
             do {
