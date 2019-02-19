@@ -46,7 +46,6 @@ export default {
             this.list = (await this.db.get()).docs.map(item =>
                 this.mapItem(item)
             );
-            console.log(this.list);
         },
         async addFundrais(event) {
             await this.db.add({ fundraisInfo: { ...event } });
