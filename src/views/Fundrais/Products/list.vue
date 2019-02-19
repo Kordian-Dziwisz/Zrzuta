@@ -15,6 +15,15 @@
             <p v-if="list.length==0">List is empty</p>
             <li v-for="(item, index) in list" :key="index">
                 <Item
+                    v-if="!admin"
+                    :item="{index: index, ...item}"
+                    @number="setNumber"
+                    @name="setName"
+                    @price="setPrice"
+                    @remove="removeItem"
+                />
+                <item-admin
+                    v-else
                     :item="{index: index, ...item}"
                     @number="setNumber"
                     @name="setName"
@@ -27,6 +36,7 @@
 </template>
 <script>
 import Item from "@/views/Fundrais/Products/item.vue";
+import ItemAdmin from "@/views/Fundrais/Products/item.admin.vue";
 
 export default {
     props: {
@@ -85,7 +95,8 @@ export default {
         }
     },
     components: {
-        Item
+        Item,
+        ItemAdmin
     }
 };
 </script>

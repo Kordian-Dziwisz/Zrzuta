@@ -28,7 +28,8 @@
 import Item from "@/views/Fundrais/Propositions/item.vue";
 export default {
     props: {
-        list: Array
+        list: Array,
+        admin: false
     },
     data() {
         return {

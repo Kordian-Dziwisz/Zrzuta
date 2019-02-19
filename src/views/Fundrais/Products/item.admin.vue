@@ -1,6 +1,5 @@
 <template>
     <div class="ParticipantsListItem">
-        <!-- display properties -->
         {{item.index}}: {{item.number}} | {{item.name}} | {{item.price}} | {{(item.price * item.number).toFixed(2)}}
         <div class="control">
             <button @click="setNumber">setNumber</button>
