@@ -7,7 +7,7 @@
         <ul>
             <p v-if="list.length == 0">Brak aktywnych zbiórek</p>
             <li v-for="(item, index) in list" :key="index">
-                <Item :item="{index: index, ...item}" @remove="removeItem" @edit="editItem"/>
+                <Item :item="{index: index, ...item}" @remove="removeItem"/>
             </li>
         </ul>
     </div>
@@ -34,15 +34,12 @@ export default {
     },
     methods: {
         addNewItem() {
-            this.list.push({ ...this.newItem });
             this.$emit("add", { ...this.newItem });
             this.newItem.title = "";
         },
-        editItem() {
-            console.log("editing item");
-        },
-        removeItem(index) {
-            this.list.splice(index, 1);
+        removeItem(event) {
+            this.list.splice(event.index, 1);
+            this.$emit("remove", event.id);
         }
     },
     created() {

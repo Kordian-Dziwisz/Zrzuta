@@ -1,5 +1,5 @@
 <template>
-    <div class="FundraisingListItem">
+    <div>
         {{item.index}}: {{item.title}} | {{item.creator}} | {{item.description}} | {{item.endDate}}
         <button
             v-if="authenticate"
@@ -18,7 +18,10 @@ export default {
             this.$emit("edit", this.item.index);
         },
         removeItem() {
-            this.$emit("remove", this.item.index);
+            this.$emit("remove", {
+                index: this.item.index,
+                id: this.item.id
+            });
         },
         authenticate() {
             if (this.item.creator == localStorage.getItem("login")) {

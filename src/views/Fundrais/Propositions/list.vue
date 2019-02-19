@@ -1,9 +1,13 @@
 <template>
     <div>
         here add a new Proposition
-        <input type="number" v-model="newItem.number">
-        <input type="text" v-model="newItem.name">
-        <input type="number" v-model="newItem.price">
+        <input
+            type="number"
+            v-model="newItem.number"
+            @keypress.enter="addNewItem"
+        >
+        <input type="text" v-model="newItem.name" @keypress.enter="addNewItem">
+        <input type="number" v-model="newItem.price" @keypress.enter="addNewItem">
         <button @click="addNewItem">add new item</button>
         <ul>
             <p v-if="list.length==0">List is empty</p>

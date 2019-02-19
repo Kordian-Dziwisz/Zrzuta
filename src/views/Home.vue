@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <login @login="changeLogin" v-if="!logged"/>
-        <fundraising-list v-if="logged" :list="list" @add="addFundrais"></fundraising-list>
+        <fundraising-list v-if="logged" :list="list" @add="addFundrais" @remove="removeFundrais"></fundraising-list>
     </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
     },
     mounted() {
         this.login = localStorage.getItem("login");
-        this.getList();
+        this.getFundrais();
     },
     methods: {
         changeLogin(login) {
@@ -42,16 +42,22 @@ export default {
             }
             localStorage.setItem("login", login);
         },
-        async getList() {
+        async getFundrais() {
             this.list = (await this.db.get()).docs.map(item =>
                 this.mapItem(item)
             );
         },
         async addFundrais(event) {
-            await this.db.add({ fundraisInfo: { ...event } });
+            let newItem = await this.db.add({
+                fundraisInfo: { ...event },
+                listOfParticipants: [],
+                listOfProducts: [],
+                listOfPropositions: []
+            });
+            this.list.push(this.mapItem(await newItem.get()));
         },
-        async removeFundrais(event) {
-            this.db.doc(event.id).delete();
+        async removeFundrais(docID) {
+            await this.db.doc(docID).delete();
         },
         mapItem(item) {
             return { ...item.data().fundraisInfo, id: item.id };
