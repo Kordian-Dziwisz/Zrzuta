@@ -74,9 +74,6 @@ export default {
             this.list[index].accepted = true;
             this.$emit("list", this.list);
             this.list.splice(index, 1);
-        },
-        authenticate(login) {
-            //TODO
         }
     },
     created() {

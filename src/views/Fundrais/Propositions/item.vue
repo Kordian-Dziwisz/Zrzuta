@@ -5,8 +5,8 @@
         <div class="control">
             <button @click="likeItem">like</button>
             <button @click="dislikeItem">dislike</button>
-            <button v-if="authenticate" @click="removeItem">removeMe!</button>
-            <button v-if="authenticate" @click="acceptItem">acceptMe!</button>
+            <button @click="removeItem">removeMe!</button>
+            <button @click="acceptItem">acceptMe!</button>
         </div>
     </div>
 </template>
@@ -27,9 +27,6 @@ export default {
         },
         acceptItem() {
             this.$emit("accept", this.item.index);
-        },
-        authenticate() {
-            return localStorage.getItem("login") == this.item.creator;
         }
     }
 };
