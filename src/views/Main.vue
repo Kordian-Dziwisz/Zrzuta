@@ -57,10 +57,6 @@ export default {
         mapItem(item) {
             return { ...item.data().fundraisInfo, id: item.id };
         }
-    },
-    components: {
-        Login,
-        FundraisingList
     }
 };
 </script>
