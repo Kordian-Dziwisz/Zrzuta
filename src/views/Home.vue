@@ -18,17 +18,7 @@ export default {
             logged: false,
             login: "",
             db: firebase.firestore().collection("Zrzuty"),
-            list: [
-                {
-                    id: "uRLJNTchecAfASfPUKT5",
-                    creator: "Kordian",
-                    title: "title",
-                    description: "Poor project",
-                    creationDate: new Date("December 17, 1995 03:24:00"),
-                    endDate: new Date("December 17, 1995 03:24:00"),
-                    ended: false
-                }
-            ]
+            list: []
         };
     },
     mounted() {
