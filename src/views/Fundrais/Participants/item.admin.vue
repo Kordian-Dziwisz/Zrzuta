@@ -3,7 +3,7 @@
         {{item.index}}: {{item.name}} | {{item.comment}} | {{item.paid}} | {{item.accepted}}
         <div class="control">
             <button @click="setComment">Comment</button>
-            <button @click="setPaid">Paid</button>
+            <button @click="setAccepted">Accepted</button>
             <button @click="removeItem">removeMe!</button>
         </div>
     </div>
@@ -11,16 +11,15 @@
 <script>
 export default {
     props: {
-        item: Object,
-        you: false
+        item: Object
     },
     methods: {
         setComment() {
             this.$emit("comment", this.item.index);
         },
-        setPaid() {
-            if (this.accepted == false) {
-                this.$emit("paid", this.item.index);
+        setAccepted() {
+            if (this.item.paid == true) {
+                this.$emit("accepted", this.item.index);
             }
         },
         removeItem() {

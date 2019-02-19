@@ -12,6 +12,16 @@
             <p v-if="list.length==0">List is empty</p>
             <li v-for="(item, index) in list" :key="index">
                 <item
+                    v-if="!admin"
+                    :item="{index: index, ...item}"
+                    :you="item.name == localStorage.getItem('login')"
+                    @comment="setComment($event)"
+                    @paid="setPaid($event)"
+                    @accepted="setAccepted($event)"
+                    @remove="removeItem($event)"
+                />
+                <item-admin
+                    v-else
                     :item="{index: index, ...item}"
                     @comment="setComment($event)"
                     @paid="setPaid($event)"
@@ -24,10 +34,12 @@
 </template>
 <script>
 import Item from "@/views/Fundrais/Participants/item.vue";
+import ItemAdmin from "@/views/Fundrais/Participants/item.admin.vue";
 
 export default {
     props: {
-        list: Array
+        list: Array,
+        admin: false
     },
     data() {
         return {
@@ -69,7 +81,8 @@ export default {
         }
     },
     components: {
-        Item
+        Item,
+        ItemAdmin
     }
 };
 </script>
