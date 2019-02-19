@@ -8,7 +8,7 @@
 <script>
 import Vue from "vue";
 import Login from "@/components/mainpage/Login.vue";
-import FundraisingList from "@/components/mainpage/Fundraising.list.vue";
+import FundraisingList from "@/views/FundraisDetails/lists/Fundraising.vue";
 import firebase from "firebase";
 // import List from '@/components/List.vue'
 
