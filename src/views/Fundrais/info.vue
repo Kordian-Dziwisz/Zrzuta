@@ -3,25 +3,23 @@
         <p>Created by: {{info.creator}}</p>
         <p>
             Title:
-            <input type="text" v-model="title">
+            {{info.title}}
         </p>
         <p>Desc:
             <br>
-            <textarea v-model="description"></textarea>
+            {{info.description}}
         </p>
-        <p>creationDate: {{info.endDate}}</p>
         <p>
             endDate:
-            <input type="date" v-model="endDate">
-            <input type="time" v-model="endTime">
+            {{info.endDate}}
         </p>
         {{endDate}}
         <br>
         {{endTime}}
         <br>
         isEnded: {{info.ended}}
-        here add your account number:
-        <input type="number" v-model="accountNumber">
+        here send your money:
+        {{info.accountNumber}}
     </div>
 </template>
 <script>
