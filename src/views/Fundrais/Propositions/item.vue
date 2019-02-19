@@ -3,12 +3,9 @@
         <!-- display properties index:creator:number|name|price|totalcost -->
         {{item.index}}: {{item.creator}}: {{item.number}} | {{item.name}} | {{item.price}} | {{(item.price * item.number).toFixed(2)}} | {{item.likes.length}} | {{item.dislikes.length}}
         <div class="control">
-            <button @click="likeItem" v-if="item.creator != localStorage.getItem('login')">like</button>
-            <button @click="dislikeItem" v-if="authenticate">dislike</button>
-            <button
-                @click="removeItem"
-                v-if="item.creator == localStorage.getItem('login')"
-            >removeMe!</button>
+            <button @click="likeItem" v-if="!authenticate">like</button>
+            <button @click="dislikeItem" v-if="!authenticate">dislike</button>
+            <button @click="removeItem" v-if="authenticate">removeMe!</button>
         </div>
     </div>
 </template>
@@ -29,6 +26,11 @@ export default {
         },
         acceptItem() {
             this.$emit("accept", this.item.index);
+        }
+    },
+    computed: {
+        authenticate() {
+            return this.item.creator != localStorage.getItem("login");
         }
     }
 };
