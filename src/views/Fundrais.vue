@@ -41,7 +41,7 @@
             <b-row>
                 <b-col style="background-color: green">
                     <p
-                        v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length>0"
+                        v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length>0 && !admin"
                     >Send all to this number: {{fundraisInfo.accountNumber}}</p>
                     <button @click="updateDoc" v-if="admin">Save all</button>
                 </b-col>
