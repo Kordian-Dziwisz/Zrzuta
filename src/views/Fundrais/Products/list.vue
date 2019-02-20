@@ -57,8 +57,12 @@ export default {
   },
   methods: {
     addNewItem() {
-      if (this.newItem.name.length == 0) {
-        alert("name field can't be empty");
+      if (
+        this.newItem.name.length == 0 ||
+        this.newItem.number < 0 ||
+        this.newItem.price < 0
+      ) {
+        alert("Wpisz poprawną wartość!");
       } else {
         this.list.push({ ...this.newItem });
         this.newItem.number = 0;
