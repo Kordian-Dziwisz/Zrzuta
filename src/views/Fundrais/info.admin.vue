@@ -12,7 +12,6 @@
         <p>creationDate: {{info.creationDate}}</p>
         <br>
         <p>endDate: {{newInfo.creationDate}}</p>
-        <datepicker></datepicker>
         isEnded: {{newInfo.ended}} endThis:
         <button @click="newInfo.ended = !newInfo.ended">END</button>
         here add your account number:
@@ -20,7 +19,6 @@
     </div>
 </template>
 <script>
-import Datepicker from "vuejs-datepicker";
 export default {
     props: {
         info: Object
@@ -35,7 +33,7 @@ export default {
             this.returnObj();
         }
     },
-    updated() {
+    mounted() {
         this.newInfo = this.info;
     },
     methods: {
@@ -46,9 +44,6 @@ export default {
             //emit
             this.$emit("data", this.newInfo);
         }
-    },
-    components: {
-        Datepicker
     }
 };
 </script>

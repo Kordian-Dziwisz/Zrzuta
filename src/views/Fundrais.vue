@@ -74,7 +74,7 @@ export default {
     },
     methods: {
         updateProjectData(info) {
-            this.fundraisData = { ...info };
+            this.fundraisData = info;
         },
         updateListOfParticipants(list) {
             this.listOfParticipants = list;
