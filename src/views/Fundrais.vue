@@ -3,17 +3,10 @@
         <b-container fluid>
             <b-row>
                 <b-col style="background-color: green">
-                    <project-info
-                        style="background-color: red"
-                        :admin="admin"
-                        v-if="true"
-                        :info="fundraisInfo"
-                        @data="updateProjectData"
-                    />
+                    <project-info style="background-color: red" v-if="false" :info="fundraisInfo"/>
                     <info-admin
                         style="background-color: red"
-                        :admin="admin"
-                        v-if="false"
+                        v-if="true"
                         :info="fundraisInfo"
                         @data="updateProjectData"
                     />
@@ -83,8 +76,8 @@ export default {
         };
     },
     methods: {
-        updateProjectData(event) {
-            this.fundraisData = { ...event };
+        updateProjectData(info) {
+            this.fundraisData = { ...info };
         },
         updateListOfParticipants(list) {
             this.listOfParticipants = list;

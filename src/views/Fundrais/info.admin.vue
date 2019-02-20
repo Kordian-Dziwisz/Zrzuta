@@ -3,28 +3,18 @@
         <p>Created by: {{info.creator}}</p>
         <p>
             Title:
-            <input type="text" v-model="title">
+            <input type="text" v-model="newInfo.title">
         </p>
         <p>Desc:
             <br>
-            <textarea v-model="description"></textarea>
+            <textarea v-model="newInfo.description"></textarea>
         </p>
-        <p>creationDate: {{info.endDate}}</p>
-        <p>
-            endDate:
-            <input type="date" v-model="endDate">
-            <input type="time" v-model="endTime">
-        </p>
-        {{endDate}}
+        <p>creationDate: {{info.creationDate}}</p>
         <br>
-        {{endTime}}
-        <br>
-        isEnded: {{info.ended}}
+        isEnded: {{newInfo.ended}} endThis:
+        <button @click="newInfo.ended = !newInfo.ended">END</button>
         here add your account number:
-        <input
-            type="number"
-            v-model="accountNumber"
-        >
+        <input type="number" v-model="newInfo.accountNumber">
     </div>
 </template>
 <script>
@@ -34,11 +24,7 @@ export default {
     },
     data() {
         return {
-            accountNumber: "",
-            title: "",
-            description: "",
-            endTime: "",
-            endDate: ""
+            newInfo: {}
         };
     },
     watch: {
@@ -52,42 +38,22 @@ export default {
             this.returnObj();
         }
     },
-    created() {
-        this.title = this.info.title;
-        this.description = this.info.description;
-        let tmpDate = { ...this.info.endDate };
-        this.endTime = tmpDate.getHours() + ":" + tmpDate.getMinutes();
-        this.endDate =
-            tmpDate.getFullYear() +
-            "-" +
-            tmpDate.getMonths() +
-            "-" +
-            tmpDate.getDate();
+    mounted() {
+        this.newInfo = { ...this.info };
     },
     methods: {
         //return
         returnObj() {
             //create enddate yyyy-mm-dd hh-mm
-            let tmpDate = this.endDate.split("-");
-            tmpDate.forEach(element => {
-                console.log(element);
-            });
-            let tmpTime = this.endTime.split(":");
-            tmpTime.forEach(element => {
-                console.log(element);
-            });
+
             //emit
             this.$emit("data", {
+                creationDate: this.info.creationDate,
                 accountNumber: this.accountNumber,
                 title: this.title,
                 description: this.description,
-                endDate: new Date(
-                    tmpDate[0],
-                    tmpDate[1],
-                    tmpDate[2],
-                    tmpTime[0],
-                    tmpTime[1]
-                )
+                creator: this.info.creator,
+                ended: this.info.ended
             });
         }
     }

@@ -11,7 +11,7 @@
         </p>
         <p>
             endDate:
-            {{displayEndDate}}
+            {{returnEndDate}}
         </p>
         <br>
         isEnded: {{info.ended}}
@@ -23,7 +23,7 @@ export default {
         info: Object
     },
     computed: {
-        displayEndDate() {
+        returnEndDate() {
             return new Date(this.info.endDate.seconds * 1000);
         }
     }
