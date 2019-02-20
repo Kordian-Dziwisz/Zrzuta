@@ -1,31 +1,35 @@
 <template>
   <div class="Fundrais">
-    <b-container class="bv-example-row">
+    <b-container fluid>
       <b-row>
-        <b-col>
+        <b-col style="background-color: green">
           <project-info
+            style="background-color: red"
             :admin="admin"
             v-if="!admin"
             :projectData="fundraisInfo"
             @data="updateProjectData"
           />
           <info-admin
+            style="background-color: red"
             :admin="admin"
             v-if="admin"
             :projectData="fundraisInfo"
             @data="updateProjectData"
           />
         </b-col>
-        <b-col>
+        <b-col style="background-color: green">
           <list-of-participants
+            style="background-color: red"
             :admin="admin"
             v-if="true"
             :list="listOfParticipants"
             @list="updateListOfParticipants"
           />
         </b-col>
-        <b-col>
+        <b-col style="background-color: green">
           <list-of-products
+            style="background-color: red"
             :admin="admin"
             v-if="true"
             :list="listOfProducts"
@@ -33,9 +37,10 @@
           />
         </b-col>
       </b-row>
-      <b-row>
-        <b-col>
+      <b-row align-h="end">
+        <b-col cols="4" style="background-color: green">
           <list-of-propositions
+            style="background-color: red"
             :admin="admin"
             v-if="true"
             :list="listOfPropositions"
@@ -44,7 +49,7 @@
         </b-col>
       </b-row>
       <b-row>
-        <b-col>
+        <b-col style="background-color: green">
           <p
             v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length>0"
           >Send all to this number: {{fundraisInfo.accountNumber}}</p>
