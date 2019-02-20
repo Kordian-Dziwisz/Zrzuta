@@ -2,9 +2,21 @@
   <div class="ListOfProducts">
     <div v-if="admin">
       <p>here add a new product</p>
-      <input type="number" v-model="newItem.number" @keypress.enter="addNewItem" min="0">
-      <input type="text" v-model="newItem.name" @keypress.enter="addNewItem">
-      <input type="number" v-model="newItem.price" @keypress.enter="addNewItem" min="0">
+      <input
+        type="number"
+        v-model="newItem.number"
+        @keypress.enter="addNewItem"
+        min="0"
+        placeholder="Ilość sztuk"
+      >
+      <input type="text" v-model="newItem.name" @keypress.enter="addNewItem" placeholder="Nazwa">
+      <input
+        type="number"
+        v-model="newItem.price"
+        @keypress.enter="addNewItem"
+        min="0"
+        placeholder="Cena jednostkowa"
+      >
       <button @click="addNewItem">add new item</button>
     </div>
     <!-- displaying a list of Participant, create new component to Item bind -->
@@ -43,9 +55,9 @@ export default {
   data() {
     return {
       newItem: {
-        number: 0,
+        number: Number,
         name: "",
-        price: 0.0
+        price: Number
       }
     };
   },

@@ -3,10 +3,10 @@
         <b-container fluid>
             <b-row>
                 <b-col style="background-color: green">
-                    <project-info style="background-color: red" v-if="false" :info="fundraisInfo"/>
+                    <project-info style="background-color: red" v-if="!admin" :info="fundraisInfo"/>
                     <info-admin
                         style="background-color: red"
-                        v-if="true"
+                        v-if="admin"
                         :info="fundraisInfo"
                         @data="updateProjectData"
                     />
@@ -15,7 +15,6 @@
                     <list-of-participants
                         style="background-color: red"
                         :admin="admin"
-                        v-if="false"
                         :list="listOfParticipants"
                         @list="updateListOfParticipants"
                     />
@@ -24,7 +23,6 @@
                     <list-of-products
                         style="background-color: red"
                         :admin="admin"
-                        v-if="false"
                         :list="listOfProducts"
                         @list="updateListOfProducts"
                     />
@@ -35,7 +33,6 @@
                     <list-of-propositions
                         style="background-color: red"
                         :admin="admin"
-                        v-if="false"
                         :list="listOfPropositions"
                         @list="updateListOfPropositions"
                     />
