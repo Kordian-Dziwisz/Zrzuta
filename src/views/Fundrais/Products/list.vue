@@ -95,46 +95,13 @@ export default {
         this.list[index].name = prompt("set new name");
       } while ((this.list[index].name.length = 0));
     },
-    methods: {
-      addNewItem() {
-        if (this.newItem.name.length == 0) {
-          alert("name field can't be empty");
-        } else {
-          this.list.push({ ...this.newItem });
-          this.newItem.number = 0;
-          this.newItem.name = "";
-          this.newItem.price = 0.0;
-        }
-      },
-      setNumber(index) {
-        let tmp = 0;
-        do {
-          tmp = parseInt(prompt("set new number"));
-        } while (typeof tmp != "number" || tmp <= 0);
-        if (tmp > 0) {
-          this.list[index].number = tmp;
-        }
-      },
-      setName(index) {
-        let tmp = "";
-        do {
-          tmp = prompt("set new name");
-        } while (tmp.length == 0);
-        if (tmp.length > 0) {
-          this.list[index].name = tmp;
-        }
-      },
-      setPrice(index) {
-        let tmp = 0;
-        do {
-          tmp = parseFloat(prompt("set new price"));
-        } while (typeof tmp != "number" || tmp <= 0);
-        if (typeof tmp == "number") {
-          this.list[index].price = tmp;
-        }
-      },
-      removeItem(index) {
-        this.list.splice(index, 1);
+    setPrice(index) {
+      let tmp = 0;
+      do {
+        tmp = parseFloat(prompt("set new price"));
+      } while (typeof tmp != "number" || tmp <= 0);
+      if (typeof tmp == "number") {
+        this.list[index].price = tmp;
       }
     },
     removeItem(index) {
