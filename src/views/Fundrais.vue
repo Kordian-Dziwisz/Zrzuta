@@ -1,33 +1,57 @@
 <template>
     <div class="Fundrais">
-        <project-info
-            :admin="admin"
-            v-if="false"
-            :projectData="fundraisInfo"
-            @data="updateProjectData"
-        />
-        <list-of-participants
-            :admin="admin"
-            v-if="true"
-            :list="listOfParticipants"
-            @list="updateListOfParticipants"
-        />
-        <list-of-products
-            :admin="admin"
-            v-if="true"
-            :list="listOfProducts"
-            @list="updateListOfProducts"
-        />
-        <list-of-propositions
-            :admin="admin"
-            v-if="true"
-            :list="listOfPropositions"
-            @list="updateListOfPropositions"
-        />
-        <p
-            v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length>0"
-        >Send all to this number: {{fundraisInfo.accountNumber}}</p>
-        <button @click="updateDoc" v-if="admin">Save all</button>
+        <b-container class="bv-example-row">
+            <b-row>
+                <b-col>
+                    <project-info
+                        :admin="admin"
+                        v-if="!admin"
+                        :projectData="fundraisInfo"
+                        @data="updateProjectData"
+                    />
+                    <info-admin
+                        :admin="admin"
+                        v-if="admin"
+                        :projectData="fundraisInfo"
+                        @data="updateProjectData"
+                    />
+                </b-col>
+                <b-col>
+                    <list-of-participants
+                        :admin="admin"
+                        v-if="true"
+                        :list="listOfParticipants"
+                        @list="updateListOfParticipants"
+                    />
+                </b-col>
+                <b-col>
+                    <list-of-products
+                        :admin="admin"
+                        v-if="true"
+                        :list="listOfProducts"
+                        @list="updateListOfProducts"
+                    />
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col>
+                    <list-of-propositions
+                        :admin="admin"
+                        v-if="true"
+                        :list="listOfPropositions"
+                        @list="updateListOfPropositions"
+                    />
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col>
+                    <p
+                        v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length>0"
+                    >Send all to this number: {{fundraisInfo.accountNumber}}</p>
+                    <button @click="updateDoc" v-if="admin">Save all</button>
+                </b-col>
+            </b-row>
+        </b-container>
     </div>
 </template>
 <script>
@@ -108,6 +132,7 @@ export default {
     },
     components: {
         ProjectInfo,
+        InfoAdmin,
         ListOfParticipants,
         ListOfProducts,
         ListOfPropositions
