@@ -10,7 +10,7 @@
             <b-collapse is-nav id="nav_collapse">
                 <b-navbar-nav>
                     <b-nav-item :to="{ name: 'Home'}">Home</b-nav-item>
-                    <b-nav-item :to="{ name: 'Fundrais', params: {id: 12345}}">Nowa zbiórka</b-nav-item>
+                    <b-nav-item @click="addNewFundrais">Nowa zbiórka</b-nav-item>
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->
@@ -24,7 +24,41 @@
     </div>
 </template>
 <script>
-export default {};
+import firebase from "firebase";
+
+export default {
+    data() {
+        return {
+            db: firebase.firestore().collection("Zrzuty"),
+            newFundrais: {
+                accountNumber: "",
+                creator: "",
+                title: "",
+                description: "",
+                creationDate: new Date("December 17, 1995 03:24:00"),
+                endDate: new Date("December 17, 1995 03:24:00"),
+                ended: false
+            }
+        };
+    },
+    methods: {
+        async addNewFundrais() {
+            if ((this.newFundrais.creator = localStorage.getItem("login"))) {
+                this.newFundrais.creationDate = Date(Date.now());
+                let newFundrais = await this.db.add({
+                    fundraisInfo: { ...this.newFundrais },
+                    listOfParticipants: [],
+                    listOfProducts: [],
+                    listOfPropositions: []
+                });
+                await this.$router.push({
+                    name: "Fundrais",
+                    params: { id: newFundrais.id }
+                });
+            }
+        }
+    }
+};
 </script>
 
 <style scoped>

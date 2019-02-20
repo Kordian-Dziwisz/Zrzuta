@@ -8,7 +8,7 @@
         />
         <list-of-participants
             :admin="admin"
-            v-if="false"
+            v-if="true"
             :list="listOfParticipants"
             @list="updateListOfParticipants"
         />
