@@ -9,10 +9,10 @@
             <br>
             <textarea v-model="newInfo.description"></textarea>
         </p>
-        <p>creationDate: {{info.creationDate}}</p>
+        <p>creationDate:{{info.creationDate}}</p>
         <br>
         <p>endDate:</p>
-        <datepicker :value="Date(info.endDate.seconds*1000)"/>
+        <datepicker v-model="newInfo.endDate"/>
         isEnded: {{newInfo.ended}} endThis:
         <button @click="newInfo.ended = !newInfo.ended">END</button>
         here add your account number:
@@ -31,28 +31,15 @@ export default {
         };
     },
     watch: {
-        newInfo() {
-            this.returnObj();
+        newInfo: {
+            handler() {
+                this.$emit("info", this.newInfo);
+            },
+            deep: true
         }
     },
     mounted() {
         this.newInfo = this.info;
-    },
-    methods: {
-        //return
-        returnObj() {
-            //create enddate yyyy-mm-dd hh-mm
-
-            //emit
-            this.$emit("data", this.newInfo);
-        },
-        returnDate(timestamp) {
-            let tmp = new Date(timestamp * 1000);
-            return `${tmp.getDay}, ${tmp.getDate}-
-            ${tmp.getMonth}-${
-                tmp.getFullYear
-            } o godzinie ${tmp.getHours()}:${tmp.getMinutes()} `;
-        }
     },
     components: {
         Datepicker

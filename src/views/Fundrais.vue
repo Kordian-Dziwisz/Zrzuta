@@ -3,12 +3,12 @@
         <b-container fluid>
             <b-row>
                 <b-col style="background-color: green">
-                    <project-info style="background-color: red" v-if="!admin" :info="fundraisInfo"/>
+                    <!-- <project-info style="background-color: red" v-if="!admin" :info="fundraisInfo"/> -->
                     <info-admin
                         style="background-color: red"
                         v-if="admin"
                         :info="fundraisInfo"
-                        @data="updateProjectData"
+                        @info="updateFundraisInfo"
                     />
                 </b-col>
                 <b-col style="background-color: green">
@@ -73,8 +73,10 @@ export default {
         };
     },
     methods: {
-        updateProjectData(info) {
-            this.fundraisData = info;
+        updateFundraisInfo(info) {
+            console.log(this.fundraisInfo);
+            console.log(info);
+            this.fundraisInfo = info;
         },
         updateListOfParticipants(list) {
             this.listOfParticipants = list;
@@ -101,6 +103,12 @@ export default {
         async getDoc() {
             let tmpDoc = await this.db.get({ source: "default" });
             this.fundraisInfo = tmpDoc.data().fundraisInfo;
+            this.fundraisInfo.creationDate = new Date(
+                this.fundraisInfo.creationDate.seconds
+            );
+            this.fundraisInfo.endDate = new Date(
+                this.fundraisInfo.endDate.seconds
+            );
             this.listOfParticipants = tmpDoc.data().listOfParticipants;
             this.listOfProducts = tmpDoc.data().listOfProducts;
             this.listOfPropositions = tmpDoc.data().listOfPropositions;
@@ -108,8 +116,8 @@ export default {
                 tmpDoc.data().fundraisInfo.creator ==
                 localStorage.getItem("login");
         },
-        updateDoc() {
-            this.db.set({
+        async updateDoc() {
+            await this.db.set({
                 fundraisInfo: this.fundraisInfo,
                 listOfParticipants: this.listOfParticipants,
                 listOfProducts: this.listOfProducts,
