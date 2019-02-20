@@ -1,14 +1,9 @@
 <template>
   <div class="Login">
     <br>
-    <div class="w-50 mx-auto">
-      <b-form-input
-        @keydown.enter="returnLogin"
-        v-model="login"
-        placeholder="Tutaj wpisz login"
-        type="text"
-      />
-      <b-button @click="returnLogin" class="mt-1">Zaloguj się</b-button>
+    <form class="w-50 mx-auto" @submit="returnLogin">
+      <b-form-input v-model="login" placeholder="Tutaj wpisz login" type="text"/>
+      <b-button type="submit" class="mt-1">Zaloguj się</b-button>
       <br>
       <b-alert
         class="mt-1 pl-3"
@@ -17,7 +12,7 @@
         dismissible
         :show="showAlert"
       >Zaloguj się, aby przejść dalej!</b-alert>
-    </div>
+    </form>
   </div>
 </template>
 <script>
