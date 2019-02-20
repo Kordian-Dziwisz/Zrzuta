@@ -47,11 +47,6 @@ export default {
             }
         };
     },
-    watch: {
-        list() {
-            this.$emit("list", this.list);
-        }
-    },
     methods: {
         addNewItem() {
             if (this.newItem.name.length == 0) {
@@ -61,18 +56,23 @@ export default {
                 //reset template, only name is changing
                 this.newItem.name = "";
             }
+            this.$emit("list", this.list);
         },
         setComment(index) {
             this.list[index].comment = prompt("set comment!");
+            this.$emit("list", this.list);
         },
         setPaid(index) {
             this.list[index].paid = !this.list[index].paid;
+            this.$emit("list", this.list);
         },
         setAccepted(index) {
             this.list[index].accepted = !this.list[index].accepted;
+            this.$emit("list", this.list);
         },
         removeItem(index) {
             this.list.splice(index, 1);
+            this.$emit("list", this.list);
         },
         isYour(login) {
             return login == localStorage.getItem("login");

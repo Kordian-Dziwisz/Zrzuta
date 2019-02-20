@@ -6,15 +6,15 @@
                     <project-info
                         style="background-color: red"
                         :admin="admin"
-                        v-if="!admin"
-                        :projectData="fundraisInfo"
+                        v-if="true"
+                        :info="fundraisInfo"
                         @data="updateProjectData"
                     />
                     <info-admin
                         style="background-color: red"
                         :admin="admin"
-                        v-if="admin"
-                        :projectData="fundraisInfo"
+                        v-if="false"
+                        :info="fundraisInfo"
                         @data="updateProjectData"
                     />
                 </b-col>
@@ -22,7 +22,7 @@
                     <list-of-participants
                         style="background-color: red"
                         :admin="admin"
-                        v-if="true"
+                        v-if="false"
                         :list="listOfParticipants"
                         @list="updateListOfParticipants"
                     />
@@ -31,7 +31,7 @@
                     <list-of-products
                         style="background-color: red"
                         :admin="admin"
-                        v-if="true"
+                        v-if="false"
                         :list="listOfProducts"
                         @list="updateListOfProducts"
                     />
@@ -42,7 +42,7 @@
                     <list-of-propositions
                         style="background-color: red"
                         :admin="admin"
-                        v-if="true"
+                        v-if="false"
                         :list="listOfPropositions"
                         @list="updateListOfPropositions"
                     />
@@ -85,9 +85,6 @@ export default {
     methods: {
         updateProjectData(event) {
             this.fundraisData = { ...event };
-            console.log(this.title);
-            console.log(this.description);
-            console.log(this.endDate);
         },
         updateListOfParticipants(list) {
             this.listOfParticipants = list;

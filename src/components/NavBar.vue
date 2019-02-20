@@ -49,7 +49,7 @@ export default {
                 this.clicked == false
             ) {
                 this.clicked = true;
-                this.newFundrais.creationDate = Date(Date.now());
+                this.newFundrais.creationDate = new Date(Date.now());
                 let newFundrais = await this.db.add({
                     fundraisInfo: { ...this.newFundrais },
                     listOfParticipants: [],

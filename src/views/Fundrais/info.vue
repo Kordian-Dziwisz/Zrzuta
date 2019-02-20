@@ -11,11 +11,8 @@
         </p>
         <p>
             endDate:
-            {{info.endDate}}
+            {{displayEndDate}}
         </p>
-        {{endDate}}
-        <br>
-        {{endTime}}
         <br>
         isEnded: {{info.ended}}
     </div>
@@ -24,6 +21,11 @@
 export default {
     props: {
         info: Object
+    },
+    computed: {
+        displayEndDate() {
+            return new Date(this.info.endDate.seconds * 1000);
+        }
     }
 };
 </script>
