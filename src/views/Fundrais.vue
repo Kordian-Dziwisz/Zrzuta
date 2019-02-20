@@ -90,6 +90,7 @@ export default {
         },
         updateListOfProducts(list) {
             this.listOfProducts = list;
+            this.updateDoc();
         },
         updateListOfPropositions(list) {
             this.listOfPropositions = list;

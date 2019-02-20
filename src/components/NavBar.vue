@@ -30,6 +30,7 @@ export default {
     data() {
         return {
             db: firebase.firestore().collection("Zrzuty"),
+            clicked: false,
             newFundrais: {
                 accountNumber: "",
                 creator: "",
@@ -43,7 +44,11 @@ export default {
     },
     methods: {
         async addNewFundrais() {
-            if ((this.newFundrais.creator = localStorage.getItem("login"))) {
+            if (
+                (this.newFundrais.creator = localStorage.getItem("login")) &&
+                this.clicked == false
+            ) {
+                this.clicked = true;
                 this.newFundrais.creationDate = Date(Date.now());
                 let newFundrais = await this.db.add({
                     fundraisInfo: { ...this.newFundrais },
