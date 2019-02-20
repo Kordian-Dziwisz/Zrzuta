@@ -1,13 +1,13 @@
 <template>
-    <div class="ParticipantsListItem">
-        <!-- display properties -->
-        {{item.index}}: {{item.number}} | {{item.name}} | {{item.price}} | {{(item.price * item.number).toFixed(2)}}
-    </div>
+  <div class="ParticipantsListItem">
+    <!-- display properties -->
+    {{item.index + 1}}: {{item.number + " szt"}} | {{item.name}} | {{item.price + " zł"}} | {{(item.price * item.number).toFixed(2) + " zł"}}
+  </div>
 </template>
 <script>
 export default {
-    props: {
-        item: Object
-    }
+  props: {
+    item: Object
+  }
 };
 </script>
