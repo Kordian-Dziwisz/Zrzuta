@@ -1,26 +1,28 @@
 <template>
-    <div class="ParticipantsListItem">
-        {{item.index}}: {{item.name}} | {{item.comment}} | {{item.paid}} | {{item.accepted}}
-        <div class="control">
-            <button @click="setAccepted">Accepted</button>
-            <button @click="removeItem">removeMe!</button>
-        </div>
+  <div class="ParticipantsListItem">
+    <span>{{item.index + 1}}: {{item.name}} |</span>
+    <span>{{item.comment}} |</span>
+    <span v-if="item.paid">Wpłacono |</span>
+    <span v-if="item.accepted">Otrzymano</span>
+    <div class="control">
+      <button @click="setAccepted" v-if="!item.accepted">Zaakceptuj</button>
+      <button @click="removeItem">Usuń</button>
     </div>
+  </div>
 </template>
 <script>
 export default {
-    props: {
-        item: Object
+  props: {
+    item: Object
+  },
+  methods: {
+    setAccepted() {
+      this.$emit("accepted", this.item.index);
+      this.accepted = true;
     },
-    methods: {
-        setAccepted() {
-            if (this.item.paid == true) {
-                this.$emit("accepted", this.item.index);
-            }
-        },
-        removeItem() {
-            this.$emit("remove", this.item.index);
-        }
+    removeItem() {
+      this.$emit("remove", this.item.index);
     }
+  }
 };
 </script>
