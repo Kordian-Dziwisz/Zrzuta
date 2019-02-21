@@ -118,7 +118,7 @@ export default {
         listOfProducts: this.listOfProducts,
         listOfPropositions: this.listOfPropositions
       });
-      if (admin) {
+      if (this.admin) {
         await alert("document updated");
       }
     }
