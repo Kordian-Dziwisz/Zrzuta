@@ -6,7 +6,7 @@
     <span v-if="item.accepted && you">Otrzymano</span>
     <div class="control">
       <button @click="setComment" v-if="you">Skomentuj</button>
-      <button @click="setPaid" v-if="you">Zapłaciłem</button>
+      <button @click="setPaid" v-if="you && !item.paid">Zapłaciłem</button>
       <button @click="removeItem" v-if="you">Usuń</button>
     </div>
   </div>

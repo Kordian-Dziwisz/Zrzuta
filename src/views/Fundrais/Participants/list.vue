@@ -1,14 +1,15 @@
 <template>
   <div class="ListOfParticipants">
     <label>Dodaj nowego uczestnika:</label>
-    <b-input
-      type="text"
-      name="participant"
-      placeholder="Nazwa/Imię/Ksywka"
-      v-model="newItem.name"
-      @keypress.enter="addNewItem()"
-    />
-    <b-button @click="addNewItem()">Dodaj</b-button>
+    <form @submit.prevent="addNewItem()">
+      <b-input
+        type="text"
+        name="participant"
+        placeholder="Nazwa/Imię/Ksywka"
+        v-model="newItem.name"
+      />
+      <b-button type="submit">Dodaj</b-button>
+    </form>
     <!-- displaying a list of Participant, create new component to Item bind -->
     <ul>
       <p v-if="list.length==0">Lista jest pusta!</p>

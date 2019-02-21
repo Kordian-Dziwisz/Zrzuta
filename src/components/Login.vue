@@ -1,7 +1,7 @@
 <template>
   <div class="Login">
     <br>
-    <form class="w-50 mx-auto" @submit="returnLogin">
+    <form class="w-50 mx-auto" @submit.prevent="returnLogin">
       <b-form-input v-model="login" placeholder="Tutaj wpisz login" type="text"/>
       <b-button type="submit" class="mt-1">Zaloguj się</b-button>
       <br>
