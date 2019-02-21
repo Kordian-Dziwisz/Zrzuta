@@ -9,11 +9,8 @@
             <br>
             {{info.description}}
         </p>
-        <p>Creation: {{info.creationDate}}</p>
-        <p>
-            endDate:
-            {{(info.endDate)}}
-        </p>
+        <p>Zbiórka rozpoczęła się: {{ info.creationDate | moment("dddd, MMMM, YYYY")}} o godzinie: {{ item.creationDate | moment("h:mm")}}</p>
+        <p>Zbiórka kończy się: {{ info.endDate | moment("dddd, MMMM, YYYY")}} o godzinie: {{ info.endDate | moment("h:mm")}}</p>
         <br>
         isEnded: {{info.ended}}
     </div>

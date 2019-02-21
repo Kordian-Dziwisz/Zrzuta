@@ -9,7 +9,7 @@
             <br>
             <textarea v-model="newInfo.description"></textarea>
         </p>
-        <p>creationDate:{{info.creationDate}}</p>
+        <p>Zbiórka rozpoczęła się: {{ info.creationDate | moment("dddd, MMMM, YYYY")}} o godzinie: {{ item.endDate | moment("h:mm")}}</p>
         <br>
         <p>endDate:</p>
         <datepicker v-model="newInfo.endDate"/>
@@ -21,7 +21,6 @@
 </template>
 <script>
 import Datepicker from "vuejs-datepicker";
-import Timepicker from "vuejs-timepicker";
 
 export default {
     props: {
@@ -44,8 +43,7 @@ export default {
         this.newInfo = { ...this.info };
     },
     components: {
-        Datepicker,
-        Timepicker
+        Datepicker
     }
 };
 </script>
