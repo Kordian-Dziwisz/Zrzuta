@@ -10,7 +10,6 @@ import Vue from "vue";
 import Login from "@/components/Login.vue";
 import FundraisingList from "@/views/Home/list.vue";
 import firebase from "firebase";
-// import List from '@/components/List.vue'
 
 export default {
     data() {

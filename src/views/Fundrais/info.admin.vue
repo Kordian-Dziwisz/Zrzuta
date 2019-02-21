@@ -21,6 +21,8 @@
 </template>
 <script>
 import Datepicker from "vuejs-datepicker";
+import Timepicker from "vuejs-timepicker";
+
 export default {
     props: {
         info: Object
@@ -39,10 +41,11 @@ export default {
         }
     },
     mounted() {
-        this.newInfo = this.info;
+        this.newInfo = { ...this.info };
     },
     components: {
-        Datepicker
+        Datepicker,
+        Timepicker
     }
 };
 </script>

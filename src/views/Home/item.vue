@@ -1,10 +1,10 @@
 <template>
     <div>
-        {{item.index}}: {{item.title}} | {{item.creator}} | {{item.description}} | {{item.endDate}}
-        <button
-            @click="removeItem"
-            v-if="isYour"
-        >removeMe!</button>
+        <span>
+            {{item.index}}: {{item.title}} | {{item.creator}} | {{item.description}} |
+            Zbiórka kończy się: {{ item.endDate | moment("dddd, MMMM, YYYY")}} o godzinie: {{ item.endDate | moment("h:mm")}}
+        </span>
+        <button @click="removeItem" v-if="isYour">removeMe!</button>
         <router-link
             :to="{name: 'Fundrais', params: {id: item.id}}"
             @click="removeItem"
@@ -28,6 +28,12 @@ export default {
                 id: this.item.id
             });
         }
+    },
+    created() {
+        this.item.creationDate = new Date(
+            this.item.creationDate.seconds * 1000
+        );
+        this.item.endDate = new Date(this.item.endDate.seconds * 1000);
     },
     computed: {
         isYour() {
