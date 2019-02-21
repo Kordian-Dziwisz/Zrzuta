@@ -19,7 +19,8 @@
     "vue-property-decorator": "^7.0.0",
     "vue-router": "^3.0.1",
     "vue-timepicker": "0.0.3",
-    "vuejs-datepicker": "^1.5.4"
+    "vuejs-datepicker": "^1.5.4",
+    "vuejs-timepicker": "^0.1.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",
