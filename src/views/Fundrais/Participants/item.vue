@@ -5,9 +5,11 @@
     <span v-if="item.paid && you">Zapłacono</span>
     <span v-if="item.accepted && you">Otrzymano</span>
     <div class="control">
-      <button @click="setComment" v-if="you">Skomentuj</button>
-      <button @click="setPaid" v-if="you && !item.paid">Zapłaciłem</button>
-      <button @click="removeItem" v-if="you">Usuń</button>
+      <b-button class="mx-1" @click="setComment" v-if="you">
+        <i class="far fa-comment"></i>coś
+      </b-button>
+      <b-button class="mx-1" @click="setPaid" v-if="you && !item.paid">Zapłaciłem</b-button>
+      <b-button class="mx-1" @click="removeItem" v-if="you">Usuń</b-button>
     </div>
   </div>
 </template>

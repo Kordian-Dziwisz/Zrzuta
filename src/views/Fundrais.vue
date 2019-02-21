@@ -1,6 +1,6 @@
 <template>
   <div class="Fundrais">
-    <b-container fluid>
+    <div class="container-fluid">
       <b-row>
         <b-col style="background-color: green">
           <project-info style="background-color: red" v-if="!admin" :info="fundraisInfo"/>
@@ -46,7 +46,7 @@
           <button @click="updateDoc" v-if="admin">Save all</button>
         </b-col>
       </b-row>
-    </b-container>
+    </div>
   </div>
 </template>
 <script>
@@ -101,15 +101,12 @@ export default {
     async getDoc() {
       let tmpDoc = await this.db.get({ source: "default" });
       this.fundraisInfo = tmpDoc.data().fundraisInfo;
-      this.fundraisInfo.creationDate = new Date(
-        this.fundraisInfo.creationDate.seconds
-      );
+      this.fundraisInfo.creationDate = new Date(this.fundraisInfo.creationDate.seconds);
       this.fundraisInfo.endDate = new Date(this.fundraisInfo.endDate.seconds);
       this.listOfParticipants = tmpDoc.data().listOfParticipants;
       this.listOfProducts = tmpDoc.data().listOfProducts;
       this.listOfPropositions = tmpDoc.data().listOfPropositions;
-      this.admin =
-        tmpDoc.data().fundraisInfo.creator == localStorage.getItem("login");
+      this.admin = tmpDoc.data().fundraisInfo.creator == localStorage.getItem("login");
     },
     async updateDoc() {
       this.db.set({
@@ -139,6 +136,6 @@ export default {
 </script>
 <style scoped>
 .Fundrais {
-  padding-top: 80px;
+  padding-top: 68px;
 }
 </style>
