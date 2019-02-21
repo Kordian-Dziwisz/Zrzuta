@@ -24,6 +24,10 @@ var config = {
 firebase.initializeApp(config);
 Vue.use(BootstrapVue);
 
+const moment = require("moment");
+require("moment/locale/pl");
+Vue.use(require("vue-moment"), { moment });
+
 new Vue({
 	router,
 	render: h => h(App),

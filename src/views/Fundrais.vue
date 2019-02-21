@@ -74,8 +74,6 @@ export default {
   },
   methods: {
     updateFundraisInfo(info) {
-      console.log(this.fundraisInfo);
-      console.log(info);
       this.fundraisInfo = info;
     },
     updateListOfParticipants(list) {
@@ -114,12 +112,15 @@ export default {
         tmpDoc.data().fundraisInfo.creator == localStorage.getItem("login");
     },
     async updateDoc() {
-      await this.db.set({
+      this.db.set({
         fundraisInfo: this.fundraisInfo,
         listOfParticipants: this.listOfParticipants,
         listOfProducts: this.listOfProducts,
         listOfPropositions: this.listOfPropositions
       });
+      if (admin) {
+        await alert("document updated");
+      }
     }
   },
   mounted() {
