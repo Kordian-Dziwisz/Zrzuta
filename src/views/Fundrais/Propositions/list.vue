@@ -1,26 +1,33 @@
 <template>
   <div>
-    <div v-if="!admin">
-      here add a new Proposition
-      <input
-        type="number"
-        name="quantity"
-        v-model="newItem.number"
-        @keypress.enter="addNewItem"
-        min="0"
-      >
-      <input type="text" name="name" v-model="newItem.name" @keypress.enter="addNewItem">
-      <input
-        type="number"
-        name="price"
-        v-model="newItem.price"
-        @keypress.enter="addNewItem"
-        min="0"
-      >
-      <button @click="addNewItem">add new item</button>
+    <div class="container">
+      <label v-if="!admin">Dodaj nową propozycję</label>
+      <form @submit.prevent="addNewItem" v-if="!admin">
+        <b-form-row>
+          <b-col sm="6" lg="2" class="px-0">
+            <b-input
+              type="number"
+              name="quantity"
+              v-model="newItem.number"
+              min="0"
+              placeholder="Ilość"
+              onfocus="this.value=''"
+            />
+          </b-col>
+          <b-col sm="6" lg="5">
+            <b-input type="text" name="name" placeholder="Nazwa" v-model="newItem.name"/>
+          </b-col>
+          <b-col sm="6" lg="2" class="px-0">
+            <b-input type="number" name="price" v-model="newItem.price" min="0" placeholder="Cena"/>
+          </b-col>
+          <b-col>
+            <b-button type="submit">Dodaj</b-button>
+          </b-col>
+        </b-form-row>
+      </form>
     </div>
-    <ul>
-      <p v-if="list.length==0">List is empty</p>
+    <ul class="overflow-auto">
+      <p v-if="list.length==0">Lista jest pusta</p>
       <li v-for="(item, index) in list" :key="index">
         <!-- create a new componen to display item -->
         <Item
@@ -50,16 +57,16 @@ import ItemAdmin from "@/views/Fundrais/Propositions/item.admin.vue";
 export default {
   props: {
     list: Array,
-    admin: false
+    admin: Boolean
   },
   data() {
     return {
       newItem: {
         creator: "",
         accepted: false,
-        number: 0,
+        number: "",
         name: "",
-        price: 0.0,
+        price: "",
         likes: [],
         dislikes: []
       }
@@ -72,11 +79,7 @@ export default {
   },
   methods: {
     addNewItem() {
-      if (
-        this.newItem.name.length == 0 ||
-        this.newItem.number < 0 ||
-        this.newItem.price < 0
-      ) {
+      if (this.newItem.name.length == 0 || this.newItem.number < 0 || this.newItem.price < 0) {
         alert("Wpisz poprawną wartość!");
       } else {
         this.list.push({ ...this.newItem });
@@ -117,4 +120,17 @@ export default {
   }
 };
 </script>
+<style scoped>
+ul {
+  max-height: 125px;
+  margin-top: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+</style>
+
 

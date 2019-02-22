@@ -1,14 +1,19 @@
 <template>
   <div class="ListOfParticipants">
-    <label>Dodaj nowego uczestnika:</label>
-    <form @submit.prevent="addNewItem()">
-      <b-input
-        type="text"
-        name="participant"
-        placeholder="Nazwa/Imię/Ksywka"
-        v-model="newItem.name"
-      />
-      <b-button type="submit">Dodaj</b-button>
+    <form @submit.prevent="addNewItem()" class="container">
+      <label>Dodaj nowego uczestnika:</label>
+      <b-form-row>
+        <b-col>
+          <b-input
+            lg="5"
+            type="text"
+            name="participant"
+            placeholder="Nazwa/Imię/Ksywka"
+            v-model="newItem.name"
+          />
+        </b-col>
+        <b-button type="submit">Dodaj</b-button>
+      </b-form-row>
     </form>
     <!-- displaying a list of Participant, create new component to Item bind -->
     <ul>
@@ -67,10 +72,7 @@ export default {
       this.$emit("list", this.list);
     },
     setComment(index) {
-      this.list[index].comment = prompt(
-        "Edytuj komentarz",
-        this.list[index].comment || ""
-      );
+      this.list[index].comment = prompt("Edytuj komentarz", this.list[index].comment || "");
       this.$emit("list", this.list);
     },
     setPaid(index) {
@@ -95,3 +97,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+ul {
+  list-style: none;
+}
+</style>
