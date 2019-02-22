@@ -32,7 +32,6 @@
           <p
             v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length>0 && !admin"
           >Send all to this number: {{fundraisInfo.accountNumber}}</p>
-          <button @click="updateDoc" v-if="admin">Save all</button>
         </b-col>
         <b-col cols="4" style="background-color: green">
           <list-of-propositions
@@ -77,6 +76,7 @@ export default {
   methods: {
     updateFundraisInfo(info) {
       this.fundraisInfo = info;
+      this.updateDoc();
     },
     updateListOfParticipants(list) {
       this.listOfParticipants = list;
@@ -84,6 +84,7 @@ export default {
     },
     updateListOfProducts(list) {
       this.listOfProducts = list;
+      this.updateDoc();
     },
     updateListOfPropositions(list) {
       this.listOfPropositions = list;
@@ -99,6 +100,7 @@ export default {
         delete item.accepted;
         this.listOfProducts.push(item);
       }
+      this.updateDoc();
     },
     async getDoc() {
       let tmpDoc = await this.db.get({ source: "default" });
@@ -111,8 +113,6 @@ export default {
       this.admin = tmpDoc.data().fundraisInfo.creator == localStorage.getItem("login");
     },
     async updateDoc() {
-      console.log(this.fundraisInfo.endDate.getYear());
-      console.log(this.fundraisInfo.creationDate.getYear());
       if (this.fundraisInfo.endDate.getYear() > 118 && this.fundraisInfo.creationDate.getYear() > 118) {
         this.db.set({
           fundraisInfo: this.fundraisInfo,
@@ -121,7 +121,7 @@ export default {
           listOfPropositions: this.listOfPropositions
         });
         if (this.admin) {
-          await alert("document updated");
+          await console.log("document updated");
         }
       }
     }
