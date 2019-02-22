@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar
-      class="fixed-top"
+      class="fixed-top shadow"
       toggleable="md"
       v-shortkey="['alt', 'n']"
       @shortkey="addNewFundrais"
@@ -70,13 +70,10 @@ export default {
 </script>
 
 <style scoped>
-.navbar {
-  background-color: white;
+.shadow {
   box-shadow: 0.5vw 0.5vw 1vh rgba(00, 00, 00, 50%);
-  border: 1px solid #ccc;
   border-radius: 0.25rem;
 }
-
 #paddingCenter {
   padding-top: 0;
 }

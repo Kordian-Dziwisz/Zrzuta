@@ -2,6 +2,7 @@
   <div class="ListOfProducts">
     <form class="container" @submit.prevent="addNewItem" v-if="admin">
       <h3>Dodaj cel zbiórki</h3>
+      <p>{{}}</p>
       <b-form-row>
         <b-col sm="6" lg="2" class="px-0">
           <b-input type="number" v-model="newItem.number" min="0" placeholder="Ilość"/>
@@ -13,11 +14,10 @@
           <b-input type="number" v-model="newItem.price" min="0" placeholder="Cena jednostkowa"/>
         </b-col>
         <b-col>
-          <b-button type="submit">Dodaj</b-button>
+          <b-button type="submit" class="btn btn-outline-success btn-ligth">Dodaj</b-button>
         </b-col>
       </b-form-row>
     </form>
-    <!-- displaying a list of Participant, create new component to Item bind -->
     <ul class="overflow-auto px-3 container">
       <label v-if="!admin">Cel zbiórki:</label>
       <label

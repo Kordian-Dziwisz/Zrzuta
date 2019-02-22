@@ -12,7 +12,7 @@
             v-model="newItem.name"
           />
         </b-col>
-        <b-button type="submit">Dodaj</b-button>
+        <b-button type="submit" class="btn-outline-success btn-light">Dodaj</b-button>
       </b-form-row>
     </form>
     <!-- displaying a list of Participant, create new component to Item bind -->

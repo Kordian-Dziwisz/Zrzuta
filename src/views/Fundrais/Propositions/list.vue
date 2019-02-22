@@ -2,8 +2,8 @@
   <div>
     <div class="container pt-3">
       <h3 v-if="admin">Lista propozycji</h3>
-      <h3 v-if="!admin">Dodaj nową propozycję</h3>
-      <form @submit.prevent="addNewItem" v-if="!admin">
+      <h3>Dodaj nową propozycję</h3>
+      <form @submit.prevent="addNewItem">
         <b-form-row>
           <b-col sm="6" lg="2" class="px-0">
             <b-input
@@ -22,7 +22,9 @@
             <b-input type="number" name="price" v-model="newItem.price" min="0" placeholder="Cena"/>
           </b-col>
           <b-col>
-            <b-button type="submit">Dodaj</b-button>
+            <b-button type="submit" class="btn-outline-success btn-light">Dodaj
+              <i class="far fa-plus-square"></i>
+            </b-button>
           </b-col>
         </b-form-row>
       </form>

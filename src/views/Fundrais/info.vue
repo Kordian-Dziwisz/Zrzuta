@@ -9,10 +9,18 @@
       <br>
       {{info.description}}
     </p>
-    <p>Zbiórka rozpoczęła się: {{ info.creationDate | moment("dddd, d, MMMM, YYYY")}} o godzinie: {{ info.creationDate | moment("h:mm")}}</p>
-    <p>Zbiórka kończy się: {{ info.endDate | moment("dddd, d, MMMM, YYYY")}} o godzinie: {{ info.endDate | moment("h:mm")}}</p>
+    <p>
+      Zbiórka rozpoczęła się:
+      <strong>
+        {{ info.creationDate | moment("dddd, d, MMMM, YYYY")}}
+        - {{ info.creationDate | moment("H:mm")}}
+      </strong>
+    </p>
+    <p>Zbiórka kończy się:
+      <strong>{{ info.endDate | moment("dddd, d, MMMM, YYYY")}} - {{ info.endDate | moment("H:mm")}}</strong>
+    </p>
     <br>
-    isEnded: {{info.ended}}
+    <h4 v-if="info.ended">Zbiórka jest zakończona</h4>
   </div>
 </template>
 <script>

@@ -23,33 +23,27 @@
 
       <b-col sm="2" class="px-0">
         <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-if="isYour">
-          <b-button class="btn-secondary px-1 mr-1">Edytuj</b-button>
+          <b-button class="btn-info">Edytuj</b-button>
         </router-link>
         <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-else>
-          <b-button class="btn-secondary px-0 mr-1">Otwórz</b-button>
-        </router-link>
-        <b-button class="btn-danger" @click="removeItem" v-if="isYour">Usuń</b-button>
+          <b-button class="btn-info">Otwórz</b-button>
+        </router-link>&nbsp;
+        <b-button class="btn-outline-danger btn-light" @click="removeItem" v-if="isYour">Usuń</b-button>
       </b-col>
       <hr>
     </b-row>
 
-    <b-row class="pl-2 mx-auto">
+    <b-row>
       <b-col md="5">
-        <b-collapse :id="item.index">{{item.description}}</b-collapse>
-        <b-button
-          v-b-toggle="'item.index'"
-          class="btn-secondary p-0 text-center"
-          @click="click = !click"
-        >
-          <p v-if="!click">Pokaż opis</p>
-          <p v-else>Ukryj opis</p>
+        <b-collapse v-model="click" id>{{item.description}}</b-collapse>
+        <b-button class="btn-secondary text-center" @click="click = !click" size="sm">
+          <span v-if="!click">Pokaż opis</span>
+          <span v-else>Ukryj opis</span>
         </b-button>
       </b-col>
-
       <b-col
         v-if="!item.endDate < new Date(Date.now())"
-        md="5"
-      >Zbiórka kończy się: {{ item.endDate | moment("dddd, d MMMM YYYY")}} o godzinie: {{ item.endDate | moment("h:mm")}}</b-col>
+      >Zbiórka kończy się: {{ item.endDate | moment("dddd, d MMMM YYYY")}} - {{ item.endDate | moment("H:mm")}}</b-col>
     </b-row>
   </b-container>
 </template>
