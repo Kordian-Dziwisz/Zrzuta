@@ -18,7 +18,8 @@
       </b-form-row>
     </form>
     <!-- displaying a list of Participant, create new component to Item bind -->
-    <ul class="overflow-auto px-3">
+    <ul class="overflow-auto px-3 container">
+      <label v-if="!admin">Cel zbiórki:</label>
       <label
         v-if="list.length==0"
       >Lista produktów jest pusta, twórca zbiórki nie dodał jeszcze żadnego produktu</label>
