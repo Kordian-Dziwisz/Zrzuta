@@ -99,10 +99,17 @@ export default {
       this.list.splice(index, 1);
     },
     likeItem(index) {
+      if (this.list[index].dislikes.includes(localStorage.getItem("login"))) {
+        this.list[index].dislikes.splice(this.list[index].dislikes.indexOf(localStorage.getItem("login"), 1));
+      }
       this.list[index].likes.push(localStorage.getItem("login"));
       this.$emit("list", this.list);
     },
     dislikeItem(index) {
+      if (this.list[index].likes.includes(localStorage.getItem("login"))) {
+        this.list[index].likes.splice(this.list[index].dislikes.indexOf(localStorage.getItem("login"), 1));
+      }
+
       this.list[index].dislikes.push(localStorage.getItem("login"));
       this.$emit("list", this.list);
     },
