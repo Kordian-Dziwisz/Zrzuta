@@ -86,9 +86,13 @@ export default {
       }
     },
     setNumber(index) {
+      let tmp = 0;
       do {
-        this.list[index].number = parseInt(prompt("set new number"));
-      } while (typeof this.list[index].number != "number" || this.list[index].number <= 0);
+        tmp = parseInt(prompt("set new number"));
+      } while (typeof tmp != "number" || tmp <= 0 || isNaN(tmp));
+      if (typeof tmp == "number" && tmp > 0 && !isNaN(tmp)) {
+        this.list[index].number = tmp;
+      }
     },
     setName(index) {
       do {
@@ -99,8 +103,8 @@ export default {
       let tmp = 0;
       do {
         tmp = parseFloat(prompt("set new price"));
-      } while (typeof tmp != "number" || tmp <= 0);
-      if (typeof tmp == "number") {
+      } while (typeof tmp != "number" || tmp <= 0 || isNaN(tmp));
+      if (typeof tmp == "number" && tmp > 0 && !isNaN(tmp)) {
         this.list[index].price = tmp;
       }
     },

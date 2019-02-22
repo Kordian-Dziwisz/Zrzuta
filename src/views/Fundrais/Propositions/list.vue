@@ -54,6 +54,7 @@
 <script>
 import Item from "@/views/Fundrais/Propositions/item.vue";
 import ItemAdmin from "@/views/Fundrais/Propositions/item.admin.vue";
+import { parse } from "@fortawesome/fontawesome-svg-core";
 
 export default {
   props: {
@@ -64,12 +65,9 @@ export default {
     return {
       newItem: {
         creator: "",
-        accepted: false,
         number: "",
         name: "",
-        price: "",
-        likes: [],
-        dislikes: []
+        price: ""
       }
     };
   },
@@ -80,30 +78,39 @@ export default {
   },
   methods: {
     addNewItem() {
-      if (this.newItem.name.length == 0 || this.newItem.number < 0 || this.newItem.price < 0) {
+      if (this.newItem.name.length == 0 || this.newItem.number.length == 0 || this.newItem.price.length == 0) {
         alert("Wpisz poprawną wartość!");
       } else {
-        this.list.push({ ...this.newItem });
-        this.newItem.number = 0;
+        this.list.push({
+          creator: this.newItem.creator,
+          name: this.newItem.name,
+          number: parseInt(this.newItem.number),
+          price: parseFloat(this.newItem.price),
+          accepted: false,
+          likes: [],
+          dislikes: []
+        });
+        this.newItem.number = "";
         this.newItem.name = "";
-        this.newItem.price = 0.0;
-        this.newItem.likes = [];
-        this.newItem.dislikes = [];
+        this.newItem.price = "";
       }
     },
     removeItem(index) {
       this.list.splice(index, 1);
     },
     likeItem(index) {
-      if (!this.list[index].likes.includes(localStorage.getItem("login"))) {
-        this.list[index].likes.push(localStorage.getItem("login"));
+      if (this.list[index].dislikes.includes(localStorage.getItem("login"))) {
+        this.list[index].dislikes.splice(this.list[index].dislikes.indexOf(localStorage.getItem("login"), 1));
       }
+      this.list[index].likes.push(localStorage.getItem("login"));
       this.$emit("list", this.list);
     },
     dislikeItem(index) {
-      if (!this.list[index].dislikes.includes(localStorage.getItem("login"))) {
-        this.list[index].dislikes.push(localStorage.getItem("login"));
+      if (this.list[index].likes.includes(localStorage.getItem("login"))) {
+        this.list[index].likes.splice(this.list[index].dislikes.indexOf(localStorage.getItem("login"), 1));
       }
+
+      this.list[index].dislikes.push(localStorage.getItem("login"));
       this.$emit("list", this.list);
     },
     acceptItem(index) {
