@@ -1,6 +1,11 @@
 <template>
   <div>
-    <b-navbar class="fixed-top" toggleable="md">
+    <b-navbar
+      class="fixed-top"
+      toggleable="md"
+      v-shortkey="['alt', 'n']"
+      @shortkey="addNewFundrais"
+    >
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
       <b-navbar-brand href="#" id="paddingCenter">
@@ -36,8 +41,8 @@ export default {
         creator: "",
         title: "",
         description: "",
-        creationDate: new Date("December 17, 1995 03:24:00"),
-        endDate: new Date("December 17, 1995 03:24:00"),
+        creationDate: new Date("December 12, 2012 12:12:12"),
+        endDate: new Date("December 12, 2012 12:12:12"),
         ended: false
       }
     };
@@ -47,6 +52,7 @@ export default {
       if ((this.newFundrais.creator = localStorage.getItem("login")) && this.clicked == false) {
         this.clicked = true;
         this.newFundrais.creationDate = new Date(Date.now());
+        this.newFundrais.endDate = new Date(Date.now());
         let newFundrais = await this.db.add({
           fundraisInfo: { ...this.newFundrais },
           listOfParticipants: [],

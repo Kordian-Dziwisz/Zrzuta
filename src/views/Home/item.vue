@@ -21,7 +21,7 @@
         <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-else>
           <b-button class="btn-secondary px-0 mr-1">Otwórz</b-button>
         </router-link>
-        <b-button class="btn-danger" @click="removeItem">Usuń</b-button>
+        <b-button class="btn-danger" @click="removeItem" v-if="isYour">Usuń</b-button>
       </b-col>
       <hr>
     </b-row>
