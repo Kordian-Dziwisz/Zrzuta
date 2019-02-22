@@ -22,8 +22,9 @@
             <b-input type="number" name="price" v-model="newItem.price" min="0" placeholder="Cena"/>
           </b-col>
           <b-col>
-            <b-button type="submit" class="btn-outline-success btn-light">Dodaj
-              <i class="far fa-plus-square"></i>
+            <b-button type="submit" class="btn-outline-success btn-light">
+              Dodaj
+              <i class="fas fa-id-badge"></i>
             </b-button>
           </b-col>
         </b-form-row>
