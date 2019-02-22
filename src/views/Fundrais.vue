@@ -2,14 +2,9 @@
   <div class="Fundrais">
     <div class="container-fluid">
       <b-row>
-        <b-col style="background-color: green">
-          <project-info style="background-color: red" v-if="!admin" :info="fundraisInfo"/>
-          <info-admin
-            style="background-color: red"
-            v-if="admin"
-            :info="fundraisInfo"
-            @info="updateFundraisInfo"
-          />
+        <b-col class="shadow">
+          <project-info v-if="!admin" :info="fundraisInfo"/>
+          <info-admin v-if="admin" :info="fundraisInfo" @info="updateFundraisInfo"/>
         </b-col>
         <b-col class="shadow">
           <list-of-participants
@@ -18,24 +13,19 @@
             @list="updateListOfParticipants"
           />
         </b-col>
-        <b-col style="background-color: green">
-          <list-of-products
-            style="background-color: red"
-            :admin="admin"
-            :list="listOfProducts"
-            @list="updateListOfProducts"
-          />
+        <b-col class="shadow">
+          <list-of-products :admin="admin" :list="listOfProducts" @list="updateListOfProducts"/>
         </b-col>
       </b-row>
       <b-row align-h="end">
-        <b-col>
+        <b-col class="shadow">
           <p
-            v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length>0 && !admin"
-          >Send all to this number: {{fundraisInfo.accountNumber}}</p>
+            class="display-4"
+            v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length > 0 && !admin"
+          >Wpłaty na numer konta: {{fundraisInfo.accountNumber}}</p>
         </b-col>
-        <b-col cols="4" style="background-color: green">
+        <b-col cols="4">
           <list-of-propositions
-            style="background-color: red"
             :admin="admin"
             :list="listOfPropositions"
             @list="updateListOfPropositions"

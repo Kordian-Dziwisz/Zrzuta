@@ -1,7 +1,7 @@
 <template>
   <div class="ListOfParticipants">
     <form @submit.prevent="addNewItem()" class="container">
-      <label>Dodaj nowego uczestnika:</label>
+      <h3>Dodaj nowego uczestnika:</h3>
       <b-form-row>
         <b-col>
           <b-input

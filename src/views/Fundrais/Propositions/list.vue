@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="container">
-      <label v-if="admin">Lista propozycji</label>
-      <label v-if="!admin">Dodaj nową propozycję</label>
+    <div class="container pt-3">
+      <h3 v-if="admin">Lista propozycji</h3>
+      <h3 v-if="!admin">Dodaj nową propozycję</h3>
       <form @submit.prevent="addNewItem" v-if="!admin">
         <b-form-row>
           <b-col sm="6" lg="2" class="px-0">
@@ -28,7 +28,7 @@
       </form>
     </div>
     <ul class="overflow-auto">
-      <p v-if="list.length==0">Nie zgłoszono żadnych propozycji</p>
+      <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
       <li v-for="(item, index) in list" :key="index">
         <!-- create a new componen to display item -->
         <Item
@@ -130,8 +130,9 @@ export default {
 </script>
 <style scoped>
 ul {
-  max-height: 125px;
+  max-height: 15rem;
   -webkit-overflow-scrolling: touch;
+  z-index: 20;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

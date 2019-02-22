@@ -1,7 +1,7 @@
 <template>
   <div class="ListOfProducts">
     <form class="container" @submit.prevent="addNewItem" v-if="admin">
-      <label>Dodaj cel zbiórki</label>
+      <h3>Dodaj cel zbiórki</h3>
       <b-form-row>
         <b-col sm="6" lg="2" class="px-0">
           <b-input type="number" v-model="newItem.number" min="0" placeholder="Ilość"/>
