@@ -126,7 +126,7 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
     this.docID = this.$route.params.id;
     this.db = this.db.doc(this.docID);
     this.getDoc();
