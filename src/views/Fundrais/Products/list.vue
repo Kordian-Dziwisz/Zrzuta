@@ -93,7 +93,7 @@ export default {
     setName(index) {
       do {
         this.list[index].name = prompt("set new name");
-      } while ((this.list[index].name.length = 0));
+      } while (this.list[index].name.length == 0);
     },
     setPrice(index) {
       let tmp = 0;
