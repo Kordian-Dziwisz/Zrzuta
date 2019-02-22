@@ -1,20 +1,27 @@
 <template>
   <b-container class="w-100 m-0 text-dark bg-light" fluid>
-    <b-row class="mx-auto border-bottom-1 mt-3">
-      <b-col md="0">{{item.index}}</b-col>
-
+    <b-row class="mx-auto border-bottom mt-3">
       <b-col sm="5">
-        <p class="h4 mr-1">{{item.title}}</p>twórca:
-        <p class="h6 d-inline">{{item.creator}}</p>
+        <b-row>
+          <p class="h4 mr-1">{{item.title}}</p>
+        </b-row>
+        <b-row>
+          <p class="h6 d-inline">twórca: {{item.creator}}</p>
+        </b-row>
       </b-col>
 
-      <b-col sm="4" class="pt-4 px-0">status:
-        <p class="h6 d-inline" v-if="item.endDate < new Date(Date.now())">zbiórka już się zakończyła</p>
-        <p class="h6 d-inline" v-else-if="item.ended">Dokonaj zapłaty</p>
-        <p class="h6 d-inline" v-else>Zbiórka jest w trakcie realizacji</p>
+      <b-col sm="4" class="pt-4 px-0">
+        <b-row>
+          <p
+            class="h6 d-inline text-danger"
+            v-if="item.endDate < new Date(Date.now())"
+          >Zbiórka zakończona</p>
+          <p class="h6 d-inline text-warning" v-else-if="item.ended">Dokonaj zapłaty</p>
+          <p class="h6 d-inline text-success" v-else>Zbiórka w trakcie</p>
+        </b-row>
       </b-col>
 
-      <b-col sm="2" class="p-0">
+      <b-col sm="2" class="px-0">
         <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-if="isYour">
           <b-button class="btn-secondary px-1 mr-1">Edytuj</b-button>
         </router-link>
@@ -25,8 +32,19 @@
       </b-col>
       <hr>
     </b-row>
-    <b-row class="pl-5 mx-auto">
-      <b-col md="5" class="overflow-auto">{{item.description}}</b-col>
+
+    <b-row class="pl-2 mx-auto">
+      <b-col md="5">
+        <b-collapse :id="item.index">{{item.description}}</b-collapse>
+        <b-button
+          v-b-toggle="'item.index'"
+          class="btn-secondary p-0 text-center"
+          @click="click = !click"
+        >
+          <p v-if="!click">Pokaż opis</p>
+          <p v-else>Ukryj opis</p>
+        </b-button>
+      </b-col>
 
       <b-col
         v-if="!item.endDate < new Date(Date.now())"
@@ -39,6 +57,11 @@
 export default {
   props: {
     item: Object
+  },
+  data() {
+    return {
+      click: false
+    };
   },
   methods: {
     editItem() {
@@ -62,3 +85,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+.red {
+  background-color: red;
+}
+</style>
+
