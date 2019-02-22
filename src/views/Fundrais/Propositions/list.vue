@@ -28,7 +28,7 @@
       </form>
     </div>
     <ul class="overflow-auto">
-      <p v-if="list.length==0">Lista jest pusta</p>
+      <p v-if="list.length==0">Nie zgłoszono żadnych propozycji</p>
       <li v-for="(item, index) in list" :key="index">
         <!-- create a new componen to display item -->
         <Item

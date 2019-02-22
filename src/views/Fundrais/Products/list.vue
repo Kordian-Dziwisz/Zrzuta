@@ -19,7 +19,9 @@
     </form>
     <!-- displaying a list of Participant, create new component to Item bind -->
     <ul class="overflow-auto px-3">
-      <label v-if="list.length==0">Lista jest pusta!</label>
+      <label
+        v-if="list.length==0"
+      >Lista produktów jest pusta, twórca zbiórki nie dodał jeszcze żadnego produktu</label>
       <li class="border-bottom w-auto" v-for="(item, index) in list" :key="index">
         <Item
           v-if="!admin"
