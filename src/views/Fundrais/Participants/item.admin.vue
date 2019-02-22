@@ -5,8 +5,8 @@
     <span v-if="item.paid">Wpłacono |</span>
     <span v-if="item.accepted">Otrzymano</span>
     <div class="control">
-      <button @click="setAccepted" v-if="!item.accepted">Zaakceptuj</button>
-      <button @click="removeItem">Usuń</button>
+      <b-button class="mx-1" @click="setAccepted" v-if="!item.accepted">Zaakceptuj</b-button>
+      <b-button class="mx-1" @click="removeItem">Usuń</b-button>
     </div>
   </div>
 </template>

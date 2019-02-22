@@ -1,28 +1,26 @@
 <template>
   <div class="ListOfProducts">
-    <div v-if="admin">
-      <p>here add a new product</p>
-      <input
-        type="number"
-        v-model="newItem.number"
-        @keypress.enter="addNewItem"
-        min="0"
-        placeholder="Ilość sztuk"
-      >
-      <input type="text" v-model="newItem.name" @keypress.enter="addNewItem" placeholder="Nazwa">
-      <input
-        type="number"
-        v-model="newItem.price"
-        @keypress.enter="addNewItem"
-        min="0"
-        placeholder="Cena jednostkowa"
-      >
-      <button @click="addNewItem">add new item</button>
-    </div>
+    <form class="container" @submit.prevent="addNewItem" v-if="admin">
+      <label>Dodaj cel zbiórki</label>
+      <b-form-row>
+        <b-col sm="6" lg="2" class="px-0">
+          <b-input type="number" v-model="newItem.number" min="0" placeholder="Ilość"/>
+        </b-col>
+        <b-col sm="6" lg="5">
+          <b-input type="text" v-model="newItem.name" placeholder="Nazwa"/>
+        </b-col>
+        <b-col sm="6" lg="2" class="px-0">
+          <b-input type="number" v-model="newItem.price" min="0" placeholder="Cena jednostkowa"/>
+        </b-col>
+        <b-col>
+          <b-button type="submit">Dodaj</b-button>
+        </b-col>
+      </b-form-row>
+    </form>
     <!-- displaying a list of Participant, create new component to Item bind -->
-    <ul>
-      <p v-if="list.length==0">List is empty</p>
-      <li v-for="(item, index) in list" :key="index">
+    <ul class="overflow-auto px-3">
+      <label v-if="list.length==0">Lista jest pusta!</label>
+      <li class="border-bottom w-auto" v-for="(item, index) in list" :key="index">
         <Item
           v-if="!admin"
           :item="{index: index, ...item}"
@@ -55,40 +53,42 @@ export default {
   data() {
     return {
       newItem: {
-        number: Number,
+        number: "",
         name: "",
-        price: Number
+        price: ""
       }
     };
   },
   watch: {
     list() {
-      //problem with new item emmiting
       this.$emit("list", this.list);
     }
   },
   methods: {
     addNewItem() {
       if (
+        this.newItem.number.length == 0 ||
+        this.newItem.price.length == 0 ||
         this.newItem.name.length == 0 ||
         this.newItem.number < 0 ||
         this.newItem.price < 0
       ) {
         alert("Wpisz poprawną wartość!");
       } else {
-        this.list.push({ ...this.newItem });
-        this.newItem.number = 0;
+        this.list.push({
+          number: parseInt(this.newItem.number),
+          name: this.newItem.name,
+          price: parseFloat(this.newItem.price)
+        });
+        this.newItem.number = "";
         this.newItem.name = "";
-        this.newItem.price = 0.0;
+        this.newItem.price = "";
       }
     },
     setNumber(index) {
       do {
         this.list[index].number = parseInt(prompt("set new number"));
-      } while (
-        typeof this.list[index].number != "number" ||
-        this.list[index].number <= 0
-      );
+      } while (typeof this.list[index].number != "number" || this.list[index].number <= 0);
     },
     setName(index) {
       do {
@@ -114,4 +114,17 @@ export default {
   }
 };
 </script>
+<style scoped>
+ul {
+  max-height: 15.9rem;
+  -webkit-overflow-scrolling: touch;
+  border-color: #ced4da;
+  list-style: none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+</style>
 

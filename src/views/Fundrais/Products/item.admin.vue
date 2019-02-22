@@ -2,10 +2,10 @@
   <div class="ParticipantsListItem">
     {{item.index + 1}}: {{item.number + " szt"}} | {{item.name}} | {{item.price + " zł"}} | {{(item.price * item.number).toFixed(2) + " zł"}}
     <div class="control">
-      <button @click="setNumber">setNumber</button>
-      <button @click="setName">setName!</button>
-      <button @click="setPrice">setPrice</button>
-      <button @click="removeItem">removeMe!</button>
+      <b-button class="mx-1" @click="setNumber">Sztuki</b-button>
+      <b-button class="mx-1" @click="setName">Nazwa</b-button>
+      <b-button class="mx-1" @click="setPrice">Cena</b-button>
+      <b-button class="mx-1" @click="removeItem">Usuń</b-button>
     </div>
   </div>
 </template>

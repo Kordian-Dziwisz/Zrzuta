@@ -11,9 +11,8 @@
             @info="updateFundraisInfo"
           />
         </b-col>
-        <b-col style="background-color: green">
+        <b-col class="shadow">
           <list-of-participants
-            style="background-color: red"
             :admin="admin"
             :list="listOfParticipants"
             @list="updateListOfParticipants"
@@ -29,6 +28,12 @@
         </b-col>
       </b-row>
       <b-row align-h="end">
+        <b-col>
+          <p
+            v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length>0 && !admin"
+          >Send all to this number: {{fundraisInfo.accountNumber}}</p>
+          <button @click="updateDoc" v-if="admin">Save all</button>
+        </b-col>
         <b-col cols="4" style="background-color: green">
           <list-of-propositions
             style="background-color: red"
@@ -38,14 +43,11 @@
           />
         </b-col>
       </b-row>
-      <b-row>
+      <!-- <b-row>
         <b-col style="background-color: green">
-          <p
-            v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length>0 && !admin"
-          >Send all to this number: {{fundraisInfo.accountNumber}}</p>
-          <button @click="updateDoc" v-if="admin">Save all</button>
+
         </b-col>
-      </b-row>
+      </b-row>-->
     </div>
   </div>
 </template>
@@ -136,6 +138,13 @@ export default {
 </script>
 <style scoped>
 .Fundrais {
-  padding-top: 68px;
+  padding-top: 67px;
+}
+list-of-propositions {
+  margin-top: 0;
+}
+.shadow {
+  box-shadow: 0.5vw 0.5vw 1vh rgba(00, 00, 00, 50%);
+  border-radius: 0.25rem;
 }
 </style>

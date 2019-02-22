@@ -16,9 +16,9 @@
       </b-form-row>
     </form>
     <!-- displaying a list of Participant, create new component to Item bind -->
-    <ul>
+    <ul class="overflow-auto px-3">
       <p v-if="list.length==0">Lista jest pusta!</p>
-      <li v-for="(item, index) in list" :key="index">
+      <li class="border-bottom w-auto" v-for="(item, index) in list" :key="index">
         <item
           v-if="!admin"
           :item="{index: index, ...item}"
@@ -100,5 +100,9 @@ export default {
 <style scoped>
 ul {
   list-style: none;
+  max-height: 15.9rem;
+  margin-top: 10px;
+  -webkit-overflow-scrolling: touch;
+  border-color: #ced4da;
 }
 </style>

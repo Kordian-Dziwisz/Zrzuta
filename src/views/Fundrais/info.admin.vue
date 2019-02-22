@@ -10,7 +10,6 @@
       <textarea v-model="newInfo.description"></textarea>
     </p>
     <p>Zbiórka rozpoczęła się: {{ info.creationDate | moment("dddd, MMMM, YYYY")}} o godzinie: {{ info.endDate | moment("h:mm")}}</p>
-    <br>
     <p>endDate:</p>
     <datepicker v-model="newInfo.endDate"/>
     isEnded: {{newInfo.ended}} endThis:

@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="container">
+      <label v-if="admin">Lista propozycji</label>
       <label v-if="!admin">Dodaj nową propozycję</label>
       <form @submit.prevent="addNewItem" v-if="!admin">
         <b-form-row>
@@ -123,7 +124,6 @@ export default {
 <style scoped>
 ul {
   max-height: 125px;
-  margin-top: 10px;
   -webkit-overflow-scrolling: touch;
 }
 input::-webkit-outer-spin-button,
