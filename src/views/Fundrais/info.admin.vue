@@ -39,8 +39,8 @@ export default {
       deep: true
     }
   },
-  async created() {
-    this.newInfo = await { ...this.info };
+  mounted() {
+    this.newInfo = { ...this.info };
   },
   components: {
     Datepicker

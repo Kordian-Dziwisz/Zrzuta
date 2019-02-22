@@ -101,26 +101,30 @@ export default {
     async getDoc() {
       let tmpDoc = await this.db.get({ source: "default" });
       this.fundraisInfo = tmpDoc.data().fundraisInfo;
-      this.fundraisInfo.creationDate = new Date(this.fundraisInfo.creationDate.seconds);
-      this.fundraisInfo.endDate = new Date(this.fundraisInfo.endDate.seconds);
+      this.fundraisInfo.creationDate = new Date(this.fundraisInfo.creationDate.seconds * 1000);
+      this.fundraisInfo.endDate = new Date(this.fundraisInfo.endDate.seconds * 1000);
       this.listOfParticipants = tmpDoc.data().listOfParticipants;
       this.listOfProducts = tmpDoc.data().listOfProducts;
       this.listOfPropositions = tmpDoc.data().listOfPropositions;
       this.admin = tmpDoc.data().fundraisInfo.creator == localStorage.getItem("login");
     },
     async updateDoc() {
-      this.db.set({
-        fundraisInfo: this.fundraisInfo,
-        listOfParticipants: this.listOfParticipants,
-        listOfProducts: this.listOfProducts,
-        listOfPropositions: this.listOfPropositions
-      });
-      if (this.admin) {
-        await alert("document updated");
+      console.log(this.fundraisInfo.endDate.getYear());
+      console.log(this.fundraisInfo.creationDate.getYear());
+      if (this.fundraisInfo.endDate.getYear() > 118 && this.fundraisInfo.creationDate.getYear() > 118) {
+        this.db.set({
+          fundraisInfo: this.fundraisInfo,
+          listOfParticipants: this.listOfParticipants,
+          listOfProducts: this.listOfProducts,
+          listOfPropositions: this.listOfPropositions
+        });
+        if (this.admin) {
+          await alert("document updated");
+        }
       }
     }
   },
-  mounted() {
+  created() {
     this.docID = this.$route.params.id;
     this.db = this.db.doc(this.docID);
     this.getDoc();
