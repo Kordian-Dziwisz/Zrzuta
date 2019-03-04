@@ -43,7 +43,7 @@
       </b-col>
       <b-col
         v-if="!item.endDate < new Date(Date.now())"
-      >Zbiórka kończy się: {{ item.endDate | moment("dddd, d MMMM YYYY")}} - {{ item.endDate | moment("H:mm")}}</b-col>
+      >Zbiórka kończy się: {{ item.endDate | moment("dddd, D MMMM YYYY")}} - {{ item.endDate | moment("H:mm")}}</b-col>
     </b-row>
   </b-container>
 </template>
