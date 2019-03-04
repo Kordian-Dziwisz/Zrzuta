@@ -22,7 +22,6 @@
         <item
           v-if="!admin"
           :item="{index: index, ...item}"
-          :you="authenticate(item.name)"
           @comment="setComment"
           @paid="setPaid"
           @accepted="setAccepted"
@@ -66,7 +65,7 @@ export default {
       if (this.newItem.name.length == 0) {
         alert("name field can't be empty");
       } else {
-        this.list.push({ ...this.newItem });
+        this.list.push({ ...this.newItem, guid: localStorage.getItem("guid") });
         //reset template, only name is changing
         this.newItem.name = "";
       }
@@ -87,9 +86,6 @@ export default {
     removeItem(index) {
       this.list.splice(index, 1);
       this.$emit("list", this.list);
-    },
-    authenticate(login) {
-      return login == localStorage.getItem("login");
     }
   },
   components: {

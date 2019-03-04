@@ -21,7 +21,7 @@
     <div class="container">
       <tr>
         <td class="h5">Suma: {{priceSum + " zł"}}</td>&nbsp;
-        <td class="h5">Na osobę: {{pricePerUser}}</td>
+        <td class="h5">Na osobę: {{pricePerUser }}</td>
       </tr>
       <tr></tr>
     </div>

@@ -7,6 +7,23 @@
 <script>
 import NavBar from "@/components/NavBar.vue";
 export default {
+  mounted() {
+    localStorage.setItem("guid", this.generateGuid());
+  },
+  methods: {
+    generateGuid() {
+      var nav = window.navigator;
+      var screen = window.screen;
+      var guid = nav.mimeTypes.length;
+      guid += nav.userAgent.replace(/\D+/g, "");
+      guid += nav.plugins.length;
+      guid += screen.height || "";
+      guid += screen.width || "";
+      guid += screen.pixelDepth || "";
+
+      return guid;
+    }
+  },
   components: {
     NavBar
   }
