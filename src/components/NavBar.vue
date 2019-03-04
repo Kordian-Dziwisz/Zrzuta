@@ -38,10 +38,10 @@ export default {
       clicked: false,
       newFundrais: {
         guid: "",
-        accountNumber: "brak numeru konta",
-        creator: "brak twórcy",
-        title: "brak tytułu",
-        description: "brak opisu",
+        accountNumber: "",
+        creator: "",
+        title: "",
+        description: "",
         creationDate: new Date(Date.now()).toJSON(),
         endDate: new Date(Date.now()).toJSON(),
         ended: false

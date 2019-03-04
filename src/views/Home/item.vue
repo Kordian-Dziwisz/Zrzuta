@@ -66,6 +66,18 @@ export default {
         index: this.item.index,
         id: this.item.id
       });
+    },
+    generateGuid() {
+      var nav = window.navigator;
+      var screen = window.screen;
+      var guid = nav.mimeTypes.length;
+      guid += nav.userAgent.replace(/\D+/g, "");
+      guid += nav.plugins.length;
+      guid += screen.height || "";
+      guid += screen.width || "";
+      guid += screen.pixelDepth || "";
+
+      return guid;
     }
   },
   created() {
@@ -74,7 +86,7 @@ export default {
   },
   computed: {
     isYour() {
-      return this.item.creator == localStorage.getItem("login");
+      return this.item.guid == this.generateGuid();
     }
   }
 };
