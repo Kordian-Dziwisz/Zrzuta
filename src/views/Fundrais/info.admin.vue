@@ -1,22 +1,23 @@
 <template>
   <div class="ProjectInfo">
     <p>Utworzył: {{info.creator}}</p>
-    <p>
-      Tytuł:
-      <input type="text" v-model="newInfo.title">
+    <p>Tytuł:
+      <b-input type="text" v-model="newInfo.title"/>
     </p>
     <p>Opis:
       <br>
-      <textarea v-model="newInfo.description"></textarea>
+      <b-textarea v-model="newInfo.description"></b-textarea>
     </p>
-    <p>Zbiórka rozpoczęła się: {{ info.creationDate | moment("dddd, D MMMM YYYY")}} o godzinie: {{ info.creationDate | moment("h:mm")}}</p>
-    <br>
-    <p>endDate:</p>
-    <datepicker v-model="newInfo.endDate"/>
-    isEnded: {{newInfo.ended}} endThis:
-    <button @click="newInfo.ended = !newInfo.ended">END</button>
-    here add your account number:
-    <input type="text" v-model="newInfo.accountNumber">
+    <p>
+      Zbiórka rozpoczęła się:
+      <strong>{{ info.creationDate | moment("dddd, D MMMM YYYY")}} o godzinie: {{ info.creationDate | moment("h:mm")}}</strong>
+    </p>
+    <p>Data zakończenia:</p>
+    <datepicker v-model="newInfo.endDate"/>Status:
+    <p v-if="newInfo.ended">Zakończona</p>
+    <p v-else>Otwarta</p>
+    <b-button @click="newInfo.ended = !newInfo.ended">Zakończ</b-button>
+    <b-input type="text" placeholder="Wpisz numer konta" v-model="newInfo.accountNumber"/>
   </div>
 </template>
 <script>

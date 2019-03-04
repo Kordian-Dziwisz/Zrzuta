@@ -28,8 +28,9 @@
     <ul class="overflow-auto px-3 container">
       <label class="h5" v-if="!admin && !this.ended">Cel zbiórki:</label>
       <label
-        v-if="list.length==0"
-      >Lista produktów jest pusta, twórca zbiórki nie dodał jeszcze żadnego produktu</label>
+        v-if="list.length==0 && !admin"
+      >Lista produktów jest pusta, twórca zbiórki nie dodał jeszcze żadnego produktu.</label>
+      <label v-if="list.length==0 && admin">Lista produktów jest pusta, dodaj nowy cel powyżej.</label>
       <li class="border-bottom w-auto" v-for="(item, index) in list" :key="index">
         <Item
           v-if="!admin"
