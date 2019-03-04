@@ -1,11 +1,11 @@
 <template>
   <div class="ProjectInfo">
-    <p>Created by: {{info.creator}}</p>
+    <p>Utworzył: {{info.creator}}</p>
     <p>
-      Title:
+      Tytuł:
       <input type="text" v-model="newInfo.title">
     </p>
-    <p>Desc:
+    <p>Opis:
       <br>
       <textarea v-model="newInfo.description"></textarea>
     </p>

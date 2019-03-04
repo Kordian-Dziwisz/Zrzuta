@@ -1,11 +1,8 @@
 <template>
   <div class="ListOfProducts">
-    <form class="container" @submit.prevent="addNewItem" v-if="admin">
+    <form class="container" @submit.prevent="addNewItem" v-if="admin && !this.ended">
       <h3>Dodaj cel zbiórki</h3>
-      <tr>
-        <td>Suma: {{priceSum + " zł"}}</td>
-        <td>Na osobę: {{pricePerUser}}</td>
-      </tr>
+
       <b-form-row>
         <b-col sm="6" lg="2" class="px-0">
           <b-input type="number" v-model="newItem.number" min="0" placeholder="Ilość"/>
@@ -21,8 +18,15 @@
         </b-col>
       </b-form-row>
     </form>
+    <div class="container">
+      <tr>
+        <td class="h5">Suma: {{priceSum + " zł"}}</td>&nbsp;
+        <td class="h5">Na osobę: {{pricePerUser}}</td>
+      </tr>
+      <tr></tr>
+    </div>
     <ul class="overflow-auto px-3 container">
-      <label v-if="!admin">Cel zbiórki:</label>
+      <label class="h5" v-if="!admin && !this.ended">Cel zbiórki:</label>
       <label
         v-if="list.length==0"
       >Lista produktów jest pusta, twórca zbiórki nie dodał jeszcze żadnego produktu</label>
@@ -55,7 +59,8 @@ export default {
   props: {
     list: Array,
     admin: false,
-    numOfParticipants: Number
+    numOfParticipants: Number,
+    ended: Boolean
   },
   data() {
     return {

@@ -1,11 +1,11 @@
 <template>
   <div class="ProjectInfo">
-    <p>Created by: {{info.creator}}</p>
+    <p>Utworzył: {{info.creator}}</p>
     <p>
-      Title:
+      Tytuł:
       {{info.title}}
     </p>
-    <p>Desc:
+    <p>Opis:
       <br>
       {{info.description}}
     </p>
