@@ -20,9 +20,8 @@
       <p v-if="list.length==0">Jak dotąd nie zapisano żadnego uczestnika, dopisz go w polu powyżej</p>
       <li class="border-bottom w-auto" v-for="(item, index) in list" :key="index">
         <item
-          v-if="!admin"
+          v-if="authenticate"
           :item="{index: index, ...item}"
-          :you="authenticate(item.name)"
           @comment="setComment"
           @paid="setPaid"
           @accepted="setAccepted"
@@ -66,7 +65,7 @@ export default {
       if (this.newItem.name.length == 0) {
         alert("name field can't be empty");
       } else {
-        this.list.push({ ...this.newItem });
+        this.list.push({ ...this.newItem, guid: localStorage.getItem("guid") });
         //reset template, only name is changing
         this.newItem.name = "";
       }

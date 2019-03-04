@@ -125,23 +125,11 @@ export default {
           await console.log("document updated");
         }
       }
-    },
-    generateGuid() {
-      var nav = window.navigator;
-      var screen = window.screen;
-      var guid = nav.mimeTypes.length;
-      guid += nav.userAgent.replace(/\D+/g, "");
-      guid += nav.plugins.length;
-      guid += screen.height || "";
-      guid += screen.width || "";
-      guid += screen.pixelDepth || "";
-
-      return guid;
     }
   },
   computed: {
     authenticate() {
-      return this.fundraisInfo.guid == this.generateGuid() ? true : false;
+      return this.fundraisInfo.guid == localStorage.getItem("guid") ? true : false;
     }
   },
   mounted() {
