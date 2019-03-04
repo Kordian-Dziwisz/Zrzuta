@@ -21,7 +21,7 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-navbar-brand right>
-            <p id="marginCenter">Oddajcie mi hajs</p>
+            <p id="marginCenter">Oddajcie mi pieniondze</p>
           </b-navbar-brand>
         </b-navbar-nav>
       </b-collapse>

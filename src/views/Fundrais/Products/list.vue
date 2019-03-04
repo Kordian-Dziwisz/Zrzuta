@@ -2,7 +2,10 @@
   <div class="ListOfProducts">
     <form class="container" @submit.prevent="addNewItem" v-if="admin">
       <h3>Dodaj cel zbiórki</h3>
-      <p>{{}}</p>
+      <tr>
+        <td>Suma: {{priceSum + " zł"}}</td>&nbsp;
+        <td>Na osobę:</td>
+      </tr>
       <b-form-row>
         <b-col sm="6" lg="2" class="px-0">
           <b-input type="number" v-model="newItem.number" min="0" placeholder="Ilość"/>
@@ -14,7 +17,7 @@
           <b-input type="number" v-model="newItem.price" min="0" placeholder="Cena jednostkowa"/>
         </b-col>
         <b-col>
-          <b-button type="submit" class="btn btn-outline-success btn-ligth">Dodaj</b-button>
+          <b-button type="submit" class="btn btn-outline-success btn-light">Dodaj</b-button>
         </b-col>
       </b-form-row>
     </form>
@@ -114,6 +117,21 @@ export default {
     removeItem(index) {
       this.list.splice(index, 1);
     }
+  },
+  computed: {
+    priceSum: {
+      get() {
+        let prices = this.list.map(x => x.price * x.number);
+        return prices.reduce((a, b) => {
+          return a + b;
+        });
+      }
+    }
+    // pricePerUser: {
+    //   get() {
+    //     return this.priceSum /
+    //   }
+    // }
   },
   components: {
     Item,
