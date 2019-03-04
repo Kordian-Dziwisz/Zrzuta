@@ -3,8 +3,8 @@
     <form class="container" @submit.prevent="addNewItem" v-if="admin">
       <h3>Dodaj cel zbiórki</h3>
       <tr>
-        <td>Suma: {{priceSum + " zł"}}</td>&nbsp;
-        <td>Na osobę:</td>
+        <td>Suma: {{priceSum + " zł"}}</td>
+        <td>Na osobę: {{pricePerUser}}</td>
       </tr>
       <b-form-row>
         <b-col sm="6" lg="2" class="px-0">
@@ -54,7 +54,8 @@ import ItemAdmin from "@/views/Fundrais/Products/item.admin.vue";
 export default {
   props: {
     list: Array,
-    admin: false
+    admin: false,
+    numOfParticipants: Number
   },
   data() {
     return {
@@ -130,12 +131,16 @@ export default {
           return 0;
         }
       }
+    },
+    pricePerUser: {
+      get() {
+        if (this.numOfParticipants != 0) {
+          return this.priceSum / this.numOfParticipants + " zł";
+        } else {
+          return "Brak uczestników";
+        }
+      }
     }
-    // pricePerUser: {
-    //   get() {
-    //     return this.priceSum /
-    //   }
-    // }
   },
   components: {
     Item,

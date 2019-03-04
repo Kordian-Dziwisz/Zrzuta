@@ -17,6 +17,7 @@
         <b-col class="shadow">
           <list-of-products
             :admin="authenticate"
+            :numOfParticipants="listOfParticipants.length"
             :list="listOfProducts"
             @list="updateListOfProducts"
           />
