@@ -3,32 +3,36 @@
     <div class="container-fluid">
       <b-row>
         <b-col class="shadow">
-          <project-info v-if="!admin" :info="fundraisInfo"/>
-          <info-admin v-if="admin" :info="fundraisInfo" @info="updateFundraisInfo"/>
+          <project-info v-if="!authenticate" :info="fundraisInfo"/>
+          <info-admin v-if="authenticate" :info="fundraisInfo" @info="updateFundraisInfo"/>
         </b-col>
         <b-col class="shadow">
           <list-of-participants
-            :admin="admin"
+            :admin="authenticate"
             :ended="this.fundraisInfo.ended"
             :list="listOfParticipants"
             @list="updateListOfParticipants"
           />
         </b-col>
         <b-col class="shadow">
-          <list-of-products :admin="admin" :list="listOfProducts" @list="updateListOfProducts"/>
+          <list-of-products
+            :admin="authenticate"
+            :list="listOfProducts"
+            @list="updateListOfProducts"
+          />
         </b-col>
       </b-row>
       <b-row align-h="end">
         <b-col class="shadow">
           <p
             class="display-4"
-            v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length > 0 && !admin"
+            v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length > 0 && !authenticate"
           >Wpłaty na numer konta: {{fundraisInfo.accountNumber}}</p>
         </b-col>
         <b-col cols="4">
           <list-of-propositions
             v-if="false"
-            :admin="admin"
+            :admin="authenticate"
             :list="listOfPropositions"
             @list="updateListOfPropositions"
           />
@@ -55,7 +59,6 @@ export default {
   data() {
     return {
       docID: "",
-      admin: false,
       db: firebase.firestore().collection("Zrzuty"),
       //ProjectInfo elements
       fundraisInfo: {},
@@ -96,26 +99,48 @@ export default {
     },
     async getDoc() {
       let tmpDoc = await this.db.get({ source: "default" });
+      //converting from JSON date format to object
       this.fundraisInfo = tmpDoc.data().fundraisInfo;
-      this.fundraisInfo.creationDate = new Date(this.fundraisInfo.creationDate.seconds * 1000);
-      this.fundraisInfo.endDate = new Date(this.fundraisInfo.endDate.seconds * 1000);
+      this.fundraisInfo.creationDate = new Date(this.fundraisInfo.creationDate);
+      this.fundraisInfo.endDate = new Date(this.fundraisInfo.endDate);
       this.listOfParticipants = tmpDoc.data().listOfParticipants;
       this.listOfProducts = tmpDoc.data().listOfProducts;
       this.listOfPropositions = tmpDoc.data().listOfPropositions;
-      this.admin = tmpDoc.data().fundraisInfo.creator == localStorage.getItem("login");
     },
     async updateDoc() {
       if (this.fundraisInfo.endDate.getYear() > 118 && this.fundraisInfo.creationDate.getYear() > 118) {
+        //date must be converted to JSON when sending to server
+        let tmpInfo = { ...this.fundraisInfo };
+        tmpInfo.creationDate = tmpInfo.creationDate.toJSON();
+        tmpInfo.endDate = tmpInfo.endDate.toJSON();
         this.db.set({
-          fundraisInfo: this.fundraisInfo,
+          fundraisInfo: tmpInfo,
           listOfParticipants: this.listOfParticipants,
           listOfProducts: this.listOfProducts,
           listOfPropositions: this.listOfPropositions
         });
-        if (this.admin) {
+        //usefull log for admin
+        if (this.authenticate) {
           await console.log("document updated");
         }
       }
+    },
+    generateGuid() {
+      var nav = window.navigator;
+      var screen = window.screen;
+      var guid = nav.mimeTypes.length;
+      guid += nav.userAgent.replace(/\D+/g, "");
+      guid += nav.plugins.length;
+      guid += screen.height || "";
+      guid += screen.width || "";
+      guid += screen.pixelDepth || "";
+
+      return guid;
+    }
+  },
+  computed: {
+    authenticate() {
+      return this.fundraisInfo.guid == this.generateGuid() ? true : false;
     }
   },
   mounted() {

@@ -14,7 +14,7 @@ export default {
   data() {
     return {
       logged: false,
-      //login: "",
+      //login: "",~
       db: firebase.firestore().collection("Zrzuty"),
       list: [],
       guid: ""
