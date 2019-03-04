@@ -9,6 +9,7 @@
         <b-col class="shadow">
           <list-of-participants
             :admin="admin"
+            :ended="this.fundraisInfo.ended"
             :list="listOfParticipants"
             @list="updateListOfParticipants"
           />

@@ -1,6 +1,6 @@
 <template>
   <div class="ListOfParticipants">
-    <form @submit.prevent="addNewItem()" class="container">
+    <form @submit.prevent="addNewItem()" class="container" v-if="!this.ended">
       <h3>Dodaj nowego uczestnika:</h3>
       <b-form-row>
         <b-col>
@@ -47,7 +47,8 @@ import ItemAdmin from "@/views/Fundrais/Participants/item.admin.vue";
 export default {
   props: {
     list: Array,
-    admin: Boolean
+    admin: Boolean,
+    ended: Boolean
   },
   data() {
     return {
