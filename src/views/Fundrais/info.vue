@@ -16,7 +16,8 @@
         - {{ info.creationDate | moment("H:mm")}}
       </strong>
     </p>
-    <p>Zbiórka kończy się:
+    <p>
+      Zbiórka kończy się:
       <strong>{{ info.endDate | moment("dddd, d, MMMM, YYYY")}} - {{ info.endDate | moment("H:mm")}}</strong>
     </p>
     <br>

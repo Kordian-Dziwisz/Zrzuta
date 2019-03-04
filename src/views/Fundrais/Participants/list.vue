@@ -22,7 +22,7 @@
         <item
           v-if="!admin"
           :item="{index: index, ...item}"
-          :you="isYour(item.name)"
+          :you="authenticate(item.name)"
           @comment="setComment"
           @paid="setPaid"
           @accepted="setAccepted"
@@ -88,7 +88,7 @@ export default {
       this.list.splice(index, 1);
       this.$emit("list", this.list);
     },
-    isYour(login) {
+    authenticate(login) {
       return login == localStorage.getItem("login");
     }
   },

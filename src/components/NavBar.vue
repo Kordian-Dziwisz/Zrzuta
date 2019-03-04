@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar
-      class="fixed-top shadow"
+      class="fixed-top shadow bg-light"
       toggleable="md"
       v-shortkey="['alt', 'n']"
       @shortkey="addNewFundrais"
@@ -37,12 +37,13 @@ export default {
       db: firebase.firestore().collection("Zrzuty"),
       clicked: false,
       newFundrais: {
+        guid: "",
         accountNumber: "",
         creator: "",
         title: "",
         description: "",
-        creationDate: new Date("December 12, 2012 12:12:12"),
-        endDate: new Date("December 12, 2012 12:12:12"),
+        creationDate: new Date(Date.now()).toJSON(),
+        endDate: new Date(Date.now()).toJSON(),
         ended: false
       }
     };
@@ -51,8 +52,7 @@ export default {
     async addNewFundrais() {
       if ((this.newFundrais.creator = localStorage.getItem("login")) && this.clicked == false) {
         this.clicked = true;
-        this.newFundrais.creationDate = new Date(Date.now());
-        this.newFundrais.endDate = new Date(Date.now());
+        this.newFundrais.guid = this.generateGuid();
         let newFundrais = await this.db.add({
           fundraisInfo: { ...this.newFundrais },
           listOfParticipants: [],
@@ -64,6 +64,18 @@ export default {
           params: { id: newFundrais.id }
         });
       }
+    },
+    generateGuid() {
+      var nav = window.navigator;
+      var screen = window.screen;
+      var guid = nav.mimeTypes.length;
+      guid += nav.userAgent.replace(/\D+/g, "");
+      guid += nav.plugins.length;
+      guid += screen.height || "";
+      guid += screen.width || "";
+      guid += screen.pixelDepth || "";
+
+      return guid;
     }
   }
 };

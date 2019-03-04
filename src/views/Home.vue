@@ -1,8 +1,6 @@
 <template>
   <div class="main">
-    <login @login="changeLogin" v-if="!logged"/>
-    <fundraising-list v-if="logged" :list="list" @add="addFundrais" @remove="removeFundrais"></fundraising-list>
-    {{guid}}
+    <fundraising-list :list="list" @remove="removeFundrais"></fundraising-list>
   </div>
 </template>
 
@@ -16,15 +14,15 @@ export default {
   data() {
     return {
       logged: false,
-      login: "",
+      //login: "",~
       db: firebase.firestore().collection("Zrzuty"),
       list: [],
       guid: ""
     };
   },
   mounted() {
-    this.login = localStorage.getItem("login");
-    this.getFundrais();
+    //this.login = localStorage.getItem("login");
+    this.getFundraises();
     this.guid = this.generateGuid();
   },
   methods: {
@@ -34,17 +32,8 @@ export default {
       }
       localStorage.setItem("login", login);
     },
-    async getFundrais() {
+    async getFundraises() {
       this.list = (await this.db.get()).docs.map(item => this.mapItem(item));
-    },
-    async addFundrais(event) {
-      let newItem = await this.db.add({
-        fundraisInfo: { ...event },
-        listOfParticipants: [],
-        listOfProducts: [],
-        listOfPropositions: []
-      });
-      this.list.push(this.mapItem(await newItem.get()));
     },
     async removeFundrais(docID) {
       await this.db.doc(docID).delete();
