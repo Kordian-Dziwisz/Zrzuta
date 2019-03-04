@@ -121,10 +121,14 @@ export default {
   computed: {
     priceSum: {
       get() {
-        let prices = this.list.map(x => x.price * x.number);
-        return prices.reduce((a, b) => {
-          return a + b;
-        });
+        if (this.list.length > 0) {
+          let prices = this.list.map(x => x.price * x.number);
+          return prices.reduce((a, b) => {
+            return a + b;
+          });
+        } else {
+          return 0;
+        }
       }
     }
     // pricePerUser: {
