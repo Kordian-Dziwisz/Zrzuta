@@ -41,8 +41,8 @@ export default {
         creator: "",
         title: "",
         description: "",
-        creationDate: new Date("December 12, 2012 12:12:12"),
-        endDate: new Date("December 12, 2012 12:12:12"),
+        creationDate: new Date(Date.now()).toJSON(),
+        endDate: new Date(Date.now()).toJSON(),
         ended: false
       }
     };
@@ -51,8 +51,6 @@ export default {
     async addNewFundrais() {
       if ((this.newFundrais.creator = localStorage.getItem("login")) && this.clicked == false) {
         this.clicked = true;
-        this.newFundrais.creationDate = new Date(Date.now());
-        this.newFundrais.endDate = new Date(Date.now());
         let newFundrais = await this.db.add({
           fundraisInfo: { ...this.newFundrais },
           listOfParticipants: [],
