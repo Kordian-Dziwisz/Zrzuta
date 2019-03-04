@@ -37,10 +37,11 @@ export default {
       db: firebase.firestore().collection("Zrzuty"),
       clicked: false,
       newFundrais: {
-        accountNumber: "",
-        creator: "",
-        title: "",
-        description: "",
+        guid: "",
+        accountNumber: "brak numeru konta",
+        creator: "brak twórcy",
+        title: "brak tytułu",
+        description: "brak opisu",
         creationDate: new Date(Date.now()).toJSON(),
         endDate: new Date(Date.now()).toJSON(),
         ended: false
@@ -51,6 +52,7 @@ export default {
     async addNewFundrais() {
       if ((this.newFundrais.creator = localStorage.getItem("login")) && this.clicked == false) {
         this.clicked = true;
+        this.newFundrais.guid = this.generateGuid();
         let newFundrais = await this.db.add({
           fundraisInfo: { ...this.newFundrais },
           listOfParticipants: [],
@@ -62,6 +64,18 @@ export default {
           params: { id: newFundrais.id }
         });
       }
+    },
+    generateGuid() {
+      var nav = window.navigator;
+      var screen = window.screen;
+      var guid = nav.mimeTypes.length;
+      guid += nav.userAgent.replace(/\D+/g, "");
+      guid += nav.plugins.length;
+      guid += screen.height || "";
+      guid += screen.width || "";
+      guid += screen.pixelDepth || "";
+
+      return guid;
     }
   }
 };
