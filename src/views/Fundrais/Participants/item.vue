@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     authenticate() {
-      this.item.guid == localStorage.getItem("guid");
+      return this.item.guid == localStorage.getItem("guid");
     }
   }
 };

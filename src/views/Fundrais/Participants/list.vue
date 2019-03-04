@@ -20,7 +20,7 @@
       <p v-if="list.length==0">Jak dotąd nie zapisano żadnego uczestnika, dopisz go w polu powyżej</p>
       <li class="border-bottom w-auto" v-for="(item, index) in list" :key="index">
         <item
-          v-if="authenticate"
+          v-if="!admin"
           :item="{index: index, ...item}"
           @comment="setComment"
           @paid="setPaid"
@@ -86,9 +86,6 @@ export default {
     removeItem(index) {
       this.list.splice(index, 1);
       this.$emit("list", this.list);
-    },
-    authenticate(login) {
-      return login == localStorage.getItem("login");
     }
   },
   components: {
