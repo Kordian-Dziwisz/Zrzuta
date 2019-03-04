@@ -26,6 +26,7 @@
         </b-col>
         <b-col cols="4">
           <list-of-propositions
+            v-if="false"
             :admin="admin"
             :list="listOfPropositions"
             @list="updateListOfPropositions"
@@ -136,9 +137,5 @@ export default {
 }
 list-of-propositions {
   margin-top: 0;
-}
-.shadow {
-  box-shadow: 0.5vw 0.5vw 1vh rgba(00, 00, 00, 50%);
-  border-radius: 0.25rem;
 }
 </style>
