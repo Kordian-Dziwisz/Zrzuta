@@ -81,8 +81,8 @@ export default {
     }
   },
   created() {
-    this.item.creationDate = new Date(this.item.creationDate.seconds * 1000);
-    this.item.endDate = new Date(this.item.endDate.seconds * 1000);
+    this.item.creationDate = new Date(this.item.creationDate);
+    this.item.endDate = new Date(this.item.endDate);
   },
   computed: {
     isYour() {
