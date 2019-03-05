@@ -130,7 +130,7 @@ export default {
   },
   computed: {
     authenticate() {
-      return this.fundraisInfo.guid == localStorage.getItem("guid") ? true : false;
+      return this.fundraisInfo.creator == localStorage.getItem("login") ? true : false;
     }
   },
   mounted() {
