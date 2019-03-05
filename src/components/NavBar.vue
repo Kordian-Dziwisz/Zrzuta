@@ -14,7 +14,7 @@
       <!--https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvfuNsZHffYNmIn1UcFABUb6-GnknWFFrXIniz1R-Ocer4BMCMug -->
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
-          <b-nav-item :to="{ name: 'Home'}">Home</b-nav-item>
+          <b-nav-item :to="{ name: 'home'}">Home</b-nav-item>
           <b-nav-item @click="addNewFundrais">Nowa zbiórka</b-nav-item>
         </b-navbar-nav>
 
