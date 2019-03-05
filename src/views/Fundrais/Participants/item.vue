@@ -2,13 +2,13 @@
   <div class="ParticipantsListItem">
     <div class="row">
       <span class="col-5">{{item.index + 1}}: {{item.name}}</span>
-      <span class="col-5" v-if="item.paid && authenticate">Zapłacono</span>
-      <span class="col-5" v-if="item.accepted && authenticate">Otrzymano</span>
+      <span class="col-5" v-if="item.paid && !item.accepted && authenticate">Zapłacono</span>
+      <span class="col-5" v-if="item.accepted">Otrzymano</span>
       <span class="col-5 pl-0 ml-5">
         <b-button
           class="ml-5 mt-1 btn-outline-info btn-light"
           size="sm"
-          v-if="authenticate && !item.paid"
+          v-if="authenticate && !item.paid && !item.accepted"
           @click="setPaid"
         >Zapłaciłem</b-button>
       </span>

@@ -1,10 +1,6 @@
 <template>
   <div class="ListOfParticipants">
-    <form
-      @submit.prevent="addNewItem()"
-      class="container"
-      v-if="!this.ended && (admin || !alreadyAdded) "
-    >
+    <form @submit.prevent="addNewItem()" class="container" v-if="!this.ended && admin">
       <h3>Dodaj nowego uczestnika:</h3>
       <b-form-row>
         <b-col>
@@ -13,15 +9,25 @@
             type="text"
             name="participant"
             placeholder="Nazwa/Imię/Ksywka"
-            v-model="newItem.name"
+            v-model="name"
           />
         </b-col>
         <b-button type="submit" class="btn-outline-success btn-light">Dodaj</b-button>
       </b-form-row>
     </form>
+    <b-button
+      class="btn-outline-success btn-light"
+      v-if="!this.ended && !admin"
+      @click="addMe"
+    >Dodaj mnie</b-button>
     <!-- displaying a list of Participant, create new component to Item bind -->
     <ul class="overflow-auto px-3">
-      <p v-if="list.length==0">Jak dotąd nie zapisano żadnego uczestnika, dopisz go w polu powyżej</p>
+      <p v-if="list.length==0">
+        Jak dotąd nie zapisano żadnego uczestnika,
+        <span
+          v-if="!this.ended && admin"
+        >dopisz go w polu powyżej.</span>
+      </p>
       <li class="border-bottom w-auto" v-for="(item, index) in list" :key="index">
         <item
           v-if="!admin"
@@ -56,23 +62,34 @@ export default {
   data() {
     return {
       //just Object template
-      newItem: {
-        name: "",
-        comment: "",
-        accepted: false,
-        paid: false
-      }
+      name: ""
     };
   },
   methods: {
     addNewItem() {
-      if (this.newItem.name.length == 0) {
+      if (this.name.length == 0) {
         alert("name field can't be empty");
       } else {
-        this.list.push({ ...this.newItem, guid: localStorage.getItem("guid") });
+        this.list.push({
+          name: this.name,
+          accepted: false,
+          paid: false,
+          comment: "",
+          guid: localStorage.getItem("guid")
+        });
         //reset template, only name is changing
-        this.newItem.name = "";
+        this.name = "";
       }
+      this.$emit("list", this.list);
+    },
+    addMe() {
+      this.list.push({
+        name: localStorage.getItem("login"),
+        accepted: false,
+        paid: false,
+        comment: "",
+        guid: localStorage.getItem("guid")
+      });
       this.$emit("list", this.list);
     },
     setComment(index) {
@@ -90,15 +107,6 @@ export default {
     removeItem(index) {
       this.list.splice(index, 1);
       this.$emit("list", this.list);
-    }
-  },
-  computed: {
-    alreadyAdded() {
-      this.list.forEach(item => {
-        if (item.name == localStorage.getItem("login")) {
-          return true;
-        }
-      });
     }
   },
   components: {
