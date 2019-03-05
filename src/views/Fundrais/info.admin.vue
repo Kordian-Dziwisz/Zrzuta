@@ -1,11 +1,10 @@
 <template>
-  <div class="ProjectInfo">
+  <div class="ProjectInfo container">
     <p>Utworzył: {{info.creator}}</p>
     <p>Tytuł:
       <b-input type="text" v-model="newInfo.title"/>
     </p>
     <p>Opis:
-      <br>
       <b-textarea v-model="newInfo.description"></b-textarea>
     </p>
     <p>
@@ -14,8 +13,9 @@
     </p>
     <p>Data zakończenia:</p>
     <datepicker v-model="newInfo.endDate"/>Status:
-    <p v-if="newInfo.ended">Zakończona</p>
-    <p v-else>Otwarta</p>
+    <label v-if="newInfo.ended">Zakończona</label>
+    <label v-else>Otwarta</label>
+    <br>
     <b-button @click="newInfo.ended = !newInfo.ended">Zakończ</b-button>
     <b-input type="text" placeholder="Wpisz numer konta" v-model="newInfo.accountNumber"/>
   </div>

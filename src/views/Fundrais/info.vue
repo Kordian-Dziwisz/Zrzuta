@@ -1,26 +1,25 @@
 <template>
-  <div class="ProjectInfo">
-    <p>Utworzył: {{info.creator}}</p>
-    <p>
+  <div class="ProjectInfo container">
+    <p class="border-bottom">Utworzył: {{info.creator}}</p>
+    <p class="border-bottom">
       Tytuł:
       {{info.title}}
     </p>
-    <p>Opis:
+    <p class="border-bottom">Opis:
       <br>
       {{info.description}}
     </p>
-    <p>
+    <p class="border-bottom">
       Zbiórka rozpoczęła się:
       <strong>
         {{ info.creationDate | moment("dddd, D, MMMM, YYYY")}}
         - {{ info.creationDate | moment("H:mm")}}
       </strong>
     </p>
-    <p>
+    <label class="border-bottom">
       Zbiórka kończy się:
       <strong>{{ info.endDate | moment("dddd, D, MMMM, YYYY")}} - {{ info.endDate | moment("H:mm")}}</strong>
-    </p>
-    <br>
+    </label>
     <h4 v-if="info.ended">Zbiórka jest zakończona</h4>
   </div>
 </template>
