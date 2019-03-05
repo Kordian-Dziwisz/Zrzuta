@@ -103,7 +103,7 @@ export default {
     number(index) {
       let tmp = 0;
       do {
-        tmp = parseInt(prompt("set new number"));
+        tmp = parseInt(prompt("Ustaw nową ilość"));
       } while (typeof tmp != "number" || tmp <= 0 || isNaN(tmp));
       if (typeof tmp == "number" && tmp > 0 && !isNaN(tmp)) {
         this.list[index].number = tmp;
@@ -111,13 +111,13 @@ export default {
     },
     name(index) {
       do {
-        this.list[index].name = prompt("set new name");
+        this.list[index].name = prompt("Ustaw nową nazwę");
       } while (this.list[index].name.length == 0);
     },
     price(index) {
       let tmp = 0;
       do {
-        tmp = parseFloat(prompt("set new price"));
+        tmp = parseFloat(prompt("Ustaw nową cenę"));
       } while (typeof tmp != "number" || tmp <= 0 || isNaN(tmp));
       if (typeof tmp == "number" && tmp > 0 && !isNaN(tmp)) {
         this.list[index].price = tmp;
@@ -144,9 +144,9 @@ export default {
       get() {
         if (this.numOfParticipants != 0) {
           return this.priceSum / this.numOfParticipants;
-        } else {
-          return "Brak uczestników";
-        }
+        } else if (this.numOfParticipants === 0 || this.priceSum === 0) {
+          return 0;
+       }
       }
     }
   },
