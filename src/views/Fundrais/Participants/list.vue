@@ -60,7 +60,7 @@ export default {
   methods: {
     addItem() {
       if (this.name.length == 0) {
-        alert("name field can't be empty");
+        alert("Pole nazwy nie może być puste!");
       } else {
         this.list.push({
           name: this.name,
