@@ -1,5 +1,5 @@
 <template>
-  <div class="Login mt-5">
+  <div class="Login">
     <br>
     <form class="w-50 mx-auto mt-4" @submit.prevent="returnLogin">
       <b-alert

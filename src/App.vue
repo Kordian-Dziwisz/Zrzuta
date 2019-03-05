@@ -31,7 +31,7 @@ export default {
 </script>
 <style>
 #vue {
-  padding-top: 80px;
+  padding-top: 5.5rem;
 }
 </style>
 
