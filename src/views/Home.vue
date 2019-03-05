@@ -22,7 +22,7 @@ export default {
   mounted() {
     this.login = localStorage.getItem("login");
     this.getFundraises();
-    this.guid = this.generateGuid();
+    this.guid = localStorage.getItem("guid");
   },
   methods: {
     async getFundraises() {
@@ -33,18 +33,6 @@ export default {
     },
     mapItem(item) {
       return { ...item.data().fundraisInfo, id: item.id };
-    },
-    generateGuid() {
-      var nav = window.navigator;
-      var screen = window.screen;
-      var guid = nav.mimeTypes.length;
-      guid += nav.userAgent.replace(/\D+/g, "");
-      guid += nav.plugins.length;
-      guid += screen.height || "";
-      guid += screen.width || "";
-      guid += screen.pixelDepth || "";
-
-      return guid;
     }
   },
   components: {

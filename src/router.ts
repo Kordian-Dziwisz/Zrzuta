@@ -16,7 +16,7 @@ export default new Router({
       component: Home,
       beforeEnter: (to, from, next) => {
         if (localStorage.getItem("login") == null || localStorage.getItem("login") == "") {
-          next({ path: "/login", params: { nextURL: to.fullPath } });
+          next({ path: "/login", params: { nextURL: from.fullPath } });
         } else next();
       }
     },
