@@ -22,7 +22,7 @@
         <b-navbar-nav class="ml-auto">
           <b-navbar-brand right>
             <p id="marginCenter">
-              <b-button @click="changeLogin">change login</b-button>
+              <b-button class="btn-outline-warning btn-light" @click="changeLogin">Zmień nazwę</b-button>
             </p>
           </b-navbar-brand>
         </b-navbar-nav>

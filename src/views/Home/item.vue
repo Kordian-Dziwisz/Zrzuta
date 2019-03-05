@@ -35,11 +35,17 @@
 
     <b-row>
       <b-col md="5">
-        <b-collapse v-model="click" id>{{item.description}}</b-collapse>
-        <b-button class="btn-secondary text-center" @click="click = !click" size="sm">
-          <span v-if="!click">Pokaż opis</span>
-          <span v-else>Ukryj opis</span>
-        </b-button>
+        <div v-if="item.description.length != 0">
+          <b-collapse v-model="click" id>{{item.description}}</b-collapse>
+          <b-button
+            class="btn-outline-secondary btn-light text-center"
+            @click="click = !click"
+            size="sm"
+          >
+            <span v-if="!click">Pokaż opis</span>
+            <span v-else>Ukryj opis</span>
+          </b-button>
+        </div>
       </b-col>
       <b-col
         v-if="!item.endDate < new Date(Date.now())"
