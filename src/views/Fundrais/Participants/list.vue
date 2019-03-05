@@ -1,6 +1,10 @@
 <template>
   <div class="ListOfParticipants">
-    <form @submit.prevent="addNewItem()" class="container" v-if="!this.ended">
+    <form
+      @submit.prevent="addNewItem()"
+      class="container"
+      v-if="!this.ended && (admin || !alreadyAdded) "
+    >
       <h3>Dodaj nowego uczestnika:</h3>
       <b-form-row>
         <b-col>
@@ -86,6 +90,15 @@ export default {
     removeItem(index) {
       this.list.splice(index, 1);
       this.$emit("list", this.list);
+    }
+  },
+  computed: {
+    alreadyAdded() {
+      this.list.forEach(item => {
+        if (item.name == localStorage.getItem("login")) {
+          return true;
+        }
+      });
     }
   },
   components: {

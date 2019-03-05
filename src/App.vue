@@ -29,3 +29,9 @@ export default {
   }
 };
 </script>
+<style>
+#vue {
+  padding-top: 80px;
+}
+</style>
+

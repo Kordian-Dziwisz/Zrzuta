@@ -148,9 +148,6 @@ export default {
 };
 </script>
 <style scoped>
-.Fundrais {
-  padding-top: 6rem;
-}
 list-of-propositions {
   margin-top: 0;
 }
