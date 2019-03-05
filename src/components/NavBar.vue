@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar
-      class="fixed-top shadow bg-light"
+      class="fixed-top shadow bg-white"
       toggleable="md"
       v-shortkey="['alt', 'n']"
       @shortkey="addNewFundrais"
