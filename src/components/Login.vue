@@ -1,7 +1,7 @@
 <template>
-  <div class="Login">
+  <div class="Login mt-5">
     <br>
-    <form class="w-50 mx-auto" @submit.prevent="returnLogin">
+    <form class="w-50 mx-auto mt-4" @submit.prevent="returnLogin">
       <b-alert
         class="mt-1 pl-3"
         id="alertMargin"
