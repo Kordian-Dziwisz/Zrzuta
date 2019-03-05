@@ -21,7 +21,10 @@
     <div class="container">
       <tr>
         <td class="h5">Suma: {{priceSum + " zł"}}</td>&nbsp;
-        <td class="h5">Na osobę: {{parseFloat(pricePerUser).toFixed(2) }}</td>
+        <td class="h5">
+          Na osobę: {{parseFloat(pricePerUser).toFixed(2) }}
+          <span v-if="pricePerUser >= 0">zł</span>
+        </td>
       </tr>
       <tr></tr>
     </div>
@@ -141,7 +144,7 @@ export default {
     pricePerUser: {
       get() {
         if (this.numOfParticipants != 0) {
-          return this.priceSum / this.numOfParticipants + " zł";
+          return this.priceSum / this.numOfParticipants;
         } else {
           return "Brak uczestników";
         }
