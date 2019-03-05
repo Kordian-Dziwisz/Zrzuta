@@ -113,7 +113,7 @@ export default {
       let tmp = 0;
       do {
         tmp = prompt("Ustaw nową nazwę");
-      } while (tmp != null && tmp.length == 0);
+      } while (tmp == null || tmp.length == 0);
       if (tmp != null) {
         this.list[index].name = tmp;
       }
