@@ -9,14 +9,14 @@
       <br>
       {{info.description}}
     </p>
-    <p class="border-bottom">
+    <p class="border-bottom" v-if="info.creationDate">
       Zbiórka rozpoczęła się:
       <strong>
         {{ info.creationDate | moment("dddd, D, MMMM, YYYY")}}
         - {{ info.creationDate | moment("H:mm")}}
       </strong>
     </p>
-    <label class="border-bottom">
+    <label class="border-bottom" v-if="info.endDate">
       Zbiórka kończy się:
       <strong>{{ info.endDate | moment("dddd, D, MMMM, YYYY")}} - {{ info.endDate | moment("H:mm")}}</strong>
     </label>

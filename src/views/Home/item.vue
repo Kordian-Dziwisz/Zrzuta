@@ -1,5 +1,5 @@
 <template>
-  <b-container class="w-100 m-0 text-dark bg-light" fluid>
+  <b-container class="w-100 m-0 mb-1 text-dark bg-light" fluid>
     <b-row class="mx-auto border-bottom mt-3">
       <b-col sm="5">
         <b-row>
