@@ -6,7 +6,7 @@
       v-if="list.length === 0"
     >Brak aktywnych zbiórek - utwórz nową lub poproś o zaproszenie do obecnej.</p>
     <ul class="list-group" v-for="(item, index) in list" :key="index">
-      <Item class="list-group-item" :item="{index: index, ...item}" @remove="removeItem"/>
+      <Item class="list-group-item" :item="{index: index, ...item}" @remove="remove"/>
     </ul>
   </b-container>
 </template>
@@ -18,7 +18,7 @@ export default {
     list: Array
   },
   methods: {
-    removeItem(event) {
+    remove(event) {
       this.list.splice(event.index, 1);
       this.$emit("remove", event.id);
     }

@@ -2,10 +2,10 @@
   <div class="ParticipantsListItem">
     {{item.index + 1}}: {{item.number + " szt"}} | {{item.name}} | {{item.price + " zł"}} | {{(item.price * item.number).toFixed(2) + " zł"}}
     <div class="control">
-      <b-button class="mx-1" @click="setNumber">Sztuki</b-button>
-      <b-button class="mx-1" @click="setName">Nazwa</b-button>
-      <b-button class="mx-1" @click="setPrice">Cena</b-button>
-      <b-button class="mx-1" @click="removeItem">Usuń</b-button>
+      <b-button class="mx-1" @click="number">Sztuki</b-button>
+      <b-button class="mx-1" @click="name">Nazwa</b-button>
+      <b-button class="mx-1" @click="price">Cena</b-button>
+      <b-button class="mx-1" @click="remove">Usuń</b-button>
     </div>
   </div>
 </template>
@@ -15,16 +15,16 @@ export default {
     item: Object
   },
   methods: {
-    setNumber() {
+    number() {
       this.$emit("number", this.item.index);
     },
-    setName() {
+    name() {
       this.$emit("name", this.item.index);
     },
-    setPrice() {
+    price() {
       this.$emit("price", this.item.index);
     },
-    removeItem() {
+    remove() {
       this.$emit("remove", this.item.index);
     }
   }

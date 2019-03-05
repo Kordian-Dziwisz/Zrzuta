@@ -3,7 +3,7 @@
     <div class="container pt-3">
       <h3 v-if="admin">Lista propozycji</h3>
       <h3>Dodaj nową propozycję</h3>
-      <form @submit.prevent="addNewItem">
+      <form @submit.prevent="addNew">
         <b-form-row>
           <b-col sm="6" lg="2" class="px-0">
             <b-input
@@ -34,18 +34,18 @@
         <Item
           v-if="!admin"
           :item="{index: index, ...item}"
-          @like="likeItem"
-          @dislike="dislikeItem"
-          @remove="removeItem"
-          @accept="acceptItem"
+          @like="like"
+          @dislike="dislike"
+          @remove="remove"
+          @accept="accept"
         />
         <item-admin
           v-else
           :item="{index: index, ...item}"
-          @like="likeItem"
-          @dislike="dislikeItem"
-          @remove="removeItem"
-          @accept="acceptItem"
+          @like="like"
+          @dislike="dislike"
+          @remove="remove"
+          @accept="accept"
         />
       </li>
     </ul>
@@ -77,7 +77,7 @@ export default {
     }
   },
   methods: {
-    addNewItem() {
+    addNew() {
       if (this.newItem.name.length == 0 || this.newItem.number.length == 0 || this.newItem.price.length == 0) {
         alert("Wpisz poprawną wartość!");
       } else {
@@ -95,17 +95,17 @@ export default {
         this.newItem.price = "";
       }
     },
-    removeItem(index) {
+    remove(index) {
       this.list.splice(index, 1);
     },
-    likeItem(index) {
+    like(index) {
       if (this.list[index].dislikes.includes(localStorage.getItem("login"))) {
         this.list[index].dislikes.splice(this.list[index].dislikes.indexOf(localStorage.getItem("login"), 1));
       }
       this.list[index].likes.push(localStorage.getItem("login"));
       this.$emit("list", this.list);
     },
-    dislikeItem(index) {
+    dislike(index) {
       if (this.list[index].likes.includes(localStorage.getItem("login"))) {
         this.list[index].likes.splice(this.list[index].dislikes.indexOf(localStorage.getItem("login"), 1));
       }
@@ -113,7 +113,7 @@ export default {
       this.list[index].dislikes.push(localStorage.getItem("login"));
       this.$emit("list", this.list);
     },
-    acceptItem(index) {
+    accept(index) {
       this.list[index].accepted = true;
       this.$emit("list", this.list);
       this.list.splice(index, 1);

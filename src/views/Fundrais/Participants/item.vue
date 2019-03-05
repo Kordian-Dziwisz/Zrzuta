@@ -9,7 +9,7 @@
           class="ml-5 mt-1 btn-outline-info btn-light"
           size="sm"
           v-if="authenticate && !item.paid && !item.accepted"
-          @click="setPaid"
+          @click="paid"
         >Zapłaciłem</b-button>
       </span>
     </div>
@@ -20,7 +20,7 @@
         <b-button
           class="ml-4 mt-2 btn-outline-danger btn-light"
           size="sm"
-          @click="removeItem"
+          @click="remove"
           v-if="authenticate"
         >Usuń</b-button>
       </span>
@@ -34,15 +34,12 @@ export default {
     item: Object
   },
   methods: {
-    setComment() {
-      this.$emit("comment", this.item.index);
-    },
-    setPaid() {
+    paid() {
       if (this.item.accepted == false) {
-        this.$emit("paid", this.item.index);
+        this.item.paid = true;
       }
     },
-    removeItem() {
+    remove() {
       this.$emit("remove", this.item.index);
     }
   },

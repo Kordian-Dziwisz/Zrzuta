@@ -1,8 +1,7 @@
 <template>
   <div class="ListOfProducts">
-    <form class="container" @submit.prevent="addNewItem" v-if="admin && !this.ended">
+    <form class="container" @submit.prevent="addItem" v-if="admin && !this.ended">
       <h3>Dodaj cel zbiórki</h3>
-
       <b-form-row>
         <b-col sm="6" lg="2" class="px-0">
           <b-input type="number" v-model="newItem.number" min="0" placeholder="Ilość"/>
@@ -38,18 +37,18 @@
         <Item
           v-if="!admin"
           :item="{index: index, ...item}"
-          @number="setNumber"
-          @name="setName"
-          @price="setPrice"
-          @remove="removeItem"
+          @number="number"
+          @name="name"
+          @price="price"
+          @remove="remove"
         />
         <item-admin
           v-else
           :item="{index: index, ...item}"
-          @number="setNumber"
-          @name="setName"
-          @price="setPrice"
-          @remove="removeItem"
+          @number="number"
+          @name="name"
+          @price="price"
+          @remove="remove"
         />
       </li>
     </ul>
@@ -81,7 +80,7 @@ export default {
     }
   },
   methods: {
-    addNewItem() {
+    addItem() {
       if (
         this.newItem.number.length == 0 ||
         this.newItem.price.length == 0 ||
@@ -101,7 +100,7 @@ export default {
         this.newItem.price = "";
       }
     },
-    setNumber(index) {
+    number(index) {
       let tmp = 0;
       do {
         tmp = parseInt(prompt("set new number"));
@@ -110,12 +109,16 @@ export default {
         this.list[index].number = tmp;
       }
     },
-    setName(index) {
+    name(index) {
+      let tmp = 0;
       do {
-        this.list[index].name = prompt("set new name");
-      } while (this.list[index].name.length == 0);
+        tmp = prompt("set new name");
+      } while (tmp != null && tmp.length == 0);
+      if (tmp != null) {
+        this.list[index].name = tmp;
+      }
     },
-    setPrice(index) {
+    price(index) {
       let tmp = 0;
       do {
         tmp = parseFloat(prompt("set new price"));
@@ -124,7 +127,7 @@ export default {
         this.list[index].price = tmp;
       }
     },
-    removeItem(index) {
+    remove(index) {
       this.list.splice(index, 1);
     }
   },

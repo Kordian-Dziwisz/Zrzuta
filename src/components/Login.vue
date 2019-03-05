@@ -7,7 +7,7 @@
         id="alertMargin"
         variant="danger"
         dismissible
-        :show="showAlert"
+        :show="alert"
       >Zaloguj się, aby przejść dalej!</b-alert>
       <b-form-input v-model="login" placeholder="Tutaj wpisz login" type="text"/>
       <b-button type="submit" class="mt-1">Zaloguj się</b-button>
@@ -34,9 +34,8 @@ export default {
       this.$emit("login", this.login);
     }
   },
-  // Function for alert
   computed: {
-    showAlert() {
+    alert() {
       return this.login.length == 0;
     }
   }

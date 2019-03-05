@@ -5,8 +5,8 @@
     <span v-if="item.paid && !item.accepted">Wpłacono |</span>
     <span v-if="item.accepted">Otrzymano</span>
     <div class="control">
-      <b-button class="mx-1" @click="setAccepted" v-if="!item.accepted">Zaakceptuj</b-button>
-      <b-button class="mx-1" @click="removeItem">Usuń</b-button>
+      <b-button class="mx-1" @click="accepted" v-if="!item.accepted">Zaakceptuj</b-button>
+      <b-button class="mx-1" @click="remove">Usuń</b-button>
     </div>
   </div>
 </template>
@@ -16,11 +16,10 @@ export default {
     item: Object
   },
   methods: {
-    setAccepted() {
-      this.$emit("accepted", this.item.index);
+    accepted() {
       this.accepted = true;
     },
-    removeItem() {
+    remove() {
       this.$emit("remove", this.item.index);
     }
   }

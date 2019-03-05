@@ -3,9 +3,9 @@
     <!-- display properties index:creator:number|name|price|totalcost -->
     {{item.index + 1}}: {{item.creator}}: {{item.number}} | {{item.name}} | {{item.price}} | {{(item.price * item.number).toFixed(2)}} | {{item.likes.length}} | {{item.dislikes.length}}
     <div class="control">
-      <b-button class="mx-1" @click="likeItem" v-if="!authenticate && !isLiked">Like</b-button>
-      <b-button class="mx-1" @click="dislikeItem" v-if="!authenticate && !isDisliked">Dislike</b-button>
-      <b-button class="mx-1" @click="removeItem" v-if="authenticate">Usuń</b-button>
+      <b-button class="mx-1" @click="like" v-if="!authenticate && !isLiked">Like</b-button>
+      <b-button class="mx-1" @click="dislike" v-if="!authenticate && !isDisliked">Dislike</b-button>
+      <b-button class="mx-1" @click="remove" v-if="authenticate">Usuń</b-button>
     </div>
   </div>
 </template>
@@ -15,17 +15,14 @@ export default {
     item: Object
   },
   methods: {
-    likeItem() {
+    like() {
       this.$emit("like", this.item.index);
     },
-    dislikeItem() {
+    dislike() {
       this.$emit("dislike", this.item.index);
     },
-    removeItem() {
+    remove() {
       this.$emit("remove", this.item.index);
-    },
-    acceptItem() {
-      this.$emit("accept", this.item.index);
     }
   },
   computed: {

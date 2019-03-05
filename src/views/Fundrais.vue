@@ -4,14 +4,14 @@
       <b-row>
         <b-col class="shadow">
           <project-info v-if="!authenticate" :info="fundraisInfo"/>
-          <info-admin v-if="authenticate" :info="fundraisInfo" @info="updateFundraisInfo"/>
+          <info-admin v-if="authenticate" :info="fundraisInfo" @info="updateInfo"/>
         </b-col>
         <b-col class="shadow">
           <list-of-participants
             :admin="authenticate"
             :ended="this.fundraisInfo.ended"
             :list="listOfParticipants"
-            @list="updateListOfParticipants"
+            @list="updateParticipants"
           />
         </b-col>
         <b-col class="shadow">
@@ -20,7 +20,7 @@
             :ended="this.fundraisInfo.ended"
             :numOfParticipants="listOfParticipants.length"
             :list="listOfProducts"
-            @list="updateListOfProducts"
+            @list="updateProducts"
           />
         </b-col>
       </b-row>
@@ -36,15 +36,10 @@
             v-if="false"
             :admin="authenticate"
             :list="listOfPropositions"
-            @list="updateListOfPropositions"
+            @list="updatePropositions"
           />
         </b-col>
       </b-row>
-      <!-- <b-row>
-        <b-col style="background-color: green">
-
-        </b-col>
-      </b-row>-->
     </div>
   </div>
 </template>
@@ -71,19 +66,19 @@ export default {
     };
   },
   methods: {
-    updateFundraisInfo(info) {
+    updateInfo(info) {
       this.fundraisInfo = info;
       this.updateDoc();
     },
-    updateListOfParticipants(list) {
+    updateParticipants(list) {
       this.listOfParticipants = list;
       this.updateDoc();
     },
-    updateListOfProducts(list) {
+    updateProducts(list) {
       this.listOfProducts = list;
       this.updateDoc();
     },
-    updateListOfPropositions(list) {
+    updatePropositions(list) {
       this.listOfPropositions = list;
       let accept = this.acceptProposition;
       this.listOfPropositions.forEach(item => accept(item));
