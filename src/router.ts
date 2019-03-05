@@ -16,7 +16,7 @@ export default new Router({
       component: Home,
       beforeEnter: (to, from, next) => {
         if (localStorage.getItem("login") == null || localStorage.getItem("login") == "") {
-          next({ path: "/login", params: { nextURL: to.fullPath } });
+          next({ path: "/login", query: { nextURL: to.fullPath } });
         } else next();
       }
     },
@@ -25,9 +25,9 @@ export default new Router({
       name: "Fundrais",
       component: Fundrais,
       beforeEnter: (to, from, next) => {
-        if (localStorage.getItem("login") == null) {
+        if (localStorage.getItem("login") == null || localStorage.getItem("login") == "") {
           //debugger;
-          next({ path: "/login", params: { nextURL: to.fullPath } });
+          next({ path: "/login", query: { nextURL: to.fullPath } });
         } else next();
       }
     },
