@@ -17,7 +17,7 @@
     </form>
     <b-button
       class="btn-outline-success btn-light"
-      v-if="!this.ended && !admin"
+      v-if="!this.ended && !admin && !alreadyAdded"
       @click="addMe"
     >Dodaj mnie</b-button>
     <!-- displaying a list of Participant, create new component to Item bind -->
@@ -107,6 +107,17 @@ export default {
     removeItem(index) {
       this.list.splice(index, 1);
       this.$emit("list", this.list);
+    }
+  },
+  computed: {
+    alreadyAdded() {
+      let flag = false;
+      this.list.forEach(item => {
+        if (item.name == localStorage.getItem("login")) {
+          flag = true;
+        }
+      });
+      return flag;
     }
   },
   components: {
