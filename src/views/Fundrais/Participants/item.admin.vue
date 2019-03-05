@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     accepted() {
-      this.accepted = true;
+      this.item.accepted = true;
     },
     remove() {
       this.$emit("remove", this.item.index);
