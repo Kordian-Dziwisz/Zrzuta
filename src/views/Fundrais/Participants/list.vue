@@ -28,22 +28,8 @@
         >dopisz go w polu powyżej.</span>
       </p>
       <li class="border-bottom w-auto" v-for="(item, index) in list" :key="index">
-        <item
-          v-if="!admin"
-          :item="{index: index, ...item}"
-          @comment="comment"
-          @paid="paid"
-          @accepted="accepted"
-          @remove="remove"
-        />
-        <item-admin
-          v-else
-          :item="{index: index, ...item}"
-          @comment="comment"
-          @paid="paid"
-          @accepted="accepted"
-          @remove="remove"
-        />
+        <item v-if="!admin" :item="Object.assign(item, {index: index})" @remove="remove"/>
+        <item-admin v-else :item="Object.assign(item, {index: index})" @remove="remove"/>
       </li>
     </ul>
   </div>
@@ -63,6 +49,15 @@ export default {
       name: ""
     };
   },
+  watch: {
+    list: {
+      handler() {
+        console.log("something has changed");
+        this.$emit("list", this.list);
+      },
+      deep: true
+    }
+  },
   methods: {
     addItem() {
       if (this.name.length == 0) {
@@ -77,7 +72,6 @@ export default {
         });
         this.name = "";
       }
-      this.$emit("list", this.list);
     },
     addMe() {
       this.list.push({
@@ -87,23 +81,9 @@ export default {
         comment: "",
         guid: localStorage.getItem("guid")
       });
-      this.$emit("list", this.list);
-    },
-    comment(index) {
-      this.list[index].comment = prompt("Edytuj komentarz", this.list[index].comment || "");
-      this.$emit("list", this.list);
-    },
-    paid(index) {
-      this.list[index].paid = !this.list[index].paid;
-      this.$emit("list", this.list);
-    },
-    accepted(index) {
-      this.list[index].accepted = !this.list[index].accepted;
-      this.$emit("list", this.list);
     },
     remove(index) {
       this.list.splice(index, 1);
-      this.$emit("list", this.list);
     }
   },
   computed: {
