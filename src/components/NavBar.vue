@@ -4,7 +4,7 @@
       class="fixed-top shadow bg-white"
       toggleable="md"
       v-shortkey="['alt', 'n']"
-      @shortkey="addNewFundrais"
+      @shortkey="addFundrais"
     >
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
@@ -15,7 +15,7 @@
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
           <b-nav-item :to="{ name: 'home'}">Home</b-nav-item>
-          <b-nav-item @click="addNewFundrais">Nowa zbiórka</b-nav-item>
+          <b-nav-item @click="addFundrais">Nowa zbiórka</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -51,7 +51,7 @@ export default {
     };
   },
   methods: {
-    async addNewFundrais() {
+    async addFundrais() {
       if ((this.newFundrais.creator = localStorage.getItem("login")) && this.clicked == false) {
         this.clicked = true;
         this.newFundrais.guid = localStorage.getItem("guid");

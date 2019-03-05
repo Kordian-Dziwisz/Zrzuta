@@ -28,12 +28,7 @@
         <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-else>
           <b-button class="btn-info" size="sm">Otwórz</b-button>
         </router-link>&nbsp;
-        <b-button
-          class="btn-outline-danger btn-light"
-          size="sm"
-          @click="removeItem"
-          v-if="isYour"
-        >Usuń</b-button>
+        <b-button class="btn-outline-danger btn-light" size="sm" @click="remove" v-if="isYour">Usuń</b-button>
       </b-col>
       <hr>
     </b-row>
@@ -69,10 +64,7 @@ export default {
     };
   },
   methods: {
-    editItem() {
-      this.$emit("edit", this.item.index);
-    },
-    removeItem() {
+    remove() {
       this.$emit("remove", {
         index: this.item.index,
         id: this.item.id

@@ -1,6 +1,6 @@
 <template>
   <div class="ListOfParticipants">
-    <form @submit.prevent="addNewItem()" class="container" v-if="!this.ended && admin">
+    <form @submit.prevent="addItem()" class="container" v-if="!this.ended && admin">
       <h3>Dodaj nowego uczestnika:</h3>
       <b-form-row>
         <b-col>
@@ -20,7 +20,6 @@
       v-if="!this.ended && !admin && !alreadyAdded"
       @click="addMe"
     >Dodaj mnie</b-button>
-    <!-- displaying a list of Participant, create new component to Item bind -->
     <ul class="overflow-auto px-3">
       <p v-if="list.length==0">
         Jak dotąd nie zapisano żadnego uczestnika,
@@ -32,18 +31,18 @@
         <item
           v-if="!admin"
           :item="{index: index, ...item}"
-          @comment="setComment"
-          @paid="setPaid"
-          @accepted="setAccepted"
-          @remove="removeItem"
+          @comment="comment"
+          @paid="paid"
+          @accepted="accepted"
+          @remove="remove"
         />
         <item-admin
           v-else
           :item="{index: index, ...item}"
-          @comment="setComment"
-          @paid="setPaid"
-          @accepted="setAccepted"
-          @remove="removeItem"
+          @comment="comment"
+          @paid="paid"
+          @accepted="accepted"
+          @remove="remove"
         />
       </li>
     </ul>
@@ -61,12 +60,11 @@ export default {
   },
   data() {
     return {
-      //just Object template
       name: ""
     };
   },
   methods: {
-    addNewItem() {
+    addItem() {
       if (this.name.length == 0) {
         alert("name field can't be empty");
       } else {
@@ -77,7 +75,6 @@ export default {
           comment: "",
           guid: localStorage.getItem("guid")
         });
-        //reset template, only name is changing
         this.name = "";
       }
       this.$emit("list", this.list);
@@ -92,19 +89,19 @@ export default {
       });
       this.$emit("list", this.list);
     },
-    setComment(index) {
+    comment(index) {
       this.list[index].comment = prompt("Edytuj komentarz", this.list[index].comment || "");
       this.$emit("list", this.list);
     },
-    setPaid(index) {
+    paid(index) {
       this.list[index].paid = !this.list[index].paid;
       this.$emit("list", this.list);
     },
-    setAccepted(index) {
+    accepted(index) {
       this.list[index].accepted = !this.list[index].accepted;
       this.$emit("list", this.list);
     },
-    removeItem(index) {
+    remove(index) {
       this.list.splice(index, 1);
       this.$emit("list", this.list);
     }
