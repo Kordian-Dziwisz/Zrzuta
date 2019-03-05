@@ -10,8 +10,9 @@ export default {
     changeLogin(login) {
       if (login.length != 0) {
         localStorage.setItem("login", login);
-        if (this.$route.params.nextURL != null) {
-          this.$router.push({ path: this.$route.params.nextURL });
+        if (this.$route.query.nextURL != null) {
+          console.log(this.$route.query.nextURL);
+          this.$router.push({ path: this.$route.query.nextURL });
         } else this.$router.push({ path: "/" });
       }
     }
