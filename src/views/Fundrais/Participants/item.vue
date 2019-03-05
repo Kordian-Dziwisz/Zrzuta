@@ -34,12 +34,9 @@ export default {
     item: Object
   },
   methods: {
-    comment() {
-      this.$emit("comment", this.item.index);
-    },
     paid() {
       if (this.item.accepted == false) {
-        this.$emit("paid", this.item.index);
+        this.item.paid = true;
       }
     },
     remove() {
