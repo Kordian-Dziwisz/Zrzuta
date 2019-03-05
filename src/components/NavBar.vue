@@ -14,14 +14,16 @@
       <!--https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvfuNsZHffYNmIn1UcFABUb6-GnknWFFrXIniz1R-Ocer4BMCMug -->
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
-          <b-nav-item :to="{ name: 'Home'}">Home</b-nav-item>
+          <b-nav-item :to="{ name: 'home'}">Home</b-nav-item>
           <b-nav-item @click="addNewFundrais">Nowa zbiórka</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-navbar-brand right>
-            <p id="marginCenter">Oddajcie mi pieniondze</p>
+            <p id="marginCenter">
+              <b-button @click="changeLogin">change login</b-button>
+            </p>
           </b-navbar-brand>
         </b-navbar-nav>
       </b-collapse>
@@ -52,7 +54,7 @@ export default {
     async addNewFundrais() {
       if ((this.newFundrais.creator = localStorage.getItem("login")) && this.clicked == false) {
         this.clicked = true;
-        this.newFundrais.guid = this.generateGuid();
+        this.newFundrais.guid = localStorage.getItem("guid");
         let newFundrais = await this.db.add({
           fundraisInfo: { ...this.newFundrais },
           listOfParticipants: [],
@@ -65,17 +67,9 @@ export default {
         });
       }
     },
-    generateGuid() {
-      var nav = window.navigator;
-      var screen = window.screen;
-      var guid = nav.mimeTypes.length;
-      guid += nav.userAgent.replace(/\D+/g, "");
-      guid += nav.plugins.length;
-      guid += screen.height || "";
-      guid += screen.width || "";
-      guid += screen.pixelDepth || "";
-
-      return guid;
+    changeLogin() {
+      localStorage.removeItem("login");
+      this.$router.push({ path: "/login" });
     }
   }
 };

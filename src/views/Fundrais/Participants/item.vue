@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     authenticate() {
-      return this.item.guid == localStorage.getItem("guid");
+      return this.item.name == localStorage.getItem("login");
     }
   }
 };

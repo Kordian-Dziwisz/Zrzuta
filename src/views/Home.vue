@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="home">
     <fundraising-list :list="list" @remove="removeFundrais"></fundraising-list>
   </div>
 </template>
@@ -13,25 +13,18 @@ import firebase from "firebase";
 export default {
   data() {
     return {
-      logged: false,
-      //login: "",~
+      login: "",
       db: firebase.firestore().collection("Zrzuty"),
       list: [],
       guid: ""
     };
   },
   mounted() {
-    //this.login = localStorage.getItem("login");
+    this.login = localStorage.getItem("login");
     this.getFundraises();
-    this.guid = this.generateGuid();
+    this.guid = localStorage.getItem("guid");
   },
   methods: {
-    changeLogin(login) {
-      if (login != "") {
-        this.logged = true;
-      }
-      localStorage.setItem("login", login);
-    },
     async getFundraises() {
       this.list = (await this.db.get()).docs.map(item => this.mapItem(item));
     },
@@ -40,18 +33,6 @@ export default {
     },
     mapItem(item) {
       return { ...item.data().fundraisInfo, id: item.id };
-    },
-    generateGuid() {
-      var nav = window.navigator;
-      var screen = window.screen;
-      var guid = nav.mimeTypes.length;
-      guid += nav.userAgent.replace(/\D+/g, "");
-      guid += nav.plugins.length;
-      guid += screen.height || "";
-      guid += screen.width || "";
-      guid += screen.pixelDepth || "";
-
-      return guid;
     }
   },
   components: {

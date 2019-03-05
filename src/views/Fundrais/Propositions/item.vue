@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     authenticate() {
-      return this.item.creatorGuid == localStorage.getItem("guid");
+      return this.item.creator == localStorage.getItem("login");
     },
     isLiked() {
       return this.item.likes.includes(localStorage.getItem("login"));

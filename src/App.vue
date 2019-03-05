@@ -7,7 +7,7 @@
 <script>
 import NavBar from "@/components/NavBar.vue";
 export default {
-  mounted() {
+  updated() {
     localStorage.setItem("guid", this.generateGuid());
   },
   methods: {
