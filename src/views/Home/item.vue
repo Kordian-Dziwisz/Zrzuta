@@ -6,7 +6,10 @@
           <p class="h4 mr-1">{{item.title}}</p>
         </b-row>
         <b-row>
-          <p class="h6 d-inline font-weight-light">twórca: <span class="font-weight-bold">{{item.creator}}</span></p>
+          <p class="h6 d-inline font-weight-light">
+            twórca:
+            <span class="font-weight-bold">{{item.creator}}</span>
+          </p>
         </b-row>
       </b-col>
       <b-col sm="4" class="pt-4 px-0">
@@ -20,7 +23,7 @@
         </b-row>
       </b-col>
 
-      <b-col sm="2" class="px-0">
+      <b-col lg="3" sm="2" class="pt-4 pl-5">
         <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-if="isYour">
           <b-button class="btn-info" size="sm">Edytuj</b-button>
         </router-link>
@@ -33,7 +36,7 @@
     </b-row>
 
     <b-row>
-      <b-col md="5">
+      <b-col lg="5">
         <div v-if="item.description.length != 0">
           <b-collapse v-model="click" id>{{item.description}}</b-collapse>
           <b-button
@@ -46,10 +49,12 @@
           </b-button>
         </div>
       </b-col>
-      <b-col
-        v-if="!item.endDate < new Date(Date.now())"
-        class="font-weight-light"
-      >Zbiórka kończy się: <span class="font-weight-bold">{{ item.endDate | moment("dddd, D MMMM YYYY")}} - {{ item.endDate | moment("H:mm")}}</span></b-col>
+      <b-col v-if="!item.endDate < new Date(Date.now())" class="font-weight-light">
+        Zbiórka kończy się:
+        <span
+          class="font-weight-bold"
+        >{{ item.endDate | moment("dddd, D MMMM YYYY")}} - {{ item.endDate | moment("H:mm")}}</span>
+      </b-col>
     </b-row>
   </b-container>
 </template>
