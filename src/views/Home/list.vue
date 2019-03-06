@@ -10,7 +10,6 @@
     </ul>
   </b-container>
 </template>
-
 <script>
 import Item from "@/views/Home/item.vue";
 export default {
