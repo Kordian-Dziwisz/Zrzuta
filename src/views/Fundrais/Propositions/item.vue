@@ -1,6 +1,5 @@
 <template>
   <div class="ParticipantsListItem">
-    <!-- display properties index:creator:number|name|price|totalcost -->
     {{item.index + 1}}: {{item.creator}}: {{item.number}} | {{item.name}} | {{item.price}} | {{(item.price * item.number).toFixed(2)}} | {{item.likes.length}} | {{item.dislikes.length}}
     <div class="control">
       <b-button class="mx-1" @click="like" v-if="!authenticate && !isLiked">Like</b-button>
