@@ -1,11 +1,25 @@
 <template>
-  <div class="ParticipantsListItem">
-    {{item.index + 1}}: {{item.number + " szt"}} | {{item.name}} | {{item.price + " zł"}} | {{(item.price * item.number).toFixed(2) + " zł"}}
-    <div class="control">
-      <b-button class="mx-1" @click="number">Sztuki</b-button>
-      <b-button class="mx-1" @click="name">Nazwa</b-button>
-      <b-button class="mx-1" @click="price">Cena</b-button>
-      <b-button class="mx-1" @click="remove">Usuń</b-button>
+  <div class="container">
+    <div class="row">
+      <span class="col-lg-auto">
+        {{item.name}}
+        <span v-if="item.number > 1">x{{item.number}}</span>
+      </span>
+      <span class="col-lg-3">{{item.price + " zł"}}</span>
+    </div>
+    <div class="row my-1">
+      <div class="col-lg-3">
+        <b-button size="sm" @click="name">Nazwa</b-button>
+      </div>
+      <div class="col-lg-3">
+        <b-button size="sm" @click="number">Sztuki</b-button>
+      </div>
+      <div class="col-lg-3">
+        <b-button size="sm" @click="price">Cena</b-button>
+      </div>
+      <span class="col-lg-3">
+        <b-button class="btn-outline-danger btn-light" size="sm" @click="remove">Usuń</b-button>
+      </span>
     </div>
   </div>
 </template>

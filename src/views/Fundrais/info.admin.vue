@@ -15,7 +15,10 @@
     <label v-if="newInfo.ended">Zakończona</label>
     <label v-else>Otwarta</label>
     <br>
-    <b-button class="mb-1" @click="newInfo.ended = !newInfo.ended">Zakończ</b-button>
+    <b-button
+      class="mb-1 btn-outline-danger btn-light"
+      @click="newInfo.ended = !newInfo.ended"
+    >Zakończ</b-button>
     <b-input
       class="mb-1"
       type="text"
