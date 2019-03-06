@@ -6,7 +6,7 @@
           <p class="h4 mr-1">{{item.title}}</p>
         </b-row>
         <b-row>
-          <p class="h6 d-inline font-weight-light">twórca: <span class="font-weight-bold">{{item.creator}}</span></p>
+          <p class="h6 d-inline font-weight-light animated bounceInDown">twórca: <span class="font-weight-bold">{{item.creator}}</span></p>
         </b-row>
       </b-col>
       <b-col sm="4" class="pt-4 px-0">
