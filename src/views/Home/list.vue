@@ -22,6 +22,8 @@ export default {
       this.$emit("remove", event.id);
     }
   },
+  created(){
+  },
   components: {
     Item
   }
