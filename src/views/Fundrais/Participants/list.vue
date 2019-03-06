@@ -28,8 +28,11 @@
         >dopisz go w polu powyżej.</span>
       </p>
       <li class="border-bottom w-auto" v-for="(item, index) in list" :key="index">
-        <item v-if="!admin" :item="Object.assign(item, {index: index})" @remove="remove"/>
-        <item-admin v-else :item="Object.assign(item, {index: index})" @remove="remove"/>
+        <component
+          :is="admin ? 'item-admin':'item'"
+          :item="Object.assign(item, {index: index})"
+          @remove="remove"
+        ></component>
       </li>
     </ul>
   </div>
