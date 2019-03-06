@@ -2,19 +2,26 @@
   <div class="ProjectInfo container">
     <label>Utworzył: {{info.creator}}</label>
     <br>
-    <label>Tytuł:</label>
-    <b-input type="text" v-model="newInfo.title"/>
-    <label>Opis:</label>
-    <b-textarea v-model="newInfo.description"></b-textarea>
-    <label>
-      Zbiórka rozpoczęła się:
-      <strong>{{ info.creationDate | moment("dddd, D MMMM YYYY")}} o godzinie: {{ info.creationDate | moment("h:mm")}}</strong>
-    </label>
-    <label>Data zakończenia:</label>
-    <datepicker v-model="newInfo.endDate"/>Status:
-    <label v-if="newInfo.ended">Zakończona</label>
-    <label v-else>Otwarta</label>
+
+    <label>Tytuł:</label>&nbsp;
+    <b-input type="text" v-model="newInfo.title" placeholder="wpisz tytuł zbiórki" class="d-inline w-25"/>
     <br>
+
+    <label>Opis:</label>&nbsp;
+    <b-textarea v-model="newInfo.description" placeholder="wpisz opis zbiórki"></b-textarea>
+    <hr>
+
+    <label>Zbiórka rozpoczęła się:</label>&nbsp;
+    <p class="border-bottom font-weight-bold">{{ info.creationDate | moment("dddd, D MMMM YYYY")}} o godzinie: {{ info.creationDate | moment("h:mm")}}</p>
+
+
+    <label>Data zakończenia:</label>
+    <datepicker v-model="newInfo.endDate" class="border-bottom border-rounded"/>
+    <br>
+
+    <label>Status:&nbsp;</label>
+    <span class="font-weight-bold text-danger h5" v-if="newInfo.ended">Zakończona</span>
+    <span class="font-weight-bold text-success h5" v-else>Otwarta</span>&nbsp;
     <b-button
       class="mb-1 btn-outline-success btn-light"
       size="sm"
@@ -27,6 +34,7 @@
       size="sm"
       v-else
     >Zakończ</b-button>
+
     <b-input
       class="mb-1"
       type="text"
@@ -63,3 +71,9 @@ export default {
   }
 };
 </script>
+<style>
+input {
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+</style>
