@@ -12,7 +12,7 @@
         <b-button size="sm" @click="name">Nazwa</b-button>
       </div>
       <div class="col-lg-3">
-        <b-button size="sm" @click="number">Sztuki</b-button>
+        <b-button size="sm" @click="number">Ilość</b-button>
       </div>
       <div class="col-lg-3">
         <b-button size="sm" @click="price">Cena</b-button>

@@ -25,14 +25,21 @@ export default {
   },
   methods: {
     async getFundraises() {
-      this.list = (await this.db.get()).docs.map(item => this.mapItem(item));
+      this.list = (await this.db.get()).docs.map(item => this.mapItem(item)).filter(x => x!=null);
+      await console.log(this.list);
+    },
+    mapItem(item) {
+      console.log((this.shared(Object.values(item.data().listOfParticipants).map(x => x.name).concat(item.data().fundraisInfo.creator))));
+      if(this.shared(Object.values(item.data().listOfParticipants).map(x => x.name).concat(item.data().fundraisInfo.creator))){
+        return {...item.data().fundraisInfo, id: item.id};
+      }else return null;
+    },
+    shared(list){
+      return list.includes(localStorage.getItem("login"));
     },
     async removeFundrais(docID) {
       await this.db.doc(docID).delete();
     },
-    mapItem(item) {
-      return { ...item.data().fundraisInfo, id: item.id };
-    }
   },
   components: {
     Login,

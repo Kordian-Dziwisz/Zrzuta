@@ -3,11 +3,11 @@
     <form class="container" @submit.prevent="addItem" v-if="admin && !this.ended">
       <h3>Dodaj cel zbiórki</h3>
       <b-form-row>
+        <b-col sm="6" lg="5" class="px-0">
+          <b-input type="text" v-model="newItem.name" placeholder="Nazwa"/>
+        </b-col>
         <b-col sm="6" lg="2" class="px-0">
           <b-input type="number" v-model="newItem.number" min="0" placeholder="Ilość"/>
-        </b-col>
-        <b-col sm="6" lg="5">
-          <b-input type="text" v-model="newItem.name" placeholder="Nazwa"/>
         </b-col>
         <b-col sm="6" lg="2" class="px-0">
           <b-input type="number" v-model="newItem.price" min="0" placeholder="Cena jednostkowa"/>
@@ -34,9 +34,7 @@
       >Lista produktów jest pusta, twórca zbiórki nie dodał jeszcze żadnego produktu.</label>
       <label v-if="list.length==0 && admin">Lista produktów jest pusta, dodaj nowy cel powyżej.</label>
       <li class="border-bottom w-auto" v-for="(item, index) in list" :key="index">
-        <component
-          :is="admin ? 'item-admin':'item'"
-          :item="{index: index, ...item}"
+        <component :is="admin ? 'item-admin':'item'" :item="Object.assign(item, {index: index})"
           @number="number"
           @name="name"
           @price="price"
@@ -67,8 +65,11 @@ export default {
     };
   },
   watch: {
-    list() {
-      this.$emit("list", this.list);
+    list: {
+      handler(){
+        this.$emit("list", this.list);
+      },
+      deep: true
     }
   },
   methods: {
@@ -102,7 +103,7 @@ export default {
       }
     },
     name(index) {
-      let tmp = 0;
+      let tmp = "";
       do {
         tmp = prompt("Ustaw nową nazwę");
       } while (tmp == null);
@@ -165,4 +166,3 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 </style>
-

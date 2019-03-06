@@ -16,7 +16,7 @@
       </b-form-row>
     </form>
     <b-button
-      class="btn-outline-success btn-light"
+      class="col-sm btn-outline-success btn-light"
       v-if="!this.ended && !admin && !alreadyAdded"
       @click="addMe"
     >Dodaj mnie</b-button>
@@ -76,7 +76,7 @@ export default {
       }
     },
     addMe() {
-      this.list.push({
+      this.list.unshift({
         name: localStorage.getItem("login"),
         accepted: false,
         paid: false,

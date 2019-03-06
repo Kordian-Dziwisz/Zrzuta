@@ -9,7 +9,6 @@
           <p class="h6 d-inline">twórca: {{item.creator}}</p>
         </b-row>
       </b-col>
-
       <b-col sm="4" class="pt-4 px-0">
         <b-row>
           <p
@@ -77,7 +76,7 @@ export default {
   },
   computed: {
     isYour() {
-      return this.item.guid == localStorage.getItem("guid");
+      return this.item.creator == localStorage.getItem("login");
     }
   }
 };
