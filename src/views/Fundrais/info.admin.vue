@@ -4,7 +4,12 @@
     <br>
 
     <label>Tytuł:</label>&nbsp;
-    <b-input type="text" v-model="newInfo.title" placeholder="wpisz tytuł zbiórki" class="d-inline w-25"/>
+    <b-input
+      type="text"
+      v-model="newInfo.title"
+      placeholder="wpisz tytuł zbiórki"
+      class="d-inline w-75"
+    />
     <br>
 
     <label>Opis:</label>&nbsp;
@@ -12,8 +17,9 @@
     <hr>
 
     <label>Zbiórka rozpoczęła się:</label>&nbsp;
-    <p class="border-bottom font-weight-bold">{{ info.creationDate | moment("dddd, D MMMM YYYY")}} o godzinie: {{ info.creationDate | moment("h:mm")}}</p>
-
+    <p
+      class="border-bottom font-weight-bold"
+    >{{ info.creationDate | moment("dddd, D MMMM YYYY")}} o godzinie: {{ info.creationDate | moment("h:mm")}}</p>
 
     <label>Data zakończenia:</label>
     <datepicker v-model="newInfo.endDate" class="border-bottom border-rounded"/>
