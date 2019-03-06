@@ -1,22 +1,22 @@
 <template>
-  <b-container class="w-100 m-0 mb-1 text-dark bg-light" fluid>
+  <b-container class="w-100 m-0 mb-1 text-dark bg-white" fluid>
     <b-row class="mx-auto border-bottom mt-3">
       <b-col sm="5">
         <b-row>
           <p class="h4 mr-1">{{item.title}}</p>
         </b-row>
         <b-row>
-          <p class="h6 d-inline">twórca: {{item.creator}}</p>
+          <p class="h6 d-inline font-weight-light">twórca: <span class="font-weight-bold">{{item.creator}}</span></p>
         </b-row>
       </b-col>
       <b-col sm="4" class="pt-4 px-0">
         <b-row>
           <p
-            class="h6 d-inline text-danger"
+            class="h5 d-inline text-danger"
             v-if="item.endDate < new Date(Date.now())"
           >Zbiórka zakończona</p>
-          <p class="h6 d-inline text-warning" v-else-if="item.ended">Dokonaj zapłaty</p>
-          <p class="h6 d-inline text-success" v-else>Zbiórka w trakcie</p>
+          <p class="h5 d-inline text-warning" v-else-if="item.ended">Dokonaj zapłaty</p>
+          <p class="h5 d-inline text-success" v-else>Zbiórka w trakcie</p>
         </b-row>
       </b-col>
 
@@ -48,7 +48,8 @@
       </b-col>
       <b-col
         v-if="!item.endDate < new Date(Date.now())"
-      >Zbiórka kończy się: {{ item.endDate | moment("dddd, D MMMM YYYY")}} - {{ item.endDate | moment("H:mm")}}</b-col>
+        class="font-weight-light"
+      >Zbiórka kończy się: <span class="font-weight-bold">{{ item.endDate | moment("dddd, D MMMM YYYY")}} - {{ item.endDate | moment("H:mm")}}</span></b-col>
     </b-row>
   </b-container>
 </template>
@@ -81,8 +82,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-.red {
-  background-color: red;
-}
-</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
     <fundraising-list :list="list" @remove="removeFundrais"></fundraising-list>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <b-container fluid class="w-75">
-    <p class="display-4">Lista zbiórek</p>
+    <p class="display-4 font-weight-normal">Lista zbiórek</p>
     <p
       class="h5"
       v-if="list.length === 0"
