@@ -10,7 +10,13 @@
           <b-input type="number" v-model="newItem.number" min="0" placeholder="Ilość"/>
         </b-col>
         <b-col sm="6" lg="2" class="px-0">
-          <b-input type="number" v-model="newItem.price" min="0" placeholder="Cena jednostkowa"/>
+          <b-input
+            type="number"
+            v-model="newItem.price"
+            min="0"
+            step="0.01"
+            placeholder="Cena jednostkowa"
+          />
         </b-col>
         <b-col>
           <b-button type="submit" class="btn btn-outline-success btn-light">Dodaj</b-button>
@@ -34,7 +40,9 @@
       >Lista produktów jest pusta, twórca zbiórki nie dodał jeszcze żadnego produktu.</label>
       <label v-if="list.length==0 && admin">Lista produktów jest pusta, dodaj nowy cel powyżej.</label>
       <li class="border-bottom w-auto" v-for="(item, index) in list" :key="index">
-        <component :is="admin ? 'item-admin':'item'" :item="Object.assign(item, {index: index})"
+        <component
+          :is="admin ? 'item-admin':'item'"
+          :item="Object.assign(item, {index: index})"
           @number="number"
           @name="name"
           @price="price"
@@ -66,7 +74,7 @@ export default {
   },
   watch: {
     list: {
-      handler(){
+      handler() {
         this.$emit("list", this.list);
       },
       deep: true

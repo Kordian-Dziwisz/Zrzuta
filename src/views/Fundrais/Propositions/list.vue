@@ -18,7 +18,14 @@
             <b-input type="text" name="name" placeholder="Nazwa" v-model="newItem.name"/>
           </span>
           <span class="col-lg-2 col-sm-6 px-0 ml-1">
-            <b-input type="number" name="price" v-model="newItem.price" min="0" placeholder="Cena"/>
+            <b-input
+              type="number"
+              name="price"
+              v-model="newItem.price"
+              step="0.01"
+              min="0"
+              placeholder="Cena"
+            />
           </span>
           <span class="ml-1">
             <b-button type="submit" class="btn-outline-success btn-light">Dodaj</b-button>
