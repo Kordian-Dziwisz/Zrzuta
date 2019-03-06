@@ -38,9 +38,8 @@
           @number="number"
           @name="name"
           @price="price"
-          @remove="remove">
-
-        </component>
+          @remove="remove"
+        ></component>
       </li>
     </ul>
   </div>

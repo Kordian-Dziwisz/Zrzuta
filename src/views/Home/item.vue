@@ -9,7 +9,6 @@
           <p class="h6 d-inline">twórca: {{item.creator}}</p>
         </b-row>
       </b-col>
-
       <b-col sm="4" class="pt-4 px-0">
         <b-row>
           <p

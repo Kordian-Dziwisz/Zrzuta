@@ -1,5 +1,5 @@
 <template>
-  <div class="ParticipantsListItem">
+  <div class="container">
     <div class="row">
       <span class="col-lg-4">{{item.index + 1}}: {{item.name}}</span>
       <span class="col-lg-4">
