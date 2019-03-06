@@ -77,7 +77,7 @@ export default {
   },
   computed: {
     isYour() {
-      return this.item.guid == localStorage.getItem("guid");
+      return this.item.creator == localStorage.getItem("login");
     }
   }
 };
