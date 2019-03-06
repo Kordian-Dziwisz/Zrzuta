@@ -108,8 +108,8 @@ export default {
 <style scoped>
 ul {
   list-style: none;
-  max-height: 15.9rem;
-  margin-top: 10px;
+  max-height: 20.3rem;
+  margin-top: 2px;
   -webkit-overflow-scrolling: touch;
   border-color: #ced4da;
 }
