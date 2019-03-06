@@ -1,7 +1,11 @@
 <template>
-  <div
-    class="ParticipantsListItem"
-  >{{item.index + 1}}: {{item.number + " szt"}} | {{item.name}} | {{item.price + " zł"}} | {{(item.price * item.number).toFixed(2) + " zł"}}</div>
+  <div class="container">
+    <span class="col-lg-auto">
+      {{item.name}}
+      <span v-if="item.number > 1">x{{item.number}}</span>
+    </span>
+    <span class="col-lg-3">{{item.price + " zł"}}</span>
+  </div>
 </template>
 <script>
 export default {

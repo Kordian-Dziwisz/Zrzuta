@@ -34,14 +34,14 @@
       >Lista produktów jest pusta, twórca zbiórki nie dodał jeszcze żadnego produktu.</label>
       <label v-if="list.length==0 && admin">Lista produktów jest pusta, dodaj nowy cel powyżej.</label>
       <li class="border-bottom w-auto" v-for="(item, index) in list" :key="index">
-        <component :is="admin ? 'item-admin':'item'" :item="{index: index, ...item}"
-          @number="nu
-          mber"
+        <component
+          :is="admin ? 'item-admin':'item'"
+          :item="{index: index, ...item}"
+          @number="number"
           @name="name"
           @price="price"
-          @remove="remove">
-
-        </component>
+          @remove="remove"
+        ></component>
       </li>
     </ul>
   </div>
