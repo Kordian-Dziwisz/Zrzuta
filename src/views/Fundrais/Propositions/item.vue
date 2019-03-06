@@ -1,10 +1,44 @@
 <template>
   <div class="ParticipantsListItem">
-    {{item.index + 1}}: {{item.creator}}: {{item.number}} | {{item.name}} | {{item.price}} | {{(item.price * item.number).toFixed(2)}} | {{item.likes.length}} | {{item.dislikes.length}}
-    <div class="control">
-      <b-button class="mx-1" @click="like" v-if="!authenticate && !isLiked">Like</b-button>
-      <b-button class="mx-1" @click="dislike" v-if="!authenticate && !isDisliked">Dislike</b-button>
-      <b-button class="mx-1" @click="remove" v-if="authenticate">Usuń</b-button>
+    <div>
+      <span class="col-lg-2 px-1">{{item.creator}}:</span>
+      <span class="col-lg-auto px-0">
+        {{item.name}}
+        <span v-if="item.number > 1">x{{item.number}}</span>
+      </span>
+      <span class="col-lg-2 pl-2">{{item.price + " zł"}}</span>
+      <span class="col-lg-2 px-0">
+        Za:&nbsp;
+        <span class="text-success">{{item.likes.length}}</span>
+        Przeciw:&nbsp;
+        <span class="text-danger">{{item.dislikes.length}}</span>
+      </span>
+    </div>
+    <div class="row my-1">
+      <div class="col-lg-2">
+        <b-button
+          class="btn-outline-success btn-light"
+          size="sm"
+          @click="like"
+          v-if="!authenticate && !isLiked"
+        >Za!</b-button>
+      </div>
+      <div class="col-lg-2">
+        <b-button
+          class="btn-outline-danger btn-light"
+          size="sm"
+          @click="dislike"
+          v-if="!authenticate && !isDisliked"
+        >Przeciw!</b-button>
+      </div>
+      <div class="col-lg-2">
+        <b-button
+          class="btn-outline-danger btn-light"
+          size="sm"
+          @click="remove"
+          v-if="authenticate"
+        >Usuń</b-button>
+      </div>
     </div>
   </div>
 </template>

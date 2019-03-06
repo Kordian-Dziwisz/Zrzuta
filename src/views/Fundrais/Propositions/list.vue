@@ -26,7 +26,7 @@
         </b-form-row>
       </form>
     </div>
-    <ul class="overflow-auto pl-3">
+    <ul class="pl-3">
       <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
       <li v-for="(item, index) in list" :key="index">
         <Item
@@ -129,10 +129,12 @@ export default {
 </script>
 <style scoped>
 ul {
-  max-height: 15rem;
+  max-height: 8rem;
   -webkit-overflow-scrolling: touch;
   z-index: 20;
   list-style: none;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
