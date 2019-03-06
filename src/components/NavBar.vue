@@ -18,11 +18,10 @@
           <b-nav-item @click="addFundrais">Nowa zbiórka</b-nav-item>
         </b-navbar-nav>
 
-        <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-navbar-brand right>
             <p id="marginCenter">
-              <b-button class="btn-outline-warning btn-light" @click="changeLogin">Zmień nazwę</b-button>
+              <b-button class="btn-outline-primary btn-light" @click="changeLogin">Zmień nazwę</b-button>
             </p>
           </b-navbar-brand>
         </b-navbar-nav>
