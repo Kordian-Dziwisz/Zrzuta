@@ -1,11 +1,10 @@
 <template>
-  <div>
+  <div v-if="!this.ended">
     <div class="container pt-3">
-      <h3 v-if="admin">Lista propozycji</h3>
       <h3>Dodaj nową propozycję</h3>
       <form @submit.prevent="addNew">
         <b-form-row>
-          <b-col sm="6" lg="2" class="px-0">
+          <span class="col-lg-2 col-sm-6 px-0 mr-1">
             <b-input
               type="number"
               name="quantity"
@@ -14,23 +13,22 @@
               placeholder="Ilość"
               onfocus="this.value=''"
             />
-          </b-col>
-          <b-col sm="6" lg="5">
+          </span>
+          <span class="col-lg-5 col-sm-6 px-0">
             <b-input type="text" name="name" placeholder="Nazwa" v-model="newItem.name"/>
-          </b-col>
-          <b-col sm="6" lg="2" class="px-0">
+          </span>
+          <span class="col-lg-2 col-sm-6 px-0 ml-1">
             <b-input type="number" name="price" v-model="newItem.price" min="0" placeholder="Cena"/>
-          </b-col>
-          <b-col>
+          </span>
+          <span class="ml-1">
             <b-button type="submit" class="btn-outline-success btn-light">Dodaj</b-button>
-          </b-col>
+          </span>
         </b-form-row>
       </form>
     </div>
-    <ul class="overflow-auto">
+    <ul class="overflow-auto pl-3">
       <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
       <li v-for="(item, index) in list" :key="index">
-        <!-- create a new componen to display item -->
         <Item
           v-if="!admin"
           :item="{index: index, ...item}"
@@ -59,7 +57,8 @@ import { parse } from "@fortawesome/fontawesome-svg-core";
 export default {
   props: {
     list: Array,
-    admin: Boolean
+    admin: Boolean,
+    ended: Boolean
   },
   data() {
     return {
@@ -133,6 +132,7 @@ ul {
   max-height: 15rem;
   -webkit-overflow-scrolling: touch;
   z-index: 20;
+  list-style: none;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

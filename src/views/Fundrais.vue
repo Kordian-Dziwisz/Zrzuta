@@ -33,8 +33,8 @@
         </b-col>
         <b-col cols="4">
           <list-of-propositions
-            v-if="false"
             :admin="authenticate"
+            :ended="this.fundraisInfo.ended"
             :list="listOfPropositions"
             @list="updatePropositions"
           />
