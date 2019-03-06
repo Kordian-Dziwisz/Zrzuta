@@ -11,14 +11,16 @@
     </p>
     <p class="border-bottom" v-if="info.creationDate">
       Zbiórka rozpoczęła się:
-      <strong>
+      <span class="font-weight-bold">
         {{ info.creationDate | moment("dddd, D, MMMM, YYYY")}}
         - {{ info.creationDate | moment("H:mm")}}
-      </strong>
+      </span>
     </p>
     <label class="border-bottom" v-if="info.endDate">
       Zbiórka kończy się:
-      <strong>{{ info.endDate | moment("dddd, D, MMMM, YYYY")}} - {{ info.endDate | moment("H:mm")}}</strong>
+      <span
+        class="font-weight-bold text-danger"
+      >{{ info.endDate | moment("dddd, D, MMMM, YYYY")}} - {{ info.endDate | moment("H:mm")}}</span>
     </label>
     <h4 v-if="info.ended">Zbiórka jest zakończona</h4>
   </div>

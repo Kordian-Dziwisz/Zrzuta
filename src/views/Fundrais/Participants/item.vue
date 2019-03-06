@@ -1,10 +1,13 @@
 <template>
   <div class="ParticipantsListItem">
     <div class="row">
-      <span class="col-lg-4">{{item.index + 1}}: {{item.name}}</span>
+      <span class="col-lg-4 font-weight-bold">{{item.name}}</span>
       <span class="col-lg-4">
-        <span v-if="item.paid && !item.accepted && authenticate">Zapłacono</span>
-        <span v-if="item.accepted">Otrzymano</span>
+        <span
+          class="font-weight-bold text-success"
+          v-if="item.paid && !item.accepted && authenticate"
+        >Zapłacono</span>
+        <span class="font-weight-bold text-primary" v-if="item.accepted">Otrzymano</span>
       </span>
       <div class="col-lg-2">
         <b-button
