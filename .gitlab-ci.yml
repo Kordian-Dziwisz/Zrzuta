@@ -22,6 +22,8 @@ deploy:
   only:
     - master
   script:
+    - call npm install --no-progress
+    - call npm run build
     - cd dist
     - del /Q/S E:\wwwroot\test\zrzutka\*.*
     - xcopy *.* /d/e/y E:\wwwroot\test\zrzutka\
