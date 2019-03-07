@@ -38,6 +38,19 @@
     </div>
     <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
     <table class="table table-light table-striped bordercontainer">
+      <thead>
+        <tr>
+          <th>
+            <b-row class="ml-4">
+              <b-col class="col-lg-2 align-self-center overflow-hidden text-center">Twórca</b-col>
+              <b-col class="pl-4 col-lg-2 align-self-center overflow-hidden text-center">Nazwa</b-col>
+              <b-col class="pr-0 col-lg-4 align-self-center overflow-hidden text-center">Ilość</b-col>
+              <b-col class="pl-0 col-lg-2 align-self-center overflow-hidden text-center">Cena</b-col>
+              <b-col class="pl-0 col-lg-2 align-self-center overflow-hidden text-center">Głosy</b-col>
+            </b-row>
+          </th>
+        </tr>
+      </thead>
       <tbody>
         <tr v-for="(item, index) in list" :key="index">
           <td>
