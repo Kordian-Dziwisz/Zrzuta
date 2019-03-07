@@ -28,7 +28,8 @@
             />
           </span>
           <span class="ml-1">
-            <b-button type="submit" class="btn-outline-success btn-light px-2">Dodaj
+            <b-button type="submit" class="btn-outline-success btn-light px-2">
+              Dodaj
               <i class="fas fa-plus-square"></i>
             </b-button>
           </span>
@@ -138,7 +139,6 @@ export default {
 </script>
 <style scoped>
 ul {
-  max-height: 8rem;
   -webkit-overflow-scrolling: touch;
   z-index: 20;
   list-style: none;

@@ -20,23 +20,20 @@
         </b-col>
       </b-form-row>
     </form>
-    <div class="container">
-      <tr>
-        <td class="h5">Suma: {{priceSum + " zł"}}</td>&nbsp;
-        <td class="h5">
-          Na osobę: {{parseFloat(pricePerUser).toFixed(2) }}
-          <span v-if="pricePerUser >= 0">zł</span>
-        </td>
-      </tr>
-      <tr></tr>
+    <div class="container mb-1">
+      <span class="h5 d-block">Suma: {{priceSum + " zł"}}</span>
+      <span class="h5 d-block">
+        Na osobę: {{parseFloat(pricePerUser).toFixed(2) }}
+        <span v-if="pricePerUser >= 0">zł</span>
+      </span>
     </div>
-    <ul class="overflow-auto px-3 container">
+    <ul class="px-3 container">
       <label class="h5" v-if="!admin && !this.ended">Cel zbiórki:</label>
       <label
         v-if="list.length==0 && !admin"
       >Lista produktów jest pusta, twórca zbiórki nie dodał jeszcze żadnego produktu.</label>
       <label v-if="list.length==0 && admin">Lista produktów jest pusta, dodaj nowy cel powyżej.</label>
-      <li class="border-bottom w-auto" v-for="(item, index) in list" :key="index">
+      <li class="mb-1" v-for="(item, index) in list" :key="index">
         <component
           :is="admin ? 'item-admin':'item'"
           :item="Object.assign(item, {index: index})"
@@ -160,7 +157,6 @@ export default {
 </script>
 <style scoped>
 ul {
-  max-height: 15.9rem;
   -webkit-overflow-scrolling: touch;
   border-color: #ced4da;
   list-style: none;
