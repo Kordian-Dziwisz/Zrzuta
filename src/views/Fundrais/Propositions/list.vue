@@ -42,11 +42,11 @@
         <tr>
           <th>
             <b-row class="ml-4">
-              <b-col class="pl-0 col-lg-2 align-self-center overflow-hidden text-center">Twórca</b-col>
-              <b-col class="pl-4 col-lg-2 align-self-center overflow-hidden text-center">Nazwa</b-col>
-              <b-col class="pr-0 col-lg-4 align-self-center overflow-hidden text-center">Ilość</b-col>
-              <b-col class="pl-0 col-lg-2 align-self-center overflow-hidden text-center">Cena</b-col>
-              <b-col class="pl-0 col-lg-2 align-self-center overflow-hidden text-center">Głosy</b-col>
+              <b-col class="pl-0 col-lg-2 align-self-center overflow-hidden text-left">Twórca</b-col>
+              <b-col class="pl-4 col-lg-2 align-self-center overflow-hidden text-left">Nazwa</b-col>
+              <b-col class="pr-0 col-lg-4 align-self-center overflow-hidden text-left">Ilość</b-col>
+              <b-col class="pl-0 col-lg-2 align-self-center overflow-hidden text-left">Cena</b-col>
+              <b-col class="pl-0 col-lg-2 align-self-center overflow-hidden text-left">Głosy</b-col>
             </b-row>
           </th>
         </tr>
