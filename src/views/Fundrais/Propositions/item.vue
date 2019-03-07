@@ -1,7 +1,7 @@
 <template>
   <div class="ParticipantsListItem container mt-1">
     <div class="row">
-      <span class="col-lg-3 align-self-center text-center">{{item.creator}}:</span>
+      <span class="col-lg-3 align-self-center text-left">{{item.creator}}:</span>
       <span class="col-lg-3 px-0 align-self-center text-center">{{item.name}}</span>
       <span class="col-lg-2 align-self-center text-center">x{{item.number}}</span>
       <span class="col-lg-2 px-0 align-self-center text-center">{{item.price + " zł"}}</span>
