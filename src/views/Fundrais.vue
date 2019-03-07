@@ -1,8 +1,8 @@
 <template>
   <div class="Fundrais">
     <div
-      class="alert-danger h4"
-      v-if="!fundraisInfo.title.length"
+      class="alert-danger h4 pl-4"
+      v-if="!fundraisInfo.title.length && authenticate"
     >Proszę o uzupełnienie pola Tytuł, bez tego pola dokument nie zostanie zaktualizowany</div>
     <div class="container-fluid">
       <b-row>

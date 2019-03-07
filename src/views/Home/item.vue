@@ -15,11 +15,11 @@
       <b-col sm="4" class="pt-4 px-0">
         <b-row>
           <p
-            class="h5 d-inline text-danger"
+            class="h4 d-inline text-danger"
             v-if="item.endDate < new Date(Date.now())"
           >Zbiórka zakończona</p>
-          <p class="h5 d-inline text-warning" v-else-if="item.ended">Dokonaj zapłaty</p>
-          <p class="h5 d-inline text-success" v-else>Zbiórka w trakcie</p>
+          <p class="h4 d-inline text-warning" v-else-if="item.ended">Dokonaj zapłaty</p>
+          <p class="h4 d-inline text-success" v-else>Zbiórka w trakcie</p>
         </b-row>
       </b-col>
 
