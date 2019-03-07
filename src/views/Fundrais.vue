@@ -1,5 +1,9 @@
 <template>
   <div class="Fundrais">
+    <div
+      class="alert-danger h4"
+      v-if="!fundraisInfo.title.length"
+    >Proszę o uzupełnienie pola Tytuł, bez tego pola dokument nie zostanie zaktualizowany</div>
     <div class="container-fluid">
       <b-row>
         <b-col class="shadow pr-0">
@@ -105,7 +109,11 @@ export default {
       this.listOfPropositions = tmpDoc.data().listOfPropositions;
     },
     async updateDoc() {
-      if (this.fundraisInfo.endDate.getYear() > 118 && this.fundraisInfo.creationDate.getYear() > 118) {
+      if (
+        this.fundraisInfo.endDate.getYear() > 118 &&
+        this.fundraisInfo.creationDate.getYear() > 118 &&
+        this.fundraisInfo.title.length > 0
+      ) {
         //date must be converted to JSON when sending to server
         let tmpInfo = { ...this.fundraisInfo };
         tmpInfo.creationDate = tmpInfo.creationDate.toJSON();
