@@ -1,0 +1,27 @@
+image: node:latest
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+    - node_modules/
+
+build:
+  stage: build
+  tags:
+    - windows
+  only:
+    - master
+  script:
+    - call npm install --no-progress
+    - call npm run build
+deploy:
+  stage: deploy
+  tags:
+    - windows
+  only:
+    - master
+  script:
+    - cd dist
+    - del /Q/S E:\wwwroot\test\zrzutka\*.*
+    - xcopy *.* /d/e/y E:\wwwroot\test\zrzutka\
