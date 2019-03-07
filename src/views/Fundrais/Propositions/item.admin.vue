@@ -1,11 +1,11 @@
 <template>
   <div class="ParticipantsListItem container mt-1">
-    <div class="row border">
-      <span class="col-lg-3 border-right align-self-center text-center">{{item.creator}}:</span>
-      <span class="col-lg-3 px-0 border-right align-self-center text-center">{{item.name}}</span>
-      <span class="col-lg-2 border-right align-self-center text-center">x{{item.number}}</span>
-      <span class="col-lg-2 px-0 border-right align-self-center text-center">{{item.price + " zł"}}</span>
-      <span class="col-lg-2 pl-0 border-right align-self-center text-center">
+    <div class="row">
+      <span class="col-lg-3 align-self-center text-center">{{item.creator}}:</span>
+      <span class="col-lg-3 px-0 align-self-center text-center">{{item.name}}</span>
+      <span class="col-lg-2 align-self-center text-center">x{{item.number}}</span>
+      <span class="col-lg-2 px-0 align-self-center text-center">{{item.price + " zł"}}</span>
+      <span class="col-lg-2 pl-0 align-self-center text-center">
         Za:
         <span class="text-success">{{item.likes.length}}</span>
       </span>
