@@ -3,23 +3,20 @@
     <form class="container" @submit.prevent="addItem" v-if="admin && !this.ended">
       <h3>Dodaj cel zbiórki</h3>
       <b-form-row>
-        <b-col sm="6" lg="5" class="px-0">
+        <b-col sm="6" lg="5" class="px-0 mr-1">
           <b-input type="text" v-model="newItem.name" placeholder="Nazwa"/>
         </b-col>
         <b-col sm="6" lg="2" class="px-0">
           <b-input type="number" v-model="newItem.number" min="0" placeholder="Ilość"/>
         </b-col>
-        <b-col sm="6" lg="2" class="px-0">
-          <b-input
-            type="number"
-            v-model="newItem.price"
-            min="0"
-            step="0.01"
-            placeholder="Cena jednostkowa"
-          />
+        <b-col sm="6" lg="2" class="px-0 ml-1">
+          <b-input type="number" v-model="newItem.price" min="0" step="0.01" placeholder="Cena"/>
         </b-col>
         <b-col>
-          <b-button type="submit" class="btn btn-outline-success btn-light">Dodaj</b-button>
+          <b-button type="submit" class="btn btn-outline-success btn-light px-2">
+            Dodaj
+            <i class="fas fa-plus-square"></i>
+          </b-button>
         </b-col>
       </b-form-row>
     </form>

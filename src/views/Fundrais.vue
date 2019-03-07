@@ -2,11 +2,11 @@
   <div class="Fundrais">
     <div class="container-fluid">
       <b-row>
-        <b-col class="shadow">
+        <b-col class="shadow pr-0">
           <project-info v-if="!authenticate" :info="fundraisInfo"/>
           <info-admin v-if="authenticate" :info="fundraisInfo" @info="updateInfo"/>
         </b-col>
-        <b-col class="shadow">
+        <b-col class="shadow px-0">
           <list-of-participants
             :admin="authenticate"
             :ended="this.fundraisInfo.ended"
@@ -14,7 +14,7 @@
             @list="updateParticipants"
           />
         </b-col>
-        <b-col class="shadow">
+        <b-col class="shadow pl-1">
           <list-of-products
             :admin="authenticate"
             :ended="this.fundraisInfo.ended"
@@ -31,7 +31,7 @@
             v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length > 0 && !authenticate"
           >Wpłaty na numer konta: {{fundraisInfo.accountNumber}}</p>
         </b-col>
-        <b-col cols="4">
+        <b-col cols="4" class="pl-0">
           <list-of-propositions
             :admin="authenticate"
             :ended="this.fundraisInfo.ended"

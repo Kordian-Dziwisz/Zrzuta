@@ -17,7 +17,10 @@
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-navbar-nav is-nav id="nav-collapse" right>
-            <b-nav-item right @click="changeLogin">Wyloguj</b-nav-item>
+            <b-nav-item right @click="changeLogin">
+              Wyloguj
+              <i class="fas fa-sign-out-alt"></i>
+            </b-nav-item>
           </b-navbar-nav>
         </b-navbar-nav>
       </b-collapse>

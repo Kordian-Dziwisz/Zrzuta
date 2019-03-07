@@ -4,7 +4,10 @@
       <h3>Dodaj nową propozycję</h3>
       <form @submit.prevent="addNew">
         <b-form-row>
-          <span class="col-lg-2 col-sm-6 px-0 mr-1">
+          <span class="col-lg-5 col-sm-6 px-0 mr-1">
+            <b-input type="text" name="name" placeholder="Nazwa" v-model="newItem.name"/>
+          </span>
+          <span class="col-lg-2 col-sm-6 px-0">
             <b-input
               type="number"
               name="quantity"
@@ -13,9 +16,6 @@
               placeholder="Ilość"
               onfocus="this.value=''"
             />
-          </span>
-          <span class="col-lg-5 col-sm-6 px-0">
-            <b-input type="text" name="name" placeholder="Nazwa" v-model="newItem.name"/>
           </span>
           <span class="col-lg-2 col-sm-6 px-0 ml-1">
             <b-input
@@ -28,7 +28,9 @@
             />
           </span>
           <span class="ml-1">
-            <b-button type="submit" class="btn-outline-success btn-light">Dodaj</b-button>
+            <b-button type="submit" class="btn-outline-success btn-light px-2">Dodaj
+              <i class="fas fa-plus-square"></i>
+            </b-button>
           </span>
         </b-form-row>
       </form>

@@ -25,12 +25,20 @@
 
       <b-col lg="3" sm="2" class="pt-4 pl-5">
         <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-if="isYour">
-          <b-button class="btn-info" size="sm">Edytuj</b-button>
+          <b-button class="btn-info" size="sm">
+            Edytuj
+            <i class="fas fa-edit"></i>
+          </b-button>
         </router-link>
         <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-else>
-          <b-button class="btn-info" size="sm">Otwórz</b-button>
+          <b-button class="btn-outline-primary btn-light" size="sm">
+            <i class="fas fa-door-open"></i>&nbsp;Otwórz
+          </b-button>
         </router-link>&nbsp;
-        <b-button class="btn-outline-danger btn-light" size="sm" @click="remove" v-if="isYour">Usuń</b-button>
+        <b-button class="btn-outline-danger btn-light" size="sm" @click="remove" v-if="isYour">
+          Usuń
+          <i class="fas fa-trash-alt"></i>
+        </b-button>
       </b-col>
       <hr>
     </b-row>

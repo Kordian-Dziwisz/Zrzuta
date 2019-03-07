@@ -12,15 +12,21 @@
             v-model="name"
           />
         </b-col>
-        <b-button type="submit" class="btn-outline-success btn-light">Dodaj</b-button>
+        <b-button type="submit" class="btn-outline-success btn-light px-2">
+          Dodaj
+          <i class="fas fa-plus-square"></i>
+        </b-button>
       </b-form-row>
     </form>
     <b-button
       class="col-sm btn-outline-success btn-light"
       v-if="!this.ended && !admin && !alreadyAdded"
       @click="addMe"
-    >Dodaj mnie</b-button>
-    <ul class="overflow-auto px-3">
+    >
+      Dodaj mnie
+      <i class="fas fa-plus-square"></i>
+    </b-button>
+    <ul class="overflow-auto px-2">
       <p v-if="list.length==0">
         Jak dotąd nie zapisano żadnego uczestnika,
         <span

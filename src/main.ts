@@ -6,13 +6,33 @@ import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCoffee,
+  faEdit,
+  faTrashAlt,
+  faUserMinus,
+  faVoteYea,
+  faPlusSquare,
+  faMoneyBillAlt,
+  faSignOutAlt,
+  faDoorOpen
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { dom } from "@fortawesome/fontawesome-svg-core";
 
 dom.watch();
 
-library.add(faCoffee);
+library.add(
+  faCoffee,
+  faEdit,
+  faTrashAlt,
+  faUserMinus,
+  faVoteYea,
+  faPlusSquare,
+  faMoneyBillAlt,
+  faSignOutAlt,
+  faDoorOpen
+);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.config.productionTip = false;
 

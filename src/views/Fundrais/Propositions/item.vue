@@ -8,9 +8,9 @@
       </span>
       <span class="col-lg-2 pl-2">{{item.price + " zł"}}</span>
       <span class="col-lg-2 px-0">
-        Za:&nbsp;
+        Za:
         <span class="text-success">{{item.likes.length}}</span>
-        Przeciw:&nbsp;
+        Przeciw:
         <span class="text-danger">{{item.dislikes.length}}</span>
       </span>
     </div>
@@ -37,7 +37,9 @@
           size="sm"
           @click="remove"
           v-if="authenticate"
-        >Usuń</b-button>
+        >Usuń
+          <i class="fas fa-trash-alt"></i>
+        </b-button>
       </div>
     </div>
   </div>
