@@ -34,14 +34,18 @@
       >Lista produktów jest pusta, twórca zbiórki nie dodał jeszcze żadnego produktu.</label>
       <label v-if="list.length==0 && admin">Lista produktów jest pusta, dodaj nowy cel powyżej.</label>
       <table class="table table-light table-striped border">
-        <!-- <thead>
+        <thead>
           <tr>
-            <th class="col-lg-4 border-right align-self-center text-center">Nazwa</th>
-            <th class="col-lg-4 border-right align-self-center text-center">Ilość</th>
-            <th class="col-lg-4 border-right align-self-center text-center">Cena</th>
-            <th class="col-lg-4 border-right align-self-center text-center">Cena całkowita</th>
+            <th>
+              <b-row>
+                <b-col class="col-lg-3 align-self-center overflow-hidden text-center">Nazwa</b-col>
+                <b-col class="col-lg-3 align-self-center overflow-hidden text-center">Ilość</b-col>
+                <b-col class="col-lg-3 align-self-center overflow-hidden text-center">Cena</b-col>
+                <b-col class="col-lg-3 align-self-center overflow-hidden text-center">Cena całkowita</b-col>
+              </b-row>
+            </th>
           </tr>
-        </thead>-->
+        </thead>
         <tbody>
           <tr class="mb-1 border" v-for="(item, index) in list" :key="index">
             <td>

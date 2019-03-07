@@ -37,7 +37,7 @@
       </form>
     </div>
     <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
-    <table class="table table-light table-striped border container">
+    <table class="table table-light table-striped bordercontainer">
       <tbody>
         <tr v-for="(item, index) in list" :key="index">
           <td>
