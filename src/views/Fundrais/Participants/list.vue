@@ -26,7 +26,7 @@
       Dodaj mnie
       <i class="fas fa-plus-square"></i>
     </b-button>
-    <ul class="overflow-auto px-2">
+    <ul class="px-2">
       <p v-if="list.length==0">
         Jak dotąd nie zapisano żadnego uczestnika,
         <span
@@ -114,7 +114,6 @@ export default {
 <style scoped>
 ul {
   list-style: none;
-  max-height: 20.3rem;
   margin-top: 2px;
   -webkit-overflow-scrolling: touch;
   border-color: #ced4da;
