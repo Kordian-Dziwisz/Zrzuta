@@ -25,7 +25,7 @@
 
       <b-col lg="3" sm="2" class="pt-4 pl-5">
         <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-if="isYour">
-          <b-button class="btn-info" size="sm">
+          <b-button class="btn-outline-primary btn-light" size="sm">
             Edytuj
             <i class="fas fa-edit"></i>
           </b-button>
