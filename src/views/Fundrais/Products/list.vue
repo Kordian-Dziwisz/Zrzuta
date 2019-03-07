@@ -27,22 +27,36 @@
         <span v-if="pricePerUser >= 0">zł</span>
       </span>
     </div>
-    <ul class="px-3 container">
+    <ul class="container">
       <label class="h5" v-if="!admin && !this.ended">Cel zbiórki:</label>
       <label
         v-if="list.length==0 && !admin"
       >Lista produktów jest pusta, twórca zbiórki nie dodał jeszcze żadnego produktu.</label>
       <label v-if="list.length==0 && admin">Lista produktów jest pusta, dodaj nowy cel powyżej.</label>
-      <li class="mb-1" v-for="(item, index) in list" :key="index">
-        <component
-          :is="admin ? 'item-admin':'item'"
-          :item="Object.assign(item, {index: index})"
-          @number="number"
-          @name="name"
-          @price="price"
-          @remove="remove"
-        ></component>
-      </li>
+      <table class="table table-light table-striped border">
+        <!-- <thead>
+          <tr>
+            <th class="col-lg-4 border-right align-self-center text-center">Nazwa</th>
+            <th class="col-lg-4 border-right align-self-center text-center">Ilość</th>
+            <th class="col-lg-4 border-right align-self-center text-center">Cena</th>
+            <th class="col-lg-4 border-right align-self-center text-center">Cena całkowita</th>
+          </tr>
+        </thead>-->
+        <tbody>
+          <tr class="mb-1 border" v-for="(item, index) in list" :key="index">
+            <td>
+              <component
+                :is="admin ? 'item-admin':'item'"
+                :item="Object.assign(item, {index: index})"
+                @number="number"
+                @name="name"
+                @price="price"
+                @remove="remove"
+              ></component>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </ul>
   </div>
 </template>

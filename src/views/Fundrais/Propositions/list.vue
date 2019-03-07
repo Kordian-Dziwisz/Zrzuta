@@ -36,27 +36,31 @@
         </b-form-row>
       </form>
     </div>
-    <ul class="pl-3">
-      <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
-      <li v-for="(item, index) in list" :key="index">
-        <Item
-          v-if="!admin"
-          :item="{index: index, ...item}"
-          @like="like"
-          @dislike="dislike"
-          @remove="remove"
-          @accept="accept"
-        />
-        <item-admin
-          v-else
-          :item="{index: index, ...item}"
-          @like="like"
-          @dislike="dislike"
-          @remove="remove"
-          @accept="accept"
-        />
-      </li>
-    </ul>
+    <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
+    <table class="table table-light table-striped border container">
+      <tbody>
+        <tr v-for="(item, index) in list" :key="index">
+          <td>
+            <Item
+              v-if="!admin"
+              :item="{index: index, ...item}"
+              @like="like"
+              @dislike="dislike"
+              @remove="remove"
+              @accept="accept"
+            />
+            <item-admin
+              v-else
+              :item="{index: index, ...item}"
+              @like="like"
+              @dislike="dislike"
+              @remove="remove"
+              @accept="accept"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 <script>
