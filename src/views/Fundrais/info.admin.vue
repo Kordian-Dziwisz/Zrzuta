@@ -22,7 +22,15 @@
     >{{ info.creationDate | moment("dddd, D MMMM YYYY")}} o godzinie: {{ info.creationDate | moment("h:mm")}}</p>
 
     <label>Data zakończenia:</label>
-    <datepicker v-model="newInfo.endDate" class="border-bottom border-rounded"/>
+    <datepicker
+      v-model="newInfo.endDate"
+      input-class="form-control bg-white w-50"
+      :style="{backgroundColor: white}"
+      :language="pl"
+      format="D, d MMM yyyy"
+      :disabledDates="disabledDates"
+    />
+    <timepicker v-model="endTime" format="H:m" @change="updateTime"/>
     <br>
 
     <label>Status:&nbsp;</label>
@@ -51,6 +59,8 @@
 </template>
 <script>
 import Datepicker from "vuejs-datepicker";
+import Timepicker from "vuejs-timepicker";
+import { en, pl } from "vuejs-datepicker/dist/locale";
 
 export default {
   props: {
@@ -58,8 +68,25 @@ export default {
   },
   data() {
     return {
-      newInfo: Object
+      pl: pl,
+      en: en,
+      newInfo: Object,
+      endTime: {
+        H: "11",
+        m: "42",
+        s: "42"
+      },
+      disabledDates: {
+        to: new Date(Date.now())
+      }
     };
+  },
+  methods: {
+    updateTime() {
+      this.newInfo.endDate.setHours(parseInt(this.endTime.H));
+      this.newInfo.endDate.setMinutes(parseInt(this.endTime.m));
+      this.newInfo.endDate.setSeconds(parseInt(this.endTime.s));
+    }
   },
   watch: {
     newInfo: {
@@ -71,15 +98,19 @@ export default {
   },
   mounted() {
     this.newInfo = { ...this.info };
+    this.endTime.HH = toString(this.newInfo.endDate.getHours());
+    this.endTime.mm = toString(this.newInfo.endDate.getMinutes());
+    this.endTime.ss = toString(this.newInfo.endDate.getSeconds());
   },
   components: {
-    Datepicker
+    Datepicker,
+    Timepicker
   }
 };
 </script>
 <style>
 input {
   border: 1px solid #ced4da;
-  border-radius: 0.25rem;
+  border-radius: 4.5px;
 }
 </style>
