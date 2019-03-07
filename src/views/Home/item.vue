@@ -1,6 +1,6 @@
 <template>
-  <b-container class="w-100 m-0 mb-1 text-dark bg-white" fluid>
-    <b-row class="mx-auto border-bottom mt-3">
+  <b-container class="w-100 mb-1 text-dark bg-white" fluid>
+    <b-row class="mx-0 border-bottom mt-3">
       <b-col sm="5">
         <b-row>
           <p class="h4 mr-1">{{item.title}}</p>
@@ -23,7 +23,7 @@
         </b-row>
       </b-col>
 
-      <b-col lg="3" sm="2" class="pt-4 pl-5">
+      <b-col lg="3" sm="3" class="pt-4 pr-0 pl-5 text-lg-right">
         <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-if="isYour">
           <b-button class="btn-outline-primary btn-light" size="sm">
             Edytuj
@@ -44,7 +44,7 @@
     </b-row>
 
     <b-row>
-      <b-col lg="5">
+      <b-col sm="7">
         <div v-if="item.description.length != 0">
           <b-collapse v-model="click" id>{{item.description}}</b-collapse>
           <b-button
@@ -57,7 +57,7 @@
           </b-button>
         </div>
       </b-col>
-      <b-col v-if="!item.endDate < new Date(Date.now())" class="font-weight-light">
+      <b-col v-if="!item.endDate < new Date(Date.now())" class="font-weight-light text-lg-right">
         Zbiórka kończy się:
         <span
           class="font-weight-bold text-danger"

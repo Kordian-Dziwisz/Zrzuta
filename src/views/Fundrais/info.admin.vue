@@ -29,7 +29,7 @@
       format="D, d MMM yyyy"
       :disabledDates="disabledDates"
     />
-    <timepicker v-model="endTime" format="H:m" @change="updateTime"/>
+    <timepicker v-model="endTime" format="H:m" @change="updateTime()"/>
     <br>
 
     <label>Status:&nbsp;</label>
@@ -80,17 +80,18 @@ export default {
       }
     };
   },
-  methods: {
-    updateTime() {
-      console.log("thusnatohh");
-      this.newInfo.endDate.setHours(parseInt(this.endTime.H));
-      this.newInfo.endDate.setMinutes(parseInt(this.endTime.m));
-      this.newInfo.endDate.setSeconds(parseInt(this.endTime.s));
-    }
-  },
   watch: {
     newInfo: {
       handler() {
+        this.$emit("info", this.newInfo);
+      },
+      deep: true
+    },
+    endTime: {
+      handler() {
+        this.newInfo.endDate.setHours(parseInt(this.endTime.H));
+        this.newInfo.endDate.setMinutes(parseInt(this.endTime.m));
+        this.newInfo.endDate.setSeconds(parseInt(this.endTime.s));
         this.$emit("info", this.newInfo);
       },
       deep: true
