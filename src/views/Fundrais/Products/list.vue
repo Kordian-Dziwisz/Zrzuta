@@ -49,7 +49,7 @@
         </thead>
         <tbody>
           <tr v-for="(item, index) in list" :key="index">
-            <th>{{item.name}}</th>
+            <th style="white-space: normal">{{item.name}}</th>
             <th>{{item.number}}</th>
             <th>{{item.price}}</th>
             <th>{{item.number * item.price}}</th>
