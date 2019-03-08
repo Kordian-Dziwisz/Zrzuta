@@ -10,20 +10,28 @@
         <span class="text-success">{{item.likes.length}}</span>
       </span>
     </div>
-    <div class="row my-1">
-      <div class="col-lg-3 pr-0 my-1">
+    <b-row>
+      <b-col>
+        <b-button
+          class="btn-outline-success btn-light"
+          size="sm"
+          @click="like"
+          v-if="!isLiked"
+        >Jestem za!</b-button>
+      </b-col>
+      <b-col>
         <b-button class="btn-outline-danger btn-light" size="sm" @click="remove">
           Usuń
           <i class="fas fa-trash-alt"></i>
         </b-button>
-      </div>
-      <div class="col-lg-4 pl-0 my-1">
+      </b-col>
+      <b-col>
         <b-button class="btn-outline-success btn-light" size="sm" @click="accept">
           Akceptuj
           <i class="fas fa-vote-yea"></i>
         </b-button>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
   </div>
 </template>
 <script>
@@ -32,11 +40,19 @@ export default {
     item: Object
   },
   methods: {
+    like() {
+      this.$emit("like", this.item.index);
+    },
     remove() {
       this.$emit("remove", this.item.index);
     },
     accept() {
       this.$emit("accept", this.item.index);
+    }
+  },
+  computed: {
+    isLiked() {
+      return this.item.likes.includes(localStorage.getItem("login"));
     }
   }
 };

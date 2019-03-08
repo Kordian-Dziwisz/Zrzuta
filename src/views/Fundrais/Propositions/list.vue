@@ -67,7 +67,6 @@
               v-if="!admin"
               :item="{index: index, ...item}"
               @like="like"
-              @dislike="dislike"
               @remove="remove"
               @accept="accept"
             />
@@ -75,7 +74,6 @@
               v-else
               :item="{index: index, ...item}"
               @like="like"
-              @dislike="dislike"
               @remove="remove"
               @accept="accept"
             />
@@ -140,14 +138,14 @@ export default {
       this.list[index].likes.push(localStorage.getItem("login"));
       this.$emit("list", this.list);
     },
-    dislike(index) {
-      if (this.list[index].likes.includes(localStorage.getItem("login"))) {
-        this.list[index].likes.splice(this.list[index].dislikes.indexOf(localStorage.getItem("login"), 1));
-      }
+    // dislike(index) {
+    //   if (this.list[index].likes.includes(localStorage.getItem("login"))) {
+    //     this.list[index].likes.splice(this.list[index].dislikes.indexOf(localStorage.getItem("login"), 1));
+    //   }
 
-      this.list[index].dislikes.push(localStorage.getItem("login"));
-      this.$emit("list", this.list);
-    },
+    //   this.list[index].dislikes.push(localStorage.getItem("login"));
+    //   this.$emit("list", this.list);
+    // },
     accept(index) {
       this.list[index].accepted = true;
       this.$emit("list", this.list);

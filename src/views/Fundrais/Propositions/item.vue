@@ -40,9 +40,9 @@ export default {
     like() {
       this.$emit("like", this.item.index);
     },
-    dislike() {
-      this.$emit("dislike", this.item.index);
-    },
+    // dislike() {
+    //   this.$emit("dislike", this.item.index);
+    // },
     remove() {
       this.$emit("remove", this.item.index);
     }
@@ -53,10 +53,10 @@ export default {
     },
     isLiked() {
       return this.item.likes.includes(localStorage.getItem("login"));
-    },
-    isDisliked() {
-      return this.item.dislikes.includes(localStorage.getItem("login"));
     }
+    // isDisliked() {
+    //   return this.item.dislikes.includes(localStorage.getItem("login"));
+    // }
   }
 };
 </script>
