@@ -38,7 +38,6 @@ export default {
     accept() {
       this.$emit("accept", this.item.index);
     }
-    // exit() 
   }
 };
 </script>
