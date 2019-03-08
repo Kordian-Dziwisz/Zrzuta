@@ -134,7 +134,10 @@ export default {
   },
   computed: {
     authenticate() {
-      this.listOfParticipants.includes(localStorage.getItem("login"));
+      return (
+        this.listOfParticipants.find(item => item.name == localStorage.getItem("login")) != null ||
+        this.fundraisInfo.creator == localStorage.getItem("login")
+      );
     },
     admin() {
       return this.fundraisInfo.creator == localStorage.getItem("login");
