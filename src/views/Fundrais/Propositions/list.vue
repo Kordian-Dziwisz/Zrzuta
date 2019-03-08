@@ -5,14 +5,22 @@
       <form @submit.prevent="addNew">
         <b-form-row>
           <span class="col-lg-5 col-sm-6 px-0 mr-1">
-            <b-input type="text" name="name" placeholder="Nazwa" v-model="newItem.name"/>
+            <b-input
+              type="text"
+              name="name"
+              placeholder="Nazwa"
+              maxlength="30"
+              v-model="newItem.name"
+            />
           </span>
           <span class="col-lg-2 col-sm-6 px-0">
             <b-input
               type="number"
               name="quantity"
+              maxlength="4"
               v-model="newItem.number"
               min="0"
+              max="9999"
               placeholder="Ilość"
               onfocus="this.value=''"
             />
@@ -24,6 +32,7 @@
               v-model="newItem.price"
               step="0.01"
               min="0"
+              max="9999"
               placeholder="Cena"
             />
           </span>

@@ -150,7 +150,8 @@ export default {
 };
 </script>
 <style scoped>
-list-of-propositions {
-  margin-top: 0;
+.Fundrais {
+  word-break: break-all;
+  word-break: break-word;
 }
 </style>

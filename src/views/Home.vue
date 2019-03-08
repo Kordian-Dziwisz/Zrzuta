@@ -52,4 +52,8 @@ export default {
 };
 </script>
 <style scoped>
+div {
+  word-break: break-all;
+  word-break: break-word;
+}
 </style>

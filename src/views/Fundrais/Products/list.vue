@@ -4,13 +4,20 @@
       <h3>Dodaj cel zbiórki</h3>
       <b-form-row>
         <b-col sm="6" lg="5" class="px-0 mr-1">
-          <b-input type="text" v-model="newItem.name" placeholder="Nazwa"/>
+          <b-input type="text" placeholder="Nazwa" maxlength="30" v-model="newItem.name"/>
         </b-col>
         <b-col sm="6" lg="2" class="px-0">
-          <b-input type="number" v-model="newItem.number" min="0" placeholder="Ilość"/>
+          <b-input type="number" placeholder="Ilość" min="0" max="9999" v-model="newItem.number"/>
         </b-col>
         <b-col sm="6" lg="2" class="px-0 ml-1">
-          <b-input type="number" v-model="newItem.price" min="0" step="0.01" placeholder="Cena"/>
+          <b-input
+            type="number"
+            placeholder="Cena"
+            min="0"
+            max="9999"
+            step="0.01"
+            v-model="newItem.price"
+          />
         </b-col>
         <b-col>
           <b-button type="submit" class="btn btn-outline-success btn-light px-2">

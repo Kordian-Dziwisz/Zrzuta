@@ -8,6 +8,7 @@
             lg="5"
             type="text"
             name="participant"
+            maxlength="30"
             placeholder="Nazwa/Imię/Ksywka"
             v-model="name"
           />

@@ -1,19 +1,24 @@
 <template>
   <div class="ProjectInfo container">
-    <label>Utworzył: {{info.creator}}</label>
+    <label>Utworzył:&nbsp;{{info.creator}}</label>
     <br>
-
-    <label>Tytuł:</label>&nbsp;
-    <b-input
-      type="text"
-      v-model.lazy.trim="newInfo.title"
-      placeholder="wpisz tytuł zbiórki"
+    <label>Tytuł:</label>
+    <br>
+    <b-textarea
       class="d-inline w-75"
-    />
+      type="text"
+      placeholder="Wpisz tytuł zbiórki"
+      maxlength="50"
+      v-model.lazy.trim="newInfo.title"
+    ></b-textarea>
     <br>
 
     <label>Opis:</label>&nbsp;
-    <b-textarea v-model.lazy.trim="newInfo.description" placeholder="wpisz opis zbiórki"></b-textarea>
+    <b-textarea
+      placeholder="Wpisz opis zbiórki"
+      maxlength="300"
+      v-model.lazy.trim="newInfo.description"
+    ></b-textarea>
     <hr>
 
     <label>Zbiórka rozpoczęła się:</label>&nbsp;

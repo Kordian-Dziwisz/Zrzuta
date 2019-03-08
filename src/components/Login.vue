@@ -9,7 +9,7 @@
       :show="alert"
     >Zaloguj się, aby przejść dalej!</b-alert>
     <form class="w-50 mx-auto mt-3" @submit.prevent="returnLogin">
-      <b-form-input v-model="login" placeholder="Wpisz login" type="text"/>
+      <b-form-input v-model="login" placeholder="Wpisz login" type="text" maxlength="30"/>
       <b-button type="submit" class="mt-1">Zaloguj się</b-button>
       <br>
     </form>
