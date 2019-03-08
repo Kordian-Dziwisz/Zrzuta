@@ -19,7 +19,8 @@
       </div>
     </div>
     <div class="row">
-      <span class="col-lg-8 font-weight-light">{{item.comment}}</span>
+      <b-textarea class="col-lg-8 mt-1 mb-1" v-model.lazy.trim="item.comment" v-if="authenticate"></b-textarea>
+      <span class="col-lg-8 font-weight-light" v-else>{{item.comment}}</span>
       <span class="col-lg-3 px-0">
         <b-button class="my-2 btn-outline-danger btn-light" size="sm" @click="remove">
           Usuń
@@ -40,6 +41,11 @@ export default {
     },
     remove() {
       this.$emit("remove", this.item.index);
+    }
+  },
+  computed: {
+    authenticate() {
+      return this.item.name == localStorage.getItem("login");
     }
   }
 };
