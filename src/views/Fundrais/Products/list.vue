@@ -7,14 +7,14 @@
           <b-input type="text" placeholder="Nazwa" maxlength="30" v-model="newItem.name"/>
         </b-col>
         <b-col sm="6" lg="2" class="px-0">
-          <b-input type="number" placeholder="Ilość" min="0" max="9999" v-model="newItem.number"/>
+          <b-input type="number" placeholder="Ilość" min="0" max="99999" v-model="newItem.number"/>
         </b-col>
         <b-col sm="6" lg="2" class="px-0 ml-1">
           <b-input
             type="number"
             placeholder="Cena"
             min="0"
-            max="9999"
+            max="99999"
             step="0.01"
             v-model="newItem.price"
           />
@@ -35,36 +35,24 @@
       </span>
     </div>
     <ul class="container">
-      <label class="h5" v-if="!admin && !this.ended">Cel zbiórki:</label>
+      <label class="h5" v-if="!admin && !this.ended">Cele zbiórki:</label>
       <label
         v-if="list.length==0 && !admin"
       >Lista produktów jest pusta, twórca zbiórki nie dodał jeszcze żadnego produktu.</label>
       <label v-if="list.length==0 && admin">Lista produktów jest pusta, dodaj nowy cel powyżej.</label>
-      <table class="table table-light table-striped border">
+      <table v-else class="table table-bordered table-striped">
         <thead>
-          <tr>
-            <th>
-              <b-row>
-                <b-col class="col-lg-3 align-self-center overflow-hidden text-center">Nazwa</b-col>
-                <b-col class="col-lg-3 align-self-center overflow-hidden text-center">Ilość</b-col>
-                <b-col class="col-lg-3 align-self-center overflow-hidden text-center">Cena</b-col>
-                <b-col class="col-lg-3 align-self-center overflow-hidden text-center">Cena całkowita</b-col>
-              </b-row>
-            </th>
-          </tr>
+          <th>Nazwa</th>
+          <th>Ilość</th>
+          <th>Cena</th>
+          <th>Cena całkowita</th>
         </thead>
         <tbody>
-          <tr class="mb-1 border" v-for="(item, index) in list" :key="index">
-            <td>
-              <component
-                :is="admin ? 'item-admin':'item'"
-                :item="Object.assign(item, {index: index})"
-                @number="number"
-                @name="name"
-                @price="price"
-                @remove="remove"
-              ></component>
-            </td>
+          <tr v-for="(item, index) in list" :key="index">
+            <th>{{item.name}}</th>
+            <th>{{item.number}}</th>
+            <th>{{item.price}}</th>
+            <th>{{item.number * item.price}}</th>
           </tr>
         </tbody>
       </table>
@@ -72,9 +60,6 @@
   </div>
 </template>
 <script>
-import Item from "@/views/Fundrais/Products/item.vue";
-import ItemAdmin from "@/views/Fundrais/Products/item.admin.vue";
-
 export default {
   props: {
     list: Array,
@@ -173,10 +158,6 @@ export default {
         }
       }
     }
-  },
-  components: {
-    Item,
-    ItemAdmin
   }
 };
 </script>
@@ -190,5 +171,8 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+table {
+  white-space: nowrap;
 }
 </style>
