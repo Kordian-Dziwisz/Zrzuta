@@ -18,6 +18,7 @@
           @click="like"
           v-if="!authenticate && !isLiked"
         >Za!</b-button>
+        <b-button class="btn-outline-danger btn-light" size="sm" @click="like" v-else>Jednak nie</b-button>
         <b-button
           class="btn-outline-danger btn-light"
           size="sm"

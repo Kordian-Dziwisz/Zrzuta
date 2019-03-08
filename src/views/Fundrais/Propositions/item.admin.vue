@@ -17,7 +17,8 @@
           size="sm"
           @click="like"
           v-if="!isLiked"
-        >Jestem za!</b-button>
+        >Jestem za</b-button>
+        <b-button class="btn-outline-danger btn-light" size="sm" @click="like" v-else>Jednak nie</b-button>
       </b-col>
       <b-col>
         <b-button class="btn-outline-danger btn-light" size="sm" @click="remove">
