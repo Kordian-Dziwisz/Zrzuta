@@ -71,21 +71,21 @@ export default {
   methods: {
     updateInfo(info) {
       this.fundraisInfo = info;
-      // this.updateDoc();
+      this.updateDoc();
     },
     updateParticipants(list) {
       this.listOfParticipants = list;
-      // this.updateDoc();
+      this.updateDoc();
     },
     updateProducts(list) {
       this.listOfProducts = list;
-      // this.updateDoc();
+      this.updateDoc();
     },
     updatePropositions(list) {
       this.listOfPropositions = list;
       let accept = this.acceptProposition;
       this.listOfPropositions.forEach(item => accept(item));
-      // this.updateDoc();
+      this.updateDoc();
     },
     acceptProposition(item) {
       if (item.accepted) {
@@ -95,7 +95,7 @@ export default {
         delete item.accepted;
         this.listOfProducts.push(item);
       }
-      //this.updateDoc();
+      this.updateDoc();
     },
     async getDoc() {
       let tmpDoc = await this.db.get({ source: "default" });
@@ -134,10 +134,6 @@ export default {
     authenticate() {
       return this.fundraisInfo.creator == localStorage.getItem("login") ? true : false;
     }
-  },
-  beforeDestroy() {
-    console.log("docupdated");
-    this.updateDoc();
   },
   mounted() {
     this.docID = this.$route.params.id;

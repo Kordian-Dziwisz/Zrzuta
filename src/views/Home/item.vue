@@ -46,7 +46,7 @@
     <b-row>
       <b-col sm="7">
         <div v-if="item.description.length != 0">
-          <b-collapse v-model="click" id>{{item.description}}</b-collapse>
+          <b-collapse style="white-space: pre" v-model="click" id>{{item.description}}</b-collapse>
           <b-button
             class="btn-outline-secondary btn-light text-center"
             @click="click = !click"
