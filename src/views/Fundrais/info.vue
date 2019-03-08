@@ -5,7 +5,7 @@
       Tytuł:
       {{info.title}}
     </p>
-    <p class="border-bottom">Opis:
+    <p class="border-bottom" style="white-space: pre">Opis:
       <br>
       {{info.description}}
     </p>

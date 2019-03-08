@@ -6,14 +6,14 @@
     <label>Tytuł:</label>&nbsp;
     <b-input
       type="text"
-      v-model="newInfo.title"
+      v-model.lazy.trim="newInfo.title"
       placeholder="wpisz tytuł zbiórki"
       class="d-inline w-75"
     />
     <br>
 
     <label>Opis:</label>&nbsp;
-    <b-textarea v-model="newInfo.description" placeholder="wpisz opis zbiórki"></b-textarea>
+    <b-textarea v-model.lazy.trim="newInfo.description" placeholder="wpisz opis zbiórki"></b-textarea>
     <hr>
 
     <label>Zbiórka rozpoczęła się:</label>&nbsp;
@@ -52,7 +52,7 @@
       class="mb-1"
       type="text"
       placeholder="Wpisz numer konta"
-      v-model="newInfo.accountNumber"
+      v-model.lazy.trim="newInfo.accountNumber"
     />
   </div>
 </template>
