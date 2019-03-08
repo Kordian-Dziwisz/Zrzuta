@@ -8,12 +8,12 @@
     <div class="container-fluid">
       <b-row>
         <b-col class="shadow pr-0">
-          <project-info v-if="!authenticate" :info="fundraisInfo"/>
-          <info-admin v-if="authenticate" :info="fundraisInfo" @info="updateInfo"/>
+          <project-info v-if="!admin" :info="fundraisInfo"/>
+          <info-admin v-if="admin" :info="fundraisInfo" @info="updateInfo"/>
         </b-col>
         <b-col class="shadow px-0">
           <list-of-participants
-            :admin="authenticate"
+            :admin="admin"
             :ended="this.fundraisInfo.ended"
             :list="listOfParticipants"
             @list="updateParticipants"
@@ -21,11 +21,12 @@
         </b-col>
         <b-col class="shadow pl-1">
           <list-of-products
-            :admin="authenticate"
+            :admin="admin"
             :ended="this.fundraisInfo.ended"
             :numOfParticipants="listOfParticipants.length"
             :list="listOfProducts"
             @list="updateProducts"
+            v-if="authenticate"
           />
         </b-col>
       </b-row>
@@ -33,15 +34,16 @@
         <b-col class="shadow">
           <p
             class="display-4"
-            v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length > 0 && !authenticate"
+            v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length > 0 && !admin && authenticate"
           >Wpłaty na numer konta: {{fundraisInfo.accountNumber}}</p>
         </b-col>
         <b-col cols="4" class="pl-0">
           <list-of-propositions
-            :admin="authenticate"
+            :admin="admin"
             :ended="this.fundraisInfo.ended"
             :list="listOfPropositions"
             @list="updatePropositions"
+            v-if="authenticate"
           />
         </b-col>
       </b-row>
@@ -132,7 +134,10 @@ export default {
   },
   computed: {
     authenticate() {
-      return this.fundraisInfo.creator == localStorage.getItem("login") ? true : false;
+      this.listOfParticipants.includes(localStorage.getItem("login"));
+    },
+    admin() {
+      return this.fundraisInfo.creator == localStorage.getItem("login");
     }
   },
   mounted() {

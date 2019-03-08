@@ -5,10 +5,10 @@
       Tytuł:
       {{info.title}}
     </p>
-    <p class="border-bottom" style="white-space: pre">Opis:
-      <br>
-      {{info.description}}
-    </p>
+    <p class="border-bottom" style="white-space: pre">Opis:</p>
+
+    <p>{{info.description}}</p>
+
     <p class="border-bottom" v-if="info.creationDate">
       Zbiórka rozpoczęła się:
       <span class="font-weight-bold">
