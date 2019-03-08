@@ -1,15 +1,15 @@
 <template>
   <div class="Login">
     <br>
-    <form class="w-50 mx-auto mt-4" @submit.prevent="returnLogin">
-      <b-alert
-        class="mt-1 pl-3"
-        id="alertMargin"
-        variant="danger"
-        dismissible
-        :show="alert"
-      >Zaloguj się, aby przejść dalej!</b-alert>
-      <b-form-input v-model="login" placeholder="Tutaj wpisz login" type="text"/>
+    <b-alert
+      class="mt-1 pl-3"
+      id="alertMargin"
+      variant="danger"
+      dismissible
+      :show="alert"
+    >Zaloguj się, aby przejść dalej!</b-alert>
+    <form class="w-50 mx-auto mt-3" @submit.prevent="returnLogin">
+      <b-form-input class="p-1" v-model="login" placeholder="Tutaj wpisz login" type="text"/>
       <b-button type="submit" class="mt-1">Zaloguj się</b-button>
       <br>
     </form>
