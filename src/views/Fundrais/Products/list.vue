@@ -52,7 +52,7 @@
         </thead>
         <tbody>
           <tr v-for="(item, index) in list" :key="index">
-            <td style="white-space: normal">{{item.name}}</td>
+            <td id="white-space">{{item.name}}</td>
             <td>{{item.number}}</td>
             <td>{{`${item.price}&nbsp;zł`}}</td>
             <td>{{`${(item.number * item.price).toFixed(2)}&nbsp;zł`}}</td>
@@ -217,5 +217,8 @@ input::-webkit-inner-spin-button {
 }
 table {
   white-space: nowrap;
+}
+#white-space {
+  white-space: normal;
 }
 </style>
