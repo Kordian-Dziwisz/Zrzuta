@@ -62,11 +62,10 @@
           <td>{{item.price}}</td>
           <td>
             {{item.likes.length}}&nbsp;
-            <b-button class="btn-info" @click="like(index)" v-if="liked(index)">
-              like&nbsp;
-              <i class="fas fa-thumbs-up"></i>
-            </b-button>
-            <b-button class="btn-outline-info btn-light" @click="like(index)" v-else>
+            <b-button
+              :class="{'btn-info': liked(index), 'btn-outline-info btn-light': !liked(index)}"
+              @click="like(index)"
+            >
               like&nbsp;
               <i class="fas fa-thumbs-up"></i>
             </b-button>
@@ -74,10 +73,10 @@
         </tr>
         <tr>
           <td>
-            <b-button class="btn-danger" v-if="authenticate(index)" @click="remove(index)">Remove</b-button>
+            <b-button class="btn-danger" v-if="authenticate(index)" @click="remove(index)">Usuń</b-button>
           </td>
           <td>
-            <b-button class="btn-success" v-if="admin" @click="accept(index)">Accept</b-button>
+            <b-button class="btn-success" v-if="admin" @click="accept(index)">Akceptuj</b-button>
           </td>
         </tr>
       </tbody>

@@ -43,12 +43,13 @@
         v-if="list.length==0 && !admin"
       >Lista produktów jest pusta, twórca zbiórki nie dodał jeszcze żadnego produktu.</label>
       <label v-if="list.length==0 && admin">Lista produktów jest pusta, dodaj nowy cel powyżej.</label>
-      <table v-else class="table table-bordered table-striped">
+      <table v-else class="table table-striped">
         <thead>
           <th>Nazwa</th>
           <th>Ilość</th>
           <th>Cena</th>
           <th>Cena całkowita</th>
+          <th></th>
         </thead>
         <tbody>
           <tr v-for="(item, index) in list" :key="index">
