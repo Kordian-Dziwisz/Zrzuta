@@ -42,7 +42,7 @@ export default {
         title: "",
         description: "",
         creationDate: new Date(Date.now()).toJSON(),
-        endDate: new Date(Date.now()).toJSON(),
+        endDate: new Date(Date.now() + 86400000).toJSON(),
         ended: false
       }
     };

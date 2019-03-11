@@ -24,7 +24,7 @@
     <label>Zbiórka rozpoczęła się:</label>&nbsp;
     <p
       class="border-bottom font-weight-bold"
-    >{{ info.creationDate | moment("dddd, D MMMM YYYY")}} o godzinie: {{ info.creationDate | moment("h:mm")}}</p>
+    >{{ info.creationDate | moment("dddd, D MMMM YYYY")}} o godzinie: {{ info.creationDate | moment("H:mm")}}</p>
 
     <label>Data zakończenia:</label>
     <datepicker
@@ -76,12 +76,12 @@ export default {
       en: en,
       newInfo: Object,
       endTime: {
-        H: "11",
-        m: "42",
-        s: "42"
+        H: "12",
+        m: "12",
+        s: "12"
       },
       disabledDates: {
-        to: new Date(Date.now())
+        to: new Date(Date.now() - 86400000)
       }
     };
   },
@@ -104,9 +104,9 @@ export default {
   },
   mounted() {
     this.newInfo = { ...this.info };
-    this.endTime.HH = toString(this.newInfo.endDate.getHours());
-    this.endTime.mm = toString(this.newInfo.endDate.getMinutes());
-    this.endTime.ss = toString(this.newInfo.endDate.getSeconds());
+    this.endTime.H = this.info.endDate.getHours();
+    this.endTime.m = this.info.endDate.getMinutes();
+    this.endTime.s = this.info.endDate.getSeconds();
   },
   components: {
     Datepicker,
@@ -114,7 +114,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 input {
   border: 1px solid #ced4da;
   border-radius: 4.5px;

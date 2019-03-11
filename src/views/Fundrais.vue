@@ -7,7 +7,7 @@
     >Proszę o uzupełnienie pola Tytuł, bez tego pola dokument nie zostanie zaktualizowany</b-alert>
     <b-alert
       :show="true"
-      v-if="fundraisInfo.endDate < new Date(Date.now())"
+      v-if="compareDates"
       variant="danger"
       class="h4 pl-4"
     >Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone</b-alert>
@@ -20,8 +20,8 @@
     <div class="container-fluid">
       <b-row>
         <b-col class="shadow pr-0">
-          <project-info v-if="!admin" :info="fundraisInfo"/>
-          <info-admin v-if="admin" :info="fundraisInfo" @info="updateInfo"/>
+          <project-info v-if="!admin && fundraisInfo" :info="fundraisInfo"/>
+          <info-admin v-if="admin  && fundraisInfo" :info="fundraisInfo" @info="updateInfo"/>
         </b-col>
         <b-col class="shadow px-0">
           <list-of-participants
@@ -38,7 +38,14 @@
             :numOfParticipants="listOfParticipants.length"
             :list="listOfProducts"
             @list="updateProducts"
-            v-if="authenticate"
+            v-if="authenticate && fundraisInfo.ended"
+          />
+          <propositions
+            :admin="admin"
+            :ended="this.fundraisInfo.ended"
+            :list="listOfPropositions"
+            @list="updatePropositions"
+            v-if="authenticate && !fundraisInfo.ended"
           />
         </b-col>
       </b-row>
@@ -49,15 +56,7 @@
             v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length > 0 && !admin && authenticate"
           >Wpłaty na numer konta: {{fundraisInfo.accountNumber}}</p>
         </b-col>
-        <b-col cols="4" class="pl-0">
-          <propositions
-            :admin="admin"
-            :ended="this.fundraisInfo.ended"
-            :list="listOfPropositions"
-            @list="updatePropositions"
-            v-if="authenticate && !fundraisInfo.ended"
-          />
-        </b-col>
+        <b-col cols="4" class="pl-0"></b-col>
       </b-row>
     </div>
   </div>
@@ -156,6 +155,11 @@ export default {
     },
     admin() {
       return this.fundraisInfo.creator == localStorage.getItem("login");
+    },
+    compareDates() {
+      console.log(this.fundraisInfo.endDate.getTime());
+      console.log(Date.now());
+      return this.fundraisInfo.endDate.getTime() < Date.now();
     }
   },
   mounted() {
