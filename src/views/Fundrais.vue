@@ -5,6 +5,18 @@
       class="h4 pl-4"
       :show="!fundraisInfo.title.length && authenticate"
     >Proszę o uzupełnienie pola Tytuł, bez tego pola dokument nie zostanie zaktualizowany</b-alert>
+    <b-alert
+      :show="true"
+      v-if="fundraisInfo.endDate < new Date(Date.now())"
+      variant="danger"
+      class="h4 pl-4"
+    >Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone</b-alert>
+    <b-alert
+      variant="warning"
+      class="h4 pl-4"
+      :show="fundraisInfo.ended"
+      v-else
+    >Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę</b-alert>
     <div class="container-fluid">
       <b-row>
         <b-col class="shadow pr-0">
@@ -43,7 +55,7 @@
             :ended="this.fundraisInfo.ended"
             :list="listOfPropositions"
             @list="updatePropositions"
-            v-if="authenticate"
+            v-if="authenticate && !fundraisInfo.ended"
           />
         </b-col>
       </b-row>
@@ -108,6 +120,10 @@ export default {
       this.listOfParticipants = tmpDoc.data().listOfParticipants;
       this.listOfProducts = tmpDoc.data().listOfProducts;
       this.listOfPropositions = tmpDoc.data().listOfPropositions;
+      console.log(this.fundraisInfo.endDate);
+      if (this.fundraisInfo.endDate < new Date(Date.now())) {
+        this.fundraisInfo.ended = true;
+      }
     },
     async updateDoc() {
       if (

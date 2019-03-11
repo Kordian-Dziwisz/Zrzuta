@@ -13,7 +13,7 @@
         <b-button
           class="mt-1 btn-outline-primary btn-light"
           size="sm"
-          v-if="authenticate && !item.paid && !item.accepted"
+          v-if="authenticate && !item.paid && !item.accepted && ended"
           @click="paid"
         >
           Zapłaciłem
@@ -41,7 +41,8 @@
 <script>
 export default {
   props: {
-    item: Object
+    item: Object,
+    ended: false
   },
   methods: {
     paid() {
