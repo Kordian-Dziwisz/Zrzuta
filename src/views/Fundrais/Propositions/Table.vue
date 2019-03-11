@@ -152,16 +152,12 @@ export default {
       this.list.splice(index, 1);
     },
     liked(index) {
-      console.log(index);
       return this.list[index].likes.includes(localStorage.getItem("login"));
     },
     authenticate(index) {
-      console.log(index);
       return this.list[index].creator == localStorage.getItem("login");
     }
   },
-  // computed: {
-  // },
   created() {
     this.newItem.creator = localStorage.getItem("login");
   }

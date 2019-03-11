@@ -1,5 +1,5 @@
 <template>
-  <div class="Fundrais">
+  <div class="Fundrais" v-if="fundraisInfo">
     <b-alert
       variant="danger"
       class="h4 pl-4"
@@ -64,7 +64,7 @@ export default {
     return {
       docID: "",
       db: firebase.firestore().collection("Zrzuty-develop"),
-      fundraisInfo: {},
+      fundraisInfo: undefined,
       listOfParticipants: [],
       listOfProducts: [],
       listOfPropositions: []

@@ -28,7 +28,10 @@
       </b-form-row>
     </form>
     <div class="container mb-1">
-      <span class="h5 d-block">Suma: {{priceSum + " zł"}}</span>
+      <span class="h5 d-block">
+        Suma: {{priceSum.toFixed(2)}}
+        <span v-if="pricePerUser >= 0">zł</span>
+      </span>
       <span class="h5 d-block">
         Na osobę: {{parseFloat(pricePerUser).toFixed(2) }}
         <span v-if="pricePerUser >= 0">zł</span>
@@ -49,13 +52,67 @@
         </thead>
         <tbody>
           <tr v-for="(item, index) in list" :key="index">
-            <th style="white-space: normal">{{item.name}}</th>
-            <th>{{item.number}}</th>
-            <th>{{item.price}}</th>
-            <th>{{item.number * item.price}}</th>
+            <td style="white-space: normal">{{item.name}}</td>
+            <td>{{item.number}}</td>
+            <td>{{`${item.price}&nbsp;zł`}}</td>
+            <td>{{`${(item.number * item.price).toFixed(2)}&nbsp;zł`}}</td>
+            <td>
+              <b-button
+                class="btn-outline-danger btn-light"
+                size="sm"
+                @click="editProduct({...item, index: index})"
+              >Edytuj</b-button>
+            </td>
           </tr>
         </tbody>
       </table>
+      <b-modal
+        hide-footer
+        title="Edytuj produkt"
+        v-if="modalShow && editObject"
+        v-model.lazy="modalShow"
+        id
+      >
+        <div class="d-block text-center">
+          <form>
+            <b-form-row>
+              <b-input
+                class="mb-1"
+                type="text"
+                name="name"
+                v-model.lazy="editObject.name"
+                required
+                placeholder="Wpisz nową nazwę"
+                maxlength="30"
+              ></b-input>
+              <b-input
+                type="number"
+                name="quantity"
+                v-model.lazy="editObject.number"
+                required
+                placeholder="Wpisz nową ilość"
+                max="9999"
+                step="0.01"
+                min="0"
+              ></b-input>
+              <b-input
+                class="my-1"
+                type="number"
+                name="price"
+                v-model.lazy="editObject.price"
+                required
+                placeholder="Wpisz nową cenę"
+                max="9999"
+                step="0.01"
+                min="0"
+              ></b-input>
+            </b-form-row>
+          </form>
+        </div>
+        <b-button class="btn btn-primary" @click="save()">Zapisz</b-button>&nbsp;
+        <b-button class="btn btn-primary" @click="modalShow = !modalShow">Anuluj</b-button>&nbsp;
+        <b-button class="btn btn-danger" @click="remove(editObject.index)">Usuń</b-button>
+      </b-modal>
     </ul>
   </div>
 </template>
@@ -73,13 +130,16 @@ export default {
         number: "",
         name: "",
         price: ""
-      }
+      },
+      editObject: undefined,
+      modalShow: false
     };
   },
   watch: {
     list: {
       handler() {
         this.$emit("list", this.list);
+        console.log("cokolwiek");
       },
       deep: true
     }
@@ -105,35 +165,18 @@ export default {
         this.newItem.price = "";
       }
     },
-    number(index) {
-      let tmp = 0;
-      do {
-        tmp = parseInt(prompt("Ustaw nową ilość"));
-      } while (typeof tmp != "number" || tmp <= 0 || isNaN(tmp));
-      if (typeof tmp == "number" && tmp > 0 && !isNaN(tmp)) {
-        this.list[index].number = tmp;
-      }
-    },
-    name(index) {
-      let tmp = "";
-      do {
-        tmp = prompt("Ustaw nową nazwę");
-      } while (tmp == null);
-      if (tmp != null) {
-        this.list[index].name = tmp;
-      }
-    },
-    price(index) {
-      let tmp = 0;
-      do {
-        tmp = parseFloat(prompt("Ustaw nową cenę"));
-      } while (typeof tmp != "number" || tmp <= 0 || isNaN(tmp));
-      if (typeof tmp == "number" && tmp > 0 && !isNaN(tmp)) {
-        this.list[index].price = tmp;
-      }
+    editProduct(product) {
+      this.editObject = product;
+      this.modalShow = true;
     },
     remove(index) {
       this.list.splice(index, 1);
+      this.modalShow = !this.modalShow;
+    },
+    save() {
+      this.list[this.editObject.index] = { ...this.editObject };
+      delete this.list[this.editObject.index].index;
+      this.modalShow = !this.modalShow;
     }
   },
   computed: {
