@@ -10,7 +10,7 @@
         <b-button
           class="mt-1 btn-outline-primary btn-light"
           size="sm"
-          v-if="!item.accepted"
+          v-if="!item.accepted && ended"
           @click="accepted"
         >
           Zaakceptuj
@@ -33,7 +33,8 @@
 <script>
 export default {
   props: {
-    item: Object
+    item: Object,
+    ended: false
   },
   methods: {
     accepted() {

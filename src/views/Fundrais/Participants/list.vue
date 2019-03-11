@@ -28,16 +28,17 @@
       <i class="fas fa-plus-square"></i>
     </b-button>
     <ul class="px-2">
-      <p v-if="list.length==0">
+      <b-alert :show="list.length==0" variant="warning" class="my-3 text-dark">
         Jak dotąd nie zapisano żadnego uczestnika,
         <span
           v-if="!this.ended && admin"
         >dopisz go w polu powyżej.</span>
-      </p>
+      </b-alert>
       <li class="border-bottom w-auto" v-for="(item, index) in list" :key="index">
         <component
           :is="admin ? 'item-admin':'item'"
           :item="Object.assign(item, {index: index})"
+          :ended="ended"
           @remove="remove"
         ></component>
       </li>
