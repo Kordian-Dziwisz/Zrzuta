@@ -56,19 +56,23 @@
       </thead>
       <tbody v-for="(item, index) in list" :key="index">
         <tr>
-          <th>{{item.creator}}</th>
-          <th style="white-space: normal">{{item.name}}</th>
-          <th>{{item.number}}</th>
-          <th>{{item.price}}</th>
-          <th>{{item.likes.length}}</th>
-        </tr>
-        <tr>
+          <td>{{item.creator}}</td>
+          <td style="white-space: normal">{{item.name}}</td>
+          <td>{{item.number}}</td>
+          <td>{{item.price}}</td>
           <td>
-            <b-button class="btn-success" @click="like(index)">
-              <span v-if="liked(index)">dislike</span>
-              <span v-else>like</span>
+            {{item.likes.length}}&nbsp;
+            <b-button class="btn-info" @click="like(index)" v-if="liked(index)">
+              like&nbsp;
+              <i class="fas fa-thumbs-up"></i>
+            </b-button>
+            <b-button class="btn-outline-info btn-light" @click="like(index)" v-else>
+              like&nbsp;
+              <i class="fas fa-thumbs-up"></i>
             </b-button>
           </td>
+        </tr>
+        <tr>
           <td>
             <b-button class="btn-danger" v-if="authenticate(index)" @click="remove(index)">Remove</b-button>
           </td>
