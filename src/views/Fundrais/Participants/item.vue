@@ -25,7 +25,7 @@
       <b-textarea class="col-lg-8 mt-1 mb-1" v-model.lazy.trim="item.comment" v-if="authenticate"></b-textarea>
       <span v-else>{{item.comment}}</span>
       <span class="col-lg-3 pl-2 pr-0">
-        <b-button
+        <b-buttot
           class="my-2 btn-outline-danger btn-light"
           size="sm"
           @click="remove"
