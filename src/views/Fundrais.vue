@@ -38,7 +38,7 @@
           >Wpłaty na numer konta: {{fundraisInfo.accountNumber}}</p>
         </b-col>
         <b-col cols="4" class="pl-0">
-          <list-of-propositions
+          <propositions
             :admin="admin"
             :ended="this.fundraisInfo.ended"
             :list="listOfPropositions"
@@ -56,7 +56,7 @@ import ProjectInfo from "@/views/Fundrais/info.vue";
 import InfoAdmin from "@/views/Fundrais/info.admin.vue";
 import ListOfParticipants from "@/views/Fundrais/Participants/list.vue";
 import ListOfProducts from "@/views/Fundrais/Products/list.vue";
-import ListOfPropositions from "@/views/Fundrais/Propositions/list.vue";
+import Propositions from "@/views/Fundrais/Propositions/Table.vue";
 import firebase from "firebase";
 
 export default {
@@ -153,7 +153,7 @@ export default {
     InfoAdmin,
     ListOfParticipants,
     ListOfProducts,
-    ListOfPropositions
+    Propositions
   }
 };
 </script>

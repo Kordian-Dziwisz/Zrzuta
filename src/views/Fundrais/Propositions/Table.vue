@@ -46,37 +46,34 @@
       </form>
     </div>
     <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
-    <table class="table table-light table-striped bordercontainer">
+    <table v-else class="table table-light table-striped bordercontainer">
       <thead>
-        <tr>
-          <th>
-            <b-row class="ml-4">
-              <b-col class="pl-0 col-lg-2 align-self-center overflow-hidden text-left">Twórca</b-col>
-              <b-col class="pl-2 col-lg-2 align-self-center overflow-hidden text-left">Nazwa</b-col>
-              <b-col class="pr-0 col-lg-4 align-self-center overflow-hidden text-center">Ilość</b-col>
-              <b-col class="pl-0 col-lg-2 align-self-center overflow-hidden text-left">Cena</b-col>
-              <b-col class="pl-0 col-lg-2 align-self-center overflow-hidden text-left">Głosy</b-col>
-            </b-row>
-          </th>
-        </tr>
+        <th>Proponuje</th>
+        <th>Nazwa</th>
+        <th>Ilość</th>
+        <th>Cena</th>
+        <th>Poparcie</th>
       </thead>
-      <tbody>
-        <tr v-for="(item, index) in list" :key="index">
+      <tbody v-for="(item, index) in list" :key="index">
+        <tr>
+          <th>{{item.creator}}</th>
+          <th style="white-space: normal">{{item.name}}</th>
+          <th>{{item.number}}</th>
+          <th>{{item.price}}</th>
+          <th>{{item.likes.length}}</th>
+        </tr>
+        <tr>
           <td>
-            <Item
-              v-if="!admin"
-              :item="{index: index, ...item}"
-              @like="like"
-              @remove="remove"
-              @accept="accept"
-            />
-            <item-admin
-              v-else
-              :item="{index: index, ...item}"
-              @like="like"
-              @remove="remove"
-              @accept="accept"
-            />
+            <b-button class="btn-success" @click="like(index)">
+              <span v-if="liked(index)">dislike</span>
+              <span v-else>like</span>
+            </b-button>
+          </td>
+          <td>
+            <b-button class="btn-danger" v-if="authenticate(index)" @click="remove(index)">Remove</b-button>
+          </td>
+          <td>
+            <b-button class="btn-success" v-if="admin" @click="accept(index)">Accept</b-button>
           </td>
         </tr>
       </tbody>
@@ -84,8 +81,6 @@
   </div>
 </template>
 <script>
-import Item from "@/views/Fundrais/Propositions/item.vue";
-import ItemAdmin from "@/views/Fundrais/Propositions/item.admin.vue";
 import { parse } from "@fortawesome/fontawesome-svg-core";
 
 export default {
@@ -151,14 +146,20 @@ export default {
       this.list[index].accepted = true;
       this.$emit("list", this.list);
       this.list.splice(index, 1);
+    },
+    liked(index) {
+      console.log(index);
+      return this.list[index].likes.includes(localStorage.getItem("login"));
+    },
+    authenticate(index) {
+      console.log(index);
+      return this.list[index].creator == localStorage.getItem("login");
     }
   },
+  // computed: {
+  // },
   created() {
     this.newItem.creator = localStorage.getItem("login");
-  },
-  components: {
-    Item,
-    ItemAdmin
   }
 };
 </script>
