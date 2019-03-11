@@ -70,7 +70,7 @@
         hide-footer
         title="Edytuj produkt"
         v-if="modalShow && editObject"
-        v-model.lazy="modalShow"
+        v-model="modalShow"
         id
       >
         <div class="d-block text-center">
@@ -80,7 +80,7 @@
                 class="mb-1"
                 type="text"
                 name="name"
-                v-model.lazy="editObject.name"
+                v-model.trim="editObject.name"
                 required
                 placeholder="Wpisz nową nazwę"
                 maxlength="30"
@@ -88,7 +88,7 @@
               <b-input
                 type="number"
                 name="quantity"
-                v-model.lazy="editObject.number"
+                v-model="editObject.number"
                 required
                 placeholder="Wpisz nową ilość"
                 max="9999"
@@ -99,7 +99,7 @@
                 class="my-1"
                 type="number"
                 name="price"
-                v-model.lazy="editObject.price"
+                v-model="editObject.price"
                 required
                 placeholder="Wpisz nową cenę"
                 max="9999"
@@ -109,7 +109,7 @@
             </b-form-row>
           </form>
         </div>
-        <b-button class="btn btn-primary" @click="save()">Zapisz</b-button>&nbsp;
+        <b-button class="btn btn-primary" @click="save">Zapisz</b-button>&nbsp;
         <b-button class="btn btn-primary" @click="modalShow = !modalShow">Anuluj</b-button>&nbsp;
         <b-button class="btn btn-danger" @click="remove(editObject.index)">Usuń</b-button>
       </b-modal>
@@ -139,7 +139,6 @@ export default {
     list: {
       handler() {
         this.$emit("list", this.list);
-        console.log("cokolwiek");
       },
       deep: true
     }
@@ -177,6 +176,7 @@ export default {
       this.list[this.editObject.index] = { ...this.editObject };
       delete this.list[this.editObject.index].index;
       this.modalShow = !this.modalShow;
+      this.$emit("list", this.list);
     }
   },
   computed: {
