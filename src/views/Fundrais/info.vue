@@ -1,29 +1,46 @@
 <template>
-  <div class="ProjectInfo container">
-    <p class="border-bottom">Utworzył: {{info.creator}}</p>
-    <p class="border-bottom">
-      Tytuł:
-      {{info.title}}
-    </p>
-    <p class="border-bottom" style="white-space: pre">Opis:</p>
+  <b-card-group>
+    <b-card-header class="w-100">Informacje o projekcie</b-card-header>
+    <b-card>
+      <b-card-body class="w-100">
+        <b-card-title class="mb-0 border-bottom align-middle">
+          <b-row>
+            <b-col>
+              <h2 class="d-inline">{{info.title}}&nbsp;</h2>
+              <h5 class="font-weight-light d-inline">stworzona przez:&nbsp;</h5>
+              <h5 class="d-inline">{{info.creator}}</h5>
+            </b-col>
+            <b-col class="text-right">
+              <h4 class="d-inline text-danger" v-if="info.ended">Zbiórka jest zakończona</h4>
+              <h4 class="d-inline text-success" v-else>Zbiórka jest w trakcie</h4>
+            </b-col>
+          </b-row>
+        </b-card-title>
 
-    <p>{{info.description}}</p>
+        <b-card-text>
+          <b-row class="border-bottom py-2">
+            <b-col>
+              <label>Zbiórka rozpoczęła się:</label>
+              <h5>{{ info.creationDate | moment("LLL")}}</h5>
+            </b-col>
+            <b-col class="text-right">
+              <label>Zbiórka kończy się:</label>
+              <h5 class="text-danger">{{ info.endDate | moment("LLL")}}</h5>
+            </b-col>
+          </b-row>
 
-    <p class="border-bottom" v-if="info.creationDate">
-      Zbiórka rozpoczęła się:
-      <span class="font-weight-bold">
-        {{ info.creationDate | moment("dddd, D, MMMM, YYYY")}}
-        - {{ info.creationDate | moment("H:mm")}}
-      </span>
-    </p>
-    <label class="border-bottom" v-if="info.endDate">
-      Zbiórka kończy się:
-      <span
-        class="font-weight-bold text-danger"
-      >{{ info.endDate | moment("dddd, D, MMMM, YYYY")}} - {{ info.endDate | moment("H:mm")}}</span>
-    </label>
-    <h4 v-if="info.ended">Zbiórka jest zakończona</h4>
-  </div>
+          <p
+            v-if="info.description.length"
+            class="py-2 border-bottom"
+            style="white-space: pre"
+          >{{info.description}}</p>
+
+          <label v-if="info.accountNumber">Informacje o płatności:</label>
+          <h5 style="white-space: pre">{{info.accountNumber}}</h5>
+        </b-card-text>
+      </b-card-body>
+    </b-card>
+  </b-card-group>
 </template>
 <script>
 export default {
