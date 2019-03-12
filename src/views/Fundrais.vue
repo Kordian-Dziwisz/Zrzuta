@@ -17,12 +17,12 @@
       :show="fundraisInfo.ended"
       v-else
     >Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę</b-alert>
+    <div class="w-75 mx-auto">
+      <project-info v-if="!admin && fundraisInfo" :info="fundraisInfo"/>
+      <info-admin v-if="admin  && fundraisInfo" :info="fundraisInfo" @info="updateInfo"/>
+    </div>
     <div class="container-fluid">
       <b-row>
-        <b-col class="shadow pr-0">
-          <project-info v-if="!admin && fundraisInfo" :info="fundraisInfo"/>
-          <info-admin v-if="admin  && fundraisInfo" :info="fundraisInfo" @info="updateInfo"/>
-        </b-col>
         <b-col class="shadow px-0">
           <list-of-participants
             :admin="admin"
