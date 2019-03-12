@@ -1,6 +1,6 @@
 <template>
   <div v-if="!this.ended">
-    <div class="container pt-3">
+    <div class="container">
       <h3>Dodaj nową propozycję</h3>
       <form @submit.prevent="addNew">
         <b-form-row>
@@ -57,8 +57,8 @@
       <tbody v-for="(item, index) in list" :key="index">
         <tr>
           <td>{{item.creator}}</td>
-          <td style="white-space: normal">{{item.name}}</td>
-          <td>{{item.number}}</td>
+          <td class="white-normal">{{item.name}}</td>
+          <td class="word-break">{{item.number}}</td>
           <td>{{item.price}}</td>
           <td>
             {{item.likes.length}}&nbsp;
@@ -137,14 +137,6 @@ export default {
       }
       this.$emit("list", this.list);
     },
-    // dislike(index) {
-    //   if (this.list[index].likes.includes(localStorage.getItem("login"))) {
-    //     this.list[index].likes.splice(this.list[index].dislikes.indexOf(localStorage.getItem("login"), 1));
-    //   }
-
-    //   this.list[index].dislikes.push(localStorage.getItem("login"));
-    //   this.$emit("list", this.list);
-    // },
     accept(index) {
       this.list[index].accepted = true;
       this.$emit("list", this.list);
@@ -167,6 +159,16 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+thead {
+  word-break: keep-all;
+  white-space: none;
+}
+.white-normal {
+  white-space: normal;
+}
+.word-break {
+  word-break: keep-all;
 }
 </style>
 

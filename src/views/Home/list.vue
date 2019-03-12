@@ -1,14 +1,13 @@
 <template>
-  <b-container fluid class="w-75">
-    <p class="display-4 font-weight-normal">Lista zbiórek</p>
-    <p
-      class="h5"
+  <div class="container-fluid w-75">
+    <h4 class="display-4">Lista zbiórek</h4>
+    <h5
       v-if="list.length === 0"
-    >Brak aktywnych zbiórek - utwórz nową lub poproś o zaproszenie do obecnej.</p>
+    >Brak aktywnych zbiórek - utwórz nową lub poproś o zaproszenie do obecnej.</h5>
     <ul class="list-group" v-for="(item, index) in list" :key="index">
       <Item class="list-group-item" :item="{index: index, ...item}" @remove="remove"/>
     </ul>
-  </b-container>
+  </div>
 </template>
 <script>
 import Item from "@/views/Home/item.vue";
