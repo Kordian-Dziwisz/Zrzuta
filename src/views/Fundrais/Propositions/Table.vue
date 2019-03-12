@@ -4,7 +4,7 @@
       <h3>Dodaj nową propozycję</h3>
       <form @submit.prevent="addNew">
         <b-form-row>
-          <span class="col-lg-5 col-sm-6 px-0 mr-1">
+          <div class="col-lg-5">
             <b-input
               type="text"
               name="name"
@@ -12,8 +12,8 @@
               maxlength="30"
               v-model="newItem.name"
             />
-          </span>
-          <span class="col-lg-2 col-sm-6 px-0">
+          </div>
+          <div class="col-lg-2">
             <b-input
               type="number"
               name="quantity"
@@ -24,8 +24,8 @@
               placeholder="Ilość"
               onfocus="this.value=''"
             />
-          </span>
-          <span class="col-lg-2 col-sm-6 px-0 ml-1">
+          </div>
+          <div class="col-lg-2">
             <b-input
               type="number"
               name="price"
@@ -35,18 +35,18 @@
               max="9999"
               placeholder="Cena"
             />
-          </span>
-          <span class="ml-1">
-            <b-button type="submit" class="btn-outline-success btn-light px-2">
+          </div>
+          <div class="col-lg-3">
+            <b-button type="submit" class="btn-outline-success btn-light">
               Dodaj
               <i class="fas fa-plus-square"></i>
             </b-button>
-          </span>
+          </div>
         </b-form-row>
       </form>
     </div>
     <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
-    <table v-else class="table table-light table-striped bordercontainer">
+    <table v-else class="table table-light table-striped">
       <thead>
         <th>Proponuje</th>
         <th>Nazwa</th>
@@ -163,13 +163,6 @@ export default {
 };
 </script>
 <style scoped>
-ul {
-  -webkit-overflow-scrolling: touch;
-  z-index: 20;
-  list-style: none;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
