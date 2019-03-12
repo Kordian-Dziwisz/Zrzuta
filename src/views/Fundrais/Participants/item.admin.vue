@@ -18,9 +18,8 @@
           size="sm"
           v-if="!item.accepted && ended"
           @click="accepted"
-        >
+        ><i class="fas fa-vote-yea fa-fw"></i>
           Zaakceptuj
-          <i class="fas fa-vote-yea"></i>
         </b-button>
       </div>
     </div>
@@ -29,8 +28,8 @@
       <div class="col-lg-8 font-weight-light" v-else>{{item.comment}}</div>
       <div class="col-lg-3">
         <b-button class="btn-outline-danger btn-light" size="sm" @click="remove">
+          <i class="fas fa-user-minus fa-fw"></i>
           Usuń
-          <i class="fas fa-user-minus"></i>
         </b-button>
       </div>
     </div>
