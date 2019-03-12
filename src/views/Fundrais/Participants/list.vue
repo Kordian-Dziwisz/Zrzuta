@@ -14,8 +14,8 @@
         </div>
         <div class="col-lg-3">
           <b-button type="submit" class="btn-outline-success btn-light">
+            <i class="fas fa-plus-square fa-fw"></i>
             Dodaj
-            <i class="fas fa-plus-square"></i>
           </b-button>
         </div>
       </b-form-row>
@@ -25,9 +25,8 @@
         class="w-75 btn-outline-success btn-light"
         v-if="!this.ended && !admin && !alreadyAdded"
         @click="addMe"
-      >
+      ><i class="fas fa-plus-square"></i>
         Dodaj mnie
-        <i class="fas fa-plus-square"></i>
       </b-button>
     </div>
     <div>

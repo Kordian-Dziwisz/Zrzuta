@@ -38,8 +38,8 @@
           </div>
           <div class="col-lg-3">
             <b-button type="submit" class="btn-outline-success btn-light">
+             <i class="fas fa-plus-square" fa-fw></i>
               Dodaj
-              <i class="fas fa-plus-square"></i>
             </b-button>
           </div>
         </b-form-row>
@@ -65,9 +65,8 @@
             <b-button
               :class="{'btn-info': liked(index), 'btn-outline-info btn-light': !liked(index)}"
               @click="like(index)"
-            >
+            ><i class="fas fa-thumbs-up fa-fw"></i>
               like&nbsp;
-              <i class="fas fa-thumbs-up"></i>
             </b-button>
           </td>
         </tr>

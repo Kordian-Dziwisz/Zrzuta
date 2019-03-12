@@ -18,9 +18,8 @@
           size="sm"
           v-if="authenticate && !item.paid && !item.accepted && ended"
           @click="paid"
-        >
+        ><i class="fas fa-vote-yea fa-fw"></i>
           Zapłaciłem
-          <i class="fas fa-vote-yea"></i>
         </b-button>
       </div>
     </div>
@@ -33,9 +32,8 @@
           size="sm"
           @click="remove"
           v-if="authenticate"
-        >
+        ><i class="fas fa-user-minus fa-fw"></i>
           Usuń
-          <i class="fas fa-user-minus"></i>
         </b-button>
       </div>
     </div>

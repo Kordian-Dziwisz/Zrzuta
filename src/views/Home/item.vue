@@ -26,8 +26,8 @@
       <b-col lg="3" sm="3" class="pt-4 pr-0 pl-5 text-lg-right">
         <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-if="isYour">
           <b-button class="btn-outline-primary btn-light" size="sm">
+            <i class="fas fa-edit fa-fw"></i>
             Edytuj
-            <i class="fas fa-edit"></i>
           </b-button>
         </router-link>
         <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-else>
@@ -36,8 +36,8 @@
           </b-button>
         </router-link>&nbsp;
         <b-button class="btn-outline-danger btn-light" size="sm" @click="remove" v-if="isYour">
-          Usuń
           <i class="fas fa-trash-alt"></i>
+               Usuń
         </b-button>
       </b-col>
       <hr>
