@@ -3,46 +3,51 @@
     <form @submit.prevent="addItem()" class="container" v-if="!this.ended && admin">
       <h3>Dodaj nowego uczestnika:</h3>
       <b-form-row>
-        <b-col>
+        <div class="col-lg-9">
           <b-input
-            lg="5"
             type="text"
             name="participant"
             maxlength="30"
             placeholder="Nazwa/Imię/Ksywka"
             v-model="name"
           />
-        </b-col>
-        <b-button type="submit" class="btn-outline-success btn-light px-2">
-          Dodaj
-          <i class="fas fa-plus-square"></i>
-        </b-button>
+        </div>
+        <div class="col-lg-3">
+          <b-button type="submit" class="btn-outline-success btn-light">
+            Dodaj
+            <i class="fas fa-plus-square"></i>
+          </b-button>
+        </div>
       </b-form-row>
     </form>
-    <b-button
-      class="col-sm btn-outline-success btn-light"
-      v-if="!this.ended && !admin && !alreadyAdded"
-      @click="addMe"
-    >
-      Dodaj mnie
-      <i class="fas fa-plus-square"></i>
-    </b-button>
-    <ul class="px-2">
-      <b-alert :show="list.length==0" variant="warning" class="my-3 text-dark">
-        Jak dotąd nie zapisano żadnego uczestnika,
-        <span
-          v-if="!this.ended && admin"
-        >dopisz go w polu powyżej.</span>
-      </b-alert>
-      <li class="border-bottom w-auto" v-for="(item, index) in list" :key="index">
-        <component
-          :is="admin ? 'item-admin':'item'"
-          :item="Object.assign(item, {index: index})"
-          :ended="ended"
-          @remove="remove"
-        ></component>
-      </li>
-    </ul>
+    <div class="d-flex justify-content-center">
+      <b-button
+        class="w-75 btn-outline-success btn-light"
+        v-if="!this.ended && !admin && !alreadyAdded"
+        @click="addMe"
+      >
+        Dodaj mnie
+        <i class="fas fa-plus-square"></i>
+      </b-button>
+    </div>
+    <div>
+      <ul>
+        <b-alert :show="list.length==0" variant="warning" class="text-dark">
+          Jak dotąd nie zapisano żadnego uczestnika,
+          <span
+            v-if="!this.ended && admin"
+          >dopisz go w polu powyżej.</span>
+        </b-alert>
+        <li class="border-bottom" v-for="(item, index) in list" :key="index">
+          <component
+            :is="admin ? 'item-admin':'item'"
+            :item="Object.assign(item, {index: index})"
+            :ended="ended"
+            @remove="remove"
+          ></component>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
@@ -119,5 +124,6 @@ ul {
   margin-top: 2px;
   -webkit-overflow-scrolling: touch;
   border-color: #ced4da;
+  padding: 0 1rem;
 }
 </style>

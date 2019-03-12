@@ -3,13 +3,13 @@
     <form class="container" @submit.prevent="addItem" v-if="admin && !this.ended">
       <h3>Dodaj cel zbiórki</h3>
       <b-form-row>
-        <b-col sm="6" lg="5" class="px-0 mr-1">
+        <div class="col-lg-5">
           <b-input type="text" placeholder="Nazwa" maxlength="30" v-model="newItem.name"/>
-        </b-col>
-        <b-col sm="6" lg="2" class="px-0">
+        </div>
+        <div class="col-lg-2">
           <b-input type="number" placeholder="Ilość" min="0" max="99999" v-model="newItem.number"/>
-        </b-col>
-        <b-col sm="6" lg="2" class="px-0 ml-1">
+        </div>
+        <div class="col-lg-2">
           <b-input
             type="number"
             placeholder="Cena"
@@ -18,27 +18,27 @@
             step="0.01"
             v-model="newItem.price"
           />
-        </b-col>
-        <b-col>
-          <b-button type="submit" class="btn btn-outline-success btn-light px-2">
+        </div>
+        <div class="col-lg-3">
+          <b-button type="submit" class="btn btn-outline-success btn-light">
             Dodaj
             <i class="fas fa-plus-square"></i>
           </b-button>
-        </b-col>
+        </div>
       </b-form-row>
     </form>
     <div class="container mb-1">
-      <span class="h5 d-block">
+      <div class="h5">
         Suma: {{priceSum.toFixed(2)}}
         <span v-if="pricePerUser >= 0">zł</span>
-      </span>
-      <span class="h5 d-block">
+      </div>
+      <div class="h5">
         Na osobę: {{parseFloat(pricePerUser).toFixed(2) }}
         <span v-if="pricePerUser >= 0">zł</span>
-      </span>
+      </div>
     </div>
-    <ul class="container">
-      <label class="h5" v-if="!admin && !this.ended">Cele zbiórki:</label>
+    <ul>
+      <h5 v-if="!admin && !this.ended">Cele zbiórki:</h5>
       <label
         v-if="list.length==0 && !admin"
       >Lista produktów jest pusta, twórca zbiórki nie dodał jeszcze żadnego produktu.</label>
@@ -74,45 +74,43 @@
         v-model="modalShow"
         id
       >
-        <div class="d-block text-center">
-          <form>
-            <b-form-row>
-              <b-input
-                class="mb-1"
-                type="text"
-                name="name"
-                v-model.trim="editObject.name"
-                required
-                placeholder="Wpisz nową nazwę"
-                maxlength="30"
-              ></b-input>
-              <b-input
-                type="number"
-                name="quantity"
-                v-model="editObject.number"
-                required
-                placeholder="Wpisz nową ilość"
-                max="9999"
-                step="0.01"
-                min="0"
-              ></b-input>
-              <b-input
-                class="my-1"
-                type="number"
-                name="price"
-                v-model="editObject.price"
-                required
-                placeholder="Wpisz nową cenę"
-                max="9999"
-                step="0.01"
-                min="0"
-              ></b-input>
-            </b-form-row>
-          </form>
-        </div>
-        <b-button class="btn btn-primary" @click="save">Zapisz</b-button>&nbsp;
-        <b-button class="btn btn-primary" @click="modalShow = !modalShow">Anuluj</b-button>&nbsp;
-        <b-button class="btn btn-danger" @click="remove(editObject.index)">Usuń</b-button>
+        <form>
+          <b-form-row>
+            <b-input
+              class="mb-1"
+              type="text"
+              name="name"
+              v-model.trim="editObject.name"
+              required
+              placeholder="Wpisz nową nazwę"
+              maxlength="30"
+            ></b-input>
+            <b-input
+              type="number"
+              name="quantity"
+              v-model="editObject.number"
+              required
+              placeholder="Wpisz nową ilość"
+              max="9999"
+              step="0.01"
+              min="0"
+            ></b-input>
+            <b-input
+              class="my-1"
+              type="number"
+              name="price"
+              v-model="editObject.price"
+              required
+              placeholder="Wpisz nową cenę"
+              max="9999"
+              step="0.01"
+              min="0"
+            ></b-input>
+          </b-form-row>
+        </form>
+        <b-button class="btn-outline-primary btn-light" @click="save">Zapisz</b-button>&nbsp;
+        <b-button class="btn-outline-primary btn-light" @click="modalShow = !modalShow">Anuluj</b-button>&nbsp;
+        <b-button class="btn-outline-danger btn-light" @click="remove(editObject.index)">Usuń</b-button>
       </b-modal>
     </ul>
   </div>
@@ -210,6 +208,7 @@ ul {
   -webkit-overflow-scrolling: touch;
   border-color: #ced4da;
   list-style: none;
+  padding: 0 1rem;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

@@ -22,9 +22,9 @@
     <hr>
 
     <label>Zbiórka rozpoczęła się:</label>&nbsp;
-    <p
-      class="border-bottom font-weight-bold"
-    >{{ info.creationDate | moment("dddd, D MMMM YYYY")}} o godzinie: {{ info.creationDate | moment("H:mm")}}</p>
+    <p class="border-bottom">
+      <strong>{{ info.creationDate | moment("dddd, D MMMM YYYY")}} o godzinie: {{ info.creationDate | moment("H:mm")}}</strong>
+    </p>
 
     <label>Data zakończenia:</label>
     <datepicker
@@ -36,10 +36,14 @@
     />
     <timepicker v-model="endTime" format="H:m" @change="updateTime()"/>
     <br>
-
+    <br>
     <label>Status:&nbsp;</label>
-    <span class="font-weight-bold text-danger h5" v-if="newInfo.ended">Zakończona</span>
-    <span class="font-weight-bold text-success h5" v-else>Otwarta</span>&nbsp;
+    <span class="text-danger" v-if="newInfo.ended">
+      <strong>Zakończona</strong>
+    </span>
+    <span class="text-success" v-else>
+      <strong>Otwarta</strong>
+    </span>&nbsp;
     <b-button
       class="mb-1 btn-outline-success btn-light"
       size="sm"
