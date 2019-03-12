@@ -155,8 +155,6 @@ export default {
       return this.fundraisInfo.creator == localStorage.getItem("login");
     },
     compareDates() {
-      console.log(this.fundraisInfo.endDate.getTime());
-      console.log(Date.now());
       return this.fundraisInfo.endDate.getTime() < Date.now();
     }
   },
