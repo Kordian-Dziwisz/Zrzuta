@@ -21,8 +21,8 @@
         </div>
         <div class="col-lg-3">
           <b-button type="submit" class="btn btn-outline-success btn-light">
-            Dodaj
-            <i class="fas fa-plus-square"></i>
+             <i class="fas fa-plus-square fa-fw"></i>
+             Dodaj
           </b-button>
         </div>
       </b-form-row>
