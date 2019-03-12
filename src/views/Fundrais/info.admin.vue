@@ -1,26 +1,30 @@
 <template>
   <b-card-group class="mx-auto" ref="info">
-    <b-card-header class="w-100">Informacje o projekcie</b-card-header>
+    <b-card-header class="w-100">
+      <strong>Informacje o projekcie</strong>
+    </b-card-header>
     <b-card>
       <b-card-body v-if="isEdited">
-        <form @submit.prevent="update()">
+        <form class="container" @submit.prevent="update">
           <b-card-title class="mb-0 border-bottom align-middle">
             <b-row>
               <b-col>
                 <b-input
-                  class="d-inline w-50"
+                  class="d-inline"
+                  required
                   maxlength="50"
                   placeholder="Tytuł"
                   v-model.trim="newInfo.title"
                 ></b-input>&nbsp;
-                <h5 class="font-weight-light d-inline">stworzona przez:&nbsp;</h5>
-                <h5 class="d-inline">{{newInfo.creator}}</h5>
+                <!-- <h5 class="font-weight-light d-inline">stworzona przez:&nbsp;</h5>
+                <h5 class="d-inline">{{newInfo.creator}}</h5>-->
               </b-col>
               <b-col class="text-right">
                 <h4 class="d-inline text-danger" v-if="newInfo.ended">Zbiórka jest zakończona</h4>
                 <h4 class="d-inline text-success" v-else>Zbiórka jest w trakcie</h4>
                 <b-button
                   class="mb-2 ml-3 btn-light"
+                  type="button"
                   :class="{'btn-outline-danger': !newInfo.ended, 'btn-outline-success': newInfo.ended}"
                   @click="newInfo.ended = !newInfo.ended"
                   size="sm"
@@ -37,7 +41,7 @@
           <b-card-text>
             <b-row class="border-bottom py-2">
               <b-col>
-                <label>Zbiórka rozpoczęła się:</label>
+                <label>Zbiórka :</label>
                 <h5>{{ info.creationDate | moment("LLL")}}</h5>
               </b-col>
               <b-col class="text-right">
@@ -52,24 +56,28 @@
                 <timepicker v-model="endTime" format="H:m" @change="updateTime()"/>
               </b-col>
             </b-row>
-
-            <label>Opis:</label>&nbsp;
-            <b-textarea
-              placeholder="Wpisz opis zbiórki"
-              rows="5"
-              maxlength="300"
-              v-model.trim="newInfo.description"
-            ></b-textarea>
-
-            <label>Informacje o płatności:</label>
-            <b-textarea
-              class="mb-1"
-              type="text"
-              rows="5"
-              maxlength="150"
-              placeholder="Informacje o płatności"
-              v-model.lazy.trim="newInfo.accountNumber"
-            />
+            <b-row>
+              <b-col>
+                <label>Opis:</label>&nbsp;
+                <b-textarea
+                  placeholder="Wpisz opis zbiórki"
+                  maxlength="300"
+                  max-rows="10"
+                  v-model="newInfo.description"
+                ></b-textarea>
+              </b-col>
+              <b-col>
+                <label>Informacje o płatności:</label>
+                <b-form-textarea
+                  class="mb-1"
+                  type="text"
+                  maxlength="150"
+                  max-rows="10"
+                  placeholder="Informacje o płatności"
+                  v-model.lazy.trim="newInfo.accountNumber"
+                ></b-form-textarea>
+              </b-col>
+            </b-row>
           </b-card-text>
         </form>
       </b-card-body>
@@ -78,8 +86,8 @@
           <b-row>
             <b-col>
               <h2 class="d-inline">{{newInfo.title}}&nbsp;</h2>
-              <h5 class="font-weight-light d-inline">stworzona przez:&nbsp;</h5>
-              <h5 class="d-inline">{{newInfo.creator}}</h5>
+              <!-- <h5 class="font-weight-light d-inline">stworzona przez:&nbsp;</h5>
+              <h5 class="d-inline">{{newInfo.creator}}</h5>-->
             </b-col>
             <b-col class="text-right">
               <h4 class="d-inline text-danger" v-if="newInfo.ended">Zbiórka jest zakończona</h4>
@@ -95,7 +103,10 @@
         </b-card-title>
 
         <b-card-text>
-          <b-row class="border-bottom py-2">
+          <b-row
+            class="py-2"
+            :class="{'border-bottom': info.description.length || info.accountNumber}"
+          >
             <b-col>
               <label>Zbiórka rozpoczęła się:</label>
               <h5>{{ info.creationDate | moment("LLL")}}</h5>
@@ -105,16 +116,16 @@
               <h5 class="text-danger">{{ newInfo.endDate | moment("LLL")}}</h5>
             </b-col>
           </b-row>
-
-          <label class="pt-2">Opis:</label>
-          <p
-            v-if="info.description.length"
-            class="border-bottom"
-            style="white-space: pre"
-          >{{info.description}}</p>
-
-          <label class="pt-2" v-if="info.accountNumber">Informacje o płatności:</label>
-          <h5 style="white-space: pre">{{info.accountNumber}}</h5>
+          <b-row class="py-2">
+            <b-col v-if="info.description.length">
+              <label>Opis:</label>
+              <h5 style="white-space: pre">{{info.description}}</h5>
+            </b-col>
+            <b-col v-if="info.accountNumber">
+              <label>Informacje o płatności:</label>
+              <h5 style="white-space: pre">{{info.accountNumber}}</h5>
+            </b-col>
+          </b-row>
         </b-card-text>
       </b-card-body>
     </b-card>
@@ -134,7 +145,6 @@ export default {
       pl: pl,
       en: en,
       newInfo: Object,
-      ellipsis: require("text-ellipsis"),
       isEdited: false,
       endTime: {
         H: "12",
@@ -148,6 +158,7 @@ export default {
   },
   methods: {
     update() {
+      console.log("Update");
       this.$emit("info", this.newInfo);
     }
   },

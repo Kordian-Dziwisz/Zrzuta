@@ -26,6 +26,7 @@
       <div class="col">
         <list-of-participants
           :admin="admin"
+          :list="listOfParticipants"
           :ended="this.fundraisInfo.ended"
           @list="updateParticipants"
         />
