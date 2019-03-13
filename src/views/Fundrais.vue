@@ -1,5 +1,5 @@
 <template>
-  <div class="Fundrais" v-if="fundraisInfo">
+  <div>
     <b-alert
       variant="danger"
       class="h4"
@@ -156,8 +156,6 @@ export default {
       return this.fundraisInfo.creator == localStorage.getItem("login");
     },
     compareDates() {
-      console.log(this.fundraisInfo.endDate.getTime());
-      console.log(Date.now());
       return this.fundraisInfo.endDate.getTime() < Date.now();
     }
   },
