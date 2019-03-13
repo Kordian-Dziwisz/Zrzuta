@@ -4,7 +4,7 @@
       <strong>Informacje o projekcie</strong>
     </b-card-header>
     <b-card>
-      <b-card-body class="w-100">
+      <b-card-body>
         <b-card-title class="mb-0 border-bottom align-middle">
           <b-row>
             <b-col>
@@ -33,10 +33,7 @@
               <h5 class="text-danger">{{ info.endDate | moment("LLL")}}</h5>
             </b-col>
           </b-row>
-          <b-row
-            class="py-2"
-            :class="{'border-bottom': info.description.length || info.accountNumber}"
-          >
+          <b-row class="py-2">
             <b-col v-if="info.description.length">
               <label>Opis:</label>
               <h5 style="white-space: pre">{{info.description}}</h5>

@@ -1,54 +1,63 @@
 <template>
-  <div class="ListOfParticipants">
-    <form @submit.prevent="addItem()" class="container" v-if="!this.ended && admin">
-      <h3>Dodaj nowego uczestnika:</h3>
-      <b-form-row>
-        <div class="col-lg-9">
-          <b-input
-            type="text"
-            name="participant"
-            maxlength="30"
-            placeholder="Nazwa/Imię/Ksywka"
-            v-model="name"
-          />
+  <b-card-group>
+    <b-card-header class="w-100">
+      <strong>Informacje o uczestnikach</strong>
+    </b-card-header>
+    <b-card>
+      <b-card-body>
+        <form @submit.prevent="addItem()" class="container" v-if="!this.ended && admin">
+          <h3>Dodaj nowego uczestnika:</h3>
+          <b-form-row>
+            <div class="col-lg-9">
+              <b-input
+                type="text"
+                name="participant"
+                maxlength="30"
+                placeholder="Nazwa/Imię/Ksywka"
+                v-model="name"
+              />
+            </div>
+            <div class="row-lg-3">
+              <b-button type="submit" class="btn-outline-success btn-light" size="sm">
+                <i class="fas fa-plus-square"></i>
+                Dodaj
+              </b-button>
+            </div>
+            <div class="row-lg-3">
+              <b-button
+                class="btn-outline-success btn-light"
+                v-if="!this.ended && !alreadyAdded"
+                @click="addMe"
+                size="sm"
+              >
+                <i class="fas fa-plus-square"></i>
+                Dodaj mnie
+              </b-button>
+            </div>
+            <div class="d-flex justify-content-center"></div>
+          </b-form-row>
+        </form>
+        <div>
+          <ul>
+            <b-alert :show="list.length==0" variant="warning" class="text-dark">
+              Jak dotąd nie zapisano żadnego uczestnika,
+              <span
+                v-if="!this.ended && admin"
+              >dopisz go w polu powyżej.</span>
+            </b-alert>
+            <li class="border-bottom" v-for="(item, index) in list" :key="index">
+              <component
+                :is="admin ? 'item-admin':'item'"
+                :item="Object.assign(item, {index: index})"
+                :ended="ended"
+                @remove="remove"
+              ></component>
+            </li>
+          </ul>
         </div>
-        <div class="col-lg-3">
-          <b-button type="submit" class="btn-outline-success btn-light">
-            Dodaj
-            <i class="fas fa-plus-square"></i>
-          </b-button>
-        </div>
-      </b-form-row>
-    </form>
-    <div class="d-flex justify-content-center">
-      <b-button
-        class="w-75 btn-outline-success btn-light"
-        v-if="!this.ended && !admin && !alreadyAdded"
-        @click="addMe"
-      >
-        Dodaj mnie
-        <i class="fas fa-plus-square"></i>
-      </b-button>
-    </div>
-    <div>
-      <ul>
-        <b-alert :show="list.length==0" variant="warning" class="text-dark">
-          Jak dotąd nie zapisano żadnego uczestnika,
-          <span
-            v-if="!this.ended && admin"
-          >dopisz go w polu powyżej.</span>
-        </b-alert>
-        <li class="border-bottom" v-for="(item, index) in list" :key="index">
-          <component
-            :is="admin ? 'item-admin':'item'"
-            :item="Object.assign(item, {index: index})"
-            :ended="ended"
-            @remove="remove"
-          ></component>
-        </li>
-      </ul>
-    </div>
-  </div>
+      </b-card-body>
+    </b-card>
+  </b-card-group>
 </template>
 <script>
 import Item from "@/views/Fundrais/Participants/item.vue";

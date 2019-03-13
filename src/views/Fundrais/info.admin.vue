@@ -79,7 +79,7 @@
           </b-row>
         </b-card-text>
       </b-card-body>
-      <b-card-body class="w-100" v-else>
+      <b-card-body v-else>
         <b-card-title class="mb-0 border-bottom align-middle">
           <b-row>
             <b-col>
