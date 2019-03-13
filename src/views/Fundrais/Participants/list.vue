@@ -12,23 +12,25 @@
             v-model="name"
           />
         </div>
-        <div class="col-lg-3">
+        <div class="row-lg-3">
           <b-button type="submit" class="btn-outline-success btn-light">
             <i class="fas fa-plus-square fa-fw"></i>
             Dodaj
           </b-button>
         </div>
+        <div class="row-lg-3">
+          <b-button
+            class="btn-outline-success btn-light"
+            v-if="!this.ended && !alreadyAdded"
+            @click="addMe"
+          >
+            <i class="fas fa-plus-square"></i>
+            Dodaj mnie
+          </b-button>
+        </div>
+        <div class="d-flex justify-content-center"></div>
       </b-form-row>
     </form>
-    <div class="d-flex justify-content-center">
-      <b-button
-        class="w-75 btn-outline-success btn-light"
-        v-if="!this.ended && !admin && !alreadyAdded"
-        @click="addMe"
-      ><i class="fas fa-plus-square"></i>
-        Dodaj mnie
-      </b-button>
-    </div>
     <div>
       <ul>
         <b-alert :show="list.length==0" variant="warning" class="text-dark">

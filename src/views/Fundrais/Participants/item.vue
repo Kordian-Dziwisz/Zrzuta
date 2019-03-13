@@ -18,7 +18,8 @@
           size="sm"
           v-if="authenticate && !item.paid && !item.accepted && ended"
           @click="paid"
-        ><i class="fas fa-vote-yea fa-fw"></i>
+        >
+          <i class="fas fa-vote-yea fa-fw"></i>
           Zapłaciłem
         </b-button>
       </div>
@@ -26,13 +27,14 @@
     <div class="row container">
       <b-textarea class="col-lg-8" v-model.lazy.trim="item.comment" v-if="authenticate"></b-textarea>
       <span v-else>{{item.comment}}</span>
-      <div class="col-lg-3">
+      <div class="col-lg-2">
         <b-button
           class="btn-outline-danger btn-light"
           size="sm"
           @click="remove"
           v-if="authenticate"
-        ><i class="fas fa-user-minus fa-fw"></i>
+        >
+          <i class="fas fa-user-minus fa-fw"></i>
           Usuń
         </b-button>
       </div>
