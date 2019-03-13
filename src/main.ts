@@ -56,6 +56,8 @@ require("moment/locale/pl");
 
 Vue.use(require("vue-moment"), { moment });
 
+// Vue.use(Vuelidate);
+
 new Vue({
   router,
   render: h => h(App)

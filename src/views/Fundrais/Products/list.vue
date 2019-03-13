@@ -21,8 +21,8 @@
         </div>
         <div class="col-lg-3">
           <b-button type="submit" class="btn btn-outline-success btn-light">
-            Dodaj
-            <i class="fas fa-plus-square"></i>
+             <i class="fas fa-plus-square fa-fw"></i>
+             Dodaj
           </b-button>
         </div>
       </b-form-row>
@@ -110,7 +110,10 @@
         </form>
         <b-button class="btn-outline-primary btn-light" @click="save">Zapisz</b-button>&nbsp;
         <b-button class="btn-outline-primary btn-light" @click="modalShow = !modalShow">Anuluj</b-button>&nbsp;
-        <b-button class="btn-outline-danger btn-light" @click="remove(editObject.index)">Usuń</b-button>
+        <b-button class="btn-outline-danger btn-light" @click="remove(editObject.index)">
+          <i class="fas fa-trash-alt"></i>
+          Usuń
+        </b-button>
       </b-modal>
     </ul>
   </div>

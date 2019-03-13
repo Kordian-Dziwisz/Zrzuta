@@ -17,43 +17,47 @@
       :show="fundraisInfo.ended"
       v-else
     >Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę</b-alert>
-    <b-row class="m-3">
-      <b-col>
-        <project-info v-if="!admin && fundraisInfo" :info="fundraisInfo"/>
-        <info-admin v-if="admin  && fundraisInfo" :info="fundraisInfo" @info="updateInfo"/>
-      </b-col>
-    </b-row>
-    <b-row class="m-3">
-      <b-col>
-        <list-of-participants
-          :admin="admin"
-          :list="listOfParticipants"
-          :ended="this.fundraisInfo.ended"
-          @list="updateParticipants"
-        />
-      </b-col>
-      <b-col>
-        <list-of-products
-          :admin="admin"
-          :ended="this.fundraisInfo.ended"
-          :numOfParticipants="listOfParticipants.length"
-          :list="listOfProducts"
-          @list="updateProducts"
-          v-if="authenticate && fundraisInfo.ended"
-        />
-        <propositions
-          :admin="admin"
-          :ended="this.fundraisInfo.ended"
-          :list="listOfPropositions"
-          @list="updatePropositions"
-          v-if="authenticate && !fundraisInfo.ended"
-        />
-      </b-col>
-    </b-row>
-    <p
-      class="display-4"
-      v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length > 0 && !admin && authenticate"
-    >Wpłaty na numer konta: {{fundraisInfo.accountNumber}}</p>
+    <div class="container-fluid">
+      <b-row>
+        <div class="col">
+          <project-info v-if="!admin && fundraisInfo" :info="fundraisInfo"/>
+          <info-admin v-if="admin  && fundraisInfo" :info="fundraisInfo" @info="updateInfo"/>
+        </div>
+        <div class="col">
+          <list-of-participants
+            :admin="admin"
+            :ended="this.fundraisInfo.ended"
+            :list="listOfParticipants"
+            @list="updateParticipants"
+          />
+        </div>
+        <div class="col">
+          <list-of-products
+            :admin="admin"
+            :ended="this.fundraisInfo.ended"
+            :numOfParticipants="listOfParticipants.length"
+            :list="listOfProducts"
+            @list="updateProducts"
+            v-if="authenticate && fundraisInfo.ended"
+          />
+          <propositions
+            :admin="admin"
+            :ended="this.fundraisInfo.ended"
+            :list="listOfPropositions"
+            @list="updatePropositions"
+            v-if="authenticate && !fundraisInfo.ended"
+          />
+        </div>
+      </b-row>
+      <div class="row">
+        <div class="col">
+          <p
+            class="display-4"
+            v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length > 0 && !admin && authenticate"
+          >Wpłaty na numer konta: {{fundraisInfo.accountNumber}}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>

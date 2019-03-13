@@ -38,8 +38,8 @@
           </div>
           <div class="col-lg-3">
             <b-button type="submit" class="btn-outline-success btn-light">
+              <i class="fas fa-plus-square" fa-fw></i>
               Dodaj
-              <i class="fas fa-plus-square"></i>
             </b-button>
           </div>
         </b-form-row>
@@ -66,14 +66,17 @@
               :class="{'btn-info': liked(index), 'btn-outline-info btn-light': !liked(index)}"
               @click="like(index)"
             >
+              <i class="fas fa-thumbs-up fa-fw"></i>
               like&nbsp;
-              <i class="fas fa-thumbs-up"></i>
             </b-button>
           </td>
         </tr>
         <tr>
           <td>
-            <b-button class="btn-danger" v-if="authenticate(index)" @click="remove(index)">Usuń</b-button>
+            <b-button class="btn-danger" v-if="authenticate(index)" @click="remove(index)">
+              <i class="fas fa-trash-alt"></i>
+              Usuń
+            </b-button>
           </td>
           <td>
             <b-button class="btn-success" v-if="admin" @click="accept(index)">Akceptuj</b-button>

@@ -100,34 +100,49 @@
           </b-row>
         </b-card-title>
 
-        <b-card-text>
-          <b-row
-            class="py-2"
-            :class="{'border-bottom': info.description.length || info.accountNumber}"
-          >
-            <b-col>
-              <label>Zbiórka rozpoczęła się:</label>
-              <h5>{{ info.creationDate | moment("LLL")}}</h5>
-            </b-col>
-            <b-col class="text-right">
-              <label>Zbiórka kończy się:</label>
-              <h5 class="text-danger">{{ newInfo.endDate | moment("LLL")}}</h5>
-            </b-col>
-          </b-row>
-          <b-row class="py-2">
-            <b-col v-if="info.description.length">
-              <label>Opis:</label>
-              <h5 style="white-space: pre">{{info.description}}</h5>
-            </b-col>
-            <b-col v-if="info.accountNumber">
-              <label>Informacje o płatności:</label>
-              <h5 style="white-space: pre">{{info.accountNumber}}</h5>
-            </b-col>
-          </b-row>
-        </b-card-text>
-      </b-card-body>
-    </b-card>
-  </b-card-group>
+    <label>Zbiórka rozpoczęła się:</label>&nbsp;
+    <p class="border-bottom">
+      <strong>{{ info.creationDate | moment("dddd, D MMMM YYYY")}} o godzinie: {{ info.creationDate | moment("H:mm")}}</strong>
+    </p>
+
+    <label>Data zakończenia:</label>
+    <datepicker
+      v-model="newInfo.endDate"
+      input-class="form-control bg-white w-50"
+      :language="pl"
+      format="D, d MMM yyyy"
+      :disabledDates="disabledDates"
+    />
+    <timepicker v-model="endTime" format="H:m" @change="updateTime()"/>
+    <br>
+    <br>
+    <label>Status:&nbsp;</label>
+    <span class="text-danger" v-if="newInfo.ended">
+      <strong>Zakończona</strong>
+    </span>
+    <span class="text-success" v-else>
+      <strong>Otwarta</strong>
+    </span>&nbsp;
+    <b-button
+      class="mb-1 btn-outline-success btn-light"
+      size="sm"
+      @click="newInfo.ended = !newInfo.ended"
+      v-if="newInfo.ended"
+    >Otwórz</b-button>
+    <b-button
+      class="mb-1 btn-outline-danger btn-light"
+      @click="newInfo.ended = !newInfo.ended"
+      size="sm"
+      v-else
+    >Zakończ</b-button>
+
+    <b-input
+      class="mb-1"
+      type="text"
+      placeholder="Wpisz numer konta"
+      v-model.lazy.trim="newInfo.accountNumber"
+    />
+  </div>
 </template>
 <script>
 import Datepicker from "vuejs-datepicker";
