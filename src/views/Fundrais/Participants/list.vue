@@ -1,9 +1,9 @@
 <template>
-  <b-card header="Informacje o uczestnikach">
+  <b-card header="Informacje o uczestnikach" class="shadow">
     <b-card-body>
-      <form @submit.prevent="addItem()" v-if="!this.ended && admin">
-        <div class="row my-2">
-          <div class="col">
+      <form @submit.prevent="addItem()" v-if="!this.ended">
+        <div class="row">
+          <div class="col" v-if="admin">
             <b-input
               type="text"
               class="d-box"
@@ -14,13 +14,18 @@
             />
           </div>
           <div class="col text-right">
-            <b-button type="submit" class="d-box btn-outline-success btn-light" size="sm">
+            <b-button
+              type="submit"
+              class="d-box btn-outline-success btn-light"
+              size="sm"
+              v-if="admin"
+            >
               <i class="fas fa-plus-square"></i>
               Dodaj uczestnika
             </b-button>
             <b-button
-              class="btn-outline-success btn-light"
-              v-if="!this.ended && !alreadyAdded"
+              class="btn-outline-success btn-light ml-1"
+              v-if="!alreadyAdded"
               @click="addMe"
               size="sm"
             >
@@ -28,10 +33,11 @@
               Dodaj mnie
             </b-button>
           </div>
+          <div></div>
         </div>
       </form>
       <div class="row">
-        <div class="col">
+        <div class="col p-0">
           <ul>
             <b-alert :show="list.length==0" variant="warning" class="text-dark">
               Jak dotąd nie zapisano żadnego uczestnika,
@@ -41,6 +47,7 @@
             </b-alert>
             <li v-for="(item, index) in list" :key="index">
               <component
+                class="my-3"
                 :is="admin ? 'item-admin':'item'"
                 :item="Object.assign(item, {index: index})"
                 :ended="ended"
