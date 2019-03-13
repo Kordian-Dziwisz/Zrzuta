@@ -1,43 +1,37 @@
 <template>
-  <b-card-group>
-    <b-card-header class="w-100">
-      <strong>Informacje o uczestnikach</strong>
-    </b-card-header>
-    <b-card>
-      <b-card-body>
-        <form @submit.prevent="addItem()" class="container" v-if="!this.ended && admin">
-          <h3>Dodaj nowego uczestnika:</h3>
-          <b-form-row>
-            <div class="col-lg-9">
-              <b-input
-                type="text"
-                name="participant"
-                maxlength="30"
-                placeholder="Nazwa/Imię/Ksywka"
-                v-model="name"
-              />
-            </div>
-            <div class="row-lg-3">
-              <b-button type="submit" class="btn-outline-success btn-light" size="sm">
-                <i class="fas fa-plus-square"></i>
-                Dodaj
-              </b-button>
-            </div>
-            <div class="row-lg-3">
-              <b-button
-                class="btn-outline-success btn-light"
-                v-if="!this.ended && !alreadyAdded"
-                @click="addMe"
-                size="sm"
-              >
-                <i class="fas fa-plus-square"></i>
-                Dodaj mnie
-              </b-button>
-            </div>
-            <div class="d-flex justify-content-center"></div>
-          </b-form-row>
-        </form>
-        <div>
+  <b-card header="Informacje o uczestnikach">
+    <b-card-body>
+      <form @submit.prevent="addItem()" v-if="!this.ended && admin">
+        <div class="row my-2">
+          <div class="col">
+            <b-input
+              type="text"
+              class="d-box"
+              name="participant"
+              maxlength="30"
+              placeholder="Nazwa/Imię/Ksywka"
+              v-model="name"
+            />
+          </div>
+          <div class="col text-right">
+            <b-button type="submit" class="d-box btn-outline-success btn-light" size="sm">
+              <i class="fas fa-plus-square"></i>
+              Dodaj uczestnika
+            </b-button>
+            <b-button
+              class="btn-outline-success btn-light"
+              v-if="!this.ended && !alreadyAdded"
+              @click="addMe"
+              size="sm"
+            >
+              <i class="fas fa-plus-square"></i>
+              Dodaj mnie
+            </b-button>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="col">
           <ul>
             <b-alert :show="list.length==0" variant="warning" class="text-dark">
               Jak dotąd nie zapisano żadnego uczestnika,
@@ -45,7 +39,7 @@
                 v-if="!this.ended && admin"
               >dopisz go w polu powyżej.</span>
             </b-alert>
-            <li class="border-bottom" v-for="(item, index) in list" :key="index">
+            <li v-for="(item, index) in list" :key="index">
               <component
                 :is="admin ? 'item-admin':'item'"
                 :item="Object.assign(item, {index: index})"
@@ -55,9 +49,9 @@
             </li>
           </ul>
         </div>
-      </b-card-body>
-    </b-card>
-  </b-card-group>
+      </div>
+    </b-card-body>
+  </b-card>
 </template>
 <script>
 import Item from "@/views/Fundrais/Participants/item.vue";
