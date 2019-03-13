@@ -1,5 +1,5 @@
 <template>
-  <div class="Fundrais" v-if="fundraisInfo">
+  <div>
     <b-alert
       variant="danger"
       class="h4"
@@ -17,21 +17,22 @@
       :show="fundraisInfo.ended"
       v-else
     >Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę</b-alert>
-    <div class="w-75 mx-auto">
-      <project-info v-if="!admin && fundraisInfo" :info="fundraisInfo"/>
-      <info-admin v-if="admin  && fundraisInfo" :info="fundraisInfo" @info="updateInfo"/>
-    </div>
-    <div class="container-fluid">
-      <div></div>
-      <div class="col">
+    <b-row class="m-3">
+      <b-col>
+        <project-info v-if="!admin && fundraisInfo" :info="fundraisInfo"/>
+        <info-admin v-if="admin  && fundraisInfo" :info="fundraisInfo" @info="updateInfo"/>
+      </b-col>
+    </b-row>
+    <b-row class="m-3">
+      <b-col>
         <list-of-participants
           :admin="admin"
           :list="listOfParticipants"
           :ended="this.fundraisInfo.ended"
           @list="updateParticipants"
         />
-      </div>
-      <div class="col">
+      </b-col>
+      <b-col>
         <list-of-products
           :admin="admin"
           :ended="this.fundraisInfo.ended"
@@ -47,16 +48,12 @@
           @list="updatePropositions"
           v-if="authenticate && !fundraisInfo.ended"
         />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <p
-          class="display-4"
-          v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length > 0 && !admin && authenticate"
-        >Wpłaty na numer konta: {{fundraisInfo.accountNumber}}</p>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
+    <p
+      class="display-4"
+      v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length > 0 && !admin && authenticate"
+    >Wpłaty na numer konta: {{fundraisInfo.accountNumber}}</p>
   </div>
 </template>
 <script>
