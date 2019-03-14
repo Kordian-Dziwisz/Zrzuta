@@ -40,7 +40,7 @@
             </div>
             <div class="col" v-if="info.accountNumber">
               <label>Informacje o płatności:</label>
-              <h5 style>{{info.accountNumber}}</h5>
+              <h5>{{info.accountNumber}}</h5>
             </div>
           </div>
         </b-card-text>
@@ -57,8 +57,6 @@ export default {
 </script>
 <style scoped>
 h5 {
-  white-space: pre;
-  word-break: keep-all;
-  white-space: none;
+  white-space: pre-line;
 }
 </style>

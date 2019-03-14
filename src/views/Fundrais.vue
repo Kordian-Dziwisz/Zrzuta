@@ -50,10 +50,6 @@
         />
       </b-col>
     </b-row>
-    <p
-      class="display-4"
-      v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length > 0 && !admin && authenticate"
-    >Wpłaty na numer konta: {{fundraisInfo.accountNumber}}</p>
   </div>
 </template>
 <script>
