@@ -21,7 +21,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { dom } from "@fortawesome/fontawesome-svg-core";
 import Vuelidate from "vuelidate";
-import Notifications from 'vue-notification';
+import Notifications from "vue-notification";
+import Datetime from "vue-datetime";
 
 dom.watch();
 
@@ -61,6 +62,8 @@ Vue.use(require("vue-moment"), { moment });
 Vue.use(Vuelidate);
 
 Vue.use(Notifications);
+
+Vue.use(Datetime);
 
 new Vue({
   router,
