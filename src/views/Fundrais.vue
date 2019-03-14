@@ -36,17 +36,17 @@
         <list-of-products
           :admin="admin"
           :ended="this.fundraisInfo.ended"
-          :numOfParticipants="listOfParticipants.length"
           :list="listOfProducts"
           @list="updateProducts"
-          v-if="authenticate && fundraisInfo.ended"
+          v-if="authenticate && fundraisInfo.ended && false"
         />
         <propositions
+          :numOfParticipants="listOfParticipants.length"
           :admin="admin"
           :ended="this.fundraisInfo.ended"
           :list="listOfPropositions"
           @list="updatePropositions"
-          v-if="authenticate && !fundraisInfo.ended"
+          v-if="authenticate"
         />
       </b-col>
     </b-row>

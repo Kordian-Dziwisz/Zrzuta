@@ -10,8 +10,7 @@
           <h6 v-if="item.paid && !item.accepted">Wpłacono</h6>
           <h6 v-if="item.accepted">Otrzymano</h6>
         </div>
-        <div class="col text-right"></div>
-        <div>
+        <div class="col text-right">
           <b-button
             class="btn-outline-primary btn-light"
             size="sm"

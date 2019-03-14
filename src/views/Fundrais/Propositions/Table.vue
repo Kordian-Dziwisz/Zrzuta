@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!this.ended">
+  <div>
     <div class="container">
       <h3>Dodaj nową propozycję</h3>
       <form @submit.prevent="addNew">
@@ -44,6 +44,16 @@
           </div>
         </b-form-row>
       </form>
+    </div>
+    <div class="container mb-1">
+      <div class="h5">
+        Suma: {{priceSum.toFixed(2)}}
+        <span v-if="pricePerUser >= 0">zł</span>
+      </div>
+      <div class="h5">
+        Na osobę: {{parseFloat(pricePerUser).toFixed(2) }}
+        <span v-if="pricePerUser >= 0">zł</span>
+      </div>
     </div>
     <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
     <table v-else class="table table-light table-striped">
@@ -93,7 +103,8 @@ export default {
   props: {
     list: Array,
     admin: Boolean,
-    ended: Boolean
+    ended: Boolean,
+    numOfParticipants: Number
   },
   data() {
     return {
@@ -154,6 +165,29 @@ export default {
   },
   created() {
     this.newItem.creator = localStorage.getItem("login");
+  },
+  computed: {
+    priceSum: {
+      get() {
+        if (this.list.length > 0) {
+          let prices = this.list.map(x => x.price * x.number);
+          return prices.reduce((a, b) => {
+            return a + b;
+          });
+        } else {
+          return 0;
+        }
+      }
+    },
+    pricePerUser: {
+      get() {
+        if (this.numOfParticipants != 0) {
+          return this.priceSum / this.numOfParticipants;
+        } else if (this.numOfParticipants === 0 || this.priceSum === 0) {
+          return 0;
+        }
+      }
+    }
   }
 };
 </script>
