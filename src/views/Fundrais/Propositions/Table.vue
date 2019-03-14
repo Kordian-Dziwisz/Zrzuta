@@ -89,7 +89,10 @@
                 @click="like(index)"
               >
                 <i class="fas fa-thumbs-up"></i>
-                Like
+                <span
+                  class="d-none"
+                  :class="{'d-lg-none': liked(index), 'd-lg-inline': !liked(index)}"
+                >Like</span>
               </b-button>
             </td>
             <td v-if="isAdmin || authenticate(index)">
@@ -109,7 +112,7 @@
                 @click="remove(index)"
               >
                 <i class="fas fa-trash-alt"></i>
-                Usuń
+                <span class="d-none d-lg-inline">Usuń</span>
               </b-button>
               <!-- <b-dropdown text="akcje" size="sm"></b-dropdown> -->
             </td>
