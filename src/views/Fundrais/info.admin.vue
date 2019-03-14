@@ -184,4 +184,7 @@ input {
   border: 1px solid #ced4da;
   border-radius: 4.5px;
 }
+h5 {
+  white-space: pre-line;
+}
 </style>

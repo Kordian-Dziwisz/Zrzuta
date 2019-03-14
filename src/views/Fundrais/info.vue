@@ -53,8 +53,6 @@ export default {
 </script>
 <style scoped>
 h5 {
-  white-space: pre;
-  word-break: keep-all;
-  white-space: none;
+  white-space: pre-line;
 }
 </style>
