@@ -114,11 +114,11 @@
         <b-row class="py-2">
           <b-col v-if="info.description.length">
             <label>Opis:</label>
-            <h5 style="white-space: pre">{{info.description}}</h5>
+            <h5>{{info.description}}</h5>
           </b-col>
           <b-col v-if="info.accountNumber">
             <label>Informacje o płatności:</label>
-            <h5 style="white-space: pre">{{info.accountNumber}}</h5>
+            <h5>{{info.accountNumber}}</h5>
           </b-col>
         </b-row>
       </b-card-text>
