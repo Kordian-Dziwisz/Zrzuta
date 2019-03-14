@@ -1,5 +1,6 @@
 <template>
-  <b-card header="Uczestnicy" class="shadow">
+  <b-card-group class="shadow border rounded">
+    <b-card-header class="w-100 shadow-sm">Uczestnicy</b-card-header>
     <b-card-body>
       <form @submit.prevent="addItem()" v-if="!this.ended">
         <h3>Dodaj nowego uczestnika</h3>
@@ -57,7 +58,7 @@
         </div>
       </div>
     </b-card-body>
-  </b-card>
+  </b-card-group>
 </template>
 <script>
 import Item from "@/views/Fundrais/Participants/item.vue";

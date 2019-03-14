@@ -1,5 +1,6 @@
 <template>
-  <b-card header="Cele zbiórki" class="shadow">
+  <b-card-group class="shadow border rounded">
+    <b-card-header class="w-100 shadow-sm">Cele zbiórki</b-card-header>
     <b-card-body>
       <form @submit.prevent="addNew" v-if="!this.ended">
         <h3>Dodaj nową propozycję</h3>
@@ -56,65 +57,65 @@
           >zł ({{numOfParticipants}} uczestników)</span>
         </div>
       </div>
+      <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
+      <table v-else class="table table-striped border">
+        <thead class="text-center">
+          <th>Proponuje</th>
+          <th>Nazwa</th>
+          <th>Ilość</th>
+          <th>Cena</th>
+          <th>Koszt</th>
+          <th>Poparcie</th>
+          <th>Akcje</th>
+        </thead>
+        <tbody>
+          <tr
+            :class="{'bg-success text-light': item.accepted, 'bg-primary text-light': item.likes.length > numOfParticipants / 2}"
+            class="text-center"
+            v-for="(item, index) in list"
+            :key="index"
+          >
+            <td>{{item.creator}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.number}} szt</td>
+            <td>{{item.price}} zł</td>
+            <td>{{item.number * item.price}} zł</td>
+            <td>
+              {{item.likes.length}}
+              <b-button
+                class="ml-1 btn"
+                size="sm"
+                :class="{'btn-info': liked(index), 'btn-outline-info btn-light': !liked(index)}"
+                @click="like(index)"
+              >
+                <i class="fas fa-thumbs-up"></i>
+                Like
+              </b-button>
+            </td>
+            <td v-if="isAdmin || authenticate(index)">
+              <b-button
+                size="sm"
+                class="btn-success"
+                v-if="isAdmin && !item.accepted"
+                @click="accept(index)"
+              >Akceptuj</b-button>
+              <b-button
+                size="sm"
+                class="btn-danger"
+                v-if="authenticate(index) || isAdmin"
+                @click="remove(index)"
+              >
+                <i class="fas fa-trash-alt"></i>
+                Usuń
+              </b-button>
+              <!-- <b-dropdown text="akcje" size="sm"></b-dropdown> -->
+            </td>
+            <td v-else>-</td>
+          </tr>
+        </tbody>
+      </table>
     </b-card-body>
-    <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
-    <table v-else class="table table-striped border">
-      <thead class="text-center">
-        <th>Proponuje</th>
-        <th>Nazwa</th>
-        <th>Ilość</th>
-        <th>Cena</th>
-        <th>Koszt</th>
-        <th>Poparcie</th>
-        <th>Akcje</th>
-      </thead>
-      <tbody>
-        <tr
-          :class="{'bg-success text-light': item.accepted, 'bg-primary text-light': item.likes.length > numOfParticipants / 2}"
-          class="text-center"
-          v-for="(item, index) in list"
-          :key="index"
-        >
-          <td>{{item.creator}}</td>
-          <td>{{item.name}}</td>
-          <td>{{item.number}} szt</td>
-          <td>{{item.price}} zł</td>
-          <td>{{item.number * item.price}} zł</td>
-          <td>
-            {{item.likes.length}}
-            <b-button
-              class="ml-1 btn"
-              size="sm"
-              :class="{'btn-info': liked(index), 'btn-outline-info btn-light': !liked(index)}"
-              @click="like(index)"
-            >
-              <i class="fas fa-thumbs-up"></i>
-              Like
-            </b-button>
-          </td>
-          <td v-if="isAdmin || authenticate(index)">
-            <b-button
-              size="sm"
-              class="btn-success"
-              v-if="isAdmin && !item.accepted"
-              @click="accept(index)"
-            >Akceptuj</b-button>
-            <b-button
-              size="sm"
-              class="btn-danger"
-              v-if="authenticate(index) || isAdmin"
-              @click="remove(index)"
-            >
-              <i class="fas fa-trash-alt"></i>
-              Usuń
-            </b-button>
-            <!-- <b-dropdown text="akcje" size="sm"></b-dropdown> -->
-          </td>
-          <td v-else>-</td>
-        </tr>
-      </tbody>
-    </table>
-  </b-card>
+  </b-card-group>
 </template>
 <script>
 import { parse } from "@fortawesome/fontawesome-svg-core";
