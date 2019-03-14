@@ -1,9 +1,12 @@
 <template>
-  <div class="shadow-sm border">
-    <b-card-header class="shadow-sm py-1" :style="{'background-color': headerColor}">
+  <div class="shadow-sm border rounded">
+    <b-card-header
+      class="shadow-sm py-1"
+      :class="{'bg-success': item.paid, 'bg-primary': item.accepted, 'text-white': (item.paid || item.accepted)}"
+    >
       <div class="row">
         <div class="col">
-          <h5 class="d-inline">{{item.name}}&nbsp;</h5>
+          <h5 class="d-lg-inline">{{item.name}}&nbsp;</h5>
           <span>
             <span v-if="item.paid && !item.accepted">Wpłacono</span>
             <span v-if="item.accepted">Otrzymano</span>
@@ -18,11 +21,11 @@
             @click="accept"
           >
             <i class="fas fa-vote-yea"></i>
-            Zaakceptuj
+            <span class="d-none d-lg-inline">Zaakceptuj</span>
           </b-button>
           <b-button class="btn-outline-danger btn-light ml-1" size="sm" @click="remove">
             <i class="fas fa-user-minus"></i>
-            Usuń
+            <span class="d-none d-lg-inline">Usuń</span>
           </b-button>
         </div>
       </div>
@@ -36,7 +39,7 @@
           placeholder="Tutaj wpisz swój komentarz"
         ></b-form-textarea>
       </div>
-      <div v-else>{{item.comment}}</div>
+      <div v-else class="white-space: pre">{{item.comment}}</div>
     </b-card-body>
   </div>
 </template>
@@ -57,13 +60,6 @@ export default {
   computed: {
     authenticate() {
       return this.item.name == localStorage.getItem("login");
-    },
-    headerColor() {
-      if (this.item.accepted) {
-        return "#3399ff";
-      } else if (this.item.paid) {
-        return "#4dff4d";
-      }
     }
   }
 };
