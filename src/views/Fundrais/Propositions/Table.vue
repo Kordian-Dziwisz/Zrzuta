@@ -98,10 +98,13 @@
                 class="btn-success"
                 v-if="isAdmin && !item.accepted"
                 @click="accept(index)"
-              >Akceptuj</b-button>
+              >
+                <i class="fas fa-vote-yea pr-1"></i>
+                <span class="d-none d-lg-inline">Akceptuj</span>
+              </b-button>
               <b-button
                 size="sm"
-                class="btn-danger"
+                class="ml-1 btn-danger"
                 v-if="authenticate(index) || isAdmin"
                 @click="remove(index)"
               >

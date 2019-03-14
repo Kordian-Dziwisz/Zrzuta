@@ -17,11 +17,11 @@
             v-if="!item.accepted && ended"
             @click="accept"
           >
-            <i class="fas fa-vote-yea"></i>
+            <i class="fas fa-vote-yea pr-1"></i>
             <span class="d-none d-lg-inline">Zaakceptuj</span>
           </b-button>
           <b-button class="btn-outline-danger btn-light ml-1" size="sm" @click="remove">
-            <i class="fas fa-user-minus"></i>
+            <i class="fas fa-user-minus pr-1"></i>
             <span class="d-none d-lg-inline">Usuń</span>
           </b-button>
         </div>
