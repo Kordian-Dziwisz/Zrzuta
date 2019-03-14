@@ -2,7 +2,7 @@
   <div id="vue">
     <nav-bar/>
     <router-view/>
-    <notifications position="top center" group="status"/>
+    <notifications position="top right" group="status"/>
   </div>
 </template>
 <script>
