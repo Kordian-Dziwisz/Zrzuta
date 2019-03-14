@@ -7,10 +7,8 @@
       <div class="row">
         <div class="col">
           <h5 class="d-lg-inline">{{item.name}}&nbsp;</h5>
-          <span>
-            <span v-if="item.paid && !item.accepted">Wpłacono</span>
-            <span v-if="item.accepted">Otrzymano</span>
-          </span>
+          <h6 v-if="item.paid && !item.accepted">Wpłacono</h6>
+          <h6 v-if="item.accepted">Otrzymano</h6>
         </div>
         <div class="col text-right"></div>
         <div>
@@ -31,15 +29,15 @@
       </div>
     </b-card-header>
     <b-card-body v-if="item.comment.length>0 || authenticate" class="py-3">
-      <div v-if="authenticate">Twój komentarz:
+      <h6 v-if="authenticate">Twój komentarz:
         <b-form-textarea
           rows="0"
           max-rows="6"
           v-model.lazy.trim="item.comment"
           placeholder="Tutaj wpisz swój komentarz"
         ></b-form-textarea>
-      </div>
-      <div v-else class="white-space: pre">{{item.comment}}</div>
+      </h6>
+      <h6 v-else>{{item.comment}}</h6>
     </b-card-body>
   </div>
 </template>
@@ -64,3 +62,10 @@ export default {
   }
 };
 </script>
+<style scoped>
+h6 {
+  white-space: pre-line;
+  font-weight: 400;
+}
+</style>
+
