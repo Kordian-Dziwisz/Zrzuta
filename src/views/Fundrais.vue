@@ -1,22 +1,22 @@
 <template>
-  <div>
-    <b-alert
+  <div v-if="fundraisInfo">
+    <!-- <b-alert
       variant="danger"
       class="h4"
       :show="!fundraisInfo.title.length && authenticate"
-    >Proszę o uzupełnienie pola Tytuł, bez tego pola dokument nie zostanie zaktualizowany</b-alert>
-    <b-alert
+    >Proszę o uzupełnienie pola Tytuł, bez tego pola dokument nie zostanie zaktualizowany</b-alert>-->
+    <!-- <b-alert
       :show="true"
       v-if="compareDates"
       variant="danger"
       class="h4"
-    >Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone</b-alert>
-    <b-alert
+    >Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone</b-alert>-->
+    <!-- <b-alert
       variant="warning"
       class="h4"
       :show="fundraisInfo.ended"
       v-else
-    >Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę</b-alert>
+    >Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę</b-alert>-->
     <b-row class="m-3">
       <b-col>
         <project-info v-if="!admin && fundraisInfo" :info="fundraisInfo"/>
@@ -145,10 +145,40 @@ export default {
       );
     },
     admin() {
-      return this.fundraisInfo.creator == localStorage.getItem("login");
+      return this.fundraisInfo && this.fundraisInfo.creator == localStorage.getItem("login");
     },
     compareDates() {
       return this.fundraisInfo.endDate.getTime() < Date.now();
+    }
+  },
+  watch: {
+    fundraisInfo: {
+      handler() {
+        if (!this.fundraisInfo) return;
+        if (!this.compareDates && this.fundraisInfo.ended) {
+          this.$notify({
+            group: "status",
+            title: "Status",
+            text: "Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę",
+            type: "warn"
+          });
+        } else if (this.compareDates) {
+          this.$notify({
+            group: "status",
+            title: "Status",
+            text: "Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone",
+            type: "error"
+          });
+        } else if (!this.fundraisInfo.title.length && this.authenticate) {
+          this.$notify({
+            group: "status",
+            title: "Status",
+            text: "Proszę o uzupełnienie pola Tytuł, bez tego pola dokument nie zostanie zaktualizowany",
+            type: "error"
+          });
+        }
+      },
+      deep: true
     }
   },
   mounted() {

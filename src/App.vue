@@ -2,6 +2,7 @@
   <div id="vue">
     <nav-bar/>
     <router-view/>
+    <notifications position="top center" group="status"/>
   </div>
 </template>
 <script>
@@ -16,7 +17,6 @@ export default {
       var guid = nav.mimeTypes.length;
       guid += nav.userAgent.replace(/\D+/g, "");
       guid += nav.plugins.length;
-
       return guid;
     }
   },
