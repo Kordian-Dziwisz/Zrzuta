@@ -1,12 +1,12 @@
 <template>
-  <b-card header="Informacje o uczestnikach" class="shadow">
+  <b-card header="Uczestnicy" class="shadow">
     <b-card-body>
       <form @submit.prevent="addItem()" v-if="!this.ended">
+        <h3>Dodaj nowego uczestnika</h3>
         <div class="row">
           <div class="col" v-if="admin">
             <b-input
               type="text"
-              class="d-box"
               name="participant"
               maxlength="30"
               placeholder="Nazwa/Imię/Ksywka"
@@ -33,7 +33,6 @@
               Dodaj mnie
             </b-button>
           </div>
-          <div></div>
         </div>
       </form>
       <div class="row">

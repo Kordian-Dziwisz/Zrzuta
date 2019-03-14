@@ -19,14 +19,14 @@
     >Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę</b-alert>
     <b-row class="m-3">
       <b-col>
-        <project-info v-if="!admin && fundraisInfo" :info="fundraisInfo"/>
-        <info-admin v-if="admin  && fundraisInfo" :info="fundraisInfo" @info="updateInfo"/>
+        <project-info v-if="!isAdmin && fundraisInfo" :info="fundraisInfo"/>
+        <info-admin v-if="isAdmin  && fundraisInfo" :info="fundraisInfo" @info="updateInfo"/>
       </b-col>
     </b-row>
     <b-row class="m-3">
       <b-col>
         <list-of-participants
-          :admin="admin"
+          :admin="isAdmin"
           :list="listOfParticipants"
           :ended="this.fundraisInfo.ended"
           @list="updateParticipants"
@@ -34,7 +34,7 @@
       </b-col>
       <b-col>
         <list-of-products
-          :admin="admin"
+          :admin="isAdmin"
           :ended="this.fundraisInfo.ended"
           :list="listOfProducts"
           @list="updateProducts"
@@ -42,7 +42,7 @@
         />
         <propositions
           :numOfParticipants="listOfParticipants.length"
-          :admin="admin"
+          :isAdmin="isAdmin"
           :ended="this.fundraisInfo.ended"
           :list="listOfPropositions"
           @list="updatePropositions"
@@ -52,7 +52,7 @@
     </b-row>
     <p
       class="display-4"
-      v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length > 0 && !admin && authenticate"
+      v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length > 0 && !isAdmin && authenticate"
     >Wpłaty na numer konta: {{fundraisInfo.accountNumber}}</p>
   </div>
 </template>
@@ -91,20 +91,20 @@ export default {
     },
     updatePropositions(list) {
       this.listOfPropositions = list;
-      let accept = this.acceptProposition;
-      this.listOfPropositions.forEach(item => accept(item));
+      //   let accept = this.acceptProposition;
+      //   this.listOfPropositions.forEach(item => accept(item));
       this.updateDoc();
     },
-    acceptProposition(item) {
-      if (item.accepted) {
-        delete item.creator;
-        delete item.likes;
-        delete item.dislikes;
-        delete item.accepted;
-        this.listOfProducts.push(item);
-      }
-      this.updateDoc();
-    },
+    // acceptProposition(item) {
+    //   if (item.accepted) {
+    //     delete item.creator;
+    //     delete item.likes;
+    //     delete item.dislikes;
+    //     delete item.accepted;
+    //     this.listOfProducts.push(item);
+    //   }
+    //   this.updateDoc();
+    // },
     async getDoc() {
       let tmpDoc = await this.db.get({ source: "default" });
       //converting from JSON date format to object
@@ -148,7 +148,7 @@ export default {
         this.fundraisInfo.creator == localStorage.getItem("login")
       );
     },
-    admin() {
+    isAdmin() {
       return this.fundraisInfo.creator == localStorage.getItem("login");
     },
     compareDates() {

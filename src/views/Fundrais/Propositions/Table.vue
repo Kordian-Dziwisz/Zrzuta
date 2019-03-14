@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <div class="container">
-      <h3>Dodaj nową propozycję</h3>
-      <form @submit.prevent="addNew">
+  <b-card header="Cele zbiórki" class="shadow">
+    <b-card-body>
+      <form @submit.prevent="addNew" v-if="!this.ended">
+        <h3>Dodaj nową propozycję</h3>
         <b-form-row>
           <div class="col-lg-5">
             <b-input
@@ -44,57 +44,77 @@
           </div>
         </b-form-row>
       </form>
-    </div>
-    <div class="container mb-1">
-      <div class="h5">
-        Suma: {{priceSum.toFixed(2)}}
-        <span v-if="pricePerUser >= 0">zł</span>
+      <div class="my-2">
+        <div class="h5">
+          Suma: {{priceSum.toFixed(2)}}
+          <span v-if="pricePerUser >= 0">zł</span>
+        </div>
+        <div class="h5">
+          Na osobę: {{parseFloat(pricePerUser).toFixed(2) }}
+          <span
+            v-if="pricePerUser >= 0"
+          >zł ({{numOfParticipants}} uczestników)</span>
+        </div>
       </div>
-      <div class="h5">
-        Na osobę: {{parseFloat(pricePerUser).toFixed(2) }}
-        <span v-if="pricePerUser >= 0">zł</span>
-      </div>
-    </div>
+    </b-card-body>
     <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
-    <table v-else class="table table-light table-striped">
-      <thead>
+    <table v-else class="table table-striped border">
+      <thead class="text-center">
         <th>Proponuje</th>
         <th>Nazwa</th>
         <th>Ilość</th>
         <th>Cena</th>
+        <th>Koszt</th>
         <th>Poparcie</th>
+        <th>Akcje</th>
       </thead>
-      <tbody v-for="(item, index) in list" :key="index">
-        <tr>
+      <tbody>
+        <tr
+          :class="{'bg-success text-light': item.accepted, 'bg-primary text-light': item.likes.length > numOfParticipants / 2}"
+          class="text-center"
+          v-for="(item, index) in list"
+          :key="index"
+        >
           <td>{{item.creator}}</td>
-          <td class="white-normal">{{item.name}}</td>
-          <td class="word-break">{{item.number}}</td>
-          <td>{{item.price}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.number}} szt</td>
+          <td>{{item.price}} zł</td>
+          <td>{{item.number * item.price}} zł</td>
           <td>
-            {{item.likes.length}}&nbsp;
+            {{item.likes.length}}
             <b-button
+              class="ml-1 btn"
+              size="sm"
               :class="{'btn-info': liked(index), 'btn-outline-info btn-light': !liked(index)}"
               @click="like(index)"
             >
-              <i class="fas fa-thumbs-up fa-fw"></i>
-              like&nbsp;
+              <i class="fas fa-thumbs-up"></i>
+              Like
             </b-button>
           </td>
-        </tr>
-        <tr>
-          <td>
-            <b-button class="btn-danger" v-if="authenticate(index)" @click="remove(index)">
+          <td v-if="isAdmin || authenticate(index)">
+            <b-button
+              size="sm"
+              class="btn-success"
+              v-if="isAdmin && !item.accepted"
+              @click="accept(index)"
+            >Akceptuj</b-button>
+            <b-button
+              size="sm"
+              class="btn-danger"
+              v-if="authenticate(index) || isAdmin"
+              @click="remove(index)"
+            >
               <i class="fas fa-trash-alt"></i>
               Usuń
             </b-button>
+            <!-- <b-dropdown text="akcje" size="sm"></b-dropdown> -->
           </td>
-          <td>
-            <b-button class="btn-success" v-if="admin" @click="accept(index)">Akceptuj</b-button>
-          </td>
+          <td v-else>-</td>
         </tr>
       </tbody>
     </table>
-  </div>
+  </b-card>
 </template>
 <script>
 import { parse } from "@fortawesome/fontawesome-svg-core";
@@ -102,7 +122,7 @@ import { parse } from "@fortawesome/fontawesome-svg-core";
 export default {
   props: {
     list: Array,
-    admin: Boolean,
+    isAdmin: Boolean,
     ended: Boolean,
     numOfParticipants: Number
   },
@@ -154,7 +174,6 @@ export default {
     accept(index) {
       this.list[index].accepted = true;
       this.$emit("list", this.list);
-      this.list.splice(index, 1);
     },
     liked(index) {
       return this.list[index].likes.includes(localStorage.getItem("login"));
@@ -204,12 +223,6 @@ input[type="number"] {
 thead {
   word-break: keep-all;
   white-space: none;
-}
-.white-normal {
-  white-space: normal;
-}
-.word-break {
-  word-break: keep-all;
 }
 </style>
 
