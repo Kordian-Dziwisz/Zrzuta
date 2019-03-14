@@ -5,7 +5,7 @@
       <form @submit.prevent="addItem()" v-if="!this.ended">
         <h3>Dodaj nowego uczestnika</h3>
         <div class="row">
-          <div class="col" v-if="admin">
+          <div class="col" v-if="isAdmin">
             <b-input
               type="text"
               name="participant"
@@ -19,7 +19,7 @@
               type="submit"
               class="d-box btn-outline-success btn-light"
               size="sm"
-              v-if="admin"
+              v-if="isAdmin"
             >
               <i class="fas fa-plus-square"></i>
               Dodaj uczestnika
@@ -42,13 +42,13 @@
             <b-alert :show="list.length==0" variant="warning" class="text-dark">
               Jak dotąd nie zapisano żadnego uczestnika,
               <span
-                v-if="!this.ended && admin"
+                v-if="!this.ended && isAdmin"
               >dopisz go w polu powyżej.</span>
             </b-alert>
             <li v-for="(item, index) in list" :key="index">
               <component
                 class="my-3"
-                :is="admin ? 'item-admin':'item'"
+                :is="isAdmin ? 'item-admin':'item'"
                 :item="Object.assign(item, {index: index})"
                 :ended="ended"
                 @remove="remove"
@@ -67,7 +67,7 @@ import ItemAdmin from "@/views/Fundrais/Participants/item.admin.vue";
 export default {
   props: {
     list: Array,
-    admin: Boolean,
+    isAdmin: Boolean,
     ended: Boolean
   },
   data() {

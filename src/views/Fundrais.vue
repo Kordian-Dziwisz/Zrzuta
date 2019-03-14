@@ -26,7 +26,7 @@
     <b-row class="m-3">
       <b-col>
         <list-of-participants
-          :admin="isAdmin"
+          :isAdmin="isAdmin"
           :list="listOfParticipants"
           :ended="this.fundraisInfo.ended"
           @list="updateParticipants"
@@ -34,7 +34,7 @@
       </b-col>
       <b-col>
         <list-of-products
-          :admin="isAdmin"
+          :isAdmin="isAdmin"
           :ended="this.fundraisInfo.ended"
           :list="listOfProducts"
           @list="updateProducts"
@@ -43,7 +43,7 @@
         <propositions
           :numOfParticipants="listOfParticipants.length"
           :isAdmin="isAdmin"
-          :ended="this.fundraisInfo.ended"
+          :ended="fundraisInfo.ended"
           :list="listOfPropositions"
           @list="updatePropositions"
           v-if="authenticate"
@@ -144,7 +144,7 @@ export default {
         this.fundraisInfo.creator == localStorage.getItem("login")
       );
     },
-    admin() {
+    isAdmin() {
       return this.fundraisInfo && this.fundraisInfo.creator == localStorage.getItem("login");
     },
     compareDates() {
