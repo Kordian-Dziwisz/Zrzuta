@@ -58,14 +58,7 @@
             />
           </div>
           <div class="col-lg-3">
-            <b-button
-              type="submit"
-              class="btn-outline-success btn-light"
-              data-toggle="tooltip"
-              data-placement="auto"
-              v-b-tooltip.hover
-              title="Dodaj"
-            >
+            <b-button type="submit" class="btn-outline-success btn-light">
               <i class="fas fa-plus-square" fa-fw></i>
               Dodaj
             </b-button>
@@ -99,10 +92,6 @@
               <b-button
                 class="btn"
                 size="sm"
-                data-toggle="tooltip"
-                data-placement="auto"
-                v-b-tooltip.hover
-                title="Polub"
                 :class="{'btn-info': liked(index), 'btn-outline-info btn-light': !liked(index)}"
                 @click="like(index)"
               >
@@ -112,10 +101,6 @@
               <b-button
                 size="sm"
                 class="btn-outline-success btn-light"
-                data-toggle="tooltip"
-                data-placement="auto"
-                v-b-tooltip.hover
-                title="Zatwierdź"
                 v-if="isAdmin && !item.accepted"
                 @click="accept(index)"
               >
@@ -125,10 +110,6 @@
               <b-button
                 size="sm"
                 class="btn-outline-danger btn-light"
-                data-toggle="tooltip"
-                data-placement="auto"
-                v-b-tooltip.hover
-                title="Usuń"
                 v-if="authenticate(index) || isAdmin"
                 @click="remove(index)"
               >
