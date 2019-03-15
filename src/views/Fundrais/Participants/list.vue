@@ -1,58 +1,53 @@
 <template>
-  <b-card class="border rounded">
-    <!-- <b-card-header class="w-100 shadow-sm h4"></b-card-header> -->
-    <b-card-body>
-      <h3>
-        <span>Uczestnicy</span>
-        <span class="float-right" v-if="list.length">{{list.length}}</span>
-      </h3>
-      <form @submit.prevent="addItem()" v-if="!this.ended">
-        <label>Dodaj nowego uczestnika</label>
-        <div class="row">
-          <div class="col" v-if="isAdmin">
-            <b-input
-              type="text"
-              name="participant"
-              maxlength="30"
-              placeholder="Nazwa/Imię/Ksywka"
-              v-model="name"
-            />
-          </div>
-          <div class="col text-right">
-            <b-button
-              type="submit"
-              class="d-box btn-outline-success btn-light"
-              size="sm"
-              v-if="isAdmin"
-            >
-              <i class="fas fa-plus-square"></i>
-              Dodaj uczestnika
-            </b-button>
-            <b-button
-              class="btn-outline-success btn-light ml-1"
-              v-if="!alreadyAdded"
-              @click="addMe"
-              size="sm"
-            >
-              <i class="fas fa-plus-square"></i>
-              Dodaj mnie
-            </b-button>
-          </div>
-        </div>
-      </form>
-      <div class="row">
-        <div class="col p-0">
+  <b-card-group>
+    <b-card-header class="w-100">
+      <strong>Informacje o uczestnikach</strong>
+    </b-card-header>
+    <b-card>
+      <b-card-body>
+        <form @submit.prevent="addItem()" class="container" v-if="!this.ended && admin">
+          <h3>Dodaj nowego uczestnika:</h3>
+          <b-form-row>
+            <div class="col-lg-9">
+              <b-input
+                type="text"
+                name="participant"
+                maxlength="30"
+                placeholder="Nazwa/Imię/Ksywka"
+                v-model="name"
+              />
+            </div>
+            <div class="row-lg-3">
+              <b-button type="submit" class="btn-outline-success btn-light" size="sm">
+                <i class="fas fa-plus-square"></i>
+                Dodaj
+              </b-button>
+            </div>
+            <div class="row-lg-3">
+              <b-button
+                class="btn-outline-success btn-light"
+                v-if="!this.ended && !alreadyAdded"
+                @click="addMe"
+                size="sm"
+              >
+                <i class="fas fa-plus-square"></i>
+                Dodaj mnie
+              </b-button>
+            </div>
+            <div class="d-flex justify-content-center"></div>
+          </b-form-row>
+        </form>
+        <div>
           <ul>
             <b-alert :show="list.length==0" variant="warning" class="text-dark">
               Jak dotąd nie zapisano żadnego uczestnika,
               <span
-                v-if="!this.ended && isAdmin"
+                v-if="!this.ended && admin"
               >dopisz go w polu powyżej.</span>
             </b-alert>
-            <li v-for="(item, index) in list" :key="index">
+            <li class="border-bottom" v-for="(item, index) in list" :key="index">
               <component
-                class="my-3"
-                :is="isAdmin ? 'item-admin':'item'"
+                :is="admin ? 'item-admin':'item'"
                 :item="Object.assign(item, {index: index})"
                 :ended="ended"
                 @remove="remove"
@@ -60,9 +55,9 @@
             </li>
           </ul>
         </div>
-      </div>
-    </b-card-body>
-  </b-card>
+      </b-card-body>
+    </b-card>
+  </b-card-group>
 </template>
 <script>
 import Item from "@/views/Fundrais/Participants/item.vue";
@@ -71,7 +66,7 @@ import ItemAdmin from "@/views/Fundrais/Participants/item.admin.vue";
 export default {
   props: {
     list: Array,
-    isAdmin: Boolean,
+    admin: Boolean,
     ended: Boolean
   },
   data() {
