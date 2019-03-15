@@ -19,13 +19,17 @@
     >Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę</b-alert>-->
     <div class="row m-3">
       <b-col>
-        <project-info v-if="!isAdmin && fundraisInfo" :info="fundraisInfo"/>
-        <info-admin v-if="isAdmin  && fundraisInfo" :info="fundraisInfo" @info="updateInfo"/>
+        <info
+          v-if="isAdmin && fundraisInfo"
+          :info="fundraisInfo"
+          @info="updateInfo"
+          :isAdmin="isAdmin"
+        />
       </b-col>
     </div>
     <div class="row m-3">
       <div class="col">
-        <list-of-participants
+        <participants
           :isAdmin="isAdmin"
           :list="listOfParticipants"
           :ended="this.fundraisInfo.ended"
@@ -53,9 +57,8 @@
   </div>
 </template>
 <script>
-import ProjectInfo from "@/views/Fundrais/info.vue";
-import InfoAdmin from "@/views/Fundrais/info.admin.vue";
-import ListOfParticipants from "@/views/Fundrais/Participants/list.vue";
+import Info from "@/views/Fundrais/Info.vue";
+import Participants from "@/views/Fundrais/Participants/list.vue";
 import Propositions from "@/views/Fundrais/Propositions/Table.vue";
 import firebase from "firebase";
 
@@ -185,9 +188,8 @@ export default {
     this.getDoc();
   },
   components: {
-    ProjectInfo,
-    InfoAdmin,
-    ListOfParticipants,
+    Info,
+    Participants,
     Propositions
   }
 };
