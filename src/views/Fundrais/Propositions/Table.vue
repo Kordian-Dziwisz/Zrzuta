@@ -76,9 +76,6 @@
       <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
       <table v-else class="table table-striped border">
         <thead class="text-center">
-          <!-- <th>Proponuje</th> -->
-          <!-- <th style="width: "></th> -->
-          <th style="width: 1%"></th>
           <th>Nazwa</th>
           <th>Ilość</th>
           <th>Cena</th>
@@ -88,10 +85,11 @@
         <tbody>
           <tr class="text-center" v-for="(item, index) in list" :key="index">
             <!-- <td>{{item.creator}}</td> -->
+            <!-- :class="{'text-light': item.accepted, 'text-light': item.likes.length > numOfParticipants / 2}"
+            :variant="{'success text-light': item.accepted, 'primary text-light': item.likes.length > numOfParticipants / 2}"-->
             <td
-              :class="{'bg-success text-light': item.accepted, 'bg-primary text-light': item.likes.length > numOfParticipants / 2}"
-            ></td>
-            <td class="text-left">{{item.name}}</td>
+              :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
+            >{{item.name}}</td>
             <td>{{item.number}} szt</td>
             <td>{{item.price.toString().replace(/[.]/, ',')}} zł</td>
             <td>{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}} zł</td>
@@ -251,6 +249,14 @@ input[type="number"] {
 thead {
   word-break: keep-all;
   white-space: none;
+}
+.acceptedBar {
+  border-left: 6px solid #28a745 !important;
+  box-sizing: border-box;
+}
+.votedBar {
+  border-left: 6px solid #007bff;
+  box-sizing: border-box;
 }
 </style>
 
