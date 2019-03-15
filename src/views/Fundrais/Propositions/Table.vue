@@ -69,6 +69,9 @@
       <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
       <table v-else class="table table-striped border">
         <thead class="text-center">
+          <!-- <th>Proponuje</th> -->
+          <!-- <th style="width: "></th> -->
+          <th style="width: 1%"></th>
           <th>Nazwa</th>
           <th>Ilość</th>
           <th>Cena</th>
@@ -78,8 +81,6 @@
         <tbody>
           <tr class="text-center" v-for="(item, index) in list" :key="index">
             <!-- <td>{{item.creator}}</td> -->
-            <!-- :class="{'text-light': item.accepted, 'text-light': item.likes.length > numOfParticipants / 2}"
-            :variant="{'success text-light': item.accepted, 'primary text-light': item.likes.length > numOfParticipants / 2}"-->
             <td
               :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
             >{{item.name}}</td>
