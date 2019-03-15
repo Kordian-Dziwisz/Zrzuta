@@ -9,6 +9,7 @@
     </b-card-title>
     <b-card-body>
       <form @submit.prevent="addNew" v-if="!this.isEnded">
+        <label>Dodaj nowego uczestnika:</label>
         <div class="row">
           <div class="col" v-if="isAdmin">
             <!-- <label class="h6 font-weight-normal" for="userName">Dodaj nowego uczestnika</label> -->
@@ -55,11 +56,11 @@
           </div>
         </div>
       </form>
-      <!-- <div v-else> -->
-      <!-- <div>{{paidAcceptedAndNot.paid}}</div> -->
-      <!-- <div>{{paidAcceptedAndNot.accepted}}</div> -->
-      <!-- <div>{{paidAcceptedAndNot.not}}</div> -->
-      <!-- </div> -->
+      <div class="h5 row" v-else>
+        <div class="text-success col">Zaakceptowane: {{paidAcceptedAndNot.accepted}}</div>
+        <div class="text-primary col text-center">Zapłacone: {{paidAcceptedAndNot.paid}}</div>
+        <div class="col text-right">Pozostało: {{paidAcceptedAndNot.not}}</div>
+      </div>
       <div class="row">
         <div class="col p-0">
           <ul>
@@ -145,24 +146,19 @@ export default {
       return flag;
     },
     paidAcceptedAndNot() {
-      //   let paid = this.list.reduce(paidSum => {
-      //     if (item.paid) {
-      //       paidSum++;
-      //     }
-      //     return paidSum;
-      //   });
-      //   console.log(paid);
-      //   let accepted = this.list.reduce((acceptedSum, item) => {
-      //     if (item.accepted) {
-      //       acceptedSum++;
-      //     }
-      //     return acceptedSum;
-      //   });
-      //   console.log(accepted);
-      //   let not = this.list.length - paid - accepted;
-      //   console.log("not");
-      //   console.log(not);
-      //   return { paid: paid, accepted: accepted, not: not };
+      let paid = 0,
+        accepted = 0,
+        not = 0;
+      this.list.forEach(item => {
+        if (item.accepted) {
+          accepted++;
+        } else if (item.paid) {
+          paid++;
+        } else {
+          not++;
+        }
+      });
+      return { paid: paid, accepted: accepted, not: not };
     },
     validation() {
       return this.name.length >= 3 && this.name.length < 30;
