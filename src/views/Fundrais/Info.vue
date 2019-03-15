@@ -25,7 +25,7 @@
             >{{newInfo.ended ? "Otwórz" : "Zakończ"}}</b-button>&nbsp;
             <b-button
               type="submit"
-              class="ml-3 mb-2 btn-outline-success btn-light"
+              class="ml-1 mb-2 btn-outline-success btn-light"
               size="sm"
               data-toggle="tooltip"
               data-placement="auto"
