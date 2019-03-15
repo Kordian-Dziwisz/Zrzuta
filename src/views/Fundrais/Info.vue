@@ -1,6 +1,5 @@
 <template>
   <b-card class="border rounded">
-    <!-- <b-card-header class="w-100 shadow-sm h3">{{info.title}}</b-card-header> -->
     <b-card-body v-if="isEdited">
       <b-card-title class="mb-0 border-bottom align-middle">
         <div class="row">
@@ -13,8 +12,6 @@
               placeholder="Wpisz tytuł zbiórki"
               v-model.trim="newInfo.title"
             ></b-form-input>&nbsp;
-            <!-- <h5 class="font-weight-light d-inline">stworzona przez:&nbsp;</h5>
-            <h5 class="d-inline">{{newInfo.creator}}</h5>-->
           </div>
           <b-col class="text-right">
             <h4 class="d-inline text-danger" v-if="newInfo.ended">Zbiórka jest zakończona</h4>
@@ -43,14 +40,6 @@
           </b-col>
           <b-col class="text-right">
             <label>Zbiórka kończy się:</label>
-            <datepicker
-              v-model="newInfo.endDate"
-              input-class="form-control bg-white w-50"
-              :language="pl"
-              format="D, d MMM yyyy"
-              :disabledDates="disabledDates"
-            />
-            <timepicker v-model="endTime" format="H:m" @change="updateTime()"/>
           </b-col>
         </b-row>
         <b-row>
@@ -82,8 +71,6 @@
         <b-row>
           <b-col>
             <h2 class="d-inline">{{info.title}}&nbsp;</h2>
-            <!-- <h5 class="font-weight-light d-inline">stworzona przez:&nbsp;</h5>
-            <h5 class="d-inline">{{newInfo.creator}}</h5>-->
           </b-col>
           <b-col class="text-right">
             <h4 class="d-inline text-danger" v-if="info.ended">Zbiórka jest zakończona</h4>
@@ -128,10 +115,6 @@
   </b-card>
 </template>
 <script>
-import Datepicker from "vuejs-datepicker";
-import Timepicker from "vuejs-timepicker";
-import { en, pl } from "vuejs-datepicker/dist/locale";
-
 export default {
   props: {
     info: Object,
@@ -139,18 +122,8 @@ export default {
   },
   data() {
     return {
-      pl: pl,
-      en: en,
       newInfo: Object,
-      isEdited: false,
-      endTime: {
-        H: "12",
-        m: "12",
-        s: "12"
-      },
-      disabledDates: {
-        to: new Date(Date.now() - 86400000)
-      }
+      isEdited: false
     };
   },
   methods: {
@@ -162,25 +135,8 @@ export default {
       this.newInfo.ended = !this.newInfo.ended;
     }
   },
-  watch: {
-    endTime: {
-      handler() {
-        this.newInfo.endDate.setHours(parseInt(this.endTime.H));
-        this.newInfo.endDate.setMinutes(parseInt(this.endTime.m));
-        this.newInfo.endDate.setSeconds(parseInt(this.endTime.s));
-      },
-      deep: true
-    }
-  },
   mounted() {
     this.newInfo = { ...this.info };
-    this.endTime.H = this.info.endDate.getHours();
-    this.endTime.m = this.info.endDate.getMinutes();
-    this.endTime.s = this.info.endDate.getSeconds();
-  },
-  components: {
-    Datepicker,
-    Timepicker
   }
 };
 </script>
