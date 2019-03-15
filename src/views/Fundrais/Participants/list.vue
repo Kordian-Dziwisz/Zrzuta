@@ -23,6 +23,10 @@
               type="submit"
               class="d-box btn-outline-success btn-light"
               size="sm"
+              data-toggle="tooltip"
+              data-placement="auto"
+              v-b-tooltip.hover
+              title="Dodaj uczestnika"
               v-if="isAdmin"
             >
               <i class="fas fa-plus-square"></i>
@@ -30,6 +34,10 @@
             </b-button>
             <b-button
               class="btn-outline-success btn-light ml-1"
+              data-toggle="tooltip"
+              data-placement="auto"
+              v-b-tooltip.hover
+              title="Dodaj siebie"
               v-if="!alreadyAdded"
               @click="addMe"
               size="sm"

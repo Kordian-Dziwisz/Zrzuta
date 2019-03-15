@@ -20,7 +20,15 @@
             <i class="fas fa-vote-yea pr-1"></i>
             <span class="d-none d-lg-inline">Zaakceptuj</span>
           </b-button>
-          <b-button class="btn-outline-danger btn-light ml-1" size="sm" @click="remove">
+          <b-button
+            class="btn-outline-danger btn-light ml-1"
+            size="sm"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Usuń"
+            @click="remove"
+          >
             <i class="fas fa-user-minus pr-1"></i>
             <span class="d-none d-lg-inline">Usuń</span>
           </b-button>

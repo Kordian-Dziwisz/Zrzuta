@@ -15,6 +15,10 @@
           <b-button
             class="btn-outline-success btn-light"
             size="sm"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Zapłacone"
             v-if="authenticate && !item.paid && !item.accepted && ended"
             @click="pay"
           >
@@ -24,6 +28,10 @@
           <b-button
             class="btn-outline-danger btn-light ml-1"
             size="sm"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Usuń"
             @click="remove"
             v-if="authenticate"
           >
