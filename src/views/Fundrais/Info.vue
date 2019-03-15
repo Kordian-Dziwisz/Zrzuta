@@ -5,7 +5,7 @@
       <b-card-title class="mb-0 border-bottom align-middle">
         <div class="row">
           <div class="col">
-            <label>Tytuł:</label>
+            <label class="h6 font-weight-normal">Tytuł:</label>
             <b-form-input
               class="d-inline"
               required
@@ -92,6 +92,7 @@
             <b-button
               class="ml-5 mb-2 btn-outline-primary btn-light"
               size="sm"
+              v-if="isAdmin"
               @click="isEdited = !isEdited"
             >Edytuj</b-button>
           </b-col>
@@ -133,7 +134,8 @@ import { en, pl } from "vuejs-datepicker/dist/locale";
 
 export default {
   props: {
-    info: Object
+    info: Object,
+    isAdmin: false
   },
   data() {
     return {
