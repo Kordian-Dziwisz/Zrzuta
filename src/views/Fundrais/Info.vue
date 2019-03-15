@@ -22,11 +22,19 @@
               :class="{'btn-outline-danger': !newInfo.ended, 'btn-outline-success': newInfo.ended}"
               @click="end()"
               size="sm"
+              data-toggle="tooltip"
+              data-placement="auto"
+              v-b-tooltip.hover
+              title="Zakończ zbiórkę"
             >{{newInfo.ended? "Otwórz" : "Zakończ"}}</b-button>&nbsp;
             <b-button
               type="submit"
               class="ml-3 mb-2 btn-outline-success btn-light"
               size="sm"
+              data-toggle="tooltip"
+              data-placement="auto"
+              v-b-tooltip.hover
+              title="Zapisz"
               @click="update"
             >Zapisz</b-button>
           </b-col>
@@ -79,6 +87,10 @@
             <b-button
               class="ml-5 mb-2 btn-outline-primary btn-light"
               size="sm"
+              data-toggle="tooltip"
+              data-placement="auto"
+              v-b-tooltip.hover
+              title="Edytuj"
               v-if="isAdmin"
               @click="isEdited = !isEdited"
             >Edytuj</b-button>
