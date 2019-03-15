@@ -23,7 +23,7 @@
               class="mb-2 ml-3 btn-light"
               type="button"
               :class="{'btn-outline-danger': !newInfo.ended, 'btn-outline-success': newInfo.ended}"
-              @click="newInfo.ended = !newInfo.ended"
+              @click="end()"
               size="sm"
             >{{newInfo.ended? "Otwórz" : "Zakończ"}}</b-button>&nbsp;
             <b-button
@@ -155,6 +155,9 @@ export default {
     update() {
       this.isEdited = !this.isEdited;
       this.$emit("info", this.newInfo);
+    },
+    end() {
+      this.newInfo.ended = !this.newInfo.ended;
     }
   },
   watch: {
