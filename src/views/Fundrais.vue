@@ -165,14 +165,15 @@ export default {
             text: "Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone",
             type: "error"
           });
-        } else if (!this.fundraisInfo.title.length && this.authenticate) {
-          this.$notify({
-            group: "status",
-            title: "Status",
-            text: "Proszę o uzupełnienie pola Tytuł, bez tego pola dokument nie zostanie zaktualizowany",
-            type: "error"
-          });
         }
+        // } else if (!this.fundraisInfo.title.length && this.authenticate) {
+        //   this.$notify({
+        //     group: "status",
+        //     title: "Status",
+        //     text: "Proszę o uzupełnienie pola Tytuł, bez tego pola dokument nie zostanie zaktualizowany",
+        //     type: "error"
+        //   });
+        // }
       },
       deep: true
     }
