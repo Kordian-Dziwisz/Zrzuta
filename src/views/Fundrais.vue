@@ -17,22 +17,22 @@
       :show="fundraisInfo.ended"
       v-else
     >Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę</b-alert>-->
-    <b-row class="m-3">
+    <div class="row m-3">
       <b-col>
         <project-info v-if="!isAdmin && fundraisInfo" :info="fundraisInfo"/>
         <info-admin v-if="isAdmin  && fundraisInfo" :info="fundraisInfo" @info="updateInfo"/>
       </b-col>
-    </b-row>
-    <b-row class="m-3">
-      <b-col>
+    </div>
+    <div class="row m-3">
+      <div class="col">
         <list-of-participants
           :isAdmin="isAdmin"
           :list="listOfParticipants"
           :ended="this.fundraisInfo.ended"
           @list="updateParticipants"
         />
-      </b-col>
-      <b-col>
+      </div>
+      <div class="col">
         <!-- <list-of-products
           :isAdmin="isAdmin"
           :ended="this.fundraisInfo.ended"
@@ -48,12 +48,11 @@
           @list="updatePropositions"
           v-if="authenticate"
         />
-      </b-col>
-    </b-row>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-//import from firebase and save in localStorage import firebase from 'firebase'
 import ProjectInfo from "@/views/Fundrais/info.vue";
 import InfoAdmin from "@/views/Fundrais/info.admin.vue";
 import ListOfParticipants from "@/views/Fundrais/Participants/list.vue";
