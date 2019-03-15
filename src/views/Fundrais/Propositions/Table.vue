@@ -81,7 +81,7 @@
             <!-- :class="{'text-light': item.accepted, 'text-light': item.likes.length > numOfParticipants / 2}"
             :variant="{'success text-light': item.accepted, 'primary text-light': item.likes.length > numOfParticipants / 2}"-->
             <td
-              :class="{'acceptedBar': item.accepted, 'votedBar': item.likes.length > numOfParticipants / 2}"
+              :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
             >{{item.name}}</td>
             <td>{{item.number}} szt</td>
             <td>{{item.price.toString().replace(/[.]/, ',')}} zł</td>
@@ -232,7 +232,7 @@ thead {
   white-space: none;
 }
 .acceptedBar {
-  border-left: 6px solid #28a745;
+  border-left: 6px solid #28a745 !important;
   box-sizing: border-box;
 }
 .votedBar {
