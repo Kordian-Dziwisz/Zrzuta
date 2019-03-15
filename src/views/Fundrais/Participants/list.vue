@@ -1,9 +1,13 @@
 <template>
-  <b-card-group class="shadow border rounded">
-    <b-card-header class="w-100 shadow-sm">Uczestnicy</b-card-header>
+  <b-card class="border rounded">
+    <!-- <b-card-header class="w-100 shadow-sm h4"></b-card-header> -->
     <b-card-body>
+      <h3>
+        <span>Uczestnicy</span>
+        <span class="float-right" v-if="list.length">{{list.length}}</span>
+      </h3>
       <form @submit.prevent="addItem()" v-if="!this.ended">
-        <h3>Dodaj nowego uczestnika</h3>
+        <label>Dodaj nowego uczestnika</label>
         <div class="row">
           <div class="col" v-if="isAdmin">
             <b-input
@@ -58,7 +62,7 @@
         </div>
       </div>
     </b-card-body>
-  </b-card-group>
+  </b-card>
 </template>
 <script>
 import Item from "@/views/Fundrais/Participants/item.vue";

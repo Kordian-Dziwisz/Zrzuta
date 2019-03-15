@@ -1,7 +1,7 @@
 <template>
   <div class="shadow-sm border rounded">
     <b-card-header
-      class="shadow-sm py-1"
+      class="py-1"
       :class="{'bg-success': item.paid, 'bg-primary': item.accepted, 'text-light': (item.paid || item.accepted)}"
     >
       <div class="row">

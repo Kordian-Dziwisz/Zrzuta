@@ -1,20 +1,21 @@
 <template>
-  <b-card-group class="mx-auto shadow border rounded" ref="info">
-    <b-card-header class="w-100 shadow-sm">Informacje o projekcie</b-card-header>
+  <b-card class="border rounded">
+    <!-- <b-card-header class="w-100 shadow-sm h3">{{info.title}}</b-card-header> -->
     <b-card-body v-if="isEdited">
       <b-card-title class="mb-0 border-bottom align-middle">
-        <b-row>
-          <b-col>
+        <div class="row">
+          <div class="col">
+            <label>Tytuł:</label>
             <b-form-input
               class="d-inline"
               required
               maxlength="50"
-              placeholder="Tytuł"
+              placeholder="Wpisz tytuł zbiórki"
               v-model.trim="newInfo.title"
             ></b-form-input>&nbsp;
             <!-- <h5 class="font-weight-light d-inline">stworzona przez:&nbsp;</h5>
             <h5 class="d-inline">{{newInfo.creator}}</h5>-->
-          </b-col>
+          </div>
           <b-col class="text-right">
             <h4 class="d-inline text-danger" v-if="newInfo.ended">Zbiórka jest zakończona</h4>
             <h4 class="d-inline text-success" v-else>Zbiórka jest w trakcie</h4>
@@ -32,7 +33,7 @@
               @click="update"
             >Zapisz</b-button>
           </b-col>
-        </b-row>
+        </div>
       </b-card-title>
       <b-card-text>
         <b-row class="border-bottom py-2">
@@ -69,7 +70,7 @@
               type="text"
               maxlength="150"
               max-rows="10"
-              placeholder="Informacje o płatności"
+              placeholder="Wpisz nformacje o płatności"
               v-model.lazy.trim="newInfo.accountNumber"
             ></b-form-textarea>
           </b-col>
@@ -80,12 +81,12 @@
       <b-card-title class="mb-0 border-bottom align-middle">
         <b-row>
           <b-col>
-            <h2 class="d-inline">{{newInfo.title}}&nbsp;</h2>
+            <h2 class="d-inline">{{info.title}}&nbsp;</h2>
             <!-- <h5 class="font-weight-light d-inline">stworzona przez:&nbsp;</h5>
             <h5 class="d-inline">{{newInfo.creator}}</h5>-->
           </b-col>
           <b-col class="text-right">
-            <h4 class="d-inline text-danger" v-if="newInfo.ended">Zbiórka jest zakończona</h4>
+            <h4 class="d-inline text-danger" v-if="info.ended">Zbiórka jest zakończona</h4>
             <h4 class="d-inline text-success" v-else>Zbiórka jest w trakcie</h4>
 
             <b-button
@@ -108,7 +109,7 @@
           </b-col>
           <b-col class="text-right">
             <label>Zbiórka kończy się:</label>
-            <h5 class="text-danger">{{ newInfo.endDate | moment("LLL")}}</h5>
+            <h5 class="text-danger">{{ info.endDate | moment("LLL")}}</h5>
           </b-col>
         </b-row>
         <b-row class="py-2">
@@ -123,7 +124,7 @@
         </b-row>
       </b-card-text>
     </b-card-body>
-  </b-card-group>
+  </b-card>
 </template>
 <script>
 import Datepicker from "vuejs-datepicker";
@@ -162,7 +163,6 @@ export default {
         this.newInfo.endDate.setHours(parseInt(this.endTime.H));
         this.newInfo.endDate.setMinutes(parseInt(this.endTime.m));
         this.newInfo.endDate.setSeconds(parseInt(this.endTime.s));
-        this.$emit("info", this.newInfo);
       },
       deep: true
     }

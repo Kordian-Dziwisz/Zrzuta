@@ -1,13 +1,11 @@
 <template>
-  <b-card-group class="shadow border rounded">
-    <b-card-header class="w-100 shadow-sm">Informacje o projekcie</b-card-header>
+  <b-card class="border rounded bg-light">
+    <!-- <b-card-header class="w-100 shadow-sm">Informacje o zbiórce</b-card-header> -->
     <b-card-body>
       <b-card-title class="mb-0 border-bottom">
         <div class="row">
           <div class="col">
             <h3>{{info.title}}&nbsp;</h3>
-            <!-- <h5 class="font-weight-light d-inline">stworzona przez:&nbsp;</h5>
-            <h5 class="d-inline">{{info.creator}}</h5>-->
           </div>
           <div class="mb-0 col text-right">
             <h3 class="text-danger" v-if="info.ended">Zbiórka jest zakończona</h3>
@@ -42,7 +40,7 @@
         </div>
       </b-card-text>
     </b-card-body>
-  </b-card-group>
+  </b-card>
 </template>
 <script>
 export default {

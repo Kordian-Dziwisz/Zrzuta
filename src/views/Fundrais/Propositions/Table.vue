@@ -1,16 +1,36 @@
 <template>
-  <b-card-group class="shadow border rounded">
-    <b-card-header class="w-100 shadow-sm">Cele zbiórki</b-card-header>
+  <b-card class="border rounded">
+    <!-- <b-card-header class="w-100 shadow-sm"> -->
+    <!-- <div class="float-right text-success">Otwarte</div> -->
+    <!-- <b-row> -->
+    <!--  -->
+    <!-- <b-col class="h4">Cele zbiórki</b-col> -->
+    <!-- <b-col class="text-right text-success">Otwarte</b-col> -->
+    <!-- </b-row> -->
+    <!-- </b-card-header> -->
     <b-card-body>
+      <b-row>
+        <b-col>
+          <h3 class="float-left">Cele zbiórki</h3>
+          <h4 class="float-right text-right">
+            {{priceSum.toFixed(2).toString().replace(/[.]/, ',')}}
+            <span v-if="pricePerUser >= 0">zł</span>
+            <div
+              class="text-right small"
+              v-if="numOfParticipants > 1"
+            >Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł</div>
+          </h4>
+        </b-col>
+      </b-row>
       <form @submit.prevent="addNew" v-if="!this.ended">
-        <h3>Dodaj nową propozycję</h3>
+        <label>Dodaj nową propozycję</label>
         <b-form-row>
           <div class="col-lg-5">
             <b-input
               type="text"
               name="name"
               placeholder="Nazwa"
-              maxlength="30"
+              maxlength="50"
               v-model="newItem.name"
             />
           </div>
@@ -45,28 +65,17 @@
           </div>
         </b-form-row>
       </form>
-      <div class="my-2">
-        <div class="h5">
-          Suma: {{priceSum.toFixed(2)}}
-          <span v-if="pricePerUser >= 0">zł</span>
-        </div>
-        <div class="h5">
-          Na osobę: {{parseFloat(pricePerUser).toFixed(2) }}
-          <span
-            v-if="pricePerUser >= 0"
-          >zł ({{numOfParticipants}} uczestników)</span>
-        </div>
-      </div>
+      <div class="my-2"></div>
       <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
       <table v-else class="table table-striped border">
         <thead class="text-center">
-          <th>Proponuje</th>
+          <!-- <th>Proponuje</th> -->
+          <!-- <th style="width: "></th> -->
+          <th style="width: 1rem"></th>
           <th>Nazwa</th>
           <th>Ilość</th>
           <th>Cena</th>
           <th>Koszt</th>
-          <th>Poparcie</th>
-          <th>Akcje</th>
         </thead>
         <tbody>
           <tr
@@ -75,44 +84,42 @@
             v-for="(item, index) in list"
             :key="index"
           >
-            <td>{{item.creator}}</td>
-            <td>{{item.name}}</td>
+            <!-- <td>{{item.creator}}</td> -->
+            <td class="text-left">{{item.name}}</td>
             <td>{{item.number}} szt</td>
-            <td>{{item.price}} zł</td>
-            <td>{{item.number * item.price}} zł</td>
-            <td>
-              {{item.likes.length}}
+            <td>{{item.price.toString().replace(/[.]/, ',')}} zł</td>
+            <td>{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}} zł</td>
+            <td>{{item.likes.length}} &nbsp;</td>
+            <td v-if="isAdmin || authenticate(index)" class="text-right">
               <b-button
-                class="ml-1 btn"
+                class="btn"
                 size="sm"
                 :class="{'btn-info': liked(index), 'btn-outline-info btn-light': !liked(index)}"
                 @click="like(index)"
               >
                 <i class="fas fa-thumbs-up"></i>
                 <span
-                  class="d-none"
+                  class="d-none ml-1"
                   :class="{'d-lg-none': liked(index), 'd-lg-inline': !liked(index)}"
-                >Like</span>
+                >{{item.likes.length}}</span>
               </b-button>
-            </td>
-            <td v-if="isAdmin || authenticate(index)">
               <b-button
                 size="sm"
-                class="btn-success"
+                class="btn-outline-success btn-light"
                 v-if="isAdmin && !item.accepted"
                 @click="accept(index)"
               >
-                <i class="fas fa-vote-yea pr-1"></i>
-                <span class="d-none d-lg-inline">Akceptuj</span>
+                <i class="fas fa-check fa-fw"></i>
+                <span class="d-none">Akceptuj</span>
               </b-button>
               <b-button
                 size="sm"
-                class="ml-1 btn-danger"
+                class="btn-outline-danger btn-light"
                 v-if="authenticate(index) || isAdmin"
                 @click="remove(index)"
               >
-                <i class="fas fa-trash-alt"></i>
-                <span class="d-none d-lg-inline">Usuń</span>
+                <i class="fas fa-trash-alt fa-fw"></i>
+                <span class="d-none">Usuń</span>
               </b-button>
               <!-- <b-dropdown text="akcje" size="sm"></b-dropdown> -->
             </td>
@@ -121,7 +128,7 @@
         </tbody>
       </table>
     </b-card-body>
-  </b-card-group>
+  </b-card>
 </template>
 <script>
 import { parse } from "@fortawesome/fontawesome-svg-core";

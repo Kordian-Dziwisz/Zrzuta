@@ -14,6 +14,7 @@ import {
   faVoteYea,
   faPlusSquare,
   faMoneyBillAlt,
+  faCheck,
   faSignOutAlt,
   faDoorOpen,
   faThumbsUp
@@ -27,6 +28,7 @@ dom.watch();
 
 library.add(
   faCoffee,
+  faCheck,
   faEdit,
   faTrashAlt,
   faUserMinus,

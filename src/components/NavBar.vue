@@ -39,7 +39,7 @@ export default {
         guid: "",
         accountNumber: "",
         creator: "",
-        title: "",
+        title: "Nowa Zbiórka",
         description: "",
         creationDate: new Date(Date.now()).toJSON(),
         endDate: new Date(Date.now() + 86400000).toJSON(),

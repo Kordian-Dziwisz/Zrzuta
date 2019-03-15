@@ -33,13 +33,13 @@
         />
       </b-col>
       <b-col>
-        <list-of-products
+        <!-- <list-of-products
           :isAdmin="isAdmin"
           :ended="this.fundraisInfo.ended"
           :list="listOfProducts"
           @list="updateProducts"
           v-if="authenticate && fundraisInfo.ended && false"
-        />
+        />-->
         <propositions
           :numOfParticipants="listOfParticipants.length"
           :isAdmin="isAdmin"
