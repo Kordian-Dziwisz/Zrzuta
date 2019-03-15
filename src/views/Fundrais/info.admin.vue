@@ -43,14 +43,14 @@
           </b-col>
           <b-col class="text-right">
             <label>Zbiórka kończy się:</label>
-            <datetime-picker
-              v-model="endDate"
-              :first-day="1"
-              :show-dst="false"
-              :show-hours="true"
-              :show-minutes="true"
-              :show-seconds="true"
-            ></datetime-picker>
+            <datepicker
+              v-model="newInfo.endDate"
+              input-class="form-control bg-white w-50"
+              :language="pl"
+              format="D, d MMM yyyy"
+              :disabledDates="disabledDates"
+            />
+            <timepicker v-model="endTime" format="H:m" @change="updateTime()"/>
           </b-col>
         </b-row>
         <b-row>
@@ -92,7 +92,6 @@
             <b-button
               class="ml-5 mb-2 btn-outline-primary btn-light"
               size="sm"
-              v-if="isAdmin"
               @click="isEdited = !isEdited"
             >Edytuj</b-button>
           </b-col>
@@ -128,19 +127,28 @@
   </b-card>
 </template>
 <script>
-import { DatetimePicker } from "vue-bootstrap-datetime-picker";
+import Datepicker from "vuejs-datepicker";
+import Timepicker from "vuejs-timepicker";
+import { en, pl } from "vuejs-datepicker/dist/locale";
 
 export default {
   props: {
-    info: Object,
-    isAdmin: false
+    info: Object
   },
   data() {
     return {
       pl: pl,
       en: en,
       newInfo: Object,
-      isEdited: false
+      isEdited: false,
+      endTime: {
+        H: "12",
+        m: "12",
+        s: "12"
+      },
+      disabledDates: {
+        to: new Date(Date.now() - 86400000)
+      }
     };
   },
   methods: {
@@ -152,14 +160,25 @@ export default {
       this.newInfo.ended = !this.newInfo.ended;
     }
   },
+  watch: {
+    endTime: {
+      handler() {
+        this.newInfo.endDate.setHours(parseInt(this.endTime.H));
+        this.newInfo.endDate.setMinutes(parseInt(this.endTime.m));
+        this.newInfo.endDate.setSeconds(parseInt(this.endTime.s));
+      },
+      deep: true
+    }
+  },
   mounted() {
     this.newInfo = { ...this.info };
-    this.newInfo.endDate = moment()
-      .locale("en")
-      .format("YYYY-MM-DDTHH:mm:ss");
+    this.endTime.H = this.info.endDate.getHours();
+    this.endTime.m = this.info.endDate.getMinutes();
+    this.endTime.s = this.info.endDate.getSeconds();
   },
   components: {
-    DatetimePicker
+    Datepicker,
+    Timepicker
   }
 };
 </script>
