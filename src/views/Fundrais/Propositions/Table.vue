@@ -71,25 +71,23 @@
         <thead class="text-center">
           <!-- <th>Proponuje</th> -->
           <!-- <th style="width: "></th> -->
-          <th style="width: 1rem"></th>
+          <th style="width: 1%"></th>
           <th>Nazwa</th>
           <th>Ilość</th>
           <th>Cena</th>
           <th>Koszt</th>
+          <th></th>
         </thead>
         <tbody>
-          <tr
-            :class="{'bg-success text-light': item.accepted, 'bg-primary text-light': item.likes.length > numOfParticipants / 2}"
-            class="text-center"
-            v-for="(item, index) in list"
-            :key="index"
-          >
+          <tr class="text-center" v-for="(item, index) in list" :key="index">
             <!-- <td>{{item.creator}}</td> -->
+            <td
+              :class="{'bg-success text-light': item.accepted, 'bg-primary text-light': item.likes.length > numOfParticipants / 2}"
+            ></td>
             <td class="text-left">{{item.name}}</td>
             <td>{{item.number}} szt</td>
             <td>{{item.price.toString().replace(/[.]/, ',')}} zł</td>
             <td>{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}} zł</td>
-            <td>{{item.likes.length}} &nbsp;</td>
             <td v-if="isAdmin || authenticate(index)" class="text-right">
               <b-button
                 class="btn"
@@ -98,10 +96,7 @@
                 @click="like(index)"
               >
                 <i class="fas fa-thumbs-up"></i>
-                <span
-                  class="d-none ml-1"
-                  :class="{'d-lg-none': liked(index), 'd-lg-inline': !liked(index)}"
-                >{{item.likes.length}}</span>
+                <span class="ml-1">{{item.likes.length}}</span>
               </b-button>
               <b-button
                 size="sm"
