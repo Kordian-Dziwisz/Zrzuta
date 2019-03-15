@@ -9,17 +9,22 @@
     </b-card-title>
     <b-card-body>
       <form @submit.prevent="addNew" v-if="!this.isEnded">
-        <label>Dodaj nowego uczestnika</label>
         <div class="row">
           <div class="col" v-if="isAdmin">
+            <!-- <label class="h6 font-weight-normal" for="userName">Dodaj nowego uczestnika</label> -->
             <b-input
+              class="d-inline"
+              id="userName"
               type="text"
-              name="participant"
-              maxlength="30"
               placeholder="Nazwa/Imię/Ksywka"
+              maxlength="30"
               v-model="name"
+              :state="validation"
             />
+            <b-form-invalid-feedback :state="validation">Weno nie psuj :( Daj tu od 3 do 30 znaków!</b-form-invalid-feedback>
+            <b-form-valid-feedback :state="validation">Dawaj dawaj!! Tak trzymaj!!!</b-form-valid-feedback>
           </div>
+          <br>
           <div class="col text-right">
             <b-button
               type="submit"
@@ -158,6 +163,9 @@ export default {
       //   console.log("not");
       //   console.log(not);
       //   return { paid: paid, accepted: accepted, not: not };
+    },
+    validation() {
+      return this.name.length >= 3 && this.name.length < 30;
     }
   },
   components: {

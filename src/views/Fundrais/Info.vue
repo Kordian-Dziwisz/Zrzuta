@@ -16,22 +16,18 @@
               ></b-form-input>&nbsp;
               <b-form-invalid-feedback :state="validation">Błąd</b-form-invalid-feedback>
             <b-form-valid-feedback :state="validation">Looks Good.</b-form-valid-feedback>-->
-            <div>
-              <label class="h6 font-weight-normal" for="titleName">Tytuł:</label>
-              <b-input
-                class="d-inline"
-                id="titleName"
-                type="text"
-                placeholder="Wpisz tytuł zbiórki"
-                maxlength="50"
-                v-model.trim="newInfo.title"
-                :state="validation"
-              />
-              <b-form-invalid-feedback
-                :state="validation"
-              >Weno nie psuj :( Daj tu od 3 do 50 znaków!</b-form-invalid-feedback>
-              <b-form-valid-feedback :state="validation">Dawaj dawaj!! Tak trzymaj!!!</b-form-valid-feedback>
-            </div>
+            <label class="h6 font-weight-normal" for="titleName">Tytuł:</label>
+            <b-input
+              class="d-inline"
+              id="titleName"
+              type="text"
+              placeholder="Wpisz tytuł zbiórki"
+              maxlength="50"
+              v-model.trim="newInfo.title"
+              :state="validation"
+            />
+            <b-form-invalid-feedback :state="validation">Weno nie psuj :( Daj tu od 3 do 50 znaków!</b-form-invalid-feedback>
+            <b-form-valid-feedback :state="validation">Dawaj dawaj!! Tak trzymaj!!!</b-form-valid-feedback>
           </div>
           <b-col class="text-right">
             <h4 class="d-inline text-danger" v-if="newInfo.ended">Zbiórka jest zakończona</h4>
@@ -157,7 +153,7 @@ export default {
   },
   methods: {
     update() {
-      if (this.newInfo.title.length > 3 && this.newInfo.title.length < 50) {
+      if (this.newInfo.title.length >= 3 && this.newInfo.title.length < 50) {
         this.isEdited = !this.isEdited;
         this.$emit("info", { ...this.newInfo });
       }
