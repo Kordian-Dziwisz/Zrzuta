@@ -9,15 +9,6 @@
         </div>
         <div class="col text-right">
           <b-button
-            class="btn-outline-success btn-light"
-            size="sm"
-            v-if="!item.accepted && ended"
-            @click="accept"
-          >
-            <i class="fas fa-vote-yea pr-1"></i>
-            <span class="d-none d-lg-inline">Zaakceptuj</span>
-          </b-button>
-          <b-button
             class="btn-outline-danger btn-light ml-1"
             size="sm"
             data-toggle="tooltip"
@@ -25,17 +16,17 @@
             v-b-tooltip.hover
             title="Usuń"
             @click="remove"
+            v-if="authenticate"
           >
-            <i class="fas fa-user-minus pr-1"></i>
+            <i class="fas fa-user-minus"></i>
             <span class="d-none d-lg-inline">Usuń</span>
           </b-button>
         </div>
       </div>
     </b-card-header>
-    <b-card-body v-if="item.comment.length>0 || authenticate" class="py-3">
+    <b-card-body class="py-3" v-if="item.comment.length>0 || authenticate">
       <h6 v-if="authenticate">Twój komentarz:
         <b-form-textarea
-          rows="0"
           max-rows="6"
           v-model.lazy.trim="item.comment"
           placeholder="Tutaj wpisz swój komentarz"
@@ -52,9 +43,6 @@ export default {
     ended: false
   },
   methods: {
-    accept() {
-      this.item.accepted = true;
-    },
     remove() {
       this.$emit("remove", this.item.index);
     }

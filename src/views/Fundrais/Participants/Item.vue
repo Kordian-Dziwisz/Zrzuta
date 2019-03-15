@@ -9,13 +9,22 @@
         </div>
         <div class="col text-right">
           <b-button
+            class="btn-outline-success btn-light"
+            size="sm"
+            v-if="!item.accepted && isEnded && isAdmin"
+            @click="accept"
+          >
+            <i class="fas fa-vote-yea pr-1"></i>
+            <span class="d-none d-lg-inline">Zaakceptuj</span>
+          </b-button>
+          <b-button
             class="btn-outline-primary btn-light"
             size="sm"
             data-toggle="tooltip"
             data-placement="auto"
             v-b-tooltip.hover
             title="Zapłacone"
-            v-if="authenticate && !item.paid && !item.accepted && ended"
+            v-if="isAuthenticated && !item.paid && !item.accepted && isEnded && !isAdmin"
             @click="pay"
           >
             <i class="fas fa-vote-yea"></i>
@@ -28,18 +37,19 @@
             data-placement="auto"
             v-b-tooltip.hover
             title="Usuń"
+            v-if="isAdmin || isAuthenticated"
             @click="remove"
-            v-if="authenticate"
           >
-            <i class="fas fa-user-minus"></i>
+            <i class="fas fa-user-minus pr-1"></i>
             <span class="d-none d-lg-inline">Usuń</span>
           </b-button>
         </div>
       </div>
     </b-card-header>
-    <b-card-body class="py-3" v-if="item.comment.length>0 || authenticate">
-      <h6 v-if="authenticate">Twój komentarz:
+    <b-card-body v-if="item.comment.length>0 || isAuthenticated" class="py-3">
+      <h6 v-if="isAuthenticated">Twój komentarz:
         <b-form-textarea
+          rows="0"
           max-rows="6"
           v-model.lazy.trim="item.comment"
           placeholder="Tutaj wpisz swój komentarz"
@@ -53,7 +63,8 @@
 export default {
   props: {
     item: Object,
-    ended: false
+    isEnded: false,
+    isAdmin: false
   },
   methods: {
     pay() {
@@ -61,12 +72,15 @@ export default {
         this.item.paid = true;
       }
     },
+    accept() {
+      this.item.accepted = true;
+    },
     remove() {
       this.$emit("remove", this.item.index);
     }
   },
   computed: {
-    authenticate() {
+    isAuthenticated() {
       return this.item.name == localStorage.getItem("login");
     }
   }
