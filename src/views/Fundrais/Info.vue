@@ -4,14 +4,34 @@
       <b-card-title class="mb-0 border-bottom align-middle">
         <div class="row">
           <div class="col">
-            <label class="h6 font-weight-normal">Tytuł:</label>
-            <b-form-input
-              class="d-inline"
-              required
-              maxlength="50"
-              placeholder="Wpisz tytuł zbiórki"
-              v-model.trim="newInfo.title"
-            ></b-form-input>&nbsp;
+            <!-- <label class="h6 font-weight-normal">Tytuł:</label>
+              <b-form-input
+                class="d-inline"
+                type="text"
+                required
+                maxlength="50"
+                placeholder="Wpisz tytuł zbiórki"
+                v-model.trim="userid"
+                :state="validation"
+              ></b-form-input>&nbsp;
+              <b-form-invalid-feedback :state="validation">Błąd</b-form-invalid-feedback>
+            <b-form-valid-feedback :state="validation">Looks Good.</b-form-valid-feedback>-->
+            <div>
+              <label class="h6 font-weight-normal" for="titleName">Tytuł:</label>
+              <b-input
+                class="d-inline"
+                id="titleName"
+                type="text"
+                placeholder="Wpisz tytuł zbiórki"
+                maxlength="50"
+                v-model.trim="newInfo.title"
+                :state="validation"
+              />
+              <b-form-invalid-feedback
+                :state="validation"
+              >Weno nie psuj :( Daj tu od 3 do 50 znaków!</b-form-invalid-feedback>
+              <b-form-valid-feedback :state="validation">Dawaj dawaj!! Tak trzymaj!!!</b-form-valid-feedback>
+            </div>
           </div>
           <b-col class="text-right">
             <h4 class="d-inline text-danger" v-if="newInfo.ended">Zbiórka jest zakończona</h4>
@@ -131,16 +151,24 @@ export default {
   data() {
     return {
       newInfo: Object,
+      userid: "",
       isEdited: false
     };
   },
   methods: {
     update() {
-      this.isEdited = !this.isEdited;
-      this.$emit("info", { ...this.newInfo });
+      if (this.newInfo.title.length > 3 && this.newInfo.title.length < 50) {
+        this.isEdited = !this.isEdited;
+        this.$emit("info", { ...this.newInfo });
+      }
     },
     end() {
       this.newInfo.ended = !this.newInfo.ended;
+    }
+  },
+  computed: {
+    validation() {
+      return this.newInfo.title.length > 3 && this.newInfo.title.length < 50;
     }
   },
   mounted() {
