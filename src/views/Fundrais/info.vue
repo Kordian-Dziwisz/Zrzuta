@@ -1,5 +1,5 @@
 <template>
-  <b-card class="border rounded">
+  <b-card class="border rounded bg-light">
     <!-- <b-card-header class="w-100 shadow-sm">Informacje o zbiórce</b-card-header> -->
     <b-card-body>
       <b-card-title class="mb-0 border-bottom">
