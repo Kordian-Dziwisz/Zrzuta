@@ -21,7 +21,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { dom } from "@fortawesome/fontawesome-svg-core";
-import Vuelidate from "vuelidate";
 import Notifications from "vue-notification";
 
 dom.watch();
@@ -59,8 +58,6 @@ const moment = require("moment");
 require("moment/locale/pl");
 
 Vue.use(require("vue-moment"), { moment });
-
-Vue.use(Vuelidate);
 
 Vue.use(Notifications);
 
