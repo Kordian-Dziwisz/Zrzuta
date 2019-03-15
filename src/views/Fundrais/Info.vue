@@ -22,7 +22,7 @@
               :class="{'btn-outline-danger': !newInfo.ended, 'btn-outline-success': newInfo.ended}"
               @click="end()"
               size="sm"
-            >{{newInfo.ended? "Otwórz" : "Zakończ"}}</b-button>&nbsp;
+            >{{newInfo.ended ? "Otwórz" : "Zakończ"}}</b-button>&nbsp;
             <b-button
               type="submit"
               class="ml-3 mb-2 btn-outline-success btn-light"
@@ -59,7 +59,7 @@
               type="text"
               maxlength="150"
               max-rows="10"
-              placeholder="Wpisz nformacje o płatności"
+              placeholder="Wpisz informacje o płatności"
               v-model.lazy.trim="newInfo.accountNumber"
             ></b-form-textarea>
           </b-col>
@@ -129,7 +129,7 @@ export default {
   methods: {
     update() {
       this.isEdited = !this.isEdited;
-      this.$emit("info", this.newInfo);
+      this.$emit("info", { ...this.newInfo });
     },
     end() {
       this.newInfo.ended = !this.newInfo.ended;

@@ -141,7 +141,8 @@ export default {
         number: "",
         name: "",
         price: ""
-      }
+      },
+      isEdited: 0
     };
   },
   watch: {
