@@ -8,23 +8,23 @@
     <!-- <b-col class="text-right text-success">Otwarte</b-col> -->
     <!-- </b-row> -->
     <!-- </b-card-header> -->
+    <b-card-title>
+      <h3>
+        <span class="float-left">Cele zbiórki</span>
+        <span class="float-right text-right" v-if="priceSum > 0 && numOfParticipants">
+          {{priceSum.toFixed(2).toString().replace(/[.]/, ',')}}
+          zł
+          <div
+            class="text-right small"
+            v-if="numOfParticipants > 1"
+          >Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł</div>
+        </span>
+      </h3>
+    </b-card-title>
     <b-card-body>
-      <div class="row">
-        <div class="col">
-          <h3 class="float-left">Cele zbiórki</h3>
-          <h4 class="float-right text-right">
-            {{priceSum.toFixed(2).toString().replace(/[.]/, ',')}}
-            <span v-if="pricePerUser >= 0">zł</span>
-            <div
-              class="text-right small"
-              v-if="numOfParticipants > 1"
-            >Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł</div>
-          </h4>
-        </div>
-      </div>
       <form @submit.prevent="addNew" v-if="!this.ended">
         <label>Dodaj nową propozycję</label>
-        <b-form-row>
+        <div class="row">
           <div class="col-lg-5">
             <b-input
               type="text"
@@ -70,10 +70,14 @@
               Dodaj
             </b-button>
           </div>
-        </b-form-row>
+        </div>
       </form>
-      <div class="my-2"></div>
-      <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
+      <b-alert
+        v-if="list.length==0"
+        :show="true"
+        variant="warning"
+        class="text-dark"
+      >Nie zgłoszono żadnych propozycji</b-alert>
       <table v-else class="table table-striped border">
         <thead class="text-center">
           <!-- <th>Proponuje</th> -->

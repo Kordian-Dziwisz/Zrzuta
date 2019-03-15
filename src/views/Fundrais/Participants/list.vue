@@ -1,12 +1,14 @@
 <template>
   <b-card class="border rounded">
     <!-- <b-card-header class="w-100 shadow-sm h4"></b-card-header> -->
-    <b-card-body>
+    <b-card-title>
       <h3>
         <span>Uczestnicy</span>
         <span class="float-right" v-if="list.length">{{list.length}}</span>
       </h3>
-      <form @submit.prevent="addItem()" v-if="!this.ended">
+    </b-card-title>
+    <b-card-body>
+      <form @submit.prevent="addNew" v-if="!this.isEnded">
         <label>Dodaj nowego uczestnika</label>
         <div class="row">
           <div class="col" v-if="isAdmin">
@@ -48,23 +50,28 @@
           </div>
         </div>
       </form>
+      <!-- <div v-else> -->
+      <!-- <div>{{paidAcceptedAndNot.paid}}</div> -->
+      <!-- <div>{{paidAcceptedAndNot.accepted}}</div> -->
+      <!-- <div>{{paidAcceptedAndNot.not}}</div> -->
+      <!-- </div> -->
       <div class="row">
         <div class="col p-0">
           <ul>
             <b-alert :show="list.length==0" variant="warning" class="text-dark">
               Jak dotąd nie zapisano żadnego uczestnika,
               <span
-                v-if="!this.ended && isAdmin"
+                v-if="!this.isEnded && isAdmin"
               >dopisz go w polu powyżej.</span>
             </b-alert>
             <li v-for="(item, index) in list" :key="index">
-              <component
+              <item
                 class="my-3"
-                :is="isAdmin ? 'item-admin':'item'"
+                :isAdmin="isAdmin"
                 :item="Object.assign(item, {index: index})"
-                :ended="ended"
+                :isEnded="isEnded"
                 @remove="remove"
-              ></component>
+              ></item>
             </li>
           </ul>
         </div>
@@ -73,14 +80,13 @@
   </b-card>
 </template>
 <script>
-import Item from "@/views/Fundrais/Participants/item.vue";
-import ItemAdmin from "@/views/Fundrais/Participants/item.admin.vue";
+import Item from "@/views/Fundrais/Participants/Item.vue";
 
 export default {
   props: {
     list: Array,
     isAdmin: Boolean,
-    ended: Boolean
+    isEnded: Boolean
   },
   data() {
     return {
@@ -96,7 +102,7 @@ export default {
     }
   },
   methods: {
-    addItem() {
+    addNew() {
       if (this.name.length == 0) {
         alert("Pole nazwy nie może być puste!");
       } else {
@@ -132,11 +138,30 @@ export default {
         }
       });
       return flag;
+    },
+    paidAcceptedAndNot() {
+      //   let paid = this.list.reduce(paidSum => {
+      //     if (item.paid) {
+      //       paidSum++;
+      //     }
+      //     return paidSum;
+      //   });
+      //   console.log(paid);
+      //   let accepted = this.list.reduce((acceptedSum, item) => {
+      //     if (item.accepted) {
+      //       acceptedSum++;
+      //     }
+      //     return acceptedSum;
+      //   });
+      //   console.log(accepted);
+      //   let not = this.list.length - paid - accepted;
+      //   console.log("not");
+      //   console.log(not);
+      //   return { paid: paid, accepted: accepted, not: not };
     }
   },
   components: {
-    Item,
-    ItemAdmin
+    Item
   }
 };
 </script>

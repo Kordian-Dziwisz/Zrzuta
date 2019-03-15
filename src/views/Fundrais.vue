@@ -27,7 +27,7 @@
         <participants
           :isAdmin="isAdmin"
           :list="listOfParticipants"
-          :ended="this.fundraisInfo.ended"
+          :isEnded="this.fundraisInfo.ended"
           @list="updateParticipants"
         />
       </div>
