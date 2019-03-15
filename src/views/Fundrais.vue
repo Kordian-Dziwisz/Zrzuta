@@ -57,7 +57,6 @@
 import ProjectInfo from "@/views/Fundrais/info.vue";
 import InfoAdmin from "@/views/Fundrais/info.admin.vue";
 import ListOfParticipants from "@/views/Fundrais/Participants/list.vue";
-import ListOfProducts from "@/views/Fundrais/Products/list.vue";
 import Propositions from "@/views/Fundrais/Propositions/Table.vue";
 import firebase from "firebase";
 
@@ -190,7 +189,6 @@ export default {
     ProjectInfo,
     InfoAdmin,
     ListOfParticipants,
-    ListOfProducts,
     Propositions
   }
 };
