@@ -1,11 +1,7 @@
 <template>
   <div class="border rounded">
-    <b-card-header class="py-1">
+    <b-card-header class="py-1" :class="{'paidBar': item.paid, 'acceptedBar': item.accepted}">
       <div class="row">
-        <div
-          class="col"
-          :class="{'bg-success': item.paid, 'bg-primary': item.accepted, 'text-light': (item.paid || item.accepted)}"
-        ></div>
         <div class="col">
           <h5 class="d-lg-inline">{{item.name}}</h5>
           <h6 v-if="item.paid && !item.accepted">Wpłacono</h6>
@@ -13,7 +9,7 @@
         </div>
         <div class="col text-right">
           <b-button
-            class="btn-outline-success btn-light"
+            class="btn-outline-primary btn-light"
             size="sm"
             v-if="authenticate && !item.paid && !item.accepted && ended"
             @click="pay"
@@ -72,6 +68,14 @@ export default {
 h6 {
   white-space: pre-line;
   font-weight: 400;
+}
+.acceptedBar {
+  border-left: 6px solid #28a745 !important;
+  box-sizing: border-box;
+}
+.paidBar {
+  border-left: 6px solid #007bff;
+  box-sizing: border-box;
 }
 </style>
 

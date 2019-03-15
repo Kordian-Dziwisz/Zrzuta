@@ -9,8 +9,8 @@
     <!-- </b-row> -->
     <!-- </b-card-header> -->
     <b-card-body>
-      <b-row>
-        <b-col>
+      <div class="row">
+        <div class="col">
           <h3 class="float-left">Cele zbiórki</h3>
           <h4 class="float-right text-right">
             {{priceSum.toFixed(2).toString().replace(/[.]/, ',')}}
@@ -20,8 +20,8 @@
               v-if="numOfParticipants > 1"
             >Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł</div>
           </h4>
-        </b-col>
-      </b-row>
+        </div>
+      </div>
       <form @submit.prevent="addNew" v-if="!this.ended">
         <label>Dodaj nową propozycję</label>
         <b-form-row>
@@ -71,7 +71,6 @@
         <thead class="text-center">
           <!-- <th>Proponuje</th> -->
           <!-- <th style="width: "></th> -->
-          <th style="width: 1%"></th>
           <th>Nazwa</th>
           <th>Ilość</th>
           <th>Cena</th>
