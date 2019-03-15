@@ -1,12 +1,13 @@
 <template>
   <div class="border rounded">
-    <b-card-header
-      class="py-1"
-      :class="{'bg-success': item.paid, 'bg-primary': item.accepted, 'text-light': (item.paid || item.accepted)}"
-    >
+    <b-card-header class="py-1">
       <div class="row">
+        <div
+          class="col"
+          :class="{'bg-success': item.paid, 'bg-primary': item.accepted, 'text-light': (item.paid || item.accepted)}"
+        ></div>
         <div class="col">
-          <h5 class="d-lg-inline">{{item.name}}&nbsp;</h5>
+          <h5 class="d-lg-inline">{{item.name}}</h5>
           <h6 v-if="item.paid && !item.accepted">Wpłacono</h6>
           <h6 v-if="item.accepted">Otrzymano</h6>
         </div>
