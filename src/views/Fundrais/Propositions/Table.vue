@@ -22,31 +22,31 @@
       </h3>
     </b-card-title>
     <b-card-body>
+      <br>
       <form @submit.prevent="addNew" v-if="!this.ended">
         <label>Dodaj nową propozycję</label>
-        <div class="row">
-          <div class="col-lg-5">
+        <div class="form-row">
+          <div class="col">
             <b-input
               type="text"
               name="name"
               placeholder="Nazwa"
+              minlenght="3"
               maxlength="50"
               v-model="newItem.name"
             />
           </div>
-          <div class="col-lg-2">
+          <div class="col">
             <b-input
               type="number"
               name="quantity"
-              maxlength="4"
               v-model="newItem.number"
               min="0"
               max="9999"
               placeholder="Ilość"
-              onfocus="this.value=''"
             />
           </div>
-          <div class="col-lg-2">
+          <div class="col">
             <b-input
               type="number"
               name="price"
@@ -57,7 +57,7 @@
               placeholder="Cena"
             />
           </div>
-          <div class="col-lg-3">
+          <div class="col">
             <b-button
               type="submit"
               class="btn-outline-success btn-light"
@@ -105,7 +105,8 @@
                 data-placement="auto"
                 v-b-tooltip.hover
                 title="Polub"
-                :class="{'btn-info': liked(index), 'btn-outline-info btn-light': !liked(index)}"
+                variant="primary"
+                :class="{'btn-primary': liked(index), 'btn-outline-primary btn-light': !liked(index)}"
                 @click="like(index)"
               >
                 <i class="fas fa-thumbs-up"></i>
@@ -132,7 +133,7 @@
                 v-b-tooltip.hover
                 title="Usuń"
                 v-if="authenticate(index) || isAdmin"
-                @click="remove(index)"
+                @click="showModal = true"
               >
                 <i class="fas fa-trash-alt fa-fw"></i>
                 <span class="d-none">Usuń</span>
@@ -144,6 +145,33 @@
         </tbody>
       </table>
     </b-card-body>
+    <b-modal
+      v-model="showModal"
+      id
+      :lazy="true"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      title="Potwierdzenie usunięcia"
+      size="lg"
+    >
+      <div class="container fluid">
+        <div class="row text-center">
+          <strong
+            class="h4"
+          >Czy jesteś pewny, że chcesz usunąć produkt? Ten proces jest nieodwracalny! Nawet administrator tego nie naprawi!</strong>
+        </div>
+      </div>
+      <div slot="modal-footer" class="w-100">
+        <b-button class="float-right ml-1" variant="outline-danger light" @click="remove(index)">
+          <i class="fas fa-trash-alt fa-fw"></i>Usuń
+        </b-button>
+        <b-button
+          class="float-right"
+          variant="outline-secondary light"
+          @click="showModal = false"
+        >Anuluj</b-button>
+      </div>
+    </b-modal>
   </b-card>
 </template>
 <script>
@@ -164,7 +192,9 @@ export default {
         name: "",
         price: ""
       },
-      isEdited: 0
+      isEdited: 0,
+      click: false,
+      showModal: false
     };
   },
   watch: {
@@ -193,6 +223,7 @@ export default {
     },
     remove(index) {
       this.list.splice(index, 1);
+      this.showModal = false;
     },
     like(index) {
       if (this.list[index].likes.includes(localStorage.getItem("login"))) {

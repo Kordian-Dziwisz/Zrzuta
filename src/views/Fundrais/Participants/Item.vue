@@ -4,8 +4,8 @@
       <div class="row">
         <div class="col">
           <h5 class="d-lg-inline">{{item.name}}</h5>
-          <h6 v-if="item.paid && !item.accepted">Wpłacono</h6>
           <h6 v-if="item.accepted">Otrzymano</h6>
+          <h6 v-else-if="item.paid">Wpłacono</h6>
         </div>
         <div class="col text-right">
           <b-button
@@ -38,7 +38,7 @@
             v-b-tooltip.hover
             title="Usuń"
             v-if="isAdmin || isAuthenticated"
-            @click="remove"
+            @click="showModal = true"
           >
             <i class="fas fa-user-minus pr-1"></i>
             <span class="d-none d-lg-inline">Usuń</span>
@@ -54,13 +54,54 @@
           v-model.trim="item.comment"
           placeholder="Tutaj wpisz swój komentarz"
         ></b-form-textarea>
+        <div class="text-right">
+          <b-button
+            @click="update"
+            size="xs"
+            variant="light"
+            class="btn-outline-success text-right"
+          >Zapisz</b-button>
+        </div>
       </h6>
       <h6 v-else>{{item.comment}}</h6>
     </b-card-body>
+    <b-modal
+      v-model="showModal"
+      id
+      :lazy="true"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      title="Potwierdzenie usunięcia"
+      size="lg"
+    >
+      <div class="container fluid">
+        <div class="row text-center">
+          <strong
+            class="h4"
+          >Czy jesteś pewny, że chcesz usunąć uczestnika? Ten proces jest nieodwracalny! Nawet administrator tego nie naprawi!</strong>
+        </div>
+      </div>
+      <div slot="modal-footer" class="w-100">
+        <b-button class="float-right ml-1" variant="outline-danger light" @click="remove()">
+          <i class="fas fa-trash-alt fa-fw"></i>Usuń
+        </b-button>
+        <b-button
+          class="float-right"
+          variant="outline-secondary light"
+          @click="showModal = false"
+        >Anuluj</b-button>
+      </div>
+    </b-modal>
   </div>
 </template>
 <script>
 export default {
+  data() {
+    return {
+      click: false,
+      showModal: false
+    };
+  },
   props: {
     item: Object,
     isEnded: false,
@@ -71,12 +112,20 @@ export default {
       if (this.item.accepted == false) {
         this.item.paid = true;
       }
+      this.update();
+      this.$forceUpdate();
     },
     accept() {
       this.item.accepted = true;
+      this.update();
+      this.$forceUpdate();
     },
     remove() {
       this.$emit("remove", this.item.index);
+      this.showModal = false;
+    },
+    update() {
+      this.$emit("update", this.item);
     }
   },
   computed: {
