@@ -22,10 +22,11 @@
       </h3>
     </b-card-title>
     <b-card-body>
+      <br>
       <form @submit.prevent="addNew" v-if="!this.ended">
         <label>Dodaj nową propozycję</label>
-        <div class="row">
-          <div class="col-lg-5">
+        <div class="form-row">
+          <div class="col">
             <b-input
               type="text"
               name="name"
@@ -34,7 +35,7 @@
               v-model="newItem.name"
             />
           </div>
-          <div class="col-lg-2">
+          <div class="col">
             <b-input
               type="number"
               name="quantity"
@@ -46,7 +47,7 @@
               onfocus="this.value=''"
             />
           </div>
-          <div class="col-lg-2">
+          <div class="col">
             <b-input
               type="number"
               name="price"
@@ -57,7 +58,7 @@
               placeholder="Cena"
             />
           </div>
-          <div class="col-lg-3">
+          <div class="col">
             <b-button
               type="submit"
               class="btn-outline-success btn-light"

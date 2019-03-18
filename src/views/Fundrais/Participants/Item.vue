@@ -4,8 +4,8 @@
       <div class="row">
         <div class="col">
           <h5 class="d-lg-inline">{{item.name}}</h5>
-          <h6 v-if="item.paid && !item.accepted">Wpłacono</h6>
           <h6 v-if="item.accepted">Otrzymano</h6>
+          <h6 v-else-if="item.paid">Wpłacono</h6>
         </div>
         <div class="col text-right">
           <b-button
@@ -54,6 +54,12 @@
           v-model.trim="item.comment"
           placeholder="Tutaj wpisz swój komentarz"
         ></b-form-textarea>
+        <b-button
+          @click="update"
+          size="xs"
+          variant="light"
+          class="btn-outline-success float-right"
+        >Zapisz</b-button>
       </h6>
       <h6 v-else>{{item.comment}}</h6>
     </b-card-body>
@@ -71,12 +77,19 @@ export default {
       if (this.item.accepted == false) {
         this.item.paid = true;
       }
+      this.update();
+      this.$forceUpdate();
     },
     accept() {
       this.item.accepted = true;
+      this.update();
+      this.$forceUpdate();
     },
     remove() {
       this.$emit("remove", this.item.index);
+    },
+    update() {
+      this.$emit("update", this.item);
     }
   },
   computed: {

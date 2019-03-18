@@ -4,13 +4,13 @@
     <b-card-title>
       <h3>
         <span>Uczestnicy</span>
-        <span class="float-right" v-if="list.length">{{list.length}}</span>
+        <span class="float-right small" v-if="list.length">łącznie: {{list.length}}</span>
       </h3>
     </b-card-title>
     <b-card-body>
       <form @submit.prevent="addNew" v-if="!this.isEnded">
         <label>Dodaj nowego uczestnika:</label>
-        <div class="row">
+        <div class="form-row">
           <div class="col" v-if="isAdmin">
             <!-- <label class="h6 font-weight-normal" for="userName">Dodaj nowego uczestnika</label> -->
             <b-input
@@ -61,9 +61,6 @@
         <div class="text-primary col text-center">Zapłacone: {{paidAcceptedAndNot.paid}}</div>
         <div class="col text-right">Pozostało: {{paidAcceptedAndNot.not}}</div>
       </div>
-      <div>
-        <b-button size="sm" variant="light" class="btn-outline-success" @click="update">Zapisz</b-button>
-      </div>
       <div class="row">
         <div class="col p-0">
           <ul>
@@ -77,9 +74,10 @@
               <item
                 class="my-3"
                 :isAdmin="isAdmin"
-                :item="Object.assign(item, {index: index})"
+                :item="{...item, index: index}"
                 :isEnded="isEnded"
                 @remove="remove"
+                @update="update"
               ></item>
             </li>
           </ul>
@@ -129,8 +127,18 @@ export default {
     remove(index) {
       this.list.splice(index, 1);
     },
-    update() {
+    update(item) {
+      this.list[item.index] = { ...item };
+      delete this.list[item.index].index;
       this.$emit("list", this.list);
+    }
+  },
+  watch: {
+    list: {
+      handler() {
+        this.$emit("list", this.list);
+      },
+      deep: true
     }
   },
   computed: {
