@@ -62,7 +62,6 @@
         </h6>
       </div>
     </div>
-
     <b-modal
       v-model="showModal"
       id
@@ -70,9 +69,10 @@
       header-bg-variant="danger"
       header-text-variant="light"
       title="Potwierdzenie usunięcia"
+      size="lg"
     >
       <div class="container fluid">
-        <div class="row">
+        <div class="row text-center">
           <strong
             class="h4"
           >Czy jesteś pewny, że chcesz usunąć zrzutkę? Ten proces jest nieodwracalny! Nawet administrator tego nie naprawi!</strong>
@@ -82,7 +82,11 @@
         <b-button class="float-right ml-1" variant="outline-danger light" @click="remove()">
           <i class="fas fa-trash-alt fa-fw"></i>Usuń
         </b-button>
-        <b-button class="float-right" variant="outline-secondary light" @click="show = false">Anuluj</b-button>
+        <b-button
+          class="float-right"
+          variant="outline-secondary light"
+          @click="showModal= false"
+        >Anuluj</b-button>
       </div>
     </b-modal>
   </div>
@@ -122,5 +126,8 @@ export default {
 b-collapse {
   white-space: pre;
   word-wrap: break-word;
+}
+strong {
+  word-break: normal;
 }
 </style>

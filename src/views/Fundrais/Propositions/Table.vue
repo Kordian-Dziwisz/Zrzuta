@@ -132,7 +132,7 @@
                 v-b-tooltip.hover
                 title="Usuń"
                 v-if="authenticate(index) || isAdmin"
-                @click="remove(index)"
+                @click="showModal = true"
               >
                 <i class="fas fa-trash-alt fa-fw"></i>
                 <span class="d-none">Usuń</span>
@@ -144,6 +144,33 @@
         </tbody>
       </table>
     </b-card-body>
+    <b-modal
+      v-model="showModal"
+      id
+      :lazy="true"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      title="Potwierdzenie usunięcia"
+      size="lg"
+    >
+      <div class="container fluid">
+        <div class="row text-center">
+          <strong
+            class="h4"
+          >Czy jesteś pewny, że chcesz usunąć produkt? Ten proces jest nieodwracalny! Nawet administrator tego nie naprawi!</strong>
+        </div>
+      </div>
+      <div slot="modal-footer" class="w-100">
+        <b-button class="float-right ml-1" variant="outline-danger light" @click="remove(index)">
+          <i class="fas fa-trash-alt fa-fw"></i>Usuń
+        </b-button>
+        <b-button
+          class="float-right"
+          variant="outline-secondary light"
+          @click="showModal = false"
+        >Anuluj</b-button>
+      </div>
+    </b-modal>
   </b-card>
 </template>
 <script>
@@ -164,7 +191,9 @@ export default {
         name: "",
         price: ""
       },
-      isEdited: 0
+      isEdited: 0,
+      click: false,
+      showModal: false
     };
   },
   watch: {
@@ -193,6 +222,7 @@ export default {
     },
     remove(index) {
       this.list.splice(index, 1);
+      this.showModal = false;
     },
     like(index) {
       if (this.list[index].likes.includes(localStorage.getItem("login"))) {
