@@ -72,12 +72,12 @@
       header-bg-variant="danger"
       header-text-variant="light"
       title="Potwierdzenie usunięcia"
-      size="lg"
+      size="md"
     >
       <div class="container fluid">
         <div class="row text-center">
           <strong
-            class="h4"
+            class="h5"
           >Czy jesteś pewny, że chcesz usunąć uczestnika? Ten proces jest nieodwracalny! Nawet administrator tego nie naprawi!</strong>
         </div>
       </div>
