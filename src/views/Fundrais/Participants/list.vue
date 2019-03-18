@@ -63,6 +63,9 @@
         <div class="text-primary col text-center">Zapłacone: {{paidAcceptedAndNot.paid}}</div>
         <div class="col text-right">Pozostało: {{paidAcceptedAndNot.not}}</div>
       </div>
+      <div>
+        <b-button size="sm" variant="light" class="btn-outline-success" @click="update">Zapisz</b-button>
+      </div>
       <div class="row">
         <div class="col p-0">
           <ul>
@@ -101,14 +104,6 @@ export default {
       name: ""
     };
   },
-  watch: {
-    list: {
-      handler() {
-        this.$emit("list", this.list);
-      },
-      deep: true
-    }
-  },
   methods: {
     addNew() {
       if (!this.name.length == 0) {
@@ -133,6 +128,9 @@ export default {
     },
     remove(index) {
       this.list.splice(index, 1);
+    },
+    update() {
+      this.$emit("list", this.list);
     }
   },
   computed: {
