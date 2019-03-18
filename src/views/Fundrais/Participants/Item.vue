@@ -63,7 +63,7 @@
           >Zapisz</b-button>
         </div>
       </h6>
-      <h6 v-else>{{item.comment}}</h6>
+      <h6 v-else>{{ellipsis(item.comment, 10)}}</h6>
     </b-card-body>
     <b-modal
       v-model="showModal"
@@ -99,7 +99,8 @@ export default {
   data() {
     return {
       click: false,
-      showModal: false
+      showModal: false,
+      ellipsis: require("text-ellipsis")
     };
   },
   props: {
