@@ -12,6 +12,10 @@
             :class="{'btn-outline-danger': !newInfo.ended, 'btn-outline-success': newInfo.ended}"
             @click="end()"
             size="sm"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Zakończ"
           >{{newInfo.ended ? "Otwórz" : "Zakończ"}}</b-button>
           <b-button
             v-if="isEdited"
@@ -31,6 +35,10 @@
             @click="isEdited = !isEdited"
             size="sm"
             v-if="isAdmin"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Anuluj"
           >Anuluj</b-button>
         </span>
         <b-input
@@ -55,6 +63,10 @@
             type="button"
             variant="light"
             @click="isEdited = !isEdited"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Edytuj"
             size="sm"
             v-if="isAdmin"
           >Edytuj</b-button>
