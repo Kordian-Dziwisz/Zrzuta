@@ -66,7 +66,7 @@
               v-b-tooltip.hover
               title="Dodaj"
             >
-              <i class="fas fa-plus-square" fa-fw></i>
+              <i class="fas fa-plus-square"></i>
               Dodaj
             </b-button>
           </div>
