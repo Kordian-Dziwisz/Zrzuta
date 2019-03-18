@@ -51,7 +51,7 @@
         <b-form-textarea
           rows="0"
           max-rows="6"
-          v-model.lazy.trim="item.comment"
+          v-model.trim="item.comment"
           placeholder="Tutaj wpisz swój komentarz"
         ></b-form-textarea>
       </h6>
