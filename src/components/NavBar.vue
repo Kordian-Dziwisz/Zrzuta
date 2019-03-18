@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       db: firebase.firestore().collection("Zrzuty-develop"),
-      clicked: false,
+      isClicked: false,
       newFundrais: {
         guid: "",
         accountNumber: "",
@@ -49,8 +49,8 @@ export default {
   },
   methods: {
     async addFundrais() {
-      if ((this.newFundrais.creator = localStorage.getItem("login")) && this.clicked == false) {
-        this.clicked = true;
+      if ((this.newFundrais.creator = localStorage.getItem("login") && !this.isClicked)) {
+        this.isClicked = true;
         this.newFundrais.guid = localStorage.getItem("guid");
         let newFundrais = await this.db.add({
           fundraisInfo: { ...this.newFundrais },
@@ -62,6 +62,11 @@ export default {
           name: "Fundrais",
           params: { id: newFundrais.id }
         });
+        if (await newFundrais.id) {
+          this.isClicked = false;
+          console.log("clikcked");
+          location.reload();
+        }
       }
     },
     changeLogin() {

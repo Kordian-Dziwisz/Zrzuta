@@ -9,21 +9,23 @@
     </b-card-title>
     <b-card-body>
       <form @submit.prevent="addNew" v-if="!this.isEnded">
-        <label>Dodaj nowego uczestnika:</label>
+        <label for="userNameValidation">Dodaj nowego uczestnika:</label>
         <div class="form-row">
           <div class="col" v-if="isAdmin">
-            <!-- <label class="h6 font-weight-normal" for="userName">Dodaj nowego uczestnika</label> -->
             <b-input
-              class="d-inline"
-              id="userName"
+              class="d-inline form-control"
+              id="userNameValidation"
               type="text"
               placeholder="Nazwa/Imię/Ksywka"
               maxlength="30"
               v-model="name"
               :state="validation"
+              required
             />
-            <b-form-invalid-feedback :state="validation">Weno nie psuj :( Daj tu od 3 do 30 znaków!</b-form-invalid-feedback>
-            <b-form-valid-feedback :state="validation">Dawaj dawaj!! Tak trzymaj!!!</b-form-valid-feedback>
+            <b-form-invalid-feedback
+              :state="validation"
+            >Nazwa uczestnika musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
+            <b-form-valid-feedback :state="validation">Wygląda dobrze!</b-form-valid-feedback>
           </div>
           <br>
           <div class="col text-right">
@@ -102,9 +104,7 @@ export default {
   },
   methods: {
     addNew() {
-      if (this.name.length == 0) {
-        alert("Pole nazwy nie może być puste!");
-      } else {
+      if (!this.name.length == 0) {
         this.list.push({
           name: this.name,
           accepted: false,

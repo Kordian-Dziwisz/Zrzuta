@@ -31,6 +31,7 @@
               type="text"
               name="name"
               placeholder="Nazwa"
+              minlenght="3"
               maxlength="50"
               v-model="newItem.name"
             />
@@ -39,12 +40,10 @@
             <b-input
               type="number"
               name="quantity"
-              maxlength="4"
               v-model="newItem.number"
               min="0"
               max="9999"
               placeholder="Ilość"
-              onfocus="this.value=''"
             />
           </div>
           <div class="col">
