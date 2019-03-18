@@ -22,31 +22,31 @@
       </h3>
     </b-card-title>
     <b-card-body>
+      <br>
       <form @submit.prevent="addNew" v-if="!this.ended">
         <label>Dodaj nową propozycję</label>
-        <div class="row">
-          <div class="col-lg-5">
+        <div class="form-row">
+          <div class="col">
             <b-input
               type="text"
               name="name"
               placeholder="Nazwa"
+              minlenght="3"
               maxlength="50"
               v-model="newItem.name"
             />
           </div>
-          <div class="col-lg-2">
+          <div class="col">
             <b-input
               type="number"
               name="quantity"
-              maxlength="4"
               v-model="newItem.number"
               min="0"
               max="9999"
               placeholder="Ilość"
-              onfocus="this.value=''"
             />
           </div>
-          <div class="col-lg-2">
+          <div class="col">
             <b-input
               type="number"
               name="price"
@@ -57,7 +57,7 @@
               placeholder="Cena"
             />
           </div>
-          <div class="col-lg-3">
+          <div class="col">
             <b-button
               type="submit"
               class="btn-outline-success btn-light"
@@ -105,7 +105,8 @@
                 data-placement="auto"
                 v-b-tooltip.hover
                 title="Polub"
-                :class="{'btn-info': liked(index), 'btn-outline-info btn-light': !liked(index)}"
+                variant="primary"
+                :class="{'btn-primary': liked(index), 'btn-outline-primary btn-light': !liked(index)}"
                 @click="like(index)"
               >
                 <i class="fas fa-thumbs-up"></i>
