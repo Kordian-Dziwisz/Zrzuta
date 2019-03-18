@@ -1,57 +1,68 @@
 <template>
   <b-card class="border rounded">
+    <b-card-title>
+      <span v-if="isEdited">
+        <label class="h6 font-weight-normal">Tytuł:</label>
+        <span class="float-right small">
+          <h4 class="d-inline text-danger" v-if="newInfo.ended">Zbiórka jest zakończona</h4>
+          <h4 class="d-inline text-success" v-else>Zbiórka jest w trakcie</h4>
+          <b-button
+            class="mb-2 ml-3 btn-light"
+            type="button"
+            :class="{'btn-outline-danger': !newInfo.ended, 'btn-outline-success': newInfo.ended}"
+            @click="end()"
+            size="sm"
+          >{{newInfo.ended ? "Otwórz" : "Zakończ"}}</b-button>
+          <b-button
+            v-if="isEdited"
+            type="submit"
+            class="ml-3 mb-2 btn-outline-success btn-light"
+            size="sm"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Zapisz"
+            @click="update"
+          >Zapisz</b-button>
+          <b-button
+            class="mb-2 ml-3 btn-outline-secondary"
+            type="button"
+            variant="light"
+            @click="isEdited = !isEdited"
+            size="sm"
+            v-if="isAdmin"
+          >Anuluj</b-button>
+        </span>
+        <b-input
+          class="d-inline"
+          id="titleName"
+          type="text"
+          placeholder="Wpisz tytuł zbiórki"
+          maxlength="50"
+          v-model.trim="newInfo.title"
+          :state="validation"
+        />
+        <b-form-invalid-feedback :state="validation">Tytuł musi mieć od 3 do 50 znaków!</b-form-invalid-feedback>
+        <b-form-valid-feedback :state="validation">Wygląda dobrze!</b-form-valid-feedback>
+      </span>
+      <span v-else>
+        <h2 class="d-inline">{{info.title}}</h2>
+        <span class="float-right small">
+          <h4 class="d-inline text-danger" v-if="newInfo.ended">Zbiórka jest zakończona</h4>
+          <h4 class="d-inline text-success" v-else>Zbiórka jest w trakcie</h4>
+          <b-button
+            class="mb-2 ml-3 btn-outline-secondary"
+            type="button"
+            variant="light"
+            @click="isEdited = !isEdited"
+            size="sm"
+            v-if="isAdmin"
+          >Edytuj</b-button>
+        </span>
+      </span>
+    </b-card-title>
+    <br>
     <b-card-body v-if="isEdited">
-      <b-card-title class="mb-0 border-bottom align-middle">
-        <div class="row">
-          <div class="col">
-            <!-- <label class="h6 font-weight-normal">Tytuł:</label>
-              <b-form-input
-                class="d-inline"
-                type="text"
-                required
-                maxlength="50"
-                placeholder="Wpisz tytuł zbiórki"
-                v-model.trim="userid"
-                :state="validation"
-              ></b-form-input>&nbsp;
-              <b-form-invalid-feedback :state="validation">Błąd</b-form-invalid-feedback>
-            <b-form-valid-feedback :state="validation">Looks Good.</b-form-valid-feedback>-->
-            <label class="h6 font-weight-normal" for="titleName">Tytuł:</label>
-            <b-input
-              class="d-inline"
-              id="titleName"
-              type="text"
-              placeholder="Wpisz tytuł zbiórki"
-              maxlength="50"
-              v-model.trim="newInfo.title"
-              :state="validation"
-            />
-            <b-form-invalid-feedback :state="validation">Weno nie psuj :( Daj tu od 3 do 50 znaków!</b-form-invalid-feedback>
-            <b-form-valid-feedback :state="validation">Dawaj dawaj!! Tak trzymaj!!!</b-form-valid-feedback>
-          </div>
-          <b-col class="text-right">
-            <h4 class="d-inline text-danger" v-if="newInfo.ended">Zbiórka jest zakończona</h4>
-            <h4 class="d-inline text-success" v-else>Zbiórka jest w trakcie</h4>
-            <b-button
-              class="mb-2 ml-3 btn-light"
-              type="button"
-              :class="{'btn-outline-danger': !newInfo.ended, 'btn-outline-success': newInfo.ended}"
-              @click="end()"
-              size="sm"
-            >{{newInfo.ended ? "Otwórz" : "Zakończ"}}</b-button>&nbsp;
-            <b-button
-              type="submit"
-              class="ml-1 mb-2 btn-outline-success btn-light"
-              size="sm"
-              data-toggle="tooltip"
-              data-placement="auto"
-              v-b-tooltip.hover
-              title="Zapisz"
-              @click="update"
-            >Zapisz</b-button>
-          </b-col>
-        </div>
-      </b-card-title>
       <b-card-text>
         <b-row class="border-bottom py-2">
           <b-col>
@@ -87,29 +98,6 @@
       </b-card-text>
     </b-card-body>
     <b-card-body v-else>
-      <b-card-title class="mb-0 border-bottom align-middle">
-        <b-row>
-          <b-col>
-            <h2 class="d-inline">{{info.title}}&nbsp;</h2>
-          </b-col>
-          <b-col class="text-right">
-            <h4 class="d-inline text-danger" v-if="info.ended">Zbiórka jest zakończona</h4>
-            <h4 class="d-inline text-success" v-else>Zbiórka jest w trakcie</h4>
-
-            <b-button
-              class="ml-5 mb-2 btn-outline-primary btn-light"
-              size="sm"
-              data-toggle="tooltip"
-              data-placement="auto"
-              v-b-tooltip.hover
-              title="Edytuj"
-              v-if="isAdmin"
-              @click="isEdited = !isEdited"
-            >Edytuj</b-button>
-          </b-col>
-        </b-row>
-      </b-card-title>
-
       <b-card-text>
         <b-row
           class="py-2"

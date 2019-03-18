@@ -54,12 +54,14 @@
           v-model.trim="item.comment"
           placeholder="Tutaj wpisz swój komentarz"
         ></b-form-textarea>
-        <b-button
-          @click="update"
-          size="xs"
-          variant="light"
-          class="btn-outline-success float-right"
-        >Zapisz</b-button>
+        <div class="text-right">
+          <b-button
+            @click="update"
+            size="xs"
+            variant="light"
+            class="btn-outline-success text-right"
+          >Zapisz</b-button>
+        </div>
       </h6>
       <h6 v-else>{{item.comment}}</h6>
     </b-card-body>

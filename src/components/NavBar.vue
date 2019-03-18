@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     async addFundrais() {
-      if ((this.newFundrais.creator = localStorage.getItem("login") && !this.isClicked)) {
+      if ((this.newFundrais.creator = localStorage.getItem("login")) && !this.isClicked) {
         this.isClicked = true;
         this.newFundrais.guid = localStorage.getItem("guid");
         let newFundrais = await this.db.add({

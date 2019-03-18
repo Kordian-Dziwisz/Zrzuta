@@ -105,7 +105,8 @@
                 data-placement="auto"
                 v-b-tooltip.hover
                 title="Polub"
-                :class="{'btn-info': liked(index), 'btn-outline-info btn-light': !liked(index)}"
+                variant="primary"
+                :class="{'btn-primary': liked(index), 'btn-outline-primary btn-light': !liked(index)}"
                 @click="like(index)"
               >
                 <i class="fas fa-thumbs-up"></i>
