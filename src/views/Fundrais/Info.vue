@@ -7,7 +7,7 @@
           <h4 class="d-inline text-danger" v-if="newInfo.ended">Zbiórka jest zakończona</h4>
           <h4 class="d-inline text-success" v-else>Zbiórka jest w trakcie</h4>
           <b-button
-            class="mb-2 ml-3 btn-light"
+            class="mx-1 mb-2 btn-light"
             type="button"
             :class="{'btn-outline-danger': !newInfo.ended, 'btn-outline-success': newInfo.ended}"
             @click="end()"
@@ -16,7 +16,7 @@
           <b-button
             v-if="isEdited"
             type="submit"
-            class="ml-3 mb-2 btn-outline-success btn-light"
+            class="mx-1 mb-2 btn-outline-success btn-light"
             size="sm"
             data-toggle="tooltip"
             data-placement="auto"
@@ -25,7 +25,7 @@
             @click="update"
           >Zapisz</b-button>
           <b-button
-            class="mb-2 ml-3 btn-outline-secondary"
+            class="mx-1 mb-2 btn-outline-secondary"
             type="button"
             variant="light"
             @click="isEdited = !isEdited"

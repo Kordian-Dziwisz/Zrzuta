@@ -66,7 +66,7 @@
               v-b-tooltip.hover
               title="Dodaj"
             >
-              <i class="fas fa-plus-square" fa-fw></i>
+              <i class="fas fa-plus-square"></i>
               Dodaj
             </b-button>
           </div>
@@ -198,12 +198,14 @@
           ></b-input>
         </b-form-row>
       </form>
-      <b-button class="btn-outline-primary btn-light" @click="editSave">Zapisz</b-button>&nbsp;
-      <b-button class="btn-outline-primary btn-light" @click="modalShow = false">Anuluj</b-button>&nbsp;
-      <b-button class="btn-outline-danger btn-light" @click="remove(editObject.index)">
-        <i class="fas fa-trash-alt"></i>
-        Usuń
-      </b-button>
+      <form class="float-right">
+        <b-button class="btn-outline-success mx-1" variant="light" @click="editSave">Zapisz</b-button>
+        <b-button
+          class="btn-outline-secondary mx-1"
+          variant="light"
+          @click="modalShow = false"
+        >Anuluj</b-button>
+      </form>
     </b-modal>
   </b-card>
 </template>
@@ -268,6 +270,7 @@ export default {
     },
     remove(index) {
       this.list.splice(index, 1);
+      this.showModal = false;
     },
     like(index) {
       if (this.list[index].likes.includes(localStorage.getItem("login"))) {

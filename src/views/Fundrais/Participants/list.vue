@@ -39,7 +39,7 @@
               title="Dodaj uczestnika"
               v-if="isAdmin"
             >
-              <i class="fas fa-plus-square"></i>
+              <i class="fas fa-plus-square fa-fw"></i>
               Dodaj uczestnika
             </b-button>
             <b-button
@@ -52,7 +52,7 @@
               @click="addMe"
               size="sm"
             >
-              <i class="fas fa-plus-square"></i>
+              <i class="fas fa-plus-square fa-fw"></i>
               Dodaj mnie
             </b-button>
           </div>
@@ -104,7 +104,7 @@ export default {
   },
   methods: {
     addNew() {
-      if (!this.name.length == 0) {
+      if (this.name.length !== 0) {
         this.list.push({
           name: this.name,
           accepted: false,
