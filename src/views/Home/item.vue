@@ -2,9 +2,11 @@
   <div class="container-fluid w-100 mb-1 bg-white">
     <div class="row border-bottom">
       <div class="col-sm-5">
-        <div class="row">
-          <h4 class="mr-1">{{item.title}}</h4>
-        </div>
+        <router-link class="text-dark" :to="{name: 'Fundrais', params: {id: item.id}}">
+          <div class="row">
+            <h4 class="mr-1">{{item.title}}</h4>
+          </div>
+        </router-link>
         <div class="row">
           <h6 class="font-weight-light">twórca:
             <h6 class="d-inline">
@@ -13,57 +15,32 @@
           </h6>
         </div>
       </div>
-      <div class="col-sm-4 mt-4 px-0">
+      <div class="col mt-4 px-0">
         <div class="d-inline">
           <h4 class="text-danger" v-if="item.endDate < new Date(Date.now())">Zbiórka zakończona</h4>
           <h4 class="text-warning" v-else-if="item.ended">Dokonaj zapłaty</h4>
           <h4 class="text-success" v-else>Zbiórka w trakcie</h4>
         </div>
       </div>
-      <div class="col-lg-3 col-sm-3 text-lg-right pt-4 pr-1">
-        <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-if="isYour">
-          <b-button
-            class="btn-outline-primary btn-light"
-            size="sm"
-            data-toggle="tooltip"
-            data-placement="auto"
-            v-b-tooltip.hover
-            title="Edytuj"
-          >
-            <i class="fas fa-edit fa-fw"></i>
-            Edytuj
-          </b-button>
-        </router-link>
-        <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-else>
-          <b-button
-            class="btn-outline-primary btn-light"
-            size="sm"
-            data-toggle="tooltip"
-            data-placement="auto"
-            v-b-tooltip.hover
-            title="Otwórz"
-          >
-            <i class="fas fa-door-open"></i>&nbsp;Otwórz
-          </b-button>
-        </router-link>&nbsp;
+      <div class="col text-lg-right pt-4 pr-1">
         <b-button
           class="btn-outline-danger btn-light"
           size="sm"
           data-toggle="tooltip"
           data-placement="auto"
-          v-b-tooltip.hover
           title="Usuń"
-          @click="remove"
           v-if="isYour"
+          v-b-tooltip.hover
+          @click="showModal = true"
         >
-          <i class="fas fa-trash-alt"></i>
+          <i class="fas fa-trash-alt fa-fw"></i>
           Usuń
         </b-button>
       </div>
       <hr>
     </div>
     <div>
-      <div class="col-sm-7">
+      <div class="col">
         <div v-if="item.description.length != 0">
           <b-collapse v-model="click" id>{{item.description}}</b-collapse>
           <b-button
@@ -85,6 +62,29 @@
         </h6>
       </div>
     </div>
+
+    <b-modal
+      v-model="showModal"
+      id
+      :lazy="true"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      title="Potwierdzenie usunięcia"
+    >
+      <div class="container fluid">
+        <div class="row">
+          <strong
+            class="h4"
+          >Czy jesteś pewny, że chcesz usunąć zrzutkę? Ten proces jest nieodwracalny! Nawet administrator tego nie naprawi!</strong>
+        </div>
+      </div>
+      <div slot="modal-footer" class="w-100">
+        <b-button class="float-right ml-1" variant="outline-danger light" @click="remove()">
+          <i class="fas fa-trash-alt fa-fw"></i>Usuń
+        </b-button>
+        <b-button class="float-right" variant="outline-secondary light" @click="show = false">Anuluj</b-button>
+      </div>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -94,7 +94,8 @@ export default {
   },
   data() {
     return {
-      click: false
+      click: false,
+      showModal: false
     };
   },
   methods: {
@@ -103,6 +104,7 @@ export default {
         index: this.item.index,
         id: this.item.id
       });
+      this.showModal = false;
     }
   },
   created() {
