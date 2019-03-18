@@ -36,7 +36,7 @@
         <span class="text-danger" v-else-if="item.ended">Dokonaj zapłaty</span>
         <span class="text-warning" v-else>
           Zbiórka trwa do
-          <strong class="d-inline">{{ item.endDate | moment("D MMMM YYYY")}}</strong>
+          <strong class="d-inline">{{ item.endDate | moment("LL")}}</strong>
         </span>
       </div>
     </div>
