@@ -113,12 +113,12 @@
               </b-button>
               <b-button
                 size="sm"
-                class="btn-outline-success btn-light"
+                :class="{'btn-outline-success btn-light': !item.accepted, 'btn-success': item.accepted}"
                 data-toggle="tooltip"
                 data-placement="auto"
                 v-b-tooltip.hover
                 title="Zatwierdź"
-                v-if="isAdmin && !item.accepted"
+                v-if="isAdmin"
                 @click="accept(index)"
               >
                 <i class="fas fa-check fa-fw"></i>
@@ -203,7 +203,7 @@ export default {
       this.$emit("list", this.list);
     },
     accept(index) {
-      this.list[index].accepted = true;
+      this.list[index].accepted = !this.list[index].accepted;
       this.$emit("list", this.list);
     },
     liked(index) {
@@ -220,10 +220,17 @@ export default {
     priceSum: {
       get() {
         if (this.list.length > 0) {
-          let prices = this.list.map(x => x.price * x.number);
-          return prices.reduce((a, b) => {
-            return a + b;
-          });
+          if (this.list.every(item => item.accepted == false)) {
+            let prices = this.list.map(item => item.price * item.number);
+            return prices.reduce((acc, item) => {
+              return acc + item;
+            });
+          } else {
+            let prices = this.list.filter(item => item.accepted == true).map(item => item.price * item.number);
+            return prices.reduce((acc, item) => {
+              return acc + item;
+            });
+          }
         } else {
           return 0;
         }
