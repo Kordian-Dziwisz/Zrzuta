@@ -26,8 +26,8 @@
               v-model.trim="newInfo.title"
               :state="validation"
             />
-            <b-form-invalid-feedback :state="validation">Weno nie psuj :( Daj tu od 3 do 50 znaków!</b-form-invalid-feedback>
-            <b-form-valid-feedback :state="validation">Dawaj dawaj!! Tak trzymaj!!!</b-form-valid-feedback>
+            <b-form-invalid-feedback :state="validation">Tytuł musi mieć od 3 do 50 znaków!</b-form-invalid-feedback>
+            <b-form-valid-feedback :state="validation">Wygląda dobrze!</b-form-valid-feedback>
           </div>
           <b-col class="text-right">
             <h4 class="d-inline text-danger" v-if="newInfo.ended">Zbiórka jest zakończona</h4>
@@ -55,7 +55,7 @@
       <b-card-text>
         <b-row class="border-bottom py-2">
           <b-col>
-            <label>Zbiórka :</label>
+            <label>Zbiórka:</label>
             <h5>{{ info.creationDate | moment("LLL")}}</h5>
           </b-col>
           <b-col class="text-right">
