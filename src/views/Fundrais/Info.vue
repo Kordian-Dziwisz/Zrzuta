@@ -66,7 +66,7 @@
       <b-card-text>
         <b-row class="border-bottom py-2">
           <b-col>
-            <label>Zbiórka :</label>
+            <label>Zbiórka:</label>
             <h5>{{ info.creationDate | moment("LLL")}}</h5>
           </b-col>
           <b-col class="text-right">
