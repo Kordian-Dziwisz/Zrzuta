@@ -34,7 +34,7 @@
           >Anuluj</b-button>
         </span>
         <b-input
-          class="d-inline"
+          class="w-50"
           id="titleName"
           type="text"
           placeholder="Wpisz tytuł zbiórki"

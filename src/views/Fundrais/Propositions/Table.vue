@@ -80,8 +80,6 @@
       >Nie zgłoszono żadnych propozycji</b-alert>
       <table v-else class="table table-striped border">
         <thead class="text-center">
-          <!-- <th>Proponuje</th> -->
-          <!-- <th style="width: "></th> -->
           <th>Nazwa</th>
           <th>Ilość</th>
           <th>Cena</th>
@@ -90,7 +88,6 @@
         </thead>
         <tbody>
           <tr class="text-center" v-for="(item, index) in list" :key="index">
-            <!-- <td>{{item.creator}}</td> -->
             <td
               :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
             >{{item.name}}</td>
@@ -98,46 +95,61 @@
             <td>{{item.price.toString().replace(/[.]/, ',')}} zł</td>
             <td>{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}} zł</td>
             <td v-if="isAdmin || authenticate(index)" class="text-right">
-              <b-button
-                class="btn"
-                size="sm"
-                data-toggle="tooltip"
-                data-placement="auto"
-                v-b-tooltip.hover
-                title="Polub"
-                variant="primary"
-                :class="{'btn-primary': liked(index), 'btn-outline-primary btn-light': !liked(index)}"
-                @click="like(index)"
-              >
-                <i class="fas fa-thumbs-up"></i>
-                <span class="ml-1">{{item.likes.length}}</span>
-              </b-button>
-              <b-button
-                size="sm"
-                :class="{'btn-outline-success btn-light': !item.accepted, 'btn-success': item.accepted}"
-                data-toggle="tooltip"
-                data-placement="auto"
-                v-b-tooltip.hover
-                title="Zatwierdź"
-                v-if="isAdmin"
-                @click="accept(index)"
-              >
-                <i class="fas fa-check fa-fw"></i>
-                <span class="d-none">Akceptuj</span>
-              </b-button>
-              <b-button
-                size="sm"
-                class="btn-outline-danger btn-light"
-                data-toggle="tooltip"
-                data-placement="auto"
-                v-b-tooltip.hover
-                title="Usuń"
-                v-if="authenticate(index) || isAdmin"
-                @click="remove(index)"
-              >
-                <i class="fas fa-trash-alt fa-fw"></i>
-                <span class="d-none">Usuń</span>
-              </b-button>
+              <b-button-group>
+                <b-button
+                  class="btn"
+                  size="sm"
+                  data-toggle="tooltip"
+                  data-placement="auto"
+                  v-b-tooltip.hover
+                  title="Polub"
+                  variant="primary"
+                  :class="{'btn-primary': liked(index), 'btn-outline-primary btn-light': !liked(index)}"
+                  @click="like(index)"
+                >
+                  <i class="fas fa-thumbs-up fa-fw"></i>
+                  <span class="ml-1">{{item.likes.length}}</span>
+                </b-button>
+                <b-button
+                  size="sm"
+                  :class="{'btn-outline-success btn-light': !item.accepted, 'btn-success': item.accepted}"
+                  data-toggle="tooltip"
+                  data-placement="auto"
+                  v-b-tooltip.hover
+                  title="Zatwierdź"
+                  v-if="isAdmin"
+                  @click="accept(index)"
+                >
+                  <i class="fas fa-check fa-fw"></i>
+                  <span class="d-none">Akceptuj</span>
+                </b-button>
+                <b-button
+                  size="sm"
+                  class="btn-outline-danger btn-light"
+                  data-toggle="tooltip"
+                  data-placement="auto"
+                  v-b-tooltip.hover
+                  title="Usuń"
+                  v-if="authenticate(index) || isAdmin"
+                  @click="remove(index)"
+                >
+                  <i class="fas fa-trash-alt fa-fw"></i>
+                  <span class="d-none">Usuń</span>
+                </b-button>
+                <b-button
+                  size="sm"
+                  class="btn-outline-secondary btn-light"
+                  data-toggle="tooltip"
+                  data-placement="auto"
+                  v-b-tooltip.hover
+                  title="Edytuj"
+                  v-if="authenticate(index) || isAdmin"
+                  @click="edit(index)"
+                >
+                  <i class="fas fa-cogs fa-fw"></i>
+                  <span class="d-none">Edytuj</span>
+                </b-button>
+              </b-button-group>
               <!-- <b-dropdown text="akcje" size="sm"></b-dropdown> -->
             </td>
             <td v-else>-</td>
@@ -145,6 +157,54 @@
         </tbody>
       </table>
     </b-card-body>
+    <b-modal
+      hide-footer
+      title="Edytuj produkt"
+      v-if="modalShow && editObject"
+      v-model="modalShow"
+      id
+    >
+      <form>
+        <b-form-row>
+          <b-input
+            class="mb-1"
+            type="text"
+            name="name"
+            v-model.trim="editObject.name"
+            required
+            placeholder="Wpisz nową nazwę"
+            maxlength="30"
+          ></b-input>
+          <b-input
+            type="number"
+            name="quantity"
+            v-model="editObject.number"
+            required
+            placeholder="Wpisz nową ilość"
+            max="9999"
+            step="0.01"
+            min="0"
+          ></b-input>
+          <b-input
+            class="my-1"
+            type="number"
+            name="price"
+            v-model="editObject.price"
+            required
+            placeholder="Wpisz nową cenę"
+            max="9999"
+            step="0.01"
+            min="0"
+          ></b-input>
+        </b-form-row>
+      </form>
+      <b-button class="btn-outline-primary btn-light" @click="editSave">Zapisz</b-button>&nbsp;
+      <b-button class="btn-outline-primary btn-light" @click="modalShow = false">Anuluj</b-button>&nbsp;
+      <b-button class="btn-outline-danger btn-light" @click="remove(editObject.index)">
+        <i class="fas fa-trash-alt"></i>
+        Usuń
+      </b-button>
+    </b-modal>
   </b-card>
 </template>
 <script>
@@ -165,7 +225,9 @@ export default {
         name: "",
         price: ""
       },
-      isEdited: 0
+      editObject: undefined,
+      modalShow: false,
+      editIndex: undefined
     };
   },
   watch: {
@@ -191,6 +253,18 @@ export default {
         this.newItem.name = "";
         this.newItem.price = "";
       }
+    },
+    edit(index) {
+      this.editIndex = index;
+      this.editObject = { ...this.list[index] };
+      this.modalShow = true;
+      console.log("edit(index)");
+    },
+    editSave() {
+      this.list[this.editIndex].name = this.editObject.name;
+      this.list[this.editIndex].number = this.editObject.number;
+      this.list[this.editIndex].price = this.editObject.price;
+      this.modalShow = false;
     },
     remove(index) {
       this.list.splice(index, 1);
