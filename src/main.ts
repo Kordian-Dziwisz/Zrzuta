@@ -17,7 +17,8 @@ import {
   faCheck,
   faSignOutAlt,
   faDoorOpen,
-  faThumbsUp
+  faThumbsUp,
+  faCogs
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { dom } from "@fortawesome/fontawesome-svg-core";
@@ -36,7 +37,8 @@ library.add(
   faMoneyBillAlt,
   faSignOutAlt,
   faDoorOpen,
-  faThumbsUp
+  faThumbsUp,
+  faCogs
 );
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.config.productionTip = false;
