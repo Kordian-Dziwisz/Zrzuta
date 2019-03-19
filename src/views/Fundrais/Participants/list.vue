@@ -72,8 +72,8 @@
         </div>
       </form>
       <div class="h5 row" v-else-if="authenticate && list.length" :show="authenticate">
-        <div class="text-success col">Zaakceptowane: {{paidAcceptedAndNot.accepted}}</div>
-        <div class="text-primary col text-center">Zapłacone: {{paidAcceptedAndNot.paid}}</div>
+        <div class="text-success col">Zapłacone: {{paidAcceptedAndNot.accepted}}</div>
+        <div class="text-primary col text-center">Wpłacone: {{paidAcceptedAndNot.paid}}</div>
         <div class="col text-right">Pozostało: {{paidAcceptedAndNot.not}}</div>
       </div>
       <div class="row" v-if="authenticate">

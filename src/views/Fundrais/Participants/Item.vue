@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col">
           <h5 class="d-lg-inline">{{item.name}}</h5>
-          <h6 v-if="item.accepted">Otrzymano</h6>
+          <h6 v-if="item.accepted">Zapłacono</h6>
           <h6 v-else-if="item.paid">Wpłacono</h6>
         </div>
         <div class="col text-right">
@@ -15,7 +15,7 @@
             @click="accept"
           >
             <i class="fas fa-vote-yea pr-1"></i>
-            <span class="d-none d-lg-inline">Zaakceptuj</span>
+            <span class="d-none d-lg-inline">Zapłacił/a</span>
           </b-button>
           <b-button
             class="btn-outline-primary btn-light"
@@ -28,7 +28,7 @@
             @click="pay"
           >
             <i class="fas fa-vote-yea"></i>
-            <span class="d-none d-lg-inline">Zapłaciłem/am</span>
+            <span class="d-none d-lg-inline">Wpłaciłem/am</span>
           </b-button>
           <b-button
             class="btn-outline-danger btn-light ml-1"
