@@ -264,7 +264,7 @@ export default {
       } else {
         this.removeShow = true;
         this.removeIndex = index;
-      };
+      }
       this.$emit("list", this.list);
     },
     like(index) {
@@ -285,9 +285,6 @@ export default {
     isAuthenticated(index) {
       return this.list[index].creator == localStorage.getItem("login");
     }
-  },
-  created() {
-    this.newItem.creator = localStorage.getItem("login");
   },
   computed: {
     priceSum: {
