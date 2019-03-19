@@ -8,7 +8,7 @@ import Login from "@/components/Login.vue";
 export default {
   methods: {
     changeLogin(login) {
-      if (login.length != 0) {
+      if (login.length > 3) {
         localStorage.setItem("login", login);
         if (this.$route.query.nextURL != null) {
           this.$router.push({ path: this.$route.query.nextURL });

@@ -73,13 +73,16 @@
           size="sm"
         >Pokaż więcej</b-button>
       </div>
-      <div v-else>
-        <h6>{{item.comment}}</h6>
+      <div v-else-if="item.comment.length > 80">
+        <h6 class="d-inline">{{item.comment}}</h6>
         <b-button
           class="d-inline text-dark btn-light btn-outline-secondary mx-1"
           @click="commentShow=!commentShow"
           size="sm"
         >Ukryj</b-button>
+      </div>
+      <div v-else>
+        <h6>{{item.comment}}</h6>
       </div>
       <!-- <button onclick="showItem.comment">
           <span class="buttontext"></span>
