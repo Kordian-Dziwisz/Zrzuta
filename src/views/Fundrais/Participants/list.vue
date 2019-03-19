@@ -4,12 +4,25 @@
     <b-card-title>
       <h3>
         <span>Uczestnicy</span>
-        <span class="float-right small" v-if="list.length">łącznie: {{list.length}}</span>
+        <span class="float-right small" v-if="list.length && authenticate">łącznie: {{list.length}}</span>
+        <b-button
+          class="btn-outline-success btn-light ml-1 float-right"
+          data-toggle="tooltip"
+          data-placement="auto"
+          v-b-tooltip.hover
+          title="Dodaj siebie"
+          v-else-if="!alreadyAdded && !isAdmin"
+          @click="addMe"
+          size="sm"
+        >
+          <i class="fas fa-plus-square fa-fw"></i>
+          Dodaj mnie
+        </b-button>
       </h3>
     </b-card-title>
     <b-card-body>
-      <form @submit.prevent="addNew" v-if="!this.isEnded">
-        <label for="userNameValidation">Dodaj nowego uczestnika:</label>
+      <form @submit.prevent="addNew" v-if="!this.isEnded && authenticate">
+        <label for="userNameValidation" v-if="isAdmin">Dodaj nowego uczestnika:</label>
         <div class="form-row">
           <div class="col" v-if="isAdmin">
             <b-input
@@ -58,16 +71,16 @@
           </div>
         </div>
       </form>
-      <div class="h5 row" v-else>
+      <div class="h5 row" v-else-if="authenticate && list.length" :show="authenticate">
         <div class="text-success col">Zaakceptowane: {{paidAcceptedAndNot.accepted}}</div>
         <div class="text-primary col text-center">Zapłacone: {{paidAcceptedAndNot.paid}}</div>
         <div class="col text-right">Pozostało: {{paidAcceptedAndNot.not}}</div>
       </div>
-      <div class="row">
+      <div class="row" v-if="authenticate">
         <div class="col p-0">
           <ul>
             <b-alert :show="list.length==0" variant="warning" class="text-dark">
-              Jak dotąd nie zapisano żadnego uczestnika,
+              Nie zapisano żadnego uczestnika,
               <span
                 v-if="!this.isEnded && isAdmin"
               >dopisz go w polu powyżej.</span>
@@ -168,6 +181,9 @@ export default {
     },
     validation() {
       return this.name.length >= 3 && this.name.length < 30;
+    },
+    authenticate() {
+      return this.list.find(item => item.name == localStorage.getItem("login")) != null || this.isAdmin;
     }
   },
   components: {

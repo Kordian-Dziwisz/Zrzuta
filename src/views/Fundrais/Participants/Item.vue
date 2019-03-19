@@ -63,7 +63,10 @@
           >Zapisz</b-button>
         </div>
       </h6>
-      <h6 v-else>{{ellipsis(item.comment, 10)}}</h6>
+      <h6 v-else>{{ellipsis(item.comment, 50).slice(0, -3)}}</h6>
+      <!-- <button onclick="showItem.comment">
+          <span class="buttontext"></span>
+      </button>-->
     </b-card-body>
     <b-modal
       v-model="showModal"
@@ -148,6 +151,14 @@ h6 {
 .paidBar {
   border-left: 6px solid #007bff;
   box-sizing: border-box;
+}
+.text-overflow-ellipsis {
+  background: transparent;
+  border: none !important;
+  padding: 15px;
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
 
