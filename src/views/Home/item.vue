@@ -56,6 +56,7 @@
       </div>
     </div>
     <b-modal
+      :hide-header-close="true"
       v-model="showModal"
       id
       :lazy="true"

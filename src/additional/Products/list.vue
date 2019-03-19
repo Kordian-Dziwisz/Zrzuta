@@ -21,8 +21,8 @@
         </div>
         <div class="col-lg-3">
           <b-button type="submit" class="btn btn-outline-success btn-light">
-             <i class="fas fa-plus-square fa-fw"></i>
-             Dodaj
+            <i class="fas fa-plus-square fa-fw"></i>
+            Dodaj
           </b-button>
         </div>
       </b-form-row>
@@ -69,6 +69,7 @@
       </table>
       <b-modal
         hide-footer
+        :hide-header-close="true"
         title="Edytuj produkt"
         v-if="modalShow && editObject"
         v-model="modalShow"

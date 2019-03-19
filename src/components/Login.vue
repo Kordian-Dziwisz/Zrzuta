@@ -31,7 +31,9 @@ export default {
   },
   methods: {
     returnLogin() {
-      this.$emit("login", this.login);
+      if (validation) {
+        this.$emit("login", this.login);
+      }
     }
   },
   computed: {

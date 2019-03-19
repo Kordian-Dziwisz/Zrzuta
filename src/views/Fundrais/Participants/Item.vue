@@ -91,6 +91,7 @@
     <b-modal
       v-model="showModal"
       id
+      :hide-header-close="true"
       :lazy="true"
       header-bg-variant="danger"
       header-text-variant="light"
