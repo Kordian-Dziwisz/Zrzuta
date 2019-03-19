@@ -23,52 +23,18 @@
     </b-card-title>
     <b-card-body>
       <form @submit.prevent="addNew" v-if="!this.ended">
-        <label>Dodaj nową propozycję</label>
-        <div class="form-row">
-          <div class="col">
-            <b-input
-              type="text"
-              name="name"
-              placeholder="Nazwa"
-              minlenght="3"
-              maxlength="50"
-              v-model="newItem.name"
-            />
-          </div>
-          <div class="col">
-            <b-input
-              type="number"
-              name="quantity"
-              v-model="newItem.number"
-              min="0"
-              max="9999"
-              placeholder="Ilość"
-            />
-          </div>
-          <div class="col">
-            <b-input
-              type="number"
-              name="price"
-              v-model="newItem.price"
-              step="0.01"
-              min="0"
-              max="9999"
-              placeholder="Cena"
-            />
-          </div>
-          <div class="col">
-            <b-button
-              type="submit"
-              class="btn-outline-success btn-light"
-              data-toggle="tooltip"
-              data-placement="auto"
-              v-b-tooltip.hover
-              title="Dodaj"
-            >
-              <i class="fas fa-plus-square"></i>
-              Dodaj
-            </b-button>
-          </div>
+        <div class="col">
+          <b-button
+            type="submit"
+            class="btn-outline-success btn-light"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Dodaj"
+          >
+            <i class="fas fa-plus-square"></i>
+            Dodaj nową propozycję
+          </b-button>
         </div>
       </form>
       <b-alert
@@ -80,20 +46,23 @@
       <table v-else class="table table-striped border">
         <thead class="text-center">
           <th>Nazwa</th>
-          <th>Ilość</th>
-          <th>Cena</th>
-          <th>Koszt</th>
+          <th>Ilość (szt)</th>
+          <th>Cena (zł)</th>
+          <th>Koszt (zł)</th>
           <th></th>
         </thead>
         <tbody>
           <tr class="text-center" v-for="(item, index) in list" :key="index">
             <td
+              class="text-left"
               :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
             >{{item.name}}</td>
-            <td>{{item.number}} szt</td>
-            <td>{{item.price.toString().replace(/[.]/, ',')}} zł</td>
-            <td>{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}} zł</td>
-            <td v-if="isAdmin || authenticate(index)" class="text-right">
+            <td class="text-right">{{item.number}}</td>
+            <td class="text-right">{{item.price.toString().replace(/[.]/, ',')}}</td>
+            <td
+              class="text-right"
+            >{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}}</td>
+            <td v-if="isAdmin || isAuthenticated(index)" class="text-right">
               <b-button-group>
                 <b-button
                   class="btn"
@@ -103,7 +72,7 @@
                   v-b-tooltip.hover
                   title="Polub"
                   variant="primary"
-                  :class="{'btn-primary': liked(index), 'btn-outline-primary btn-light': !liked(index)}"
+                  :class="{'btn-primary': isLiked(index), 'btn-outline-primary btn-light': !isLiked(index)}"
                   @click="like(index)"
                 >
                   <i class="fas fa-thumbs-up fa-fw"></i>
@@ -129,7 +98,7 @@
                   data-placement="auto"
                   v-b-tooltip.hover
                   title="Usuń"
-                  v-if="authenticate(index) || isAdmin"
+                  v-if="isAuthenticated(index) || isAdmin"
                   @click="remove(index)"
                 >
                   <i class="fas fa-trash-alt fa-fw"></i>
@@ -142,7 +111,7 @@
                   data-placement="auto"
                   v-b-tooltip.hover
                   title="Edytuj"
-                  v-if="authenticate(index) || isAdmin"
+                  v-if="isAuthenticated(index) || isAdmin"
                   @click="edit(index)"
                 >
                   <i class="fas fa-cogs fa-fw"></i>
@@ -158,9 +127,11 @@
     </b-card-body>
     <b-modal
       hide-footer
+      header-bg-variant="secondary"
+      header-text-variant="light"
       title="Edytuj produkt"
-      v-if="modalShow && editObject"
-      v-model="modalShow"
+      v-if="editShow && editObject"
+      v-model="editShow"
       id
     >
       <form>
@@ -202,9 +173,36 @@
         <b-button
           class="btn-outline-secondary mx-1"
           variant="light"
-          @click="modalShow = false"
+          @click="editShow = false"
         >Anuluj</b-button>
       </form>
+    </b-modal>
+    <b-modal
+      v-model="removeShow"
+      id
+      :lazy="true"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      title="Potwierdzenie usunięcia"
+      size="lg"
+    >
+      <div class="container fluid">
+        <div class="row text-center">
+          <strong
+            class="h4"
+          >Czy jesteś pewny, że chcesz usunąć uczestnika? Ten proces jest nieodwracalny! Nawet administrator tego nie naprawi!</strong>
+        </div>
+      </div>
+      <div slot="modal-footer" class="w-100">
+        <b-button class="float-right ml-1" variant="outline-danger light" @click="remove()">
+          <i class="fas fa-trash-alt fa-fw"></i>Usuń
+        </b-button>
+        <b-button
+          class="float-right"
+          variant="outline-secondary light"
+          @click="removeShow = false"
+        >Anuluj</b-button>
+      </div>
     </b-modal>
   </b-card>
 </template>
@@ -220,56 +218,54 @@ export default {
   },
   data() {
     return {
-      newItem: {
-        creator: "",
-        number: "",
-        name: "",
-        price: ""
-      },
+      removeShow: false,
+      removeIndex: 0,
       editObject: undefined,
-      modalShow: false,
+      editShow: false,
       editIndex: undefined
     };
   },
-  watch: {
-    list() {
-      this.$emit("list", this.list);
-    }
-  },
   methods: {
     addNew() {
-      if (this.newItem.name.length == 0 || this.newItem.number.length == 0 || this.newItem.price.length == 0) {
-        alert("Wpisz poprawną wartość!");
-      } else {
-        this.list.push({
-          creator: this.newItem.creator,
-          name: this.newItem.name,
-          number: parseInt(this.newItem.number),
-          price: parseFloat(this.newItem.price),
-          accepted: false,
-          likes: [],
-          dislikes: []
-        });
-        this.newItem.number = "";
-        this.newItem.name = "";
-        this.newItem.price = "";
+      this.list.push({
+        creator: localStorage.getItem("login"),
+        name: "",
+        number: 0.0,
+        price: 0.0,
+        accepted: false,
+        likes: [],
+        dislikes: []
+      });
+      this.edit(this.list.length - 1);
+      if (
+        this.list[this.list.length - 1].name ||
+        this.list[this.list.length - 1].number ||
+        this.list[this.list.length - 1].price
+      ) {
+        this.list.pop();
       }
     },
     edit(index) {
       this.editIndex = index;
       this.editObject = { ...this.list[index] };
-      this.modalShow = true;
-      console.log("edit(index)");
+      this.editShow = true;
     },
     editSave() {
       this.list[this.editIndex].name = this.editObject.name;
       this.list[this.editIndex].number = this.editObject.number;
       this.list[this.editIndex].price = this.editObject.price;
-      this.modalShow = false;
+      this.editShow = false;
+      this.$emit("list", this.list);
     },
     remove(index) {
-      this.list.splice(index, 1);
-      this.showModal = false;
+      if (this.removeShow) {
+        this.list.splice(this.removeIndex, 1);
+        this.removeShow = false;
+      } else {
+        this.removeShow = true;
+        this.removeIndex = index;
+      };
+      this.$emit("list", this.list);
     },
     like(index) {
       if (this.list[index].likes.includes(localStorage.getItem("login"))) {
@@ -283,10 +279,10 @@ export default {
       this.list[index].accepted = !this.list[index].accepted;
       this.$emit("list", this.list);
     },
-    liked(index) {
+    isLiked(index) {
       return this.list[index].likes.includes(localStorage.getItem("login"));
     },
-    authenticate(index) {
+    isAuthenticated(index) {
       return this.list[index].creator == localStorage.getItem("login");
     }
   },
