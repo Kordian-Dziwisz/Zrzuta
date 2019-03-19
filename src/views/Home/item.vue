@@ -1,28 +1,14 @@
 <template>
   <div class="container-fluid w-100 mb-1 bg-white">
-    <div class="row border-bottom">
+    <div class="row">
       <div class="col-sm-5">
         <router-link class="text-dark" :to="{name: 'Fundrais', params: {id: item.id}}">
           <div class="row">
             <h4 class="mr-1">{{item.title}}</h4>
           </div>
         </router-link>
-        <div class="row">
-          <h6 class="font-weight-light">twórca:
-            <h6 class="d-inline">
-              <strong>{{item.creator}}</strong>
-            </h6>
-          </h6>
-        </div>
       </div>
-      <div class="col mt-4 px-0">
-        <div class="d-inline">
-          <h4 class="text-danger" v-if="item.endDate < new Date(Date.now())">Zbiórka zakończona</h4>
-          <h4 class="text-warning" v-else-if="item.ended">Dokonaj zapłaty</h4>
-          <h4 class="text-success" v-else>Zbiórka w trakcie</h4>
-        </div>
-      </div>
-      <div class="col text-lg-right pt-4 pr-1">
+      <div class="col text-lg-right my-auto pr-1">
         <b-button
           class="btn-outline-danger btn-light"
           size="sm"
@@ -37,9 +23,24 @@
           Usuń
         </b-button>
       </div>
-      <hr>
     </div>
-    <div>
+    <div class="row border-bottom">
+      <div class="col">
+        <span>
+          twórca:
+          <strong class="d-inline">{{item.creator}}</strong>
+        </span>
+      </div>
+      <div class="col text-right">
+        <span class="text-dark" v-if="item.endDate < new Date(Date.now())">Zbiórka zakończona</span>
+        <span class="text-danger" v-else-if="item.ended">Dokonaj zapłaty</span>
+        <span class="text-warning" v-else>
+          Zbiórka trwa do
+          <strong class="d-inline">{{ item.endDate | moment("LL")}}</strong>
+        </span>
+      </div>
+    </div>
+    <div class="row mt-1">
       <div class="col">
         <div v-if="item.description.length != 0">
           <b-collapse v-model="click" id>{{item.description}}</b-collapse>
@@ -52,14 +53,6 @@
             <span v-else>Ukryj opis</span>
           </b-button>
         </div>
-      </div>
-      <div
-        v-if="!item.endDate < new Date(Date.now())"
-        class="col font-weight-light text-lg-right"
-      >Zbiórka kończy się:
-        <h6 class="text-danger d-inline">
-          <strong>{{ item.endDate | moment("dddd, D MMMM YYYY")}} - {{ item.endDate | moment("H:mm")}}</strong>
-        </h6>
       </div>
     </div>
     <b-modal

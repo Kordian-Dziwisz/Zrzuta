@@ -63,7 +63,7 @@
           >Zapisz</b-button>
         </div>
       </h6>
-      <h6 v-else>{{item.comment}}</h6>
+      <h6 v-else>{{ellipsis(item.comment, 10)}}</h6>
     </b-card-body>
     <b-modal
       v-model="showModal"
@@ -72,12 +72,12 @@
       header-bg-variant="danger"
       header-text-variant="light"
       title="Potwierdzenie usunięcia"
-      size="lg"
+      size="md"
     >
       <div class="container fluid">
         <div class="row text-center">
           <strong
-            class="h4"
+            class="h5"
           >Czy jesteś pewny, że chcesz usunąć uczestnika? Ten proces jest nieodwracalny! Nawet administrator tego nie naprawi!</strong>
         </div>
       </div>
@@ -99,7 +99,8 @@ export default {
   data() {
     return {
       click: false,
-      showModal: false
+      showModal: false,
+      ellipsis: require("text-ellipsis")
     };
   },
   props: {
