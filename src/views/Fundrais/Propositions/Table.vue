@@ -136,32 +136,38 @@
     >
       <form>
         <b-form-row>
+          <label for="editNameInput">Nazwa:</label>
           <b-input
+            id="editNameInput"
             class="mb-1"
             type="text"
             name="name"
             v-model.trim="editObject.name"
             required
-            placeholder="Wpisz nową nazwę"
+            placeholder="Wpisz nazwę"
             maxlength="30"
           ></b-input>
+          <label for="editNumberInput">Ilość:</label>
           <b-input
+            id="editNumberInput"
             type="number"
             name="quantity"
             v-model="editObject.number"
             required
-            placeholder="Wpisz nową ilość"
+            placeholder="Wpisz ilość"
             max="9999"
             step="0.01"
             min="0"
           ></b-input>
+          <label for="editNameInput">Cena:</label>
           <b-input
+            id="editPriceInput"
             class="my-1"
             type="number"
             name="price"
             v-model="editObject.price"
             required
-            placeholder="Wpisz nową cenę"
+            placeholder="Wpisz cenę"
             max="9999"
             step="0.01"
             min="0"
@@ -229,8 +235,8 @@ export default {
     addNew() {
       this.list.push({
         creator: localStorage.getItem("login"),
-        name: "",
-        number: 0.0,
+        name: "Nowa Zbiórka",
+        number: 0,
         price: 0.0,
         accepted: false,
         likes: [],
@@ -243,6 +249,8 @@ export default {
         this.list[this.list.length - 1].price
       ) {
         this.list.pop();
+      }
+      if (this.list[this.list.length - 1]) {
       }
     },
     edit(index) {

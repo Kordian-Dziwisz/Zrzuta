@@ -83,7 +83,7 @@
           </b-col>
         </b-row>-->
         <div class="row">
-          <div class="col">
+          <div class="col col-lg-6">
             <label>Opis:</label>
             <b-form-textarea
               placeholder="Wpisz opis zbiórki"
@@ -92,7 +92,7 @@
               v-model="newInfo.description"
             ></b-form-textarea>
           </div>
-          <div class="col">
+          <div class="col col-lg-6">
             <label>Informacje o płatności:</label>
             <b-form-textarea
               type="text"
@@ -107,16 +107,16 @@
     </b-card-body>
     <b-card-body v-else>
       <b-card-text>
-        <b-row class="py-2">
-          <b-col v-if="info.description.length">
+        <div class="row py-2">
+          <div class="col col-lg-6" v-if="info.description.length">
             <label>Opis:</label>
             <h5>{{info.description}}</h5>
-          </b-col>
-          <b-col v-if="info.accountNumber">
+          </div>
+          <div class="col col-lg-6" v-if="info.accountNumber">
             <label>Informacje o płatności:</label>
             <h5>{{info.accountNumber}}</h5>
-          </b-col>
-        </b-row>
+          </div>
+        </div>
       </b-card-text>
     </b-card-body>
   </b-card>

@@ -23,7 +23,7 @@
       </b-col>
     </div>
     <div class="row m-3">
-      <div class="col">
+      <div class="col col-lg-6">
         <participants
           :isAdmin="isAdmin"
           :list="listOfParticipants"
@@ -31,7 +31,7 @@
           @list="updateParticipants"
         />
       </div>
-      <div class="col">
+      <div class="col col-lg-6">
         <!-- <list-of-products
           :isAdmin="isAdmin"
           :ended="this.fundraisInfo.ended"

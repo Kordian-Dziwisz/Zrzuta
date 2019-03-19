@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col">
           <h5 class="d-lg-inline">{{item.name}}</h5>
-          <h6 v-if="item.accepted">Otrzymano</h6>
+          <h6 v-if="item.accepted">Zapłacono</h6>
           <h6 v-else-if="item.paid">Wpłacono</h6>
         </div>
         <div class="col text-right">
@@ -15,7 +15,7 @@
             @click="accept"
           >
             <i class="fas fa-vote-yea pr-1"></i>
-            <span class="d-none d-lg-inline">Zaakceptuj</span>
+            <span class="d-none d-lg-inline">Zapłacił/a</span>
           </b-button>
           <b-button
             class="btn-outline-primary btn-light"
@@ -28,7 +28,7 @@
             @click="pay"
           >
             <i class="fas fa-vote-yea"></i>
-            <span class="d-none d-lg-inline">Zapłaciłem/am</span>
+            <span class="d-none d-lg-inline">Wpłaciłem/am</span>
           </b-button>
           <b-button
             class="btn-outline-danger btn-light ml-1"
@@ -73,13 +73,16 @@
           size="sm"
         >Pokaż więcej</b-button>
       </div>
-      <div v-else>
-        <h6>{{item.comment}}</h6>
+      <div v-else-if="item.comment.length > 80">
+        <h6 class="d-inline">{{item.comment}}</h6>
         <b-button
           class="d-inline text-dark btn-light btn-outline-secondary mx-1"
           @click="commentShow=!commentShow"
           size="sm"
         >Ukryj</b-button>
+      </div>
+      <div v-else>
+        <h6>{{item.comment}}</h6>
       </div>
       <!-- <button onclick="showItem.comment">
           <span class="buttontext"></span>
