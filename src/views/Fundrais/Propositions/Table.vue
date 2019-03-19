@@ -226,11 +226,6 @@ export default {
       editIndex: undefined
     };
   },
-  watch: {
-    list() {
-      this.$emit("list", this.list);
-    }
-  },
   methods: {
     addNew() {
       this.list.push({
@@ -261,6 +256,7 @@ export default {
       this.list[this.editIndex].number = this.editObject.number;
       this.list[this.editIndex].price = this.editObject.price;
       this.editShow = false;
+      this.$emit("list", this.list);
     },
     remove(index) {
       if (this.removeShow) {
@@ -269,7 +265,8 @@ export default {
       } else {
         this.removeShow = true;
         this.removeIndex = index;
-      }
+      };
+      this.$emit("list", this.list);
     },
     like(index) {
       if (this.list[index].likes.includes(localStorage.getItem("login"))) {
