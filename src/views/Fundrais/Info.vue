@@ -87,7 +87,7 @@
             <label>Opis:</label>
             <b-form-textarea
               placeholder="Wpisz opis zbiórki"
-              maxlength="300"
+              maxlength="500"
               max-rows="10"
               v-model="newInfo.description"
             ></b-form-textarea>

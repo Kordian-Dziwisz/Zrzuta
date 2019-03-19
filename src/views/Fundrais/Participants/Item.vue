@@ -52,6 +52,7 @@
         <b-form-textarea
           rows="0"
           max-rows="6"
+          maxlength="400"
           v-model.trim="item.comment"
           placeholder="Tutaj wpisz swój komentarz"
         ></b-form-textarea>
@@ -64,7 +65,22 @@
           >Zapisz</b-button>
         </div>
       </div>
-      <h6 v-else>{{ellipsis(item.comment, 50).slice(0, -3)}}</h6>
+      <div v-else-if="item.comment.length > 80 && !commentShow">
+        <h6 class="d-inline">{{ellipsis(item.comment, 80).slice(0, -3)}}</h6>
+        <b-button
+          class="d-inline btn-light btn-outline-secondary mx-1"
+          @click="commentShow=!commentShow"
+          size="sm"
+        >Pokaż więcej</b-button>
+      </div>
+      <div v-else>
+        <h6>{{item.comment}}</h6>
+        <b-button
+          class="d-inline text-dark btn-light btn-outline-secondary mx-1"
+          @click="commentShow=!commentShow"
+          size="sm"
+        >Ukryj</b-button>
+      </div>
       <!-- <button onclick="showItem.comment">
           <span class="buttontext"></span>
       </button>-->
@@ -104,7 +120,8 @@ export default {
     return {
       click: false,
       showModal: false,
-      ellipsis: require("text-ellipsis")
+      ellipsis: require("text-ellipsis"),
+      commentShow: false
     };
   },
   props: {
