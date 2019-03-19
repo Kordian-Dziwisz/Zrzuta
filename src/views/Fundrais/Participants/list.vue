@@ -32,13 +32,12 @@
               placeholder="Nazwa/Imię/Ksywka"
               maxlength="30"
               v-model="name"
-              :state="validation"
+              :state="dirty ? validation : null"
+              @blur="dirty=true"
               required
             />
-            <b-form-invalid-feedback
-              :state="validation"
-            >Nazwa uczestnika musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
-            <b-form-valid-feedback :state="validation">Wygląda dobrze!</b-form-valid-feedback>
+            <b-form-invalid-feedback>Nazwa uczestnika musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
+            <b-form-valid-feedback>Wygląda dobrze!</b-form-valid-feedback>
           </div>
           <br>
           <div class="col text-right">
@@ -112,7 +111,8 @@ export default {
   },
   data() {
     return {
-      name: ""
+      name: "",
+      dirty: false
     };
   },
   methods: {
