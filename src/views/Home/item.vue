@@ -40,10 +40,8 @@
         </span>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <!-- v-if="item.description.length > 80 && !descriptionShow" -->
-        <!-- <b-collapse v-model="click" id>{{item.description}}</b-collapse>
+    <!-- v-if="item.description.length > 80 && !descriptionShow" -->
+    <!-- <b-collapse v-model="click" id>{{item.description}}</b-collapse>
           <b-button
             class="btn-outline-secondary btn-light text-center"
             @click="click = !click"
@@ -51,22 +49,27 @@
           >
             <span v-if="!click">Pokaż opis</span>
             <span v-else>Ukryj opis</span>
-        </b-button>-->
+    </b-button>-->
+    <div class="row">
+      <div class="col">
         <div v-if="item.description.length > 80 && !descriptionShow">
-          <h6 class="d-inline">{{elipsis(item.description, 80).slice(0, -3)}}</h6>
+          <h6 class="d-inline">{{ellipsis(item.description, 80).slice(0, -3)}}</h6>
           <b-button
             class="d-inline btn-light btn-outline-secondary mx-1"
             @click="descriptionShow=!descriptionShow"
             size="sm"
           >Pokaż opis</b-button>
         </div>
-        <div v-else>
-          <h6>{{item.comment}}</h6>
+        <div v-else-if="item.description.length > 80">
+          <h6 class="d-inline">{{item.description}}</h6>
           <b-button
             class="d-inline text-dark btn-light btn-outline-secondary mx-1"
             @click="descriptionShow=!descriptionShow"
             size="sm"
           >Ukryj opis</b-button>
+        </div>
+        <div v-else>
+          <h6>{{item.description}}</h6>
         </div>
       </div>
     </div>
@@ -104,7 +107,6 @@
 export default {
   data() {
     return {
-      click: false,
       showModal: false,
       ellipsis: require("text-ellipsis"),
       descriptionShow: false
