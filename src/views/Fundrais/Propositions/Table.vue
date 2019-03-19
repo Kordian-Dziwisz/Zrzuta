@@ -297,10 +297,6 @@ export default {
       return this.list[index].creator == localStorage.getItem("login");
     }
   },
-
-  created() {
-    this.newItem.creator = localStorage.getItem("login");
-  },
   computed: {
     priceSum: {
       get() {
