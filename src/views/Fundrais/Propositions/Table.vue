@@ -120,19 +120,20 @@
               </b-button-group>
               <!-- <b-dropdown text="akcje" size="sm"></b-dropdown> -->
             </td>
-            <td v-else>-</td>
           </tr>
         </tbody>
       </table>
     </b-card-body>
     <b-modal
+      id
       hide-footer
+      @hide="editSave()"
+      :lazy="true"
       header-bg-variant="secondary"
       header-text-variant="light"
       title="Edytuj produkt"
       v-if="editShow && editObject"
       v-model="editShow"
-      id
     >
       <form>
         <b-form-row>
@@ -147,6 +148,10 @@
             placeholder="Wpisz nazwę"
             maxlength="30"
           ></b-input>
+          <b-form-invalid-feedback
+            :state="validationName"
+          >Proszę uzupełnić pole, nazwa musi mieć długość do 50 znaków!</b-form-invalid-feedback>
+          <b-form-valid-feedback :state="validationName"></b-form-valid-feedback>
           <label for="editNumberInput">Ilość:</label>
           <b-input
             id="editNumberInput"
@@ -159,6 +164,8 @@
             step="0.01"
             min="0"
           ></b-input>
+          <b-form-invalid-feedback :state="validationNumber">Proszę wpisać ilość większą od 0</b-form-invalid-feedback>
+          <b-form-valid-feedback :state="validationNumber"></b-form-valid-feedback>
           <label for="editNameInput">Cena:</label>
           <b-input
             id="editPriceInput"
@@ -172,6 +179,8 @@
             step="0.01"
             min="0"
           ></b-input>
+          <b-form-invalid-feedback :state="validationPrice">Proszę wpisać cenę większą od 0</b-form-invalid-feedback>
+          <b-form-valid-feedback :state="validationPrice"></b-form-valid-feedback>
         </b-form-row>
       </form>
       <form class="float-right">
@@ -186,6 +195,7 @@
     <b-modal
       v-model="removeShow"
       id
+      @hide="removeShow = false"
       :lazy="true"
       header-bg-variant="danger"
       header-text-variant="light"
@@ -196,7 +206,7 @@
         <div class="row text-center">
           <strong
             class="h4"
-          >Czy jesteś pewny, że chcesz usunąć uczestnika? Ten proces jest nieodwracalny! Nawet administrator tego nie naprawi!</strong>
+          >Czy jesteś pewny, że chcesz usunąć propozycję? Ten proces jest nieodwracalny! Nawet administrator tego nie naprawi!</strong>
         </div>
       </div>
       <div slot="modal-footer" class="w-100">
@@ -235,7 +245,7 @@ export default {
     addNew() {
       this.list.push({
         creator: localStorage.getItem("login"),
-        name: "Nowa Zbiórka",
+        name: "Nowy produkt",
         number: 0,
         price: 0.0,
         accepted: false,
@@ -243,15 +253,6 @@ export default {
         dislikes: []
       });
       this.edit(this.list.length - 1);
-      if (
-        this.list[this.list.length - 1].name ||
-        this.list[this.list.length - 1].number ||
-        this.list[this.list.length - 1].price
-      ) {
-        this.list.pop();
-      }
-      if (this.list[this.list.length - 1]) {
-      }
     },
     edit(index) {
       this.editIndex = index;
@@ -259,11 +260,13 @@ export default {
       this.editShow = true;
     },
     editSave() {
-      this.list[this.editIndex].name = this.editObject.name;
-      this.list[this.editIndex].number = this.editObject.number;
-      this.list[this.editIndex].price = this.editObject.price;
       this.editShow = false;
-      this.$emit("list", this.list);
+      if (this.validationName && this.validationNumber && this.validationPrice) {
+        this.list[this.editIndex].name = this.editObject.name;
+        this.list[this.editIndex].number = this.editObject.number;
+        this.list[this.editIndex].price = this.editObject.price;
+        this.$emit("list", this.list);
+      }
     },
     remove(index) {
       if (this.removeShow) {
@@ -294,9 +297,6 @@ export default {
       return this.list[index].creator == localStorage.getItem("login");
     }
   },
-  created() {
-    this.newItem.creator = localStorage.getItem("login");
-  },
   computed: {
     priceSum: {
       get() {
@@ -324,6 +324,21 @@ export default {
         } else if (this.numOfParticipants === 0 || this.priceSum === 0) {
           return 0;
         }
+      }
+    },
+    validationName: {
+      get() {
+        return this.editObject.name.length > 0 && this.editObject.name.length <= 50;
+      }
+    },
+    validationNumber: {
+      get() {
+        return this.editObject.number > 0 && this.editObject.number <= 9999;
+      }
+    },
+    validationPrice: {
+      get() {
+        return this.editObject.price > 0 && this.editObject.price <= 9999;
       }
     }
   }
