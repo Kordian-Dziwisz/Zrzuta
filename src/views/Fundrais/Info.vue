@@ -71,7 +71,6 @@
         >Edytuj</b-button>
       </span>
     </b-card-title>
-    <hr>
     <b-card-body v-if="isEdited">
       <b-card-text>
         <!-- <b-row class="border-bottom py-2">

@@ -1,14 +1,14 @@
 <template>
-  <div class="container-fluid w-100 mb-1 bg-white">
+  <div class="container-fluid w-100 my-1 bg-white">
     <div class="row">
-      <div class="col-sm-5">
+      <div class="col-sm-5 ml-1">
         <router-link class="text-dark" :to="{name: 'Fundrais', params: {id: item.id}}">
           <div class="row">
-            <h4 class="mr-1">{{item.title}}</h4>
+            <h4>{{item.title}}</h4>
           </div>
         </router-link>
       </div>
-      <div class="col text-lg-right my-auto pr-1">
+      <div class="col text-lg-right px-1">
         <b-button
           class="btn-outline-danger btn-light"
           size="sm"
@@ -24,7 +24,7 @@
         </b-button>
       </div>
     </div>
-    <div class="row border-bottom">
+    <div class="row" :class="{'border-bottom': item.description.length}">
       <div class="col">
         <span>
           twórca:

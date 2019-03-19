@@ -1,6 +1,6 @@
 <template>
   <div class="border rounded">
-    <b-card-header class="py-1" :class="{'paidBar': item.paid, 'acceptedBar': item.accepted}">
+    <b-card-header class="p-1" :class="{'paidBar': item.paid, 'acceptedBar': item.accepted}">
       <div class="row">
         <div class="col">
           <h5 class="d-lg-inline">{{item.name}}</h5>
@@ -47,7 +47,8 @@
       </div>
     </b-card-header>
     <b-card-body v-if="item.comment.length>0 || isAuthenticated" class="py-3">
-      <h6 v-if="isAuthenticated">Twój komentarz:
+      <div v-if="isAuthenticated">
+        <label>Twój komentarz</label>
         <b-form-textarea
           rows="0"
           max-rows="6"
@@ -57,12 +58,12 @@
         <div class="text-right">
           <b-button
             @click="update"
-            size="xs"
+            size="sm"
             variant="light"
-            class="btn-outline-success text-right"
+            class="my-1 btn-outline-success text-right"
           >Zapisz</b-button>
         </div>
-      </h6>
+      </div>
       <h6 v-else>{{ellipsis(item.comment, 50).slice(0, -3)}}</h6>
       <!-- <button onclick="showItem.comment">
           <span class="buttontext"></span>
