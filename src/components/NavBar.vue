@@ -7,7 +7,7 @@
       @shortkey="addFundrais"
     >
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <b-navbar-brand href="#" class="pt-0">
+      <b-navbar-brand href="/" class="pt-0">
         <img src="@/assets/Logo.jpg" width="50">
       </b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
