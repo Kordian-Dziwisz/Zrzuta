@@ -15,7 +15,7 @@
           @click="addMe"
           size="sm"
         >
-          <i class="fas fa-plus-square fa-fw"></i>
+          <i class="fas fa-pl`us`-square fa-fw"></i>
           Dodaj mnie
         </b-button>
       </h3>
