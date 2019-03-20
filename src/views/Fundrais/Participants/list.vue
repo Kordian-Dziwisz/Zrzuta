@@ -46,7 +46,7 @@
             <b-form-invalid-feedback>Nazwa uczestnika musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
           </div>
           <br>
-          <div class="col text-right">
+          <div class="col text-right mr-1">
             <b-button
               type="submit"
               class="d-box btn-outline-success btn-light"
