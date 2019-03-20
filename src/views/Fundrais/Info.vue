@@ -3,7 +3,7 @@
     <b-card-title v-if="isEdited">
       <label class="h6 font-weight-normal">Tytuł:</label>
       <span class="float-right small">
-        <h4 class="d-inline text-dark" v-if="isEnded">Zbiórka jest zakończona</h4>
+        <h4 class="d-inline text-dark" v-if="isAfterDate">Zbiórka jest zakończona</h4>
         <h4 class="d-inline text-danger" v-else-if="newInfo.ended">Zbiórka jest zamknięta</h4>
         <h4 class="d-inline text-warning" v-else>Zbiórka jest otwarta</h4>
         <b-button
@@ -53,11 +53,20 @@
       />
       <b-form-invalid-feedback :state="validation">Tytuł musi mieć od 3 do 50 znaków!</b-form-invalid-feedback>
       <label class="h6 font-weight-normal">data zakończenia:</label>
+      <br>
+      <date-picker
+        type="datetime"
+        :time-picker-options="timePickerOptions"
+        :lang="dtLang"
+        v-model="info.endDate"
+        format="YYYY-MM-DD HH:mm"
+        input-class="form-control"
+      ></date-picker>
     </b-card-title>
     <b-card-title v-else>
       <h2 class="d-inline">{{info.title}}</h2>
       <span class="float-right small">
-        <h4 class="d-inline text-danger" v-if="newInfo.ended">Zbiórka jest zakończona</h4>
+        <h4 class="d-inline text-danger" v-if="isAfterDate">Zbiórka jest zakończona</h4>
         <h4 class="d-inline text-warning" v-else>Zbiórka trwa do {{ info.endDate | moment("LL")}}</h4>
         <b-button
           class="mb-2 ml-3 btn-outline-secondary"
@@ -124,6 +133,9 @@
   </b-card>
 </template>
 <script>
+import DatePicker from "vue2-datepicker";
+// import DatePickerLanguage from "@/misc/dtLang";
+
 export default {
   props: {
     info: Object,
@@ -134,7 +146,21 @@ export default {
       newInfo: Object,
       userid: "",
       isEdited: false,
-      dirty: false
+      dirty: false,
+      timePickerOptions: {
+        start: "00:00",
+        step: "00:30",
+        end: "23:30"
+      },
+      dtLang: {
+        days: ["Nie", "Pon", "Wt", "Śr", "Czw", "Pt", "So"],
+        months: ["Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru"],
+        pickers: ["kolejne 7 dni", "kolejne 30 dni", "poprzednie 7 dni", "poprzednie 30 dni"],
+        placeholder: {
+          date: "Wybierz datę",
+          dateRange: "Wybierz daty"
+        }
+      }
     };
   },
   methods: {
@@ -159,6 +185,10 @@ export default {
   },
   mounted() {
     this.newInfo = { ...this.info };
+  },
+  components: {
+    DatePicker
+    // DatePickerLanguage
   }
 };
 </script>
