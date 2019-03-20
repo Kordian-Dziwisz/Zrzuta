@@ -14,19 +14,21 @@ import {
   faVoteYea,
   faPlusSquare,
   faMoneyBillAlt,
+  faCheck,
   faSignOutAlt,
   faDoorOpen,
-  faThumbsUp
+  faThumbsUp,
+  faCogs
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { dom } from "@fortawesome/fontawesome-svg-core";
-import Vuelidate from "vuelidate";
-import Notifications from 'vue-notification';
+import Notifications from "vue-notification";
 
 dom.watch();
 
 library.add(
   faCoffee,
+  faCheck,
   faEdit,
   faTrashAlt,
   faUserMinus,
@@ -35,7 +37,8 @@ library.add(
   faMoneyBillAlt,
   faSignOutAlt,
   faDoorOpen,
-  faThumbsUp
+  faThumbsUp,
+  faCogs
 );
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.config.productionTip = false;
@@ -57,8 +60,6 @@ const moment = require("moment");
 require("moment/locale/pl");
 
 Vue.use(require("vue-moment"), { moment });
-
-Vue.use(Vuelidate);
 
 Vue.use(Notifications);
 

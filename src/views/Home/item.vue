@@ -1,48 +1,47 @@
 <template>
-  <div class="container-fluid w-100 mb-1 bg-white">
-    <div class="row border-bottom">
-      <div class="col-sm-5">
-        <div class="row">
-          <h4 class="mr-1">{{item.title}}</h4>
-        </div>
-        <div class="row">
-          <h6 class="font-weight-light">twórca:
-            <h6 class="d-inline">
-              <strong>{{item.creator}}</strong>
-            </h6>
-          </h6>
-        </div>
-      </div>
-      <div class="col-sm-4 mt-4 px-0">
-        <div class="d-inline">
-          <h4 class="text-danger" v-if="item.endDate < new Date(Date.now())">Zbiórka zakończona</h4>
-          <h4 class="text-warning" v-else-if="item.ended">Dokonaj zapłaty</h4>
-          <h4 class="text-success" v-else>Zbiórka w trakcie</h4>
-        </div>
-      </div>
-      <div class="col-lg-3 col-sm-3 text-lg-right pt-4 pr-1">
-        <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-if="isYour">
-          <b-button class="btn-outline-primary btn-light" size="sm">
-            <i class="fas fa-edit fa-fw"></i>
-            Edytuj
-          </b-button>
+  <div class="container-fluid w-100 my-1 bg-white">
+    <div class="row">
+      <div class="col-sm-5 ml-1">
+        <router-link class="text-dark" :to="{name: 'Fundrais', params: {id: item.id}}">
+          <div class="row">
+            <h4>{{item.title}}</h4>
+          </div>
         </router-link>
-        <router-link :to="{name: 'Fundrais', params: {id: item.id}}" v-else>
-          <b-button class="btn-outline-primary btn-light" size="sm">
-            <i class="fas fa-door-open"></i>&nbsp;Otwórz
-          </b-button>
-        </router-link>&nbsp;
-        <b-button class="btn-outline-danger btn-light" size="sm" @click="remove" v-if="isYour">
-          <i class="fas fa-trash-alt"></i>
-               Usuń
+      </div>
+      <div class="col text-lg-right px-1">
+        <b-button
+          class="btn-outline-danger btn-light"
+          size="sm"
+          data-toggle="tooltip"
+          data-placement="auto"
+          title="Usuń"
+          v-if="isYour"
+          v-b-tooltip.hover
+          @click="showModal = true"
+        >
+          <i class="fas fa-trash-alt fa-fw"></i>
+          Usuń
         </b-button>
       </div>
-      <hr>
     </div>
-    <div>
-      <div class="col-sm-7">
-        <div v-if="item.description.length != 0">
-          <b-collapse v-model="click" id>{{item.description}}</b-collapse>
+    <div class="row" :class="{'border-bottom': item.description.length}">
+      <div class="col">
+        <span>
+          twórca:
+          <strong class="d-inline">{{item.creator}}</strong>
+        </span>
+      </div>
+      <div class="col text-right">
+        <span class="text-dark" v-if="item.endDate < new Date(Date.now())">Zbiórka zakończona</span>
+        <span class="text-danger" v-else-if="item.ended">Dokonaj zapłaty</span>
+        <span v-else>
+          Zbiórka trwa do
+          <strong class="text-danger">{{ item.endDate | moment("LL")}}</strong>
+        </span>
+      </div>
+    </div>
+    <!-- v-if="item.description.length > 80 && !descriptionShow" -->
+    <!-- <b-collapse v-model="click" id>{{item.description}}</b-collapse>
           <b-button
             class="btn-outline-secondary btn-light text-center"
             @click="click = !click"
@@ -50,29 +49,80 @@
           >
             <span v-if="!click">Pokaż opis</span>
             <span v-else>Ukryj opis</span>
-          </b-button>
+    </b-button>-->
+    <div class="row">
+      <div class="col">
+        <div v-if="item.description.length > 80 && !descriptionShow">
+          <h6 class="d-inline">{{ellipsis(item.description, 80).slice(0, -3)}}</h6>
+          <b-button
+            class="d-inline btn-light btn-outline-secondary mx-1"
+            @click="descriptionShow=!descriptionShow"
+            size="sm"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Pokaż opis"
+          >Pokaż opis</b-button>
+        </div>
+        <div v-else-if="item.description.length > 80">
+          <h6 class="d-inline">{{item.description}}</h6>
+          <b-button
+            class="d-inline text-dark btn-light btn-outline-secondary mx-1"
+            @click="descriptionShow=!descriptionShow"
+            size="sm"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Ukryj opis"
+          >Ukryj opis</b-button>
+        </div>
+        <div v-else>
+          <h6>{{item.description}}</h6>
         </div>
       </div>
-      <div
-        v-if="!item.endDate < new Date(Date.now())"
-        class="col font-weight-light text-lg-right"
-      >Zbiórka kończy się:
-        <h6 class="text-danger d-inline">
-          <strong>{{ item.endDate | moment("dddd, D MMMM YYYY")}} - {{ item.endDate | moment("H:mm")}}</strong>
-        </h6>
-      </div>
     </div>
+
+    <b-modal
+      :hide-header-close="true"
+      v-model="showModal"
+      id
+      :lazy="true"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      title="Potwierdzenie usunięcia"
+      size="lg"
+    >
+      <div class="container fluid">
+        <div class="row text-center">
+          <strong
+            class="h4"
+          >Czy jesteś pewny, że chcesz usunąć zrzutkę? Ten proces jest nieodwracalny! Nawet administrator tego nie naprawi!</strong>
+        </div>
+      </div>
+      <div slot="modal-footer" class="w-100">
+        <b-button class="float-right ml-1" variant="outline-danger light" @click="remove()">
+          <i class="fas fa-trash-alt fa-fw"></i>Usuń
+        </b-button>
+        <b-button
+          class="float-right"
+          variant="outline-secondary light"
+          @click="showModal= false"
+        >Anuluj</b-button>
+      </div>
+    </b-modal>
   </div>
 </template>
 <script>
 export default {
-  props: {
-    item: Object
-  },
   data() {
     return {
-      click: false
+      showModal: false,
+      ellipsis: require("text-ellipsis"),
+      descriptionShow: false
     };
+  },
+  props: {
+    item: Object
   },
   methods: {
     remove() {
@@ -80,6 +130,7 @@ export default {
         index: this.item.index,
         id: this.item.id
       });
+      this.showModal = false;
     }
   },
   created() {
@@ -97,5 +148,8 @@ export default {
 b-collapse {
   white-space: pre;
   word-wrap: break-word;
+}
+strong {
+  word-break: normal;
 }
 </style>

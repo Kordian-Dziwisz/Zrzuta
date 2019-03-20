@@ -1,13 +1,13 @@
 <template>
   <div>
     <b-navbar
-      class="fixed-top shadow bg-white"
+      class="fixed-top border-bottom shadow bg-white"
       toggleable="md"
       v-shortkey="['alt', 'n']"
       @shortkey="addFundrais"
     >
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <b-navbar-brand href="#" class="pt-0">
+      <b-navbar-brand href="/" class="pt-0">
         <img src="@/assets/Logo.jpg" width="50">
       </b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
@@ -34,12 +34,12 @@ export default {
   data() {
     return {
       db: firebase.firestore().collection("Zrzuty-develop"),
-      clicked: false,
+      isClicked: false,
       newFundrais: {
         guid: "",
         accountNumber: "",
         creator: "",
-        title: "",
+        title: "Nowa Zbiórka",
         description: "",
         creationDate: new Date(Date.now()).toJSON(),
         endDate: new Date(Date.now() + 86400000).toJSON(),
@@ -49,8 +49,8 @@ export default {
   },
   methods: {
     async addFundrais() {
-      if ((this.newFundrais.creator = localStorage.getItem("login")) && this.clicked == false) {
-        this.clicked = true;
+      if ((this.newFundrais.creator = localStorage.getItem("login")) && !this.isClicked) {
+        this.isClicked = true;
         this.newFundrais.guid = localStorage.getItem("guid");
         let newFundrais = await this.db.add({
           fundraisInfo: { ...this.newFundrais },
@@ -62,6 +62,11 @@ export default {
           name: "Fundrais",
           params: { id: newFundrais.id }
         });
+        if (await newFundrais.id) {
+          this.isClicked = false;
+          console.log("clikcked");
+          location.reload();
+        }
       }
     },
     changeLogin() {

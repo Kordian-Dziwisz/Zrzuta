@@ -1,90 +1,222 @@
 <template>
-  <div v-if="!this.ended">
-    <div class="container">
-      <h3>Dodaj nową propozycję</h3>
-      <form @submit.prevent="addNew">
+  <b-card class="border rounded">
+    <!-- <b-card-header class="w-100 shadow-sm"> -->
+    <!-- <div class="float-right text-success">Otwarte</div> -->
+    <!-- <b-row> -->
+    <!--  -->
+    <!-- <b-col class="h4">Cele zbiórki</b-col> -->
+    <!-- <b-col class="text-right text-success">Otwarte</b-col> -->
+    <!-- </b-row> -->
+    <!-- </b-card-header> -->
+    <b-card-title>
+      <h3>
+        <span>Cele zbiórki</span>
+        <span class="float-right text-right" v-if="priceSum > 0 && numOfParticipants">
+          {{priceSum.toFixed(2).toString().replace(/[.]/, ',')}}
+          zł
+          <div
+            class="text-right small"
+            v-if="numOfParticipants > 1"
+          >Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł</div>
+        </span>
+      </h3>
+    </b-card-title>
+    <b-card-body>
+      <form @submit.prevent="addNew" v-if="!this.ended">
+        <div class="col">
+          <b-button
+            type="submit"
+            class="btn-outline-success btn-light"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Dodaj"
+            size="sm"
+          >
+            <i class="fas fa-plus-square"></i>
+            Dodaj nową propozycję
+          </b-button>
+        </div>
+      </form>
+      <b-alert
+        v-if="list.length==0"
+        :show="true"
+        variant="warning"
+        class="text-dark"
+      >Nie zgłoszono żadnych propozycji</b-alert>
+      <table v-else class="table table-striped border">
+        <thead class="text-center">
+          <th>Nazwa</th>
+          <th>Ilość (szt.)</th>
+          <th>Cena (zł)</th>
+          <th>Koszt (zł)</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr class="text-center" v-for="(item, index) in list" :key="index">
+            <td
+              class="text-left"
+              :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
+            >{{item.name}}</td>
+            <td class="text-right">{{item.number}}</td>
+            <td class="text-right">{{item.price.toString().replace(/[.]/, ',')}}</td>
+            <td
+              class="text-right"
+            >{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}}</td>
+            <td class="text-right">
+              <b-button-group>
+                <b-button
+                  class="btn"
+                  size="sm"
+                  data-toggle="tooltip"
+                  data-placement="auto"
+                  v-b-tooltip.hover
+                  title="Zagłosuj"
+                  variant="primary"
+                  :class="{'btn-primary': isLiked(index), 'btn-outline-primary btn-light': !isLiked(index)}"
+                  @click="like(index)"
+                >
+                  <i class="fas fa-thumbs-up fa-fw"></i>
+                  <span class="ml-1">{{item.likes.length}}</span>
+                </b-button>
+                <b-button
+                  size="sm"
+                  :class="{'btn-outline-success btn-light': !item.accepted, 'btn-success': item.accepted}"
+                  data-toggle="tooltip"
+                  data-placement="auto"
+                  v-b-tooltip.hover
+                  title="Zatwierdź"
+                  v-if="isAdmin"
+                  @click="accept(index)"
+                >
+                  <i class="fas fa-check fa-fw"></i>
+                  <span class="d-none">Akceptuj</span>
+                </b-button>
+                <b-button
+                  size="sm"
+                  class="btn-outline-danger btn-light"
+                  data-toggle="tooltip"
+                  data-placement="auto"
+                  v-b-tooltip.hover
+                  title="Usuń"
+                  v-if="isAuthenticated(index) || isAdmin"
+                  @click="remove(index)"
+                >
+                  <i class="fas fa-trash-alt fa-fw"></i>
+                  <span class="d-none">Usuń</span>
+                </b-button>
+                <b-button
+                  size="sm"
+                  class="btn-outline-secondary btn-light"
+                  data-toggle="tooltip"
+                  data-placement="auto"
+                  v-b-tooltip.hover
+                  title="Edytuj"
+                  v-if="isAuthenticated(index) || isAdmin"
+                  @click="edit(index)"
+                >
+                  <i class="fas fa-cogs fa-fw"></i>
+                  <span class="d-none">Edytuj</span>
+                </b-button>
+              </b-button-group>
+              <!-- <b-dropdown text="akcje" size="sm"></b-dropdown> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </b-card-body>
+    <b-modal
+      id
+      hide-footer
+      @hide="editShow = false"
+      :lazy="true"
+      header-bg-variant="secondary"
+      header-text-variant="light"
+      title="Edytuj produkt"
+      v-model="editShow"
+    >
+      <form v-if="editObject">
         <b-form-row>
-          <div class="col-lg-5">
-            <b-input
-              type="text"
-              name="name"
-              placeholder="Nazwa"
-              maxlength="30"
-              v-model="newItem.name"
-            />
-          </div>
-          <div class="col-lg-2">
-            <b-input
-              type="number"
-              name="quantity"
-              maxlength="4"
-              v-model="newItem.number"
-              min="0"
-              max="9999"
-              placeholder="Ilość"
-              onfocus="this.value=''"
-            />
-          </div>
-          <div class="col-lg-2">
-            <b-input
-              type="number"
-              name="price"
-              v-model="newItem.price"
-              step="0.01"
-              min="0"
-              max="9999"
-              placeholder="Cena"
-            />
-          </div>
-          <div class="col-lg-3">
-            <b-button type="submit" class="btn-outline-success btn-light">
-              <i class="fas fa-plus-square" fa-fw></i>
-              Dodaj
-            </b-button>
-          </div>
+          <label for="editNameInput">Nazwa:</label>
+          <b-input
+            id="editNameInput"
+            class="mb-1"
+            type="text"
+            name="name"
+            v-model.trim="editObject.name"
+            required
+            placeholder="Wpisz nazwę"
+            maxlength="30"
+            :state="validationName"
+          ></b-input>
+          <b-form-invalid-feedback>Proszę uzupełnić pole, nazwa musi mieć długość do 50 znaków!</b-form-invalid-feedback>
+          <label for="editNumberInput">Ilość:</label>
+          <b-input
+            id="editNumberInput"
+            type="number"
+            name="quantity"
+            v-model="editObject.number"
+            required
+            placeholder="Wpisz ilość"
+            max="9999"
+            step="1"
+            min="0"
+            :state="validationNumber"
+          ></b-input>
+          <b-form-invalid-feedback>Proszę wpisać ilość jako liczbę naturalną</b-form-invalid-feedback>
+          <label for="editNameInput">Cena:</label>
+          <b-input
+            id="editPriceInput"
+            class="my-1"
+            type="number"
+            name="price"
+            v-model="editObject.price"
+            placeholder="Wpisz cenę"
+            max="9999"
+            step="0.01"
+            min="0"
+          ></b-input>
+          <b-form-invalid-feedback>Proszę wpisać cenę większą od 0</b-form-invalid-feedback>
         </b-form-row>
       </form>
-    </div>
-    <h3 v-if="list.length==0">Nie zgłoszono żadnych propozycji</h3>
-    <table v-else class="table table-light table-striped">
-      <thead>
-        <th>Proponuje</th>
-        <th>Nazwa</th>
-        <th>Ilość</th>
-        <th>Cena</th>
-        <th>Poparcie</th>
-      </thead>
-      <tbody v-for="(item, index) in list" :key="index">
-        <tr>
-          <td>{{item.creator}}</td>
-          <td class="white-normal">{{item.name}}</td>
-          <td class="word-break">{{item.number}}</td>
-          <td>{{item.price}}</td>
-          <td>
-            {{item.likes.length}}&nbsp;
-            <b-button
-              :class="{'btn-info': liked(index), 'btn-outline-info btn-light': !liked(index)}"
-              @click="like(index)"
-            >
-              <i class="fas fa-thumbs-up fa-fw"></i>
-              like&nbsp;
-            </b-button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <b-button class="btn-danger" v-if="authenticate(index)" @click="remove(index)">
-              <i class="fas fa-trash-alt"></i>
-              Usuń
-            </b-button>
-          </td>
-          <td>
-            <b-button class="btn-success" v-if="admin" @click="accept(index)">Akceptuj</b-button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <form class="float-right">
+        <b-button class="btn-outline-success mx-1" variant="light" @click="editSave">Zapisz</b-button>
+        <b-button
+          class="btn-outline-secondary mx-1"
+          variant="light"
+          @click="editShow = false"
+        >Anuluj</b-button>
+      </form>
+    </b-modal>
+    <b-modal
+      v-model="removeShow"
+      id
+      @hide="removeShow = false"
+      :lazy="true"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      title="Potwierdzenie usunięcia"
+      size="lg"
+    >
+      <div class="container fluid">
+        <div class="row text-center">
+          <strong
+            class="h4"
+          >Czy jesteś pewny, że chcesz usunąć propozycję? Ten proces jest nieodwracalny! Nawet administrator tego nie naprawi!</strong>
+        </div>
+      </div>
+      <div slot="modal-footer" class="w-100">
+        <b-button class="float-right ml-1" variant="outline-danger light" @click="remove()">
+          <i class="fas fa-trash-alt fa-fw"></i>Usuń
+        </b-button>
+        <b-button
+          class="float-right"
+          variant="outline-secondary light"
+          @click="removeShow = false"
+        >Anuluj</b-button>
+      </div>
+    </b-modal>
+  </b-card>
 </template>
 <script>
 import { parse } from "@fortawesome/fontawesome-svg-core";
@@ -92,45 +224,55 @@ import { parse } from "@fortawesome/fontawesome-svg-core";
 export default {
   props: {
     list: Array,
-    admin: Boolean,
-    ended: Boolean
+    isAdmin: Boolean,
+    ended: Boolean,
+    numOfParticipants: Number
   },
   data() {
     return {
-      newItem: {
-        creator: "",
-        number: "",
-        name: "",
-        price: ""
-      }
+      removeShow: false,
+      removeIndex: 0,
+      editObject: undefined,
+      editShow: false,
+      editIndex: undefined
     };
-  },
-  watch: {
-    list() {
-      this.$emit("list", this.list);
-    }
   },
   methods: {
     addNew() {
-      if (this.newItem.name.length == 0 || this.newItem.number.length == 0 || this.newItem.price.length == 0) {
-        alert("Wpisz poprawną wartość!");
-      } else {
-        this.list.push({
-          creator: this.newItem.creator,
-          name: this.newItem.name,
-          number: parseInt(this.newItem.number),
-          price: parseFloat(this.newItem.price),
-          accepted: false,
-          likes: [],
-          dislikes: []
-        });
-        this.newItem.number = "";
-        this.newItem.name = "";
-        this.newItem.price = "";
+      this.list.push({
+        creator: localStorage.getItem("login"),
+        name: "Nowy produkt",
+        number: 1,
+        price: 1.0,
+        accepted: false,
+        likes: [],
+        dislikes: []
+      });
+      this.edit(this.list.length - 1);
+    },
+    edit(index) {
+      this.editIndex = index;
+      this.editObject = { ...this.list[index] };
+      this.editShow = true;
+    },
+    editSave() {
+      if (this.validationName && this.validationNumber && this.validationPrice) {
+        this.editShow = false;
+        this.list[this.editIndex].name = this.editObject.name;
+        this.list[this.editIndex].number = parseInt(this.editObject.number);
+        this.list[this.editIndex].price = parseFloat(this.editObject.price).toFixed(2);
+        this.$emit("list", this.list);
       }
     },
     remove(index) {
-      this.list.splice(index, 1);
+      if (this.removeShow) {
+        this.list.splice(this.removeIndex, 1);
+        this.removeShow = false;
+      } else {
+        this.removeShow = true;
+        this.removeIndex = index;
+      }
+      this.$emit("list", this.list);
     },
     like(index) {
       if (this.list[index].likes.includes(localStorage.getItem("login"))) {
@@ -141,19 +283,60 @@ export default {
       this.$emit("list", this.list);
     },
     accept(index) {
-      this.list[index].accepted = true;
+      this.list[index].accepted = !this.list[index].accepted;
       this.$emit("list", this.list);
-      this.list.splice(index, 1);
     },
-    liked(index) {
+    isLiked(index) {
       return this.list[index].likes.includes(localStorage.getItem("login"));
     },
-    authenticate(index) {
+    isAuthenticated(index) {
       return this.list[index].creator == localStorage.getItem("login");
     }
   },
-  created() {
-    this.newItem.creator = localStorage.getItem("login");
+  computed: {
+    priceSum: {
+      get() {
+        if (this.list.length > 0) {
+          if (this.list.every(item => item.accepted == false)) {
+            let prices = this.list.map(item => item.price * item.number);
+            return prices.reduce((acc, item) => {
+              return acc + item;
+            });
+          } else {
+            let prices = this.list.filter(item => item.accepted == true).map(item => item.price * item.number);
+            return prices.reduce((acc, item) => {
+              return acc + item;
+            });
+          }
+        } else {
+          return 0;
+        }
+      }
+    },
+    pricePerUser: {
+      get() {
+        if (this.numOfParticipants != 0) {
+          return this.priceSum / this.numOfParticipants;
+        } else if (this.numOfParticipants === 0 || this.priceSum === 0) {
+          return 0;
+        }
+      }
+    },
+    validationName: {
+      get() {
+        return this.editObject.name.length > 0 && this.editObject.name.length <= 50;
+      }
+    },
+    validationNumber: {
+      get() {
+        return this.editObject.number > 0 && this.editObject.number <= 9999 && this.editObject.number % 1 == 0;
+      }
+    },
+    validationPrice: {
+      get() {
+        return this.editObject.price > 0 && this.editObject.price <= 9999;
+      }
+    }
   }
 };
 </script>
@@ -171,11 +354,13 @@ thead {
   word-break: keep-all;
   white-space: none;
 }
-.white-normal {
-  white-space: normal;
+.acceptedBar {
+  border-left: 6px solid #28a745 !important;
+  box-sizing: border-box;
 }
-.word-break {
-  word-break: keep-all;
+.votedBar {
+  border-left: 6px solid #007bff;
+  box-sizing: border-box;
 }
 </style>
 

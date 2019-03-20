@@ -17,47 +17,44 @@
       :show="fundraisInfo.ended"
       v-else
     >Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę</b-alert>-->
-    <b-row class="m-3">
+    <div class="row m-3">
       <b-col>
-        <project-info v-if="!admin && fundraisInfo" :info="fundraisInfo"/>
-        <info-admin v-if="admin  && fundraisInfo" :info="fundraisInfo" @info="updateInfo"/>
+        <info v-if="fundraisInfo" :info="fundraisInfo" :isAdmin="isAdmin" @info="updateInfo"/>
       </b-col>
-    </b-row>
-    <b-row class="m-3">
-      <b-col>
-        <list-of-participants
-          :admin="admin"
+    </div>
+    <div class="row m-3">
+      <div class="col col-lg-6">
+        <participants
+          :isAdmin="isAdmin"
           :list="listOfParticipants"
-          :ended="this.fundraisInfo.ended"
+          :isEnded="this.fundraisInfo.ended"
           @list="updateParticipants"
+          @saveComment="saveComment"
         />
-      </b-col>
-      <b-col>
-        <list-of-products
-          :admin="admin"
+      </div>
+      <div class="col col-lg-6">
+        <!-- <list-of-products
+          :isAdmin="isAdmin"
           :ended="this.fundraisInfo.ended"
-          :numOfParticipants="listOfParticipants.length"
           :list="listOfProducts"
           @list="updateProducts"
-          v-if="authenticate && fundraisInfo.ended"
-        />
+          v-if="authenticate && fundraisInfo.ended && false"
+        />-->
         <propositions
-          :admin="admin"
-          :ended="this.fundraisInfo.ended"
+          :numOfParticipants="listOfParticipants.length"
+          :isAdmin="isAdmin"
+          :ended="fundraisInfo.ended"
           :list="listOfPropositions"
           @list="updatePropositions"
-          v-if="authenticate && !fundraisInfo.ended"
+          v-if="authenticate"
         />
-      </b-col>
-    </b-row>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-//import from firebase and save in localStorage import firebase from 'firebase'
-import ProjectInfo from "@/views/Fundrais/info.vue";
-import InfoAdmin from "@/views/Fundrais/info.admin.vue";
-import ListOfParticipants from "@/views/Fundrais/Participants/list.vue";
-import ListOfProducts from "@/views/Fundrais/Products/list.vue";
+import Info from "@/views/Fundrais/Info.vue";
+import Participants from "@/views/Fundrais/Participants/list.vue";
 import Propositions from "@/views/Fundrais/Propositions/Table.vue";
 import firebase from "firebase";
 
@@ -87,20 +84,20 @@ export default {
     },
     updatePropositions(list) {
       this.listOfPropositions = list;
-      let accept = this.acceptProposition;
-      this.listOfPropositions.forEach(item => accept(item));
+      //   let accept = this.acceptProposition;
+      //   this.listOfPropositions.forEach(item => accept(item));
       this.updateDoc();
     },
-    acceptProposition(item) {
-      if (item.accepted) {
-        delete item.creator;
-        delete item.likes;
-        delete item.dislikes;
-        delete item.accepted;
-        this.listOfProducts.push(item);
-      }
-      this.updateDoc();
-    },
+    // acceptProposition(item) {
+    //   if (item.accepted) {
+    //     delete item.creator;
+    //     delete item.likes;
+    //     delete item.dislikes;
+    //     delete item.accepted;
+    //     this.listOfProducts.push(item);
+    //   }
+    //   this.updateDoc();
+    // },
     async getDoc() {
       let tmpDoc = await this.db.get({ source: "default" });
       //converting from JSON date format to object
@@ -110,8 +107,11 @@ export default {
       this.listOfParticipants = tmpDoc.data().listOfParticipants;
       this.listOfProducts = tmpDoc.data().listOfProducts;
       this.listOfPropositions = tmpDoc.data().listOfPropositions;
-      if (this.fundraisInfo.endDate < new Date(Date.now())) {
-        this.fundraisInfo.ended = true;
+      if (!this.fundraisInfo) return;
+      if (this.compareDates) {
+        this.notifyEnded();
+      } else if (this.fundraisInfo.ended) {
+        this.notifyClosed();
       }
     },
     async updateDoc() {
@@ -134,7 +134,37 @@ export default {
         if (this.authenticate) {
           await console.log("document updated");
         }
+        if (!this.fundraisInfo) return;
+        if (this.compareDates) {
+          this.notifyEnded();
+        } else if (this.fundraisInfo.ended) {
+          this.notifyClosed();
+        }
       }
+    },
+    saveComment() {
+      this.$notify({
+        group: "status",
+        title: "Status",
+        text: "Komentarz został zapisany",
+        type: "success"
+      });
+    },
+    notifyClosed() {
+      this.$notify({
+        group: "status",
+        title: "Status",
+        text: "Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę",
+        type: "warn"
+      });
+    },
+    notifyEnded() {
+      this.$notify({
+        group: "status",
+        title: "Status",
+        text: "Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone",
+        type: "error"
+      });
     }
   },
   computed: {
@@ -144,53 +174,44 @@ export default {
         this.fundraisInfo.creator == localStorage.getItem("login")
       );
     },
-    admin() {
+    isAdmin() {
       return this.fundraisInfo && this.fundraisInfo.creator == localStorage.getItem("login");
     },
     compareDates() {
       return this.fundraisInfo.endDate.getTime() < Date.now();
     }
   },
-  watch: {
-    fundraisInfo: {
-      handler() {
-        if (!this.fundraisInfo) return;
-        if (!this.compareDates && this.fundraisInfo.ended) {
-          this.$notify({
-            group: "status",
-            title: "Status",
-            text: "Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę",
-            type: "warn"
-          });
-        } else if (this.compareDates) {
-          this.$notify({
-            group: "status",
-            title: "Status",
-            text: "Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone",
-            type: "error"
-          });
-        } else if (!this.fundraisInfo.title.length && this.authenticate) {
-          this.$notify({
-            group: "status",
-            title: "Status",
-            text: "Proszę o uzupełnienie pola Tytuł, bez tego pola dokument nie zostanie zaktualizowany",
-            type: "error"
-          });
-        }
-      },
-      deep: true
-    }
-  },
+  // watch: {
+  //   fundraisInfo: {
+  //     handler() {
+  //       if (!this.fundraisInfo) return;
+  //       if (!this.compareDates && this.fundraisInfo.ended) {
+  //         // this.$notify({
+  //         //   group: "status",
+  //         //   title: "Status",
+  //         //   text: "Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę",
+  //         //   type: "warn"
+  //         // });
+  //       } else if (this.compareDates) {
+  //         this.$notify({
+  //           group: "status",
+  //           title: "Status",
+  //           text: "Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone",
+  //           type: "error"
+  //         });
+  //       }
+  //     },
+  //     deep: true
+  //   }
+  // },
   mounted() {
     this.docID = this.$route.params.id;
     this.db = this.db.doc(this.docID);
     this.getDoc();
   },
   components: {
-    ProjectInfo,
-    InfoAdmin,
-    ListOfParticipants,
-    ListOfProducts,
+    Info,
+    Participants,
     Propositions
   }
 };

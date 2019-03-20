@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid w-75">
-    <h4 class="display-4">Lista zbiórek</h4>
+    <h2 class="font-weight-light">Lista zbiórek</h2>
     <h5
       v-if="list.length === 0"
     >Brak aktywnych zbiórek - utwórz nową lub poproś o zaproszenie do obecnej.</h5>

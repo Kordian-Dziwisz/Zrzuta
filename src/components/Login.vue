@@ -1,19 +1,20 @@
 <template>
-  <div class="Login">
-    <br>
-    <b-alert
-      class="mt-1 pl-3"
-      id="alertMargin"
-      variant="danger"
-      dismissible
-      :show="alert"
-    >Zaloguj się, aby przejść dalej!</b-alert>
-    <form class="w-50 mx-auto mt-3" @submit.prevent="returnLogin">
-      <b-form-input v-model="login" placeholder="Wpisz login" type="text" maxlength="30"/>
-      <b-button type="submit" class="mt-1">Zaloguj się</b-button>
-      <br>
+  <b-card class="w-50 mx-auto">
+    <b-card-title>Zaloguj się</b-card-title>
+    <form class="w-75 mx-auto mt-3" @submit.prevent="returnLogin">
+      <b-input
+        v-model.lazy.trim="login"
+        placeholder="Wpisz login"
+        type="text"
+        maxlength="30"
+        :state="validation"
+        autocomplete="off"
+      />
+      <b-form-invalid-feedback :state="validation">Login musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
+      <b-form-valid-feedback :state="validation"></b-form-valid-feedback>
+      <b-button type="submit" size="sm" class="my-1 float-right">Zaloguj się</b-button>
     </form>
-  </div>
+  </b-card>
 </template>
 <script>
 export default {
@@ -31,12 +32,17 @@ export default {
   },
   methods: {
     returnLogin() {
-      this.$emit("login", this.login);
+      if (this.validation) {
+        this.$emit("login", this.login);
+      }
     }
   },
   computed: {
     alert() {
       return this.login.length == 0;
+    },
+    validation() {
+      return this.login.length >= 3 && this.login.length <= 30;
     }
   }
 };
