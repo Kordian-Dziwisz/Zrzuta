@@ -1,67 +1,78 @@
 <template>
   <b-card class="border rounded">
     <b-card-title v-if="isEdited">
-      <label class="h6 font-weight-normal">Tytuł:</label>
-      <span class="float-right small">
-        <h4 class="d-inline text-dark" v-if="isAfterDate">Zbiórka jest zakończona</h4>
-        <h4 class="d-inline text-danger" v-else-if="newInfo.ended">Zbiórka jest zamknięta</h4>
-        <h4 class="d-inline text-warning" v-else>Zbiórka jest otwarta</h4>
-        <b-button
-          class="mx-1 mb-2 btn-light"
-          type="button"
-          :class="{'btn-outline-danger': !newInfo.ended, 'btn-outline-success': newInfo.ended}"
-          @click="end()"
-          size="sm"
-          data-toggle="tooltip"
-          data-placement="auto"
-          v-b-tooltip.hover
-          title="Zakończ"
-        >{{newInfo.ended ? "Otwórz" : "Zakończ"}}</b-button>
-        <b-button
-          v-if="isEdited"
-          type="submit"
-          class="mx-1 mb-2 btn-outline-success btn-light"
-          size="sm"
-          data-toggle="tooltip"
-          data-placement="auto"
-          v-b-tooltip.hover
-          title="Zapisz"
-          @click="update"
-        >Zapisz</b-button>
-        <b-button
-          class="mx-1 mb-2 btn-outline-secondary"
-          type="button"
-          variant="light"
-          @click="isEdited = !isEdited"
-          size="sm"
-          v-if="isAdmin"
-          data-toggle="tooltip"
-          data-placement="auto"
-          v-b-tooltip.hover
-          title="Anuluj"
-        >Anuluj</b-button>
-      </span>
-      <b-input
-        class="w-50"
-        id="titleName"
-        type="text"
-        placeholder="Wpisz tytuł zbiórki"
-        maxlength="50"
-        v-model.trim="newInfo.title"
-        :state="dirty ? validation : null"
-        @update="dirty=true"
-      />
-      <b-form-invalid-feedback :state="validation">Tytuł musi mieć od 3 do 50 znaków!</b-form-invalid-feedback>
-      <label class="h6 font-weight-normal">data zakończenia:</label>
-      <br>
-      <date-picker
-        type="datetime"
-        :time-picker-options="timePickerOptions"
-        :lang="dtLang"
-        v-model="newInfo.endDate"
-        format="YYYY-MM-DD HH:mm"
-        input-class="form-control"
-      ></date-picker>
+      <div class="row float-right">
+        <div class="col">
+          <h4 class="d-inline text-dark" v-if="isAfterDate">Zbiórka jest zakończona</h4>
+          <h4 class="d-inline text-danger" v-else-if="newInfo.ended">Zbiórka jest zamknięta</h4>
+          <h4 class="d-inline text-warning" v-else>Zbiórka jest otwarta</h4>
+          <b-button
+            class="mx-1 mb-2 btn-light"
+            type="button"
+            :class="{'btn-outline-danger': !newInfo.ended, 'btn-outline-success': newInfo.ended}"
+            @click="end()"
+            size="sm"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Zakończ"
+          >{{newInfo.ended ? "Otwórz" : "Zakończ"}}</b-button>
+          <b-button
+            v-if="isEdited"
+            type="submit"
+            class="mx-1 mb-2 btn-outline-success btn-light"
+            size="sm"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Zapisz"
+            @click="update"
+          >Zapisz</b-button>
+          <b-button
+            class="mx-1 mb-2 btn-outline-secondary"
+            type="button"
+            variant="light"
+            @click="isEdited = !isEdited"
+            size="sm"
+            v-if="isAdmin"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Anuluj"
+          >Anuluj</b-button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label class="h6 font-weight-normal">Tytuł:</label>
+          <b-input
+            class="w-50"
+            id="titleName"
+            type="text"
+            placeholder="Wpisz tytuł zbiórki"
+            maxlength="50"
+            v-model.trim="newInfo.title"
+            :state="dirty ? validation : null"
+            @update="dirty=true"
+          />
+          <b-form-invalid-feedback :state="validation">Tytuł musi mieć od 3 do 50 znaków!</b-form-invalid-feedback>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label class="h6 font-weight-normal ml-3">data zakończenia:</label>
+          <br>
+          <date-picker
+            class="ml-3"
+            type="datetime"
+            :time-picker-options="timePickerOptions"
+            :lang="dtLang"
+            v-model="newInfo.endDate"
+            format="YYYY-MM-DD HH:mm"
+            input-class="form-control"
+          ></date-picker>
+        </div>
+      </div>
     </b-card-title>
     <b-card-title v-else>
       <h2 class="d-inline">{{info.title}}</h2>
