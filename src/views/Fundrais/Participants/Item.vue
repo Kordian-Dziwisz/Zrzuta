@@ -61,7 +61,7 @@
         ></b-form-textarea>
         <div class="text-right">
           <b-button
-            @click="update"
+            @click="saveComment"
             size="sm"
             data-placement="auto"
             v-b-tooltip.hover
@@ -166,6 +166,10 @@ export default {
     },
     update() {
       this.$emit("update", this.item);
+    },
+    saveComment() {
+      this.update();
+      this.$emit("saveComment", true);
     }
   },
   computed: {

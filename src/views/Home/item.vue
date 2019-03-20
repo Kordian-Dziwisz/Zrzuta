@@ -34,9 +34,9 @@
       <div class="col text-right">
         <span class="text-dark" v-if="item.endDate < new Date(Date.now())">Zbiórka zakończona</span>
         <span class="text-danger" v-else-if="item.ended">Dokonaj zapłaty</span>
-        <span class="text-warning" v-else>
+        <span v-else>
           Zbiórka trwa do
-          <strong class="d-inline">{{ item.endDate | moment("LL")}}</strong>
+          <strong class="text-danger">{{ item.endDate | moment("LL")}}</strong>
         </span>
       </div>
     </div>

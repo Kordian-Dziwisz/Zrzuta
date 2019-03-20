@@ -29,6 +29,7 @@
           :list="listOfParticipants"
           :isEnded="this.fundraisInfo.ended"
           @list="updateParticipants"
+          @saveComment="saveComment"
         />
       </div>
       <div class="col col-lg-6">
@@ -106,9 +107,9 @@ export default {
       this.listOfParticipants = tmpDoc.data().listOfParticipants;
       this.listOfProducts = tmpDoc.data().listOfProducts;
       this.listOfPropositions = tmpDoc.data().listOfPropositions;
-      if (this.fundraisInfo.endDate < new Date(Date.now())) {
-        this.fundraisInfo.ended = true;
-      }
+      //   if (this.fundraisInfo.endDate < new Date(Date.now())) {
+      //     this.fundraisInfo.ended = true;
+      //   }
     },
     async updateDoc() {
       if (
@@ -131,6 +132,14 @@ export default {
           await console.log("document updated");
         }
       }
+    },
+    saveComment() {
+      this.$notify({
+        group: "status",
+        title: "Status",
+        text: "Komentarz został zapisany",
+        type: "success"
+      });
     }
   },
   computed: {
