@@ -31,6 +31,7 @@
             data-placement="auto"
             v-b-tooltip.hover
             title="Dodaj"
+            size="sm"
           >
             <i class="fas fa-plus-square"></i>
             Dodaj nową propozycję
@@ -62,7 +63,7 @@
             <td
               class="text-right"
             >{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}}</td>
-            <td v-if="isAdmin || isAuthenticated(index)" class="text-right">
+            <td class="text-right">
               <b-button-group>
                 <b-button
                   class="btn"
@@ -132,10 +133,9 @@
       header-bg-variant="secondary"
       header-text-variant="light"
       title="Edytuj produkt"
-      v-if="editShow && editObject"
       v-model="editShow"
     >
-      <form>
+      <form v-if="editObject">
         <b-form-row>
           <label for="editNameInput">Nazwa:</label>
           <b-input
@@ -178,9 +178,9 @@
             max="9999"
             step="0.01"
             min="0"
+            :state="validationPrice"
           ></b-input>
-          <b-form-invalid-feedback :state="validationPrice">Proszę wpisać cenę większą od 0</b-form-invalid-feedback>
-          <b-form-valid-feedback :state="validationPrice"></b-form-valid-feedback>
+          <b-form-invalid-feedback>Proszę wpisać cenę większą od 0</b-form-invalid-feedback>
         </b-form-row>
       </form>
       <form class="float-right">
@@ -260,11 +260,11 @@ export default {
       this.editShow = true;
     },
     editSave() {
-      this.editShow = false;
       if (this.validationName && this.validationNumber && this.validationPrice) {
+        this.editShow = false;
         this.list[this.editIndex].name = this.editObject.name;
         this.list[this.editIndex].number = this.editObject.number;
-        this.list[this.editIndex].price = this.editObject.price;
+        this.list[this.editIndex].price = this.editObject.price.toFixed(2);
         this.$emit("list", this.list);
       }
     },
@@ -333,7 +333,7 @@ export default {
     },
     validationNumber: {
       get() {
-        return this.editObject.number > 0 && this.editObject.number <= 9999;
+        return this.editObject.number > 0 && this.editObject.number <= 9999 && this.editObject.number % 1 == 0;
       }
     },
     validationPrice: {
