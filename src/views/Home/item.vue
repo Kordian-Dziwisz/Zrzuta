@@ -34,9 +34,9 @@
       <div class="col text-right">
         <span class="text-dark" v-if="item.endDate < new Date(Date.now())">Zbiórka zakończona</span>
         <span class="text-danger" v-else-if="item.ended">Dokonaj zapłaty</span>
-        <span class="text-warning" v-else>
+        <span v-else>
           Zbiórka trwa do
-          <strong class="d-inline">{{ item.endDate | moment("LL")}}</strong>
+          <strong class="text-danger">{{ item.endDate | moment("LL")}}</strong>
         </span>
       </div>
     </div>
@@ -58,6 +58,10 @@
             class="d-inline btn-light btn-outline-secondary mx-1"
             @click="descriptionShow=!descriptionShow"
             size="sm"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Pokaż opis"
           >Pokaż opis</b-button>
         </div>
         <div v-else-if="item.description.length > 80">
@@ -66,6 +70,10 @@
             class="d-inline text-dark btn-light btn-outline-secondary mx-1"
             @click="descriptionShow=!descriptionShow"
             size="sm"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Ukryj opis"
           >Ukryj opis</b-button>
         </div>
         <div v-else>

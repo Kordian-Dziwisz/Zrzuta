@@ -71,7 +71,7 @@
                   data-toggle="tooltip"
                   data-placement="auto"
                   v-b-tooltip.hover
-                  title="Polub"
+                  title="Zagłosuj"
                   variant="primary"
                   :class="{'btn-primary': isLiked(index), 'btn-outline-primary btn-light': !isLiked(index)}"
                   @click="like(index)"

@@ -107,9 +107,6 @@ export default {
       this.listOfParticipants = tmpDoc.data().listOfParticipants;
       this.listOfProducts = tmpDoc.data().listOfProducts;
       this.listOfPropositions = tmpDoc.data().listOfPropositions;
-      if (this.fundraisInfo.endDate < new Date(Date.now())) {
-        this.fundraisInfo.ended = true;
-      }
       if (!this.fundraisInfo) return;
       if (this.compareDates) {
         this.notifyEnded();

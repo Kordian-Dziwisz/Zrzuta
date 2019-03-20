@@ -4,7 +4,12 @@
     <b-card-title>
       <h3>
         <span>Uczestnicy</span>
-        <span class="float-right small" v-if="list.length && authenticate">łącznie: {{list.length}}</span>
+        <b-badge
+          pill
+          variant="primary"
+          class="float-right"
+          v-if="list.length && authenticate"
+        >{{list.length}}</b-badge>
         <b-button
           class="btn-outline-success btn-light ml-1 float-right"
           data-toggle="tooltip"
@@ -15,7 +20,7 @@
           @click="addMe"
           size="sm"
         >
-          <i class="fas fa-plus-square fa-fw"></i>
+          <i class="fas fa-pl`us`-square fa-fw"></i>
           Dodaj mnie
         </b-button>
       </h3>
@@ -41,7 +46,7 @@
             <b-form-invalid-feedback>Nazwa uczestnika musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
           </div>
           <br>
-          <div class="col text-right">
+          <div class="col text-right mr-1">
             <b-button
               type="submit"
               class="d-box btn-outline-success btn-light"

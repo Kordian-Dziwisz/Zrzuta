@@ -9,8 +9,11 @@
         </div>
         <div class="col text-right">
           <b-button
-            class="btn-outline-success btn-light"
+            class="btn-outline-success btn-light mr-1"
             size="sm"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Zapłacone"
             v-if="!item.accepted && isEnded && isAdmin"
             @click="accept"
           >
@@ -27,11 +30,11 @@
             v-if="isAuthenticated && !item.paid && !item.accepted && isEnded && !isAdmin"
             @click="pay"
           >
-            <i class="fas fa-vote-yea"></i>
+            <i class="fas fa-vote-yea fa-fw"></i>
             <span class="d-none d-lg-inline">Wpłaciłem/am</span>
           </b-button>
           <b-button
-            class="btn-outline-danger btn-light ml-1"
+            class="btn-outline-danger btn-light"
             size="sm"
             data-toggle="tooltip"
             data-placement="auto"
@@ -40,7 +43,7 @@
             v-if="isAdmin || isAuthenticated"
             @click="showModal = true"
           >
-            <i class="fas fa-user-minus pr-1"></i>
+            <i class="fas fa-user-minus fa-fw pr-1"></i>
             <span class="d-none d-lg-inline">Usuń</span>
           </b-button>
         </div>
@@ -60,6 +63,9 @@
           <b-button
             @click="saveComment"
             size="sm"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Zapisz"
             variant="light"
             class="my-1 btn-outline-success text-right"
           >Zapisz</b-button>
@@ -71,6 +77,10 @@
           class="d-inline btn-light btn-outline-secondary mx-1"
           @click="commentShow=!commentShow"
           size="sm"
+          data-toggle="tooltip"
+          data-placement="auto"
+          v-b-tooltip.hover
+          title="Pokaż więcej"
         >Pokaż więcej</b-button>
       </div>
       <div v-else-if="item.comment.length > 80">
@@ -79,6 +89,10 @@
           class="d-inline text-dark btn-light btn-outline-secondary mx-1"
           @click="commentShow=!commentShow"
           size="sm"
+          data-toggle="tooltip"
+          data-placement="auto"
+          v-b-tooltip.hover
+          title="Ukryj"
         >Ukryj</b-button>
       </div>
       <div v-else>
