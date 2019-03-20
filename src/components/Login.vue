@@ -8,6 +8,7 @@
         type="text"
         maxlength="30"
         :state="validation"
+        autocomplete="off"
       />
       <b-form-invalid-feedback :state="validation">Login musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
       <b-form-valid-feedback :state="validation"></b-form-valid-feedback>
