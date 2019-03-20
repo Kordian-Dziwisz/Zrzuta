@@ -47,10 +47,10 @@
         placeholder="Wpisz tytuł zbiórki"
         maxlength="50"
         v-model.trim="newInfo.title"
-        :state="validation"
+        :state="dirty ? validation : null"
+        @update="dirty=true"
       />
       <b-form-invalid-feedback :state="validation">Tytuł musi mieć od 3 do 50 znaków!</b-form-invalid-feedback>
-      <b-form-valid-feedback :state="validation">Wygląda dobrze!</b-form-valid-feedback>
     </b-card-title>
     <b-card-title v-else>
       <h2 class="d-inline">{{info.title}}</h2>
@@ -108,11 +108,11 @@
     <b-card-body v-else>
       <b-card-text>
         <div class="row py-2">
-          <div class="col col-lg-6" v-if="info.description.length">
+          <div class="col-6 col-lg-6" v-if="info.description.length">
             <label>Opis:</label>
             <h5>{{info.description}}</h5>
           </div>
-          <div class="col col-lg-6" v-if="info.accountNumber">
+          <div class="col-6 col-lg-6" v-if="info.accountNumber">
             <label>Informacje o płatności:</label>
             <h5>{{info.accountNumber}}</h5>
           </div>
@@ -131,14 +131,16 @@ export default {
     return {
       newInfo: Object,
       userid: "",
-      isEdited: false
+      isEdited: false,
+      dirty: false
     };
   },
   methods: {
     update() {
-      if (this.newInfo.title.length >= 3 && this.newInfo.title.length < 50) {
+      if (this.validation) {
         this.isEdited = !this.isEdited;
         this.$emit("info", { ...this.newInfo });
+        this.dirty = false;
       }
     },
     end() {
@@ -147,7 +149,7 @@ export default {
   },
   computed: {
     validation() {
-      return this.newInfo.title.length > 3 && this.newInfo.title.length < 50;
+      return this.newInfo.title.length >= 3 && this.newInfo.title.length <= 50;
     }
   },
   mounted() {
