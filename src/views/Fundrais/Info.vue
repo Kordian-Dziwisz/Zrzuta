@@ -60,7 +60,7 @@
       </div>
       <div class="row">
         <div class="col">
-          <label class="h6 font-weight-normal ml-3">data zakończenia:</label>
+          <label class="h6 font-weight-normal ml-3">Data zakończenia:</label>
           <br>
           <date-picker
             class="ml-3"

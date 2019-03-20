@@ -51,7 +51,7 @@
     </b-card-header>
     <b-card-body v-if="item.comment.length>0 || isAuthenticated" class="py-3">
       <div v-if="isAuthenticated">
-        <label>Twój komentarz</label>
+        <label>Twój komentarz:</label>
         <b-form-textarea
           rows="0"
           max-rows="6"

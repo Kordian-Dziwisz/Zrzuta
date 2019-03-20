@@ -47,7 +47,7 @@
       <table v-else class="table table-striped border">
         <thead class="text-center">
           <th>Nazwa</th>
-          <th>Ilość (szt)</th>
+          <th>Ilość (szt.)</th>
           <th>Cena (zł)</th>
           <th>Koszt (zł)</th>
           <th></th>
@@ -159,11 +159,11 @@
             required
             placeholder="Wpisz ilość"
             max="9999"
-            step="0.1"
+            step="1"
             min="0"
             :state="validationNumber"
           ></b-input>
-          <b-form-invalid-feedback>Proszę wpisać ilość jako liczbę całkowitą większą od 0</b-form-invalid-feedback>
+          <b-form-invalid-feedback>Proszę wpisać ilość jako liczbę naturalną</b-form-invalid-feedback>
           <label for="editNameInput">Cena:</label>
           <b-input
             id="editPriceInput"
@@ -171,12 +171,10 @@
             type="number"
             name="price"
             v-model="editObject.price"
-            required
             placeholder="Wpisz cenę"
             max="9999"
             step="0.01"
             min="0"
-            :state="validationPrice"
           ></b-input>
           <b-form-invalid-feedback>Proszę wpisać cenę większą od 0</b-form-invalid-feedback>
         </b-form-row>
@@ -244,8 +242,8 @@ export default {
       this.list.push({
         creator: localStorage.getItem("login"),
         name: "Nowy produkt",
-        number: 0,
-        price: 0.0,
+        number: 1,
+        price: 1.0,
         accepted: false,
         likes: [],
         dislikes: []
