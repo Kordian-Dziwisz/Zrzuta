@@ -58,7 +58,7 @@
         type="datetime"
         :time-picker-options="timePickerOptions"
         :lang="dtLang"
-        v-model="info.endDate"
+        v-model="newInfo.endDate"
         format="YYYY-MM-DD HH:mm"
         input-class="form-control"
       ></date-picker>
