@@ -58,6 +58,10 @@
             class="d-inline btn-light btn-outline-secondary mx-1"
             @click="descriptionShow=!descriptionShow"
             size="sm"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Pokaż opis"
           >Pokaż opis</b-button>
         </div>
         <div v-else-if="item.description.length > 80">
@@ -66,6 +70,10 @@
             class="d-inline text-dark btn-light btn-outline-secondary mx-1"
             @click="descriptionShow=!descriptionShow"
             size="sm"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Ukryj opis"
           >Ukryj opis</b-button>
         </div>
         <div v-else>

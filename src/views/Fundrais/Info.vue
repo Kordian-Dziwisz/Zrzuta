@@ -69,7 +69,7 @@
         <h4 class="d-inline text-danger" v-if="isAfterDate">Zbiórka jest zakończona</h4>
         <h4 class="d-inline text-warning" v-else>Zbiórka trwa do {{ info.endDate | moment("LL")}}</h4>
         <b-button
-          class="mb-2 ml-3 btn-outline-secondary"
+          class="mb-1 ml-3 btn-outline-secondary"
           type="button"
           variant="light"
           @click="isEdited = !isEdited"
