@@ -110,6 +110,12 @@ export default {
       if (this.fundraisInfo.endDate < new Date(Date.now())) {
         this.fundraisInfo.ended = true;
       }
+      if (!this.fundraisInfo) return;
+      if (this.compareDates) {
+        this.notifyEnded();
+      } else if (this.fundraisInfo.ended) {
+        this.notifyClosed();
+      }
     },
     async updateDoc() {
       if (
@@ -131,6 +137,12 @@ export default {
         if (this.authenticate) {
           await console.log("document updated");
         }
+        if (!this.fundraisInfo) return;
+        if (this.compareDates) {
+          this.notifyEnded();
+        } else if (this.fundraisInfo.ended) {
+          this.notifyClosed();
+        }
       }
     },
     saveComment() {
@@ -139,6 +151,22 @@ export default {
         title: "Status",
         text: "Komentarz został zapisany",
         type: "success"
+      });
+    },
+    notifyClosed() {
+      this.$notify({
+        group: "status",
+        title: "Status",
+        text: "Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę",
+        type: "warn"
+      });
+    },
+    notifyEnded() {
+      this.$notify({
+        group: "status",
+        title: "Status",
+        text: "Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone",
+        type: "error"
       });
     }
   },
@@ -156,37 +184,29 @@ export default {
       return this.fundraisInfo.endDate.getTime() < Date.now();
     }
   },
-  watch: {
-    fundraisInfo: {
-      handler() {
-        if (!this.fundraisInfo) return;
-        if (!this.compareDates && this.fundraisInfo.ended) {
-          this.$notify({
-            group: "status",
-            title: "Status",
-            text: "Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę",
-            type: "warn"
-          });
-        } else if (this.compareDates) {
-          this.$notify({
-            group: "status",
-            title: "Status",
-            text: "Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone",
-            type: "error"
-          });
-        }
-        // } else if (!this.fundraisInfo.title.length && this.authenticate) {
-        //   this.$notify({
-        //     group: "status",
-        //     title: "Status",
-        //     text: "Proszę o uzupełnienie pola Tytuł, bez tego pola dokument nie zostanie zaktualizowany",
-        //     type: "error"
-        //   });
-        // }
-      },
-      deep: true
-    }
-  },
+  // watch: {
+  //   fundraisInfo: {
+  //     handler() {
+  //       if (!this.fundraisInfo) return;
+  //       if (!this.compareDates && this.fundraisInfo.ended) {
+  //         // this.$notify({
+  //         //   group: "status",
+  //         //   title: "Status",
+  //         //   text: "Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę",
+  //         //   type: "warn"
+  //         // });
+  //       } else if (this.compareDates) {
+  //         this.$notify({
+  //           group: "status",
+  //           title: "Status",
+  //           text: "Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone",
+  //           type: "error"
+  //         });
+  //       }
+  //     },
+  //     deep: true
+  //   }
+  // },
   mounted() {
     this.docID = this.$route.params.id;
     this.db = this.db.doc(this.docID);
