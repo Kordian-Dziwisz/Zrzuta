@@ -21,7 +21,7 @@
       </h3>
     </b-card-title>
     <b-card-body>
-      <form @submit.prevent="addNew" v-if="!this.isEnded && authenticate">
+      <form autocomplete="off" @submit.prevent="addNew" v-if="!this.isEnded && authenticate">
         <label for="userNameValidation" v-if="isAdmin">Dodaj nowego uczestnika:</label>
         <div class="form-row">
           <div class="col" v-if="isAdmin">
@@ -33,7 +33,9 @@
               maxlength="30"
               v-model="name"
               :state="dirty ? validation : null"
-              @blur="dirty=true"
+              @update="name.length ? dirty=true : dirty=false"
+              @blur="dirty = false"
+              @focus="name.length ? dirty = true : dirty = false"
               required
             />
             <b-form-invalid-feedback>Nazwa uczestnika musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
@@ -116,7 +118,7 @@ export default {
   },
   methods: {
     addNew() {
-      if (this.name.length !== 0) {
+      if (this.validation) {
         this.list.push({
           name: this.name,
           accepted: false,
@@ -125,7 +127,7 @@ export default {
           guid: localStorage.getItem("guid")
         });
         this.name = "";
-        dirty = false;
+        this.dirty = false;
       }
     },
     addMe() {
