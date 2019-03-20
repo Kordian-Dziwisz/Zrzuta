@@ -12,12 +12,11 @@
       <h3>
         <span>Cele zbiórki</span>
         <span class="float-right text-right" v-if="priceSum > 0 && numOfParticipants">
-          {{priceSum.toFixed(2).toString().replace(/[.]/, ',')}}
-          zł
-          <div
-            class="text-right small"
-            v-if="numOfParticipants > 1"
-          >Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł</div>
+          Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł
+          <div class="text-right small" v-if="numOfParticipants > 1">
+            {{priceSum.toFixed(2).toString().replace(/[.]/, ',')}}
+            zł
+          </div>
         </span>
       </h3>
     </b-card-title>
@@ -149,7 +148,7 @@
             maxlength="30"
             :state="validationName"
           ></b-input>
-          <b-form-invalid-feedback>Proszę uzupełnić pole, nazwa musi mieć długość do 50 znaków!</b-form-invalid-feedback>
+          <b-form-invalid-feedback>Wpisz nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
           <label for="editNumberInput">Ilość:</label>
           <b-input
             id="editNumberInput"
@@ -163,9 +162,10 @@
             min="0"
             :state="validationNumber"
           ></b-input>
-          <b-form-invalid-feedback>Proszę wpisać ilość jako liczbę naturalną</b-form-invalid-feedback>
+          <b-form-invalid-feedback>Wpisz ilość (0-9999 szt.)</b-form-invalid-feedback>
           <label for="editNameInput">Cena:</label>
           <b-input
+            :state="validationPrice"
             id="editPriceInput"
             class="my-1"
             type="number"
@@ -176,7 +176,7 @@
             step="0.01"
             min="0"
           ></b-input>
-          <b-form-invalid-feedback>Proszę wpisać cenę większą od 0</b-form-invalid-feedback>
+          <b-form-invalid-feedback>Wpisz cenę (0-9999 zł)</b-form-invalid-feedback>
         </b-form-row>
       </form>
       <form class="float-right">

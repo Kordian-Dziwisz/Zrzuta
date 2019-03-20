@@ -29,11 +29,11 @@
     </form>
     <div class="container mb-1">
       <div class="h5">
-        Suma: {{priceSum.toFixed(2)}}
+        Na osobę: {{parseFloat(pricePerUser).toFixed(2)}}
         <span v-if="pricePerUser >= 0">zł</span>
       </div>
       <div class="h5">
-        Na osobę: {{parseFloat(pricePerUser).toFixed(2) }}
+        Suma: {{priceSum.toFixed(2)}}
         <span v-if="pricePerUser >= 0">zł</span>
       </div>
     </div>
