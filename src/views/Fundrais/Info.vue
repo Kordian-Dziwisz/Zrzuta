@@ -3,8 +3,9 @@
     <b-card-title v-if="isEdited">
       <label class="h6 font-weight-normal">Tytuł:</label>
       <span class="float-right small">
-        <h4 class="d-inline text-danger" v-if="newInfo.ended">Zbiórka jest zakończona</h4>
-        <h4 class="d-inline text-warning" v-else>Zbiórka trwa do:</h4>
+        <h4 class="d-inline text-dark" v-if="isEnded">Zbiórka jest zakończona</h4>
+        <h4 class="d-inline text-danger" v-else-if="newInfo.ended">Zbiórka jest zamknięta</h4>
+        <h4 class="d-inline text-warning" v-else>Zbiórka jest otwarta</h4>
         <b-button
           class="mx-1 mb-2 btn-light"
           type="button"
@@ -51,6 +52,7 @@
         @update="dirty=true"
       />
       <b-form-invalid-feedback :state="validation">Tytuł musi mieć od 3 do 50 znaków!</b-form-invalid-feedback>
+      <label class="h6 font-weight-normal">data zakończenia:</label>
     </b-card-title>
     <b-card-title v-else>
       <h2 class="d-inline">{{info.title}}</h2>
@@ -150,6 +152,9 @@ export default {
   computed: {
     validation() {
       return this.newInfo.title.length >= 3 && this.newInfo.title.length <= 50;
+    },
+    isAfterDate() {
+      return this.info.endDate < new Date(Date.now());
     }
   },
   mounted() {

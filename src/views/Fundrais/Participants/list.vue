@@ -4,7 +4,12 @@
     <b-card-title>
       <h3>
         <span>Uczestnicy</span>
-        <span class="float-right small" v-if="list.length && authenticate">łącznie: {{list.length}}</span>
+        <b-badge
+          pill
+          variant="primary"
+          class="float-right"
+          v-if="list.length && authenticate"
+        >{{list.length}}</b-badge>
         <b-button
           class="btn-outline-success btn-light ml-1 float-right"
           data-toggle="tooltip"
