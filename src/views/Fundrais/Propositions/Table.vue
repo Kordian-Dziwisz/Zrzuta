@@ -127,7 +127,7 @@
     <b-modal
       id
       hide-footer
-      @hide="editSave()"
+      @hide="editShow = false"
       :lazy="true"
       header-bg-variant="secondary"
       header-text-variant="light"

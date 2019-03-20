@@ -37,7 +37,6 @@
               required
             />
             <b-form-invalid-feedback>Nazwa uczestnika musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
-            <b-form-valid-feedback>Wygląda dobrze!</b-form-valid-feedback>
           </div>
           <br>
           <div class="col text-right">
@@ -126,6 +125,7 @@ export default {
           guid: localStorage.getItem("guid")
         });
         this.name = "";
+        dirty = false;
       }
     },
     addMe() {
