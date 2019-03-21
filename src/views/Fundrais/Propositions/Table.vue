@@ -180,12 +180,12 @@
         </b-form-row>
       </form>
       <form class="float-right">
-        <b-button class="btn-outline-success mx-1" variant="light" @click="editSave">Zapisz</b-button>
         <b-button
           class="btn-outline-secondary mx-1"
           variant="light"
           @click="editShow = false"
         >Anuluj</b-button>
+        <b-button class="btn-outline-success mx-1" variant="light" @click="editSave">Zapisz</b-button>
       </form>
     </b-modal>
     <b-modal
