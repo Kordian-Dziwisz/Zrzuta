@@ -120,7 +120,7 @@
               type="text"
               maxlength="150"
               max-rows="10"
-              placeholder="Wpisz informacje o płatności"
+              placeholder="Wpisz numer rachunku odbiorcy, nazwa odbiorcy, adres odbiorcy, tytuł przelewu, kwota przelewu."
               v-model.lazy.trim="newInfo.accountNumber"
             ></b-form-textarea>
           </div>
