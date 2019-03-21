@@ -126,7 +126,6 @@
     </b-card-body>
     <b-modal
       id
-      hide-footer
       @hide="editShow = false"
       :lazy="true"
       title="Edytuj produkt"
@@ -175,14 +174,14 @@
           <b-form-invalid-feedback>Wpisz cenę (0-9999 zł)</b-form-invalid-feedback>
         </b-form-row>
       </form>
-      <form class="float-right">
+      <div slot="modal-footer" class="w-100">
+        <b-button class="float-right ml-1" variant="outline-success light" @click="editSave">Zapisz</b-button>
         <b-button
-          class="btn-outline-secondary mx-1"
-          variant="light"
+          class="float-right"
+          variant="outline-secondary light"
           @click="editShow = false"
         >Anuluj</b-button>
-        <b-button class="btn-outline-success mx-1" variant="light" @click="editSave">Zapisz</b-button>
-      </form>
+      </div>
     </b-modal>
     <b-modal
       v-model="removeShow"
