@@ -120,7 +120,7 @@
               type="text"
               maxlength="150"
               max-rows="10"
-              placeholder="Wpisz numer rachunku odbiorcy, nazwa odbiorcy, adres odbiorcy, tytuł przelewu, kwota przelewu."
+              placeholder="Wpisz informacje o płatności: dane odbiorcy, rodzaj (przelew lub płatność gotówką)"
               v-model.lazy.trim="newInfo.accountNumber"
             ></b-form-textarea>
           </div>
