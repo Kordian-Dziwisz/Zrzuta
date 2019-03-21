@@ -1,6 +1,6 @@
 <template>
   <b-card class="border rounded">
-    <!-- <b-card-header class="w-100 shadow-sm"> -->
+    <!-- <b-card-header class="w-100"> -->
     <!-- <div class="float-right text-success">Otwarte</div> -->
     <!-- <b-row> -->
     <!--  -->
