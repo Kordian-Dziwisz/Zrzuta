@@ -17,7 +17,8 @@
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-navbar-nav is-nav id="nav-collapse" right>
-            <b-nav-item right @click="changeLogin">
+            <b-navbar-brand>{{returnLogin}}</b-navbar-brand>
+            <b-nav-item @click="changeLogin">
               Wyloguj
               <i class="fas fa-sign-out-alt"></i>
             </b-nav-item>
@@ -64,7 +65,6 @@ export default {
         });
         if (await newFundrais.id) {
           this.isClicked = false;
-          console.log("clikcked");
           location.reload();
         }
       }
@@ -72,6 +72,11 @@ export default {
     changeLogin() {
       localStorage.removeItem("login");
       this.$router.push({ path: "/login" });
+    }
+  },
+  computed: {
+    returnLogin() {
+      return localStorage.getItem("login");
     }
   }
 };

@@ -35,6 +35,7 @@ export default {
       if (this.validation) {
         this.$emit("login", this.login);
       }
+      location.reload();
     }
   },
   computed: {
