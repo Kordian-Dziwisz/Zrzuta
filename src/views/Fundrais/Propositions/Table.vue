@@ -127,7 +127,7 @@
       </table>
     </b-card-body>
     <b-modal id @hide="editShow = false" :lazy="true" title="Edytuj produkt" v-model="editShow">
-      <form v-if="editObject">
+      <form v-if="editObject" @submit.prevent="editSave">
         <b-form-row>
           <label for="editNameInput">Nazwa:</label>
           <b-form-input
