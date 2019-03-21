@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       docID: "",
-      db: firebase.firestore().collection("Zrzuty-develop"),
+      db: firebase.firestore().collection("Zrzuty"),
       fundraisInfo: undefined,
       listOfParticipants: [],
       listOfProducts: [],

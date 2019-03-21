@@ -12,12 +12,11 @@
       <h3>
         <span>Cele zbiórki</span>
         <span class="float-right text-right" v-if="priceSum > 0 && numOfParticipants">
-          {{priceSum.toFixed(2).toString().replace(/[.]/, ',')}}
-          zł
-          <div
-            class="text-right small"
-            v-if="numOfParticipants > 1"
-          >Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł</div>
+          Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł
+          <div class="text-right small" v-if="numOfParticipants > 1">
+            {{priceSum.toFixed(2).toString().replace(/[.]/, ',')}}
+            zł
+          </div>
         </span>
       </h3>
     </b-card-title>
@@ -146,10 +145,7 @@
             placeholder="Wpisz nazwę"
             maxlength="30"
           ></b-form-input>
-          <b-form-invalid-feedback
-            :state="validationName"
-          >Proszę uzupełnić pole, nazwa musi mieć długość do 50 znaków!</b-form-invalid-feedback>
-
+          <b-form-invalid-feedback :state="validationName">Wpisz nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
           <label for="editNumberInput">Ilość:</label>
           <b-form-input
             id="editNumberInput"
@@ -162,12 +158,10 @@
             step="1"
             min="0"
           ></b-form-input>
-          <b-form-invalid-feedback
-            :state="validationNumber"
-          >Proszę wpisać ilość jako liczbę naturalną</b-form-invalid-feedback>
-
-          <label for="editPriceInput">Cena:</label>
-          <b-form-input
+          <b-form-invalid-feedback :state="validationNumber">Wpisz ilość (0-9999 szt.)</b-form-invalid-feedback>
+          <label for="editNameInput">Cena:</label>
+          <b-input
+            :state="validationPrice"
             id="editPriceInput"
             class="my-1"
             type="number"
@@ -177,17 +171,17 @@
             max="9999"
             step="0.01"
             min="0"
-          ></b-form-input>
-          <b-form-invalid-feedback :state="validationPrice">Proszę wpisać cenę większą od 0</b-form-invalid-feedback>
+          ></b-input>
+          <b-form-invalid-feedback>Wpisz cenę (0-9999 zł)</b-form-invalid-feedback>
         </b-form-row>
       </form>
       <form class="float-right">
-        <b-button class="btn-outline-success mx-1" variant="light" @click="editSave">Zapisz</b-button>
         <b-button
           class="btn-outline-secondary mx-1"
           variant="light"
           @click="editShow = false"
         >Anuluj</b-button>
+        <b-button class="btn-outline-success mx-1" variant="light" @click="editSave">Zapisz</b-button>
       </form>
     </b-modal>
     <b-modal
