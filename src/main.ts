@@ -23,6 +23,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { dom } from "@fortawesome/fontawesome-svg-core";
 import Notifications from "vue-notification";
+import Vuelidate from "vuelidate";
 
 dom.watch();
 
@@ -62,6 +63,8 @@ require("moment/locale/pl");
 Vue.use(require("vue-moment"), { moment });
 
 Vue.use(Notifications);
+
+Vue.use(Vuelidate);
 
 new Vue({
   router,

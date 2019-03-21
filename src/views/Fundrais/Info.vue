@@ -4,8 +4,8 @@
       <div class="row float-right">
         <div class="col">
           <h4 class="d-inline text-dark" v-if="isAfterDate">Zbiórka jest zakończona</h4>
-          <h4 class="d-inline text-danger" v-else-if="newInfo.ended">Zbiórka jest zamknięta</h4>
-          <h4 class="d-inline text-warning" v-else>Zbiórka jest otwarta</h4>
+          <h4 class="d-inline text-danger" v-else-if="newInfo.ended">Faza wpłat</h4>
+          <h4 class="d-inline text-warning" v-else>Faza zapisów</h4>
           <b-button
             class="mx-1 mb-2 btn-light"
             type="button"
@@ -15,7 +15,7 @@
             data-toggle="tooltip"
             data-placement="auto"
             v-b-tooltip.hover
-            title="Zakończ"
+            title="Wpłaty"
           >{{newInfo.ended ? "Otwórz" : "Zakończ"}}</b-button>
           <b-button
             v-if="isEdited"
@@ -25,7 +25,7 @@
             data-toggle="tooltip"
             data-placement="auto"
             v-b-tooltip.hover
-            title="Zapisz"
+            title="Zapisy"
             @click="update"
           >Zapisz</b-button>
           <b-button
@@ -77,8 +77,8 @@
     <b-card-title v-else>
       <h2 class="d-inline">{{info.title}}</h2>
       <span class="float-right small">
-        <h4 class="d-inline text-danger" v-if="isAfterDate">Zbiórka jest zakończona</h4>
-        <h4 class="d-inline text-warning" v-else>Zbiórka trwa do {{ info.endDate | moment("LL")}}</h4>
+        <h4 class="d-inline text-waring" v-if="isAfterDate">Zbiórka jest zakończona</h4>
+        <h3 class="d-inline text-dark" v-else>Zbiórka trwa do: {{ info.endDate | moment("LL")}}</h3>
         <b-button
           class="mb-3 ml-3 btn-outline-secondary"
           type="button"
@@ -127,7 +127,7 @@
         </div>
       </b-card-text>
     </b-card-body>
-    <b-card-body v-else>
+    <b-card-body v-else-if="info.description.length || info.accountNumber">
       <b-card-text>
         <div class="row py-2">
           <div class="col-6 col-lg-6" v-if="info.description.length">
