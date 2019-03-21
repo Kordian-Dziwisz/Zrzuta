@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div class="row">
-      <span class="col-lg-4 align-self-center text-center">{{item.name}}</span>
-      <span class="col-lg-2 align-self-center text-center">x{{item.number}}</span>
+      <span class="col-lg-4 align-self-center text-left">{{item.name}}</span>
+      <span class="col-lg-2 align-self-center text-center">{{item.number}}</span>
       <span class="col-lg-3 align-self-center text-right">{{item.price + " zł"}}</span>
       <span
         class="col-lg-3 align-self-center text-right"

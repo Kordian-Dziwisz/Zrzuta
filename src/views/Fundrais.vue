@@ -1,59 +1,60 @@
 <template>
-  <div class="Fundrais">
-    <div
-      class="alert-danger h4 pl-4"
-      v-if="!fundraisInfo.title.length && authenticate"
-    >Proszę o uzupełnienie pola Tytuł, bez tego pola dokument nie zostanie zaktualizowany</div>
-    <div class="container-fluid">
-      <b-row>
-        <b-col class="shadow pr-0">
-          <project-info v-if="!authenticate" :info="fundraisInfo"/>
-          <info-admin v-if="authenticate" :info="fundraisInfo" @info="updateInfo"/>
-        </b-col>
-        <b-col class="shadow px-0">
-          <list-of-participants
-            :admin="authenticate"
-            :ended="this.fundraisInfo.ended"
-            :list="listOfParticipants"
-            @list="updateParticipants"
-          />
-        </b-col>
-        <b-col class="shadow pl-1">
-          <list-of-products
-            :admin="authenticate"
-            :ended="this.fundraisInfo.ended"
-            :numOfParticipants="listOfParticipants.length"
-            :list="listOfProducts"
-            @list="updateProducts"
-          />
-        </b-col>
-      </b-row>
-      <b-row align-h="end">
-        <b-col class="shadow">
-          <p
-            class="display-4"
-            v-if="fundraisInfo.ended == true && fundraisInfo.accountNumber.length > 0 && !authenticate"
-          >Wpłaty na numer konta: {{fundraisInfo.accountNumber}}</p>
-        </b-col>
-        <b-col cols="4" class="pl-0">
-          <list-of-propositions
-            :admin="authenticate"
-            :ended="this.fundraisInfo.ended"
-            :list="listOfPropositions"
-            @list="updatePropositions"
-          />
-        </b-col>
-      </b-row>
+  <div v-if="fundraisInfo">
+    <!-- <b-alert
+      variant="danger"
+      class="h4"
+      :show="!fundraisInfo.title.length && authenticate"
+    >Proszę o uzupełnienie pola Tytuł, bez tego pola dokument nie zostanie zaktualizowany</b-alert>-->
+    <!-- <b-alert
+      :show="true"
+      v-if="compareDates"
+      variant="danger"
+      class="h4"
+    >Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone</b-alert>-->
+    <!-- <b-alert
+      variant="warning"
+      class="h4"
+      :show="fundraisInfo.ended"
+      v-else
+    >Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę</b-alert>-->
+    <div class="row m-3">
+      <b-col>
+        <info v-if="fundraisInfo" :info="fundraisInfo" :isAdmin="isAdmin" @info="updateInfo"/>
+      </b-col>
+    </div>
+    <div class="row m-3">
+      <div class="col col-lg-6">
+        <participants
+          :isAdmin="isAdmin"
+          :list="listOfParticipants"
+          :isEnded="this.fundraisInfo.ended"
+          @list="updateParticipants"
+        />
+      </div>
+      <div class="col col-lg-6">
+        <!-- <list-of-products
+          :isAdmin="isAdmin"
+          :ended="this.fundraisInfo.ended"
+          :list="listOfProducts"
+          @list="updateProducts"
+          v-if="authenticate && fundraisInfo.ended && false"
+        />-->
+        <propositions
+          :numOfParticipants="listOfParticipants.length"
+          :isAdmin="isAdmin"
+          :ended="fundraisInfo.ended"
+          :list="listOfPropositions"
+          @list="updatePropositions"
+          v-if="authenticate"
+        />
+      </div>
     </div>
   </div>
 </template>
 <script>
-//import from firebase and save in localStorage import firebase from 'firebase'
-import ProjectInfo from "@/views/Fundrais/info.vue";
-import InfoAdmin from "@/views/Fundrais/info.admin.vue";
-import ListOfParticipants from "@/views/Fundrais/Participants/list.vue";
-import ListOfProducts from "@/views/Fundrais/Products/list.vue";
-import ListOfPropositions from "@/views/Fundrais/Propositions/list.vue";
+import Info from "@/views/Fundrais/Info.vue";
+import Participants from "@/views/Fundrais/Participants/list.vue";
+import Propositions from "@/views/Fundrais/Propositions/Table.vue";
 import firebase from "firebase";
 
 export default {
@@ -61,9 +62,7 @@ export default {
     return {
       docID: "",
       db: firebase.firestore().collection("Zrzuty"),
-      //ProjectInfo elements
-      fundraisInfo: {},
-      //TODO ListOfParticipants should be a proper arr of obj with Name, Comment, paid, accepted
+      fundraisInfo: undefined,
       listOfParticipants: [],
       listOfProducts: [],
       listOfPropositions: []
@@ -84,20 +83,20 @@ export default {
     },
     updatePropositions(list) {
       this.listOfPropositions = list;
-      let accept = this.acceptProposition;
-      this.listOfPropositions.forEach(item => accept(item));
+      //   let accept = this.acceptProposition;
+      //   this.listOfPropositions.forEach(item => accept(item));
       this.updateDoc();
     },
-    acceptProposition(item) {
-      if (item.accepted) {
-        delete item.creator;
-        delete item.likes;
-        delete item.dislikes;
-        delete item.accepted;
-        this.listOfProducts.push(item);
-      }
-      this.updateDoc();
-    },
+    // acceptProposition(item) {
+    //   if (item.accepted) {
+    //     delete item.creator;
+    //     delete item.likes;
+    //     delete item.dislikes;
+    //     delete item.accepted;
+    //     this.listOfProducts.push(item);
+    //   }
+    //   this.updateDoc();
+    // },
     async getDoc() {
       let tmpDoc = await this.db.get({ source: "default" });
       //converting from JSON date format to object
@@ -107,6 +106,12 @@ export default {
       this.listOfParticipants = tmpDoc.data().listOfParticipants;
       this.listOfProducts = tmpDoc.data().listOfProducts;
       this.listOfPropositions = tmpDoc.data().listOfPropositions;
+      if (!this.fundraisInfo) return;
+      if (this.compareDates) {
+        this.notifyEnded();
+      } else if (this.fundraisInfo.ended) {
+        this.notifyClosed();
+      }
     },
     async updateDoc() {
       if (
@@ -128,30 +133,78 @@ export default {
         if (this.authenticate) {
           await console.log("document updated");
         }
+        if (!this.fundraisInfo) return;
       }
+    },
+    notifyClosed() {
+      this.$notify({
+        group: "status",
+        title: "Status",
+        text: "Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę",
+        type: "warn"
+      });
+    },
+    notifyEnded() {
+      this.$notify({
+        group: "status",
+        title: "Status",
+        text: "Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone",
+        type: "error"
+      });
     }
   },
   computed: {
     authenticate() {
-      return this.fundraisInfo.creator == localStorage.getItem("login") ? true : false;
+      return (
+        this.listOfParticipants.find(item => item.name == localStorage.getItem("login")) != null ||
+        this.fundraisInfo.creator == localStorage.getItem("login")
+      );
+    },
+    isAdmin() {
+      return this.fundraisInfo && this.fundraisInfo.creator == localStorage.getItem("login");
+    },
+    compareDates() {
+      return this.fundraisInfo.endDate.getTime() < Date.now();
     }
   },
+  // watch: {
+  //   fundraisInfo: {
+  //     handler() {
+  //       if (!this.fundraisInfo) return;
+  //       if (!this.compareDates && this.fundraisInfo.ended) {
+  //         // this.$notify({
+  //         //   group: "status",
+  //         //   title: "Status",
+  //         //   text: "Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę",
+  //         //   type: "warn"
+  //         // });
+  //       } else if (this.compareDates) {
+  //         this.$notify({
+  //           group: "status",
+  //           title: "Status",
+  //           text: "Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone",
+  //           type: "error"
+  //         });
+  //       }
+  //     },
+  //     deep: true
+  //   }
+  // },
   mounted() {
     this.docID = this.$route.params.id;
     this.db = this.db.doc(this.docID);
     this.getDoc();
   },
   components: {
-    ProjectInfo,
-    InfoAdmin,
-    ListOfParticipants,
-    ListOfProducts,
-    ListOfPropositions
+    Info,
+    Participants,
+    Propositions
   }
 };
 </script>
 <style scoped>
-list-of-propositions {
-  margin-top: 0;
+.Fundrais {
+  word-break: break-all;
+  word-break: break-word;
 }
 </style>
