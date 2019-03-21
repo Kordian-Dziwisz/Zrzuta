@@ -80,7 +80,7 @@
         <h4 class="d-inline text-waring" v-if="isAfterDate">Zbiórka jest zakończona</h4>
         <h5 class="d-inline text-dark" v-else>Zbiórka trwa do: {{ info.endDate | moment("LL")}}</h5>
         <b-button
-          class="mb-3 ml-3 btn-outline-secondary"
+          class="mb-1 ml-2 btn-outline-secondary"
           type="button"
           variant="light"
           @click="isEdited = !isEdited"
@@ -90,7 +90,10 @@
           title="Edytuj"
           size="sm"
           v-if="isAdmin"
-        >Edytuj</b-button>
+        >
+          <i class="fas fa-edit fa-fw"></i>
+          <span>Edytuj</span>
+        </b-button>
       </span>
     </b-card-title>
     <b-card-body v-if="isEdited">

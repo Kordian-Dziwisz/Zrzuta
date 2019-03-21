@@ -12,13 +12,13 @@ import {
   faTrashAlt,
   faUserMinus,
   faVoteYea,
-  faPlusSquare,
   faMoneyBillAlt,
   faCheck,
   faSignOutAlt,
   faDoorOpen,
   faThumbsUp,
-  faCogs
+  faCogs,
+  faPlus
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { dom } from "@fortawesome/fontawesome-svg-core";
@@ -34,12 +34,12 @@ library.add(
   faTrashAlt,
   faUserMinus,
   faVoteYea,
-  faPlusSquare,
   faMoneyBillAlt,
   faSignOutAlt,
   faDoorOpen,
   faThumbsUp,
-  faCogs
+  faCogs,
+  faPlus
 );
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.config.productionTip = false;

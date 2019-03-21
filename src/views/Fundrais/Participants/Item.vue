@@ -43,8 +43,8 @@
             v-if="(isAdmin || isAuthenticated) && !isEnded"
             @click="showModal = true"
           >
-            <i class="fas fa-user-minus fa-fw pr-1"></i>
-            <span class="d-none d-lg-inline">Usuń</span>
+            <i class="fas fa-trash-alt fa-fw"></i>
+            <span class="d-none d-lg-inline"></span>
           </b-button>
         </div>
       </div>
