@@ -78,7 +78,7 @@
       <h2 class="d-inline">{{info.title}}</h2>
       <span class="float-right small">
         <h4 class="d-inline text-waring" v-if="isAfterDate">Zbiórka jest zakończona</h4>
-        <h3 class="d-inline text-dark" v-else>Zbiórka trwa do: {{ info.endDate | moment("LL")}}</h3>
+        <h5 class="d-inline text-dark" v-else>Zbiórka trwa do: {{ info.endDate | moment("LL")}}</h5>
         <b-button
           class="mb-3 ml-3 btn-outline-secondary"
           type="button"
