@@ -2,12 +2,12 @@
   <b-card class="border rounded">
     <b-card-title v-if="isEdited">
       <div class="row float-right">
-        <div class="col">
+        <div class="col mr-3 mb-2">
           <h4 class="d-inline text-dark" v-if="isAfterDate">Zbiórka jest zakończona</h4>
           <h4 class="d-inline text-danger" v-else-if="newInfo.ended">Faza wpłat</h4>
           <h4 class="d-inline text-warning" v-else>Faza zapisów</h4>
           <b-button
-            class="mx-1 mb-2 btn-light"
+            class="mx-1 mt-1 btn-light"
             type="button"
             :class="{'btn-outline-danger': !newInfo.ended, 'btn-outline-success': newInfo.ended}"
             @click="end()"
@@ -20,7 +20,7 @@
           <b-button
             v-if="isEdited"
             type="submit"
-            class="mx-1 mb-2 btn-outline-success btn-light"
+            class="mx-1 mt-1 btn-outline-success btn-light"
             size="sm"
             data-toggle="tooltip"
             data-placement="auto"
@@ -29,7 +29,7 @@
             @click="update"
           >Zapisz</b-button>
           <b-button
-            class="mx-1 mb-2 btn-outline-secondary"
+            class="mx-1 mt-1 btn-outline-secondary"
             type="button"
             variant="light"
             @click="isEdited = !isEdited"
@@ -42,11 +42,9 @@
           >Anuluj</b-button>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
+        <div class="col-6">
           <label class="h6 font-weight-normal">Tytuł:</label>
           <b-input
-            class="w-50"
             id="titleName"
             type="text"
             placeholder="Wpisz tytuł zbiórki"
@@ -58,12 +56,10 @@
           <b-form-invalid-feedback :state="validation">Tytuł musi mieć od 3 do 50 znaków!</b-form-invalid-feedback>
         </div>
       </div>
-      <div class="row">
         <div class="col">
-          <label class="h6 font-weight-normal ml-3">Data zakończenia:</label>
+          <label class="h6 font-weight-normal">Data zakończenia:</label>
           <br>
           <date-picker
-            class="ml-3"
             type="datetime"
             :time-picker-options="timePickerOptions"
             :lang="dtLang"
@@ -78,7 +74,7 @@
       <h2 class="d-inline">{{info.title}}</h2>
       <span class="float-right small">
         <h4 class="d-inline text-waring" v-if="isAfterDate">Zbiórka jest zakończona</h4>
-        <h5 class="d-inline text-dark" v-else>Zbiórka trwa do: {{ info.endDate | moment("LL")}}</h5>
+        <h4 class="d-inline text-dark" v-else>Zbiórka trwa do: {{ info.endDate | moment("LL")}}</h4>
         <b-button
           class="mb-1 ml-2 btn-outline-secondary"
           type="button"
@@ -108,7 +104,7 @@
           </b-col>
         </b-row>-->
         <div class="row">
-          <div class="col col-lg-6">
+          <div class="col">
             <label>Opis:</label>
             <b-form-textarea
               placeholder="Wpisz opis zbiórki"
@@ -117,7 +113,7 @@
               v-model="newInfo.description"
             ></b-form-textarea>
           </div>
-          <div class="col col-lg-6">
+          <div class="col">
             <label>Informacje o płatności:</label>
             <b-form-textarea
               type="text"
