@@ -184,6 +184,27 @@ export default {
     },
     end() {
       this.newInfo.ended = !this.newInfo.ended;
+      if (this.isAfterDate) {
+        this.notifyEnded();
+      } else if (this.info.ended) {
+        this.notifyClosed();
+      }
+    },
+    notifyClosed() {
+      this.$notify({
+        group: "status",
+        title: "Status",
+        text: "Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę",
+        type: "warn"
+      });
+    },
+    notifyEnded() {
+      this.$notify({
+        group: "status",
+        title: "Status",
+        text: "Termin zbiórki minął, mamy nadzieję że wszystkie kwoty zostały wpłacone",
+        type: "error"
+      });
     }
   },
   computed: {

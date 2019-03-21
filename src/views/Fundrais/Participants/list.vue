@@ -152,9 +152,6 @@ export default {
       this.list[item.index] = { ...item };
       delete this.list[item.index].index;
       this.$emit("list", this.list);
-    },
-    saveComment() {
-      this.$emit("saveComment", true);
     }
   },
   watch: {
