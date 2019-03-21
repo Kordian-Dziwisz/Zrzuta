@@ -40,7 +40,7 @@
             data-placement="auto"
             v-b-tooltip.hover
             title="Usuń"
-            v-if="isAdmin || isAuthenticated"
+            v-if="(isAdmin || isAuthenticated) && !isEnded"
             @click="showModal = true"
           >
             <i class="fas fa-user-minus fa-fw pr-1"></i>
@@ -81,7 +81,7 @@
           data-placement="auto"
           v-b-tooltip.hover
           title="Pokaż więcej"
-        >Pokaż więcej</b-button>
+        >...</b-button>
       </div>
       <div v-else-if="item.comment.length > 80">
         <h6 class="d-inline">{{item.comment}}</h6>
@@ -93,7 +93,7 @@
           data-placement="auto"
           v-b-tooltip.hover
           title="Ukryj"
-        >Ukryj</b-button>
+        >...</b-button>
       </div>
       <div v-else>
         <h6>{{item.comment}}</h6>
@@ -168,8 +168,13 @@ export default {
       this.$emit("update", this.item);
     },
     saveComment() {
+      this.$notify({
+        group: "status",
+        title: "Status",
+        text: "Komentarz został zapisany",
+        type: "success"
+      });
       this.update();
-      this.$emit("saveComment", true);
     }
   },
   computed: {

@@ -63,7 +63,7 @@
               class="text-right"
             >{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}}</td>
             <td class="text-right">
-              <b-button-group>
+              <b-button-group v-if="!ended">
                 <b-button
                   class="btn"
                   size="sm"
@@ -124,13 +124,7 @@
         </tbody>
       </table>
     </b-card-body>
-    <b-modal
-      id
-      @hide="editShow = false"
-      :lazy="true"
-      title="Edytuj produkt"
-      v-model="editShow"
-    >
+    <b-modal id @hide="editShow = false" :lazy="true" title="Edytuj produkt" v-model="editShow">
       <form v-if="editObject">
         <b-form-row>
           <label for="editNameInput">Nazwa:</label>

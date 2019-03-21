@@ -29,7 +29,6 @@
           :list="listOfParticipants"
           :isEnded="this.fundraisInfo.ended"
           @list="updateParticipants"
-          @saveComment="saveComment"
         />
       </div>
       <div class="col col-lg-6">
@@ -135,20 +134,7 @@ export default {
           await console.log("document updated");
         }
         if (!this.fundraisInfo) return;
-        if (this.compareDates) {
-          this.notifyEnded();
-        } else if (this.fundraisInfo.ended) {
-          this.notifyClosed();
-        }
       }
-    },
-    saveComment() {
-      this.$notify({
-        group: "status",
-        title: "Status",
-        text: "Komentarz został zapisany",
-        type: "success"
-      });
     },
     notifyClosed() {
       this.$notify({
