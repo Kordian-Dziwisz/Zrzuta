@@ -71,10 +71,10 @@
           >Zapisz</b-button>
         </div>
       </div>
-      <div v-else-if="item.comment.length > 80 && !commentShow">
-        <h6 class="d-inline">{{ellipsis(item.comment, 80).slice(0, -3)}}</h6>
+      <div v-else-if="item.comment.length > 50 && !commentShow">
+        <h6 class="d-inline">{{ellipsis(item.comment, 50).slice(0, -3)}}</h6>
         <b-button
-          class="d-inline btn-light btn-outline-secondary mx-1"
+          class="d-inline btn-light mx-1"
           @click="commentShow=!commentShow"
           size="sm"
           data-toggle="tooltip"
@@ -83,10 +83,10 @@
           title="Pokaż więcej"
         >...</b-button>
       </div>
-      <div v-else-if="item.comment.length > 80">
+      <div v-else-if="item.comment.length > 50">
         <h6 class="d-inline">{{item.comment}}</h6>
         <b-button
-          class="d-inline text-dark btn-light btn-outline-secondary mx-1"
+          class="d-inline text-dark btn-light mx-1"
           @click="commentShow=!commentShow"
           size="sm"
           data-toggle="tooltip"

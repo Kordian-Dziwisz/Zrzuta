@@ -46,80 +46,82 @@
       <table v-else class="table table-striped border">
         <thead class="text-center">
           <th>Nazwa</th>
-          <th>Ilość (szt.)</th>
+          <th>Ilość</th>
           <th>Cena (zł)</th>
           <th>Koszt (zł)</th>
           <th></th>
         </thead>
         <tbody>
           <tr class="text-center" v-for="(item, index) in list" :key="index">
-            <td
-              class="text-left"
-              :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
-            >{{item.name}}</td>
-            <td class="text-right">{{item.number}}</td>
-            <td class="text-right">{{item.price.toString().replace(/[.]/, ',')}}</td>
-            <td
-              class="text-right"
-            >{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}}</td>
-            <td class="text-right">
-              <b-button-group v-if="!ended">
-                <b-button
-                  class="btn"
-                  size="sm"
-                  data-toggle="tooltip"
-                  data-placement="auto"
-                  v-b-tooltip.hover
-                  title="Zagłosuj"
-                  variant="primary"
-                  :class="{'btn-primary': isLiked(index), 'btn-outline-primary btn-light': !isLiked(index)}"
-                  @click="like(index)"
-                >
-                  <i class="fas fa-thumbs-up fa-fw"></i>
-                  <span class="ml-1">{{item.likes.length}}</span>
-                </b-button>
-                <b-button
-                  size="sm"
-                  :class="{'btn-outline-success btn-light': !item.accepted, 'btn-success': item.accepted}"
-                  data-toggle="tooltip"
-                  data-placement="auto"
-                  v-b-tooltip.hover
-                  title="Zatwierdź"
-                  v-if="isAdmin"
-                  @click="accept(index)"
-                >
-                  <i class="fas fa-check fa-fw"></i>
-                  <span class="d-none">Akceptuj</span>
-                </b-button>
-                <b-button
-                  size="sm"
-                  class="btn-outline-danger btn-light"
-                  data-toggle="tooltip"
-                  data-placement="auto"
-                  v-b-tooltip.hover
-                  title="Usuń"
-                  v-if="isAuthenticated(index) || isAdmin"
-                  @click="remove(index)"
-                >
-                  <i class="fas fa-trash-alt fa-fw"></i>
-                  <span class="d-none">Usuń</span>
-                </b-button>
-                <b-button
-                  size="sm"
-                  class="btn-outline-secondary btn-light"
-                  data-toggle="tooltip"
-                  data-placement="auto"
-                  v-b-tooltip.hover
-                  title="Edytuj"
-                  v-if="isAuthenticated(index) || isAdmin"
-                  @click="edit(index)"
-                >
-                  <i class="fas fa-cogs fa-fw"></i>
-                  <span class="d-none">Edytuj</span>
-                </b-button>
-              </b-button-group>
-              <!-- <b-dropdown text="akcje" size="sm"></b-dropdown> -->
-            </td>
+            <template v-if="item.accepted == true || !ended">
+              <td
+                class="text-left"
+                :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
+              >{{item.name}}</td>
+              <td class="text-right">{{item.number}}</td>
+              <td class="text-right">{{item.price.toString().replace(/[.]/, ',')}}</td>
+              <td
+                class="text-right"
+              >{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}}</td>
+              <td class="text-right">
+                <b-button-group v-if="!ended">
+                  <b-button
+                    class="btn"
+                    size="sm"
+                    data-toggle="tooltip"
+                    data-placement="auto"
+                    v-b-tooltip.hover
+                    title="Zagłosuj"
+                    variant="primary"
+                    :class="{'btn-primary': isLiked(index), 'btn-outline-primary btn-light': !isLiked(index)}"
+                    @click="like(index)"
+                  >
+                    <i class="fas fa-thumbs-up fa-fw"></i>
+                    <span class="ml-1">{{item.likes.length}}</span>
+                  </b-button>
+                  <b-button
+                    size="sm"
+                    :class="{'btn-outline-success btn-light': !item.accepted, 'btn-success': item.accepted}"
+                    data-toggle="tooltip"
+                    data-placement="auto"
+                    v-b-tooltip.hover
+                    title="Zatwierdź"
+                    v-if="isAdmin"
+                    @click="accept(index)"
+                  >
+                    <i class="fas fa-check fa-fw"></i>
+                    <span class="d-none">Akceptuj</span>
+                  </b-button>
+                  <b-button
+                    size="sm"
+                    class="btn-outline-danger btn-light"
+                    data-toggle="tooltip"
+                    data-placement="auto"
+                    v-b-tooltip.hover
+                    title="Usuń"
+                    v-if="isAuthenticated(index) || isAdmin"
+                    @click="remove(index)"
+                  >
+                    <i class="fas fa-trash-alt fa-fw"></i>
+                    <span class="d-none">Usuń</span>
+                  </b-button>
+                  <b-button
+                    size="sm"
+                    class="btn-outline-secondary btn-light"
+                    data-toggle="tooltip"
+                    data-placement="auto"
+                    v-b-tooltip.hover
+                    title="Edytuj"
+                    v-if="isAuthenticated(index) || isAdmin"
+                    @click="edit(index)"
+                  >
+                    <i class="fas fa-cogs fa-fw"></i>
+                    <span class="d-none">Edytuj</span>
+                  </b-button>
+                </b-button-group>
+                <!-- <b-dropdown text="akcje" size="sm"></b-dropdown> -->
+              </td>
+            </template>
           </tr>
         </tbody>
       </table>
