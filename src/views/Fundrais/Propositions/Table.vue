@@ -10,7 +10,23 @@
     <!-- </b-card-header> -->
     <b-card-title>
       <h3>
-        <span>Cele zbiórki</span>
+        <div class="d-inline">
+          <span>Cele zbiórki</span>
+          <b-button
+            v-if="!this.ended"
+            type="submit"
+            class="btn-outline-success btn-light ml-2 mb-1"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Dodaj nową propozycję"
+            size="sm"
+            @click="addNew"
+          >
+            <i class="fas fa-plus fa-fw"></i>
+            Dodaj
+          </b-button>
+        </div>
         <span class="float-right text-right" v-if="priceSum > 0 && numOfParticipants">
           Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł
           <div class="text-right small" v-if="numOfParticipants > 1">
@@ -21,22 +37,6 @@
       </h3>
     </b-card-title>
     <b-card-body>
-      <form @submit.prevent="addNew" v-if="!this.ended">
-        <div class="col">
-          <b-button
-            type="submit"
-            class="btn-outline-success btn-light"
-            data-toggle="tooltip"
-            data-placement="auto"
-            v-b-tooltip.hover
-            title="Dodaj"
-            size="sm"
-          >
-            <i class="fas fa-plus-square"></i>
-            Dodaj nową propozycję
-          </b-button>
-        </div>
-      </form>
       <b-alert
         v-if="list.length==0"
         :show="true"
@@ -115,7 +115,7 @@
                     v-if="isAuthenticated(index) || isAdmin"
                     @click="edit(index)"
                   >
-                    <i class="fas fa-cogs fa-fw"></i>
+                    <i class="fas fa-edit fa-fw"></i>
                     <span class="d-none">Edytuj</span>
                   </b-button>
                 </b-button-group>
@@ -154,9 +154,8 @@
             min="0"
           ></b-form-input>
           <b-form-invalid-feedback :state="validationNumber">Wpisz ilość (0-9999 szt.)</b-form-invalid-feedback>
-          <label for="editNameInput">Cena:</label>
+          <label for="editPriceInput">Cena:</label>
           <b-input
-            :state="validationPrice"
             id="editPriceInput"
             class="my-1"
             type="number"
@@ -167,7 +166,7 @@
             step="0.01"
             min="0"
           ></b-input>
-          <b-form-invalid-feedback>Wpisz cenę (0-9999 zł)</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="validationPrice">Wpisz cenę (0-9999 zł)</b-form-invalid-feedback>
         </b-form-row>
       </form>
       <div slot="modal-footer" class="w-100">

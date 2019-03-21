@@ -20,7 +20,7 @@
           @click="addMe"
           size="sm"
         >
-          <i class="fas fa-pl`us`-square fa-fw"></i>
+          <i class="fas fa-plus fa-fw"></i>
           Dodaj mnie
         </b-button>
       </h3>
@@ -28,52 +28,46 @@
     <b-card-body>
       <form autocomplete="off" @submit.prevent="addNew" v-if="!this.isEnded && authenticate">
         <label for="userNameValidation" v-if="isAdmin">Dodaj nowego uczestnika:</label>
-        <div class="form-row">
-          <div class="col" v-if="isAdmin">
-            <b-input
-              class="d-inline form-control"
-              id="userNameValidation"
-              type="text"
-              placeholder="Nazwa/Imię/Ksywka"
-              maxlength="30"
-              v-model="name"
-              :state="dirty ? validation : null"
-              @update="name.length ? dirty=true : dirty=false"
-              @blur="dirty = false"
-              @focus="name.length ? dirty = true : dirty = false"
-              required
-            />
-            <b-form-invalid-feedback>Nazwa uczestnika musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
-          </div>
-          <br>
-          <div class="col text-right mr-1">
-            <b-button
-              type="submit"
-              class="d-box btn-outline-success btn-light"
-              size="sm"
-              data-toggle="tooltip"
-              data-placement="auto"
-              v-b-tooltip.hover
-              title="Dodaj uczestnika"
-              v-if="isAdmin"
-            >
-              <i class="fas fa-plus-square fa-fw"></i>
-              Dodaj uczestnika
-            </b-button>
-            <b-button
-              class="btn-outline-success btn-light ml-1"
-              data-toggle="tooltip"
-              data-placement="auto"
-              v-b-tooltip.hover
-              title="Dodaj siebie"
-              v-if="!alreadyAdded"
-              @click="addMe"
-              size="sm"
-            >
-              <i class="fas fa-plus-square fa-fw"></i>
-              Dodaj mnie
-            </b-button>
-          </div>
+        <div class="input-group">
+          <b-input
+            id="userNameValidation"
+            type="text"
+            placeholder="Nazwa/Imię/Ksywka"
+            maxlength="30"
+            v-model="name"
+            :state="dirty ? validation : null"
+            @update="name.length ? dirty=true : dirty=false"
+            @blur="dirty = false"
+            @focus="name.length ? dirty = true : dirty = false"
+            required
+          />
+          <b-form-invalid-feedback>Nazwa uczestnika musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
+          <b-button
+            type="submit"
+            class="btn-outline-success btn-light mx-1"
+            size="sm"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Dodaj uczestnika"
+            v-if="isAdmin"
+          >
+            <i class="fas fa-plus fa-fw"></i>
+            Dodaj
+          </b-button>
+          <b-button
+            class="btn-outline-success btn-light"
+            data-toggle="tooltip"
+            data-placement="auto"
+            v-b-tooltip.hover
+            title="Dodaj siebie"
+            v-if="!alreadyAdded"
+            @click="addMe"
+            size="sm"
+          >
+            <i class="fas fa-plus fa-fw"></i>
+            Dodaj mnie
+          </b-button>
         </div>
       </form>
       <div class="h5 row" v-else-if="authenticate && list.length" :show="authenticate">
@@ -84,7 +78,7 @@
       <div class="row" v-if="authenticate">
         <div class="col p-0">
           <ul>
-            <b-alert :show="list.length==0" variant="warning" class="text-dark">
+            <b-alert :show="list.length==0" variant="warning" class="text-dark mt-2">
               Nie zapisano żadnego uczestnika,
               <span
                 v-if="!this.isEnded && isAdmin"
@@ -98,7 +92,6 @@
                 :isEnded="isEnded"
                 @remove="remove"
                 @update="update"
-                @saveComment="saveComment"
               ></item>
             </li>
           </ul>
