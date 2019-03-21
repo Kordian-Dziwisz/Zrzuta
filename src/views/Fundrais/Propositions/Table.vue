@@ -130,15 +130,13 @@
       hide-footer
       @hide="editShow = false"
       :lazy="true"
-      header-bg-variant="secondary"
-      header-text-variant="light"
       title="Edytuj produkt"
       v-model="editShow"
     >
       <form v-if="editObject">
         <b-form-row>
           <label for="editNameInput">Nazwa:</label>
-          <b-input
+          <b-form-input
             id="editNameInput"
             class="mb-1"
             type="text"
@@ -147,11 +145,13 @@
             required
             placeholder="Wpisz nazwę"
             maxlength="30"
+          ></b-form-input>
+          <b-form-invalid-feedback
             :state="validationName"
-          ></b-input>
-          <b-form-invalid-feedback>Proszę uzupełnić pole, nazwa musi mieć długość do 50 znaków!</b-form-invalid-feedback>
+          >Proszę uzupełnić pole, nazwa musi mieć długość do 50 znaków!</b-form-invalid-feedback>
+
           <label for="editNumberInput">Ilość:</label>
-          <b-input
+          <b-form-input
             id="editNumberInput"
             type="number"
             name="quantity"
@@ -161,11 +161,13 @@
             max="9999"
             step="1"
             min="0"
+          ></b-form-input>
+          <b-form-invalid-feedback
             :state="validationNumber"
-          ></b-input>
-          <b-form-invalid-feedback>Proszę wpisać ilość jako liczbę naturalną</b-form-invalid-feedback>
-          <label for="editNameInput">Cena:</label>
-          <b-input
+          >Proszę wpisać ilość jako liczbę naturalną</b-form-invalid-feedback>
+
+          <label for="editPriceInput">Cena:</label>
+          <b-form-input
             id="editPriceInput"
             class="my-1"
             type="number"
@@ -175,8 +177,8 @@
             max="9999"
             step="0.01"
             min="0"
-          ></b-input>
-          <b-form-invalid-feedback>Proszę wpisać cenę większą od 0</b-form-invalid-feedback>
+          ></b-form-input>
+          <b-form-invalid-feedback :state="validationPrice">Proszę wpisać cenę większą od 0</b-form-invalid-feedback>
         </b-form-row>
       </form>
       <form class="float-right">
@@ -220,6 +222,7 @@
 </template>
 <script>
 import { parse } from "@fortawesome/fontawesome-svg-core";
+import { required, minLenght, between, maxLength, integer, numeric } from "vuelidate/lib/validators";
 
 export default {
   props: {
@@ -239,29 +242,54 @@ export default {
   },
   methods: {
     addNew() {
-      this.list.push({
-        creator: localStorage.getItem("login"),
-        name: "Nowy produkt",
-        number: 1,
-        price: 1.0,
-        accepted: false,
-        likes: [],
-        dislikes: []
-      });
-      this.edit(this.list.length - 1);
+      //   this.list.push({
+      //     creator: localStorage.getItem("login"),
+      //     name: editObject.name,
+      //     number: editObject.number,
+      //     price: editObject.price,
+      //     accepted: false,
+      //     likes: [],
+      //     dislikes: []
+      //   });
+      this.edit(null);
+      //   this.edit(this.list.length - 1);
     },
     edit(index) {
-      this.editIndex = index;
-      this.editObject = { ...this.list[index] };
-      this.editShow = true;
+      if (index === null) {
+        this.editIndex = null;
+        this.editObject = {
+          creator: localStorage.getItem("login"),
+          name: "",
+          number: null,
+          price: null,
+          accepted: false,
+          likes: [],
+          dislikes: []
+        };
+        this.editShow = true;
+      } else {
+        this.editIndex = index;
+        this.editObject = { ...this.list[index] };
+        this.editShow = true;
+      }
     },
     editSave() {
       if (this.validationName && this.validationNumber && this.validationPrice) {
-        this.editShow = false;
-        this.list[this.editIndex].name = this.editObject.name;
-        this.list[this.editIndex].number = parseInt(this.editObject.number);
-        this.list[this.editIndex].price = parseFloat(this.editObject.price).toFixed(2);
-        this.$emit("list", this.list);
+        //   w wypadku kiedy tworzysz nowy obiekt
+        if (this.editIndex === null) {
+          this.list.push({ ...this.editObject });
+          console.log(this.editObject);
+          this.$emit("list", this.list);
+          this.editShow = false;
+        } else {
+          this.editShow = false;
+
+          this.list[this.editIndex].name = this.editObject.name;
+          this.list[this.editIndex].number = parseInt(this.editObject.number);
+          this.list[this.editIndex].price = parseFloat(this.editObject.price).toFixed(2);
+          this.editIndex = null;
+          this.$emit("list", this.list);
+        }
       }
     },
     remove(index) {
@@ -293,6 +321,23 @@ export default {
       return this.list[index].creator == localStorage.getItem("login");
     }
   },
+  //   validations: {
+  //     editInfo: {
+  //       name: {
+  //         required: required(),
+  //         minLength: minLenght(4),
+  //         maxLength: maxLength(80)
+  //       },
+  //       number: {
+  //         between: between(20, 30),
+  //         integer: integer()
+  //       },
+  //       price: {
+  //         between: between(20, 30),
+  //         numeric: numeric()
+  //       }
+  //     }
+  //   },
   computed: {
     priceSum: {
       get() {

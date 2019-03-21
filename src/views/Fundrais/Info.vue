@@ -127,7 +127,7 @@
         </div>
       </b-card-text>
     </b-card-body>
-    <b-card-body v-else>
+    <b-card-body v-else-if="info.description.length || info.accountNumber">
       <b-card-text>
         <div class="row py-2">
           <div class="col-6 col-lg-6" v-if="info.description.length">
