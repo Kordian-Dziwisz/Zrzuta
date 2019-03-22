@@ -126,7 +126,7 @@
         </tbody>
       </table>
     </b-card-body>
-    <b-modal id @hide="editShow = false" :lazy="true" title="Edytuj produkt" v-model="editShow">
+    <b-modal id @hide="editShow = false" :lazy="true" :title="editModalTitle" v-model="editShow">
       <form v-if="editObject" @submit.prevent="editSave">
         <b-form-row>
           <label for="editNameInput">Nazwa:</label>
@@ -225,7 +225,8 @@ export default {
       removeIndex: 0,
       editObject: undefined,
       editShow: false,
-      editIndex: undefined
+      editIndex: undefined,
+      editModalTitle: "Edytuj produkt"
     };
   },
   methods: {
@@ -244,6 +245,7 @@ export default {
     },
     edit(index) {
       if (index === null) {
+        this.editModalTitle = "Nowy produkt";
         this.editIndex = null;
         this.editObject = {
           creator: localStorage.getItem("login"),
@@ -259,6 +261,7 @@ export default {
         this.editIndex = index;
         this.editObject = { ...this.list[index] };
         this.editShow = true;
+        this.editModalTitle = "Edytuj produkt";
       }
     },
     editSave() {
