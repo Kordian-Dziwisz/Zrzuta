@@ -36,7 +36,7 @@
         </span>
       </h3>
     </b-card-title>
-    <b-card-body>
+    <b-card-body class="px-0 mt-3">
       <b-alert
         v-if="list.length==0"
         :show="true"
@@ -44,8 +44,8 @@
         class="text-dark"
       >Nie zgłoszono żadnych propozycji</b-alert>
       <table v-else class="table table-striped border">
-        <thead class="text-center">
-          <th>Nazwa</th>
+        <thead>
+          <th class="mr-2">Nazwa</th>
           <th>Ilość</th>
           <th>Cena (zł)</th>
           <th>Koszt (zł)</th>
