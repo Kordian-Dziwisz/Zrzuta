@@ -34,7 +34,7 @@ import firebase from "firebase";
 export default {
   data() {
     return {
-      db: firebase.firestore().collection("Zrzuty"),
+      db: firebase.firestore().collection("Zrzuty-develop"),
       isClicked: false,
       newFundrais: {
         guid: "",

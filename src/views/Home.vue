@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       login: "",
-      db: firebase.firestore().collection("Zrzuty"),
+      db: firebase.firestore().collection("Zrzuty-develop"),
       list: [],
       guid: ""
     };
