@@ -45,11 +45,11 @@
       >Nie zgłoszono żadnych propozycji</b-alert>
       <table v-else class="table table-striped border">
         <thead>
-          <th class="mr-2">Nazwa</th>
-          <th>Ilość</th>
-          <th>Cena (zł)</th>
-          <th>Koszt (zł)</th>
-          <th></th>
+          <th class="text-left">Nazwa</th>
+          <th class="text-right">Ilość</th>
+          <th class="text-right">Cena (zł)</th>
+          <th class="text-right">Koszt (zł)</th>
+          <th class="text-right"></th>
         </thead>
         <tbody>
           <tr class="text-center" v-for="(item, index) in list" :key="index">
