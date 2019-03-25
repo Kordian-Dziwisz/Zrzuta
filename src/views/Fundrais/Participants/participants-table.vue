@@ -93,7 +93,11 @@
                   class="small"
                   :class="{'text-success': item.accepted, 'text-primary': item.paid}"
                 >{{item.accepted ? "zapłacił/a" : item.paid ? "wpłacił/a" : ""}}</span>
-                <a v-if="isAuthenticated" style="cursor: pointer"></a>
+                <a
+                  v-if="isAuthenticated"
+                  style="cursor: pointer"
+                  @click="editCommentIndex=index; edit"
+                ></a>
                 <a
                   style="cursor: pointer"
                   @click="showComment==index ? showComment=null : showComment=index"
@@ -141,7 +145,7 @@
                 v-b-tooltip.hover
                 title="Usuń uczestnika"
                 v-if="(isAdmin || isAuthenticated) && !isEnded"
-                @click="showModal = true; removeIndex=index"
+                @click="showRemoveModal = true; removeIndex=index"
               >
                 <i class="fas fa-trash-alt fa-fw"></i>
                 <span class="d-none d-lg-inline"></span>
@@ -151,8 +155,55 @@
         </tbody>
       </table>
     </b-card-body>
+    <!-- comment modal -->
     <b-modal
-      v-model="showModal"
+      id
+      @hide="editShow = false"
+      :lazy="true"
+      title="edytuj komentarz"
+      v-model="showCommentModal"
+    >
+      <form @submit.prevent="saveComment()">
+        <b-form-row>
+          <label for="editCommentInput">Komentarz:</label>
+          <b-form-input
+            id="editCommentInput"
+            class="mb-1"
+            type="text"
+            name="name"
+            v-model.trim="newComment"
+            required
+            placeholder="Wpisz komentarz"
+            maxlength="30"
+          ></b-form-input>
+          <b-form-invalid-feedback :state="validationName">Wpisz swój komentarz</b-form-invalid-feedback>
+          <div slot="modal-footer" class="w-100">
+            <b-button
+              class="float-right ml-1"
+              variant="outline-success light"
+              @click="saveComment()"
+            >Zapisz</b-button>
+            <b-button
+              class="float-right"
+              variant="outline-secondary light"
+              @click="editShow = false"
+            >Anuluj</b-button>
+          </div>
+        </b-form-row>
+      </form>
+      <div slot="modal-footer" class="w-100">
+        <b-button class="float-right ml-1" variant="outline-success light" @click="editSave">Zapisz</b-button>
+        <b-button
+          class="float-right"
+          variant="outline-secondary light"
+          @click="editShow = false"
+        >Anuluj</b-button>
+      </div>
+    </b-modal>
+
+    <!-- remove modal -->
+    <b-modal
+      v-model="showRemoveModal"
       id
       :hide-header-close="true"
       :lazy="true"
@@ -179,7 +230,7 @@
         <b-button
           class="float-right"
           variant="outline-secondary light"
-          @click="showModal = false"
+          @click="showRemoveModal = false"
         >Anuluj</b-button>
       </div>
     </b-modal>
@@ -198,13 +249,22 @@ export default {
     return {
       name: "",
       dirty: false,
-      showModal: false,
-      showComment: null
+      newComment: "",
+      showRemoveModal: false,
+      showCommentModal: false,
+      showCommentIndex: null,
+      editCommentIndex: null
     };
   },
   methods: {
     showComment(index) {
       console.log(index);
+    },
+    saveComment(index) {
+      if (newComment.length) {
+        this.list[editCommentIndex].comment = newComment;
+        this.showCommentModal = false;
+      }
     },
     addNew() {
       if (this.validation) {
@@ -229,7 +289,7 @@ export default {
       });
     },
     remove(index) {
-      this.showModal = false;
+      this.showRemoveModal = false;
       this.list.splice(index, 1);
     },
     update(item) {
