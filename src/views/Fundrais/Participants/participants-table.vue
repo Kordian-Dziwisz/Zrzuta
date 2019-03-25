@@ -83,10 +83,10 @@
           v-if="!this.isEnded && isAdmin"
         >dopisz go w polu powyżej.</span>
       </b-alert>
-      <table v-else class="table table-striped border">
+      <table v-else class="table table-striped border mt-2">
         <tbody>
           <tr v-for="(item, index) in list" :key="index">
-            <td>
+            <td class="pl-1">
               <h5>
                 {{item.name}}
                 <span
@@ -102,7 +102,7 @@
               </h5>
               <h6 v-if="showComment==index">{{item.comment}}</h6>
             </td>
-            <td class="text-right">
+            <td class="text-right pr-1">
               <!-- accept -->
               <b-button
                 class="btn-outline-success btn-light mr-1"
