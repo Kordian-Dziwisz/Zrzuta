@@ -140,7 +140,7 @@
             placeholder="Wpisz nazwę"
             maxlength="30"
           ></b-form-input>
-          <b-form-invalid-feedback :state="validationName">Wpisz nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="validationName">Wpisz poprawną nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
           <label for="editNumberInput">Ilość:</label>
           <b-form-input
             id="editNumberInput"
@@ -153,7 +153,7 @@
             step="1"
             min="0"
           ></b-form-input>
-          <b-form-invalid-feedback :state="validationNumber">Wpisz ilość (0-9999 szt.)</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="validationNumber">Wpisz poprawną ilość (1-9999 szt.)</b-form-invalid-feedback>
           <label for="editPriceInput">Cena:</label>
           <b-input
             id="editPriceInput"
@@ -166,7 +166,7 @@
             step="0.01"
             min="0"
           ></b-input>
-          <b-form-invalid-feedback :state="validationPrice">Wpisz cenę (0-9999 zł)</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="validationPrice">Wpisz poprawną cenę (0,01-9999 zł)</b-form-invalid-feedback>
         </b-form-row>
       </form>
       <div slot="modal-footer" class="w-100">
