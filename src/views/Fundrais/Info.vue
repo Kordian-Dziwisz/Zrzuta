@@ -55,7 +55,6 @@
           />
           <b-form-invalid-feedback :state="validation">Tytuł musi mieć od 3 do 50 znaków!</b-form-invalid-feedback>
         </div>
-      </div>
         <div class="col">
           <label class="h6 font-weight-normal">Data zakończenia:</label>
           <br>
@@ -68,7 +67,6 @@
             input-class="form-control"
           ></date-picker>
         </div>
-      </div>
     </b-card-title>
     <b-card-title v-else>
       <h2 class="d-inline">{{info.title}}</h2>
