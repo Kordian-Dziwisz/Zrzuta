@@ -1,7 +1,7 @@
 <template>
-  <b-card class="border rounded">
+  <b-card class="border rounded" no-body>
     <!-- <b-card-header class="w-100 shadow-sm h4"></b-card-header> -->
-    <b-card-title>
+    <b-card-title class="p-2">
       <h3>
         <span>Uczestnicy</span>
         <b-badge
@@ -42,7 +42,7 @@
               @focus="name.length ? dirty = true : dirty = false"
               required
             />
-            <b-form-invalid-feedback>Nazwa uczestnika musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
+            <b-form-invalid-feedback>Nazwa uczestnika musi mieć powyżej 3 znaków!</b-form-invalid-feedback>
             <b-button
               type="submit"
               class="btn-outline-success btn-light mx-1"
@@ -89,24 +89,28 @@
             <td class="pl-1">
               <h5>
                 {{item.name}}
-                <span
-                  class="small"
-                  :class="{'text-success': item.accepted, 'text-primary': item.paid}"
-                >{{item.accepted ? "zapłacił/a" : item.paid ? "wpłacił/a" : ""}}</span>
                 <a
+                  style="cursor: pointer"
+                  @click="showCommentIndex==index ? showCommentIndex=null : showCommentIndex=index"
+                  class="small"
+                >{{item.comment.length ? (showCommentIndex==index ? ' Schowaj komentarz ':' Pokaż komentarz ') : ''}}</a>
+              </h5>
+              <span v-if="showCommentIndex==index">
+                {{item.comment}}
+                <a
+                  class="font-weight-bold"
                   v-if="isAuthenticated"
                   style="cursor: pointer"
-                  @click="editCommentIndex=index; edit"
-                ></a>
-                <a
-                  style="cursor: pointer"
-                  @click="showComment==index ? showComment=null : showComment=index"
-                  class="small bg-transparent outline-none"
-                >{{item.comment ? showComment==index ? ' schowaj komentarz':' pokaż komentarz' : ''}}</a>
-              </h5>
-              <h6 v-if="showComment==index">{{item.comment}}</h6>
+                  @click="editCommentIndex=index; showCommentModal = true"
+                >(Edytuj Komentarz)</a>
+              </span>
             </td>
             <td class="text-right pr-1">
+              <div
+                class="d-inline"
+                :class="{'text-success': item.accepted, 'text-primary': item.paid}"
+              >{{item.accepted ? "zapłacił/a " : item.paid ? "wpłacił/a " : ""}}</div>
+
               <!-- accept -->
               <b-button
                 class="btn-outline-success btn-light mr-1"
@@ -158,7 +162,8 @@
     <!-- comment modal -->
     <b-modal
       id
-      @hide="editShow = false"
+      @hide="showCommentModal = false"
+      :hide-header-close="true"
       :lazy="true"
       title="edytuj komentarz"
       v-model="showCommentModal"
@@ -175,28 +180,21 @@
             required
             placeholder="Wpisz komentarz"
             maxlength="30"
+            :state="newComment.length > 0"
           ></b-form-input>
-          <b-form-invalid-feedback :state="validationName">Wpisz swój komentarz</b-form-invalid-feedback>
-          <div slot="modal-footer" class="w-100">
-            <b-button
-              class="float-right ml-1"
-              variant="outline-success light"
-              @click="saveComment()"
-            >Zapisz</b-button>
-            <b-button
-              class="float-right"
-              variant="outline-secondary light"
-              @click="editShow = false"
-            >Anuluj</b-button>
-          </div>
+          <b-form-invalid-feedback>Wpisz swój komentarz</b-form-invalid-feedback>
         </b-form-row>
       </form>
       <div slot="modal-footer" class="w-100">
-        <b-button class="float-right ml-1" variant="outline-success light" @click="editSave">Zapisz</b-button>
+        <b-button
+          class="float-right ml-1"
+          variant="outline-success light"
+          @click="saveComment()"
+        >Zapisz</b-button>
         <b-button
           class="float-right"
           variant="outline-secondary light"
-          @click="editShow = false"
+          @click="showCommentModal = false"
         >Anuluj</b-button>
       </div>
     </b-modal>
@@ -257,12 +255,9 @@ export default {
     };
   },
   methods: {
-    showComment(index) {
-      console.log(index);
-    },
     saveComment(index) {
-      if (newComment.length) {
-        this.list[editCommentIndex].comment = newComment;
+      if (this.newComment.length) {
+        this.list[this.editCommentIndex].comment = this.newComment;
         this.showCommentModal = false;
       }
     },
@@ -340,7 +335,7 @@ export default {
       return { paid: paid, accepted: accepted, not: not };
     },
     validation() {
-      return this.name.length >= 3 && this.name.length < 30;
+      return this.name.length >= 3;
     },
     isAuthenticated() {
       return this.list.find(item => item.name == localStorage.getItem("login")) != null || this.isAdmin;
