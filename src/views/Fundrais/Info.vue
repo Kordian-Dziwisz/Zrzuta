@@ -42,31 +42,31 @@
           >Anuluj</b-button>
         </div>
       </div>
-        <div class="col-6">
-          <label class="h6 font-weight-normal">Tytuł:</label>
-          <b-input
-            id="titleName"
-            type="text"
-            placeholder="Wpisz tytuł zbiórki"
-            maxlength="50"
-            v-model.trim="newInfo.title"
-            :state="dirty ? validation : null"
-            @update="dirty=true"
-          />
-          <b-form-invalid-feedback :state="validation">Tytuł musi mieć od 3 do 50 znaków!</b-form-invalid-feedback>
-        </div>
-        <div class="col">
-          <label class="h6 font-weight-normal">Data zakończenia:</label>
-          <br>
-          <date-picker
-            type="datetime"
-            :time-picker-options="timePickerOptions"
-            :lang="dtLang"
-            v-model="newInfo.endDate"
-            format="YYYY-MM-DD HH:mm"
-            input-class="form-control"
-          ></date-picker>
-        </div>
+      <div class="col-6">
+        <label class="h6 font-weight-normal">Tytuł:</label>
+        <b-input
+          id="titleName"
+          type="text"
+          placeholder="Wpisz tytuł zbiórki"
+          maxlength="50"
+          v-model.trim="newInfo.title"
+          :state="dirty ? validation : null"
+          @update="dirty=true"
+        />
+        <b-form-invalid-feedback :state="validation">Tytuł musi mieć od 3 do 50 znaków!</b-form-invalid-feedback>
+      </div>
+      <div class="col">
+        <label class="h6 font-weight-normal">Data zakończenia:</label>
+        <br>
+        <date-picker
+          type="datetime"
+          :time-picker-options="timePickerOptions"
+          :lang="dtLang"
+          v-model="newInfo.endDate"
+          format="YYYY-MM-DD HH:mm"
+          input-class="form-control"
+        ></date-picker>
+      </div>
     </b-card-title>
     <b-card-title v-else>
       <h2 class="d-inline">{{info.title}}</h2>

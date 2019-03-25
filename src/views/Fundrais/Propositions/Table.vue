@@ -52,12 +52,14 @@
           <th class="text-right"></th>
         </thead>
         <tbody>
-          <tr class="text-center" v-for="(item, index) in list" :key="index">
+          <tr
+            :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
+            class="text-center"
+            v-for="(item, index) in list"
+            :key="index"
+          >
             <template v-if="item.accepted == true || !ended">
-              <td
-                class="text-left"
-                :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
-              >{{item.name}}</td>
+              <td class="text-left">{{item.name}}</td>
               <td class="text-right">{{item.number}}</td>
               <td class="text-right">{{item.price.toString().replace(/[.]/, ',')}}</td>
               <td
@@ -190,7 +192,9 @@
             placeholder="Wpisz nazwę"
             maxlength="30"
           ></b-form-input>
-          <b-form-invalid-feedback :state="validationName">Wpisz nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
+          <b-form-invalid-feedback
+            :state="validationName"
+          >Wpisz poprawną nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
           <label for="editNumberInput">Ilość:</label>
           <b-form-input
             id="editNumberInput"
@@ -203,7 +207,7 @@
             step="1"
             min="0"
           ></b-form-input>
-          <b-form-invalid-feedback :state="validationNumber">Wpisz ilość (0-9999 szt.)</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="validationNumber">Wpisz poprawną ilość (1-9999 szt.)</b-form-invalid-feedback>
           <label for="editPriceInput">Cena:</label>
           <b-input
             id="editPriceInput"
@@ -216,7 +220,7 @@
             step="0.01"
             min="0"
           ></b-input>
-          <b-form-invalid-feedback :state="validationPrice">Wpisz cenę (0-9999 zł)</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="validationPrice">Wpisz poprawną cenę (0,01-9999 zł)</b-form-invalid-feedback>
         </b-form-row>
       </form>
       <div slot="modal-footer" class="w-100">
@@ -441,12 +445,10 @@ thead {
   white-space: none;
 }
 .acceptedBar {
-  border-left: 6px solid #28a745 !important;
-  box-sizing: border-box;
+  box-shadow: inset 6px 0px 0px 0px #28a745 !important;
 }
 .votedBar {
-  border-left: 6px solid #007bff;
-  box-sizing: border-box;
+  box-shadow: inset 6px 0px 0px 0px #007bff !important;
 }
 </style>
 
