@@ -36,7 +36,7 @@
         </span>
       </h3>
     </b-card-title>
-    <b-card-body>
+    <b-card-body class="px-0">
       <b-alert
         v-if="list.length==0"
         :show="true"
@@ -44,12 +44,12 @@
         class="text-dark"
       >Nie zgłoszono żadnych propozycji</b-alert>
       <table v-else class="table table-striped border">
-        <thead class="text-center">
-          <th>Nazwa</th>
-          <th>Ilość</th>
-          <th>Cena (zł)</th>
-          <th>Koszt (zł)</th>
-          <th></th>
+        <thead>
+          <th class="text-left">Nazwa</th>
+          <th class="text-right">Ilość</th>
+          <th class="text-right">Cena (zł)</th>
+          <th class="text-right">Koszt (zł)</th>
+          <th class="text-right"></th>
         </thead>
         <tbody>
           <tr class="text-center" v-for="(item, index) in list" :key="index">
@@ -63,6 +63,56 @@
               <td
                 class="text-right"
               >{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}}</td>
+              <!-- <b-button
+                class="btn"
+                size="sm"
+                data-toggle="tooltip"
+                data-placement="auto"
+                v-b-tooltip.hover
+                title="Zagłosuj"
+                variant="primary"
+                :class="{'btn-primary': isLiked(index), 'btn-outline-primary btn-light': !isLiked(index)}"
+                @click="like(index)"
+              >
+                <i class="fas fa-thumbs-up fa-fw"></i>
+                <span class="ml-1">{{item.likes.length}}</span>
+              </b-button>
+              <b-dropdown
+                split
+                text="Edytuj"
+                class="m-1"
+                size="sm"
+                data-toggle="tooltip"
+                data-placement="auto"
+                v-b-tooltip.hover
+                title="Edytuj"
+                v-if="isAuthenticated(index) || isAdmin"
+                @click="edit(index)"
+              >
+                <b-dropdown-item-button
+                  size
+                  :class="{'btn-outline-success btn-light': !item.accepted, 'btn-success': item.accepted}"
+                  data-toggle="tooltip"
+                  data-placement="auto"
+                  v-b-tooltip.hover
+                  title="Zatwierdź"
+                  v-if="isAdmin"
+                  @click="accept(index)"
+                >
+                  <i class="fas fa-check fa-fw"></i>
+                  <span class="d-none">Akceptuj</span>
+                </b-dropdown-item-button>
+                <b-dropdown-item-button
+                  size="sm"
+                  title="Usuń"
+                  class="btn-outline-danger btn-light"
+                  v-if="isAuthenticated(index) || isAdmin"
+                  @click="remove(index)"
+                >
+                  <i class="fas fa-trash-alt fa-fw"></i>
+                  <span class="d-none">Usuń</span>
+                </b-dropdown-item-button>
+              </b-dropdown>-->
               <td class="text-right">
                 <b-button-group v-if="!ended">
                   <b-button
@@ -126,7 +176,7 @@
         </tbody>
       </table>
     </b-card-body>
-    <b-modal id @hide="editShow = false" :lazy="true" title="Edytuj produkt" v-model="editShow">
+    <b-modal id @hide="editShow = false" :lazy="true" :title="editModalTitle" v-model="editShow">
       <form v-if="editObject" @submit.prevent="editSave">
         <b-form-row>
           <label for="editNameInput">Nazwa:</label>
@@ -225,7 +275,8 @@ export default {
       removeIndex: 0,
       editObject: undefined,
       editShow: false,
-      editIndex: undefined
+      editIndex: undefined,
+      editModalTitle: "Edytuj produkt"
     };
   },
   methods: {
@@ -244,6 +295,7 @@ export default {
     },
     edit(index) {
       if (index === null) {
+        this.editModalTitle = "Nowy produkt";
         this.editIndex = null;
         this.editObject = {
           creator: localStorage.getItem("login"),
@@ -259,6 +311,7 @@ export default {
         this.editIndex = index;
         this.editObject = { ...this.list[index] };
         this.editShow = true;
+        this.editModalTitle = "Edytuj produkt";
       }
     },
     editSave() {
