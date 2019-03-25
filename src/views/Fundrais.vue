@@ -53,7 +53,7 @@
 </template>
 <script>
 import Info from "@/views/Fundrais/Info.vue";
-import Participants from "@/views/Fundrais/Participants/list.vue";
+import Participants from "@/views/Fundrais/Participants/participants-table.vue";
 import Propositions from "@/views/Fundrais/Propositions/Table.vue";
 import firebase from "firebase";
 
