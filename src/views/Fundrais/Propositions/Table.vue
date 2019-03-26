@@ -103,7 +103,7 @@
                   title="Usuń"
                   class="btn-outline-danger btn-light text-danger"
                   v-if="isAuthenticated(index) || isAdmin"
-                  @click="remove(index)"
+                  @click="edit(index)"
                 >
                   <i class="fas fa-trash-alt fa-fw"></i>
                   <span>Usuń</span>
