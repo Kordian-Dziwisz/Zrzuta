@@ -1,5 +1,5 @@
 <template>
-  <b-card class="border rounded">
+  <b-card class="border rounded" no-body>
     <!-- <b-card-header class="w-100"> -->
     <!-- <div class="float-right text-success">Otwarte</div> -->
     <!-- <b-row> -->
@@ -8,7 +8,7 @@
     <!-- <b-col class="text-right text-success">Otwarte</b-col> -->
     <!-- </b-row> -->
     <!-- </b-card-header> -->
-    <b-card-title>
+    <b-card-title class="p-2 mb-0">
       <h3>
         <div class="d-inline">
           <span>Cele zbiórki</span>
@@ -36,14 +36,14 @@
         </span>
       </h3>
     </b-card-title>
-    <b-card-body class="px-0">
+    <b-card-body>
       <b-alert
         v-if="list.length==0"
         :show="true"
         variant="warning"
         class="text-dark"
       >Nie zgłoszono żadnych propozycji</b-alert>
-      <table v-else class="table table-striped border">
+      <table v-else class="table table-striped border mb-0">
         <thead>
           <th class="text-left">Nazwa</th>
           <th class="text-right">Ilość</th>
@@ -52,12 +52,14 @@
           <th class="text-right"></th>
         </thead>
         <tbody>
-          <tr class="text-center" v-for="(item, index) in list" :key="index">
+          <tr
+            :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
+            class="text-center"
+            v-for="(item, index) in list"
+            :key="index"
+          >
             <template v-if="item.accepted == true || !ended">
-              <td
-                class="text-left"
-                :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
-              >{{item.name}}</td>
+              <td class="text-left">{{item.name}}</td>
               <td class="text-right">{{item.number}}</td>
               <td class="text-right">{{item.price.toString().replace(/[.]/, ',')}}</td>
               <td
@@ -196,20 +198,38 @@
             max="9999"
             step="1"
           ></b-form-input>
-          <b-form-invalid-feedback :state="validationNumber">Wpisz ilość (0-9999 szt.)</b-form-invalid-feedback>
-          <label for="editPriceInput">Cena:</label>
-          <b-input
-            id="editPriceInput"
-            class="my-1"
-            type="number"
-            name="price"
-            v-model="editObject.price"
-            placeholder="Wpisz cenę"
-            max="9999"
-            step="0.01"
-            min="0"
-          ></b-input>
-          <b-form-invalid-feedback :state="validationPrice">Wpisz cenę (0-9999 zł)</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="validationName">Nazwa produktu nie może być pusta</b-form-invalid-feedback>
+        </b-form-row>
+        <b-form-row>
+          <div class="col">
+            <label for="editNumberInput">Ilość:</label>
+            <b-form-input
+              id="editNumberInput"
+              type="number"
+              name="quantity"
+              v-model="editObject.number"
+              required
+              placeholder="Wpisz ilość"
+              step="1"
+              min="0"
+              class="text-right"
+            ></b-form-input>
+            <b-form-invalid-feedback :state="validationNumber">Ilość musi być większa niż 0</b-form-invalid-feedback>
+          </div>
+          <div class="col">
+            <label for="editPriceInput">Cena:</label>
+            <b-input
+              class="float-right text-right"
+              id="editPriceInput"
+              type="number"
+              name="price"
+              v-model="editObject.price"
+              placeholder="Wpisz cenę"
+              step="0.01"
+              min="0"
+            ></b-input>
+          </div>
+          <b-form-invalid-feedback :state="validationPrice">Cena produktu musi być większa niż 0 zł</b-form-invalid-feedback>
         </b-form-row>
       </form>
       <div slot="modal-footer" class="w-100">
@@ -403,17 +423,17 @@ export default {
     },
     validationName: {
       get() {
-        return this.editObject.name.length > 0 && this.editObject.name.length <= 50;
+        return this.editObject.name.length > 0;
       }
     },
     validationNumber: {
       get() {
-        return this.editObject.number > 0 && this.editObject.number <= 9999 && this.editObject.number % 1 == 0;
+        return this.editObject.number > 0 && this.editObject.number % 1 == 0;
       }
     },
     validationPrice: {
       get() {
-        return this.editObject.price > 0 && this.editObject.price <= 9999;
+        return this.editObject.price > 0;
       }
     }
   }
@@ -434,12 +454,10 @@ thead {
   white-space: none;
 }
 .acceptedBar {
-  border-left: 6px solid #28a745 !important;
-  box-sizing: border-box;
+  box-shadow: inset 6px 0px 0px 0px #28a745 !important;
 }
 .votedBar {
-  border-left: 6px solid #007bff;
-  box-sizing: border-box;
+  box-shadow: inset 6px 0px 0px 0px #007bff !important;
 }
 </style>
 
