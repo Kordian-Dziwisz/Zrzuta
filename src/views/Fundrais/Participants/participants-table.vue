@@ -8,7 +8,7 @@
           pill
           variant="primary"
           class="float-right"
-          v-if="list.length && isAuthenticated"
+          v-if="list.length && alreadyAdded"
         >{{list.length}}</b-badge>
         <b-button
           class="btn-outline-success btn-light ml-1 float-right"
@@ -72,7 +72,7 @@
           </b-button>
         </div>
       </form>
-      <div class="h5 row" v-else-if="isAuthenticated && list.length">
+      <div class="h5 row" v-else-if="list.length">
         <div class="text-success col">Zapłacone: {{paidAcceptedAndNot.accepted}}</div>
         <div class="text-primary col text-center">Wpłacone: {{paidAcceptedAndNot.paid}}</div>
         <div class="col text-right">Pozostało: {{paidAcceptedAndNot.not}}</div>
