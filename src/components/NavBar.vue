@@ -12,11 +12,7 @@
       </b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
-          <b-nav-item to="/" exact>
-            Strona główna
-            <!-- :to="{ name: 'home'}"  -->
-            <!-- <router-link to="/" exact>Strona główna</router-link> -->
-          </b-nav-item>
+          <b-nav-item to="/" exact>Strona główna</b-nav-item>
           <b-nav-item @click="addFundrais">Nowa zbiórka</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
@@ -86,4 +82,9 @@ export default {
 };
 </script>
 <style scoped>
+a:hover,
+a.router-link-active,
+a.router-link-exact-active {
+  color: #990000 !important;
+}
 </style>
