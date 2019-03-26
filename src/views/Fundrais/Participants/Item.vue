@@ -102,34 +102,6 @@
           <span class="buttontext"></span>
       </button>-->
     </b-card-body>
-    <b-modal
-      v-model="showModal"
-      id
-      :hide-header-close="true"
-      :lazy="true"
-      header-bg-variant="danger"
-      header-text-variant="light"
-      title="Potwierdzenie usunięcia"
-      size="md"
-    >
-      <div class="container fluid">
-        <div class="row text-center">
-          <strong
-            class="h5"
-          >Czy jesteś pewny, że chcesz usunąć uczestnika? Ten proces jest nieodwracalny! Nawet administrator tego nie naprawi!</strong>
-        </div>
-      </div>
-      <div slot="modal-footer" class="w-100">
-        <b-button class="float-right ml-1" variant="outline-danger light" @click="remove()">
-          <i class="fas fa-trash-alt fa-fw"></i>Usuń
-        </b-button>
-        <b-button
-          class="float-right"
-          variant="outline-secondary light"
-          @click="showModal = false"
-        >Anuluj</b-button>
-      </div>
-    </b-modal>
   </div>
 </template>
 <script>
