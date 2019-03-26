@@ -2,7 +2,6 @@
   <div>
     <b-navbar
       class="fixed-top border-bottom shadow bg-white"
-      @click="like(index)"
       toggleable="md"
       v-shortkey="['alt', 'n']"
       @shortkey="addFundrais"

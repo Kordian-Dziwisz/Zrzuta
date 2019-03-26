@@ -26,7 +26,11 @@
       </h3>
     </b-card-title>
     <b-card-body>
-      <form autocomplete="off" @submit.prevent="addNew" v-if="!this.isEnded && isAuthenticated">
+      <form
+        autocomplete="off"
+        @submit.prevent="addNew"
+        v-if="!this.isEnded && (isAuthenticated || isAdmin)"
+      >
         <label for="userNameValidation" v-if="isAdmin">Dodaj nowego uczestnika:</label>
         <div class="input-group">
           <template v-if="isAdmin">
