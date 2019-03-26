@@ -54,7 +54,7 @@
             <span v-else>Ukryj opis</span>
     </b-button>-->
     <div class="row">
-      <div class="col">
+      <div class="col pl-1">
         <div v-if="item.description.length > 80 && !descriptionShow">
           <h6 class="d-inline">{{ellipsis(item.description, 80).slice(0, -3)}}</h6>
           <b-button
