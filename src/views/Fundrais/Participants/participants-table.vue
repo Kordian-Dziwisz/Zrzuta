@@ -297,6 +297,9 @@ export default {
       if (this.list[index].accepted == false) {
         this.list[index].paid = true;
       }
+    },
+    isYour(name) {
+      return name == localStorage.getItem("login");
     }
   },
   watch: {
@@ -337,9 +340,6 @@ export default {
     },
     isAuthenticated() {
       return this.list.find(item => item.name == localStorage.getItem("login")) != null;
-    },
-    isYour(name) {
-      return name == localStorage.getItem("login");
     }
   },
   components: {
