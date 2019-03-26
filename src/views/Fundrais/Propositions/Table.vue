@@ -36,7 +36,7 @@
         </span>
       </h3>
     </b-card-title>
-    <b-card-body class>
+    <b-card-body class="px-0">
       <b-alert
         v-if="list.length==0"
         :show="true"

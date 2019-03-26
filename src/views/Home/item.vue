@@ -8,7 +8,7 @@
           </div>
         </router-link>
       </div>
-      <div class="col text-lg-right px-1">
+      <div class="col text-lg-right pr-1">
         <b-button
           class="btn-outline-danger btn-light"
           size="sm"
@@ -25,13 +25,13 @@
       </div>
     </div>
     <div class="row" :class="{'border-bottom': item.description.length}">
-      <div class="col">
+      <div class="col pl-1">
         <span>
           twórca:
           <strong class="d-inline">{{item.creator}}</strong>
         </span>
       </div>
-      <div class="col text-right">
+      <div class="col text-right pr-1">
         <span class="text-dark" v-if="item.endDate < new Date(Date.now())">Zbiórka zakończona</span>
         <span
           class="text-danger"
