@@ -92,7 +92,7 @@
                   :class="{'btn-outline-success btn-light': !item.accepted, 'btn-success': item.accepted}"
                   text="Zatwierdź"
                   class="text-success"
-                  v-if="isAdmin"
+                  v-if="isAdmin && !item.accepted"
                   @click="accept(index)"
                 >
                   <i class="fas fa-check fa-fw"></i>
@@ -103,70 +103,12 @@
                   title="Usuń"
                   class="btn-outline-danger btn-light text-danger"
                   v-if="isAuthenticated(index) || isAdmin"
-                  @click="edit(index)"
+                  @click="remove(index)"
                 >
                   <i class="fas fa-trash-alt fa-fw"></i>
                   <span>Usuń</span>
                 </b-dropdown-item-button>
               </b-dropdown>
-              <!-- <td class="text-right">
-                <b-button-group v-if="!ended">
-                  <b-button
-                    class="btn"
-                    size="sm"
-                    data-toggle="tooltip"
-                    data-placement="auto"
-                    v-b-tooltip.hover
-                    title="Zagłosuj"
-                    variant="primary"
-                    :class="{'btn-primary': isLiked(index), 'btn-outline-primary btn-light': !isLiked(index)}"
-                    @click="like(index)"
-                  >
-                    <i class="fas fa-thumbs-up fa-fw"></i>
-                    <span class="ml-1">{{item.likes.length}}</span>
-                  </b-button>
-                  <b-button
-                    size="sm"
-                    :class="{'btn-outline-success btn-light': !item.accepted, 'btn-success': item.accepted}"
-                    data-toggle="tooltip"
-                    data-placement="auto"
-                    v-b-tooltip.hover
-                    title="Zatwierdź"
-                    v-if="isAdmin"
-                    @click="accept(index)"
-                  >
-                    <i class="fas fa-check fa-fw"></i>
-                    <span class="d-none">Akceptuj</span>
-                  </b-button>
-                  <b-button
-                    size="sm"
-                    class="btn-outline-danger btn-light"
-                    data-toggle="tooltip"
-                    data-placement="auto"
-                    v-b-tooltip.hover
-                    title="Usuń"
-                    v-if="isAuthenticated(index) || isAdmin"
-                    @click="remove(index)"
-                  >
-                    <i class="fas fa-trash-alt fa-fw"></i>
-                    <span class="d-none">Usuń</span>
-                  </b-button>
-                  <b-button
-                    size="sm"
-                    class="btn-outline-secondary btn-light"
-                    data-toggle="tooltip"
-                    data-placement="auto"
-                    v-b-tooltip.hover
-                    title="Edytuj"
-                    v-if="isAuthenticated(index) || isAdmin"
-                    @click="edit(index)"
-                  >
-                    <i class="fas fa-edit fa-fw"></i>
-                    <span class="d-none">Edytuj</span>
-                  </b-button>
-                </b-button-group>
-           <b-dropdown text="akcje" size="sm"></b-dropdown>
-              </!-- </td>-->
             </template>
           </tr>
         </tbody>
@@ -187,18 +129,6 @@
             maxlength="30"
           ></b-form-input>
           <b-form-invalid-feedback :state="validationName">Wpisz nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
-          <label for="editNumberInput">Ilość:</label>
-          <b-form-input
-            id="editNumberInput"
-            type="number"
-            name="quantity"
-            v-model="editObject.number"
-            required
-            placeholder="Wpisz ilość"
-            max="9999"
-            step="1"
-          ></b-form-input>
-          <b-form-invalid-feedback :state="validationName">Nazwa produktu nie może być pusta</b-form-invalid-feedback>
         </b-form-row>
         <b-form-row>
           <div class="col">
@@ -249,7 +179,6 @@
       header-bg-variant="danger"
       header-text-variant="light"
       title="Potwierdzenie usunięcia"
-      size="lg"
     >
       <div class="container fluid">
         <div class="row text-center">
