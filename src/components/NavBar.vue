@@ -2,6 +2,7 @@
   <div>
     <b-navbar
       class="fixed-top border-bottom shadow bg-white"
+      @click="like(index)"
       toggleable="md"
       v-shortkey="['alt', 'n']"
       @shortkey="addFundrais"
@@ -20,7 +21,7 @@
             <b-navbar-brand>{{returnLogin}}</b-navbar-brand>
             <b-nav-item @click="changeLogin">
               Wyloguj
-              <i class="fas fa-sign-out-alt"></i>
+              <i class="fas fa-sign-out-alt fa-fw"></i>
             </b-nav-item>
           </b-navbar-nav>
         </b-navbar-nav>

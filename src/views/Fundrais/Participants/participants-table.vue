@@ -86,24 +86,25 @@
       <table v-else class="table table-striped border mt-2">
         <tbody>
           <tr v-for="(item, index) in list" :key="index">
-            <td class="pl-1">
+            <td class="pl-2" :class="{'acceptedBar':item.accepted, 'paidBar':item.paid}">
               <h5>
                 {{item.name}}
                 <a
-                  style="cursor: pointer"
-                  @click="showCommentIndex==index ? showCommentIndex=null : showCommentIndex=index"
-                  class="small"
-                >{{item.comment.length ? (showCommentIndex==index ? ' Schowaj komentarz ':' Pokaż komentarz ') : ''}}</a>
-              </h5>
-              <span v-if="showCommentIndex==index">
-                {{item.comment}}
+                  @click="showCommentIndex=index"
+                  v-if="item.comment && showCommentIndex != index"
+                  class="small text-primary"
+                >
+                  <i class="fas fa-comment-dots fa-fw"></i>Pokaż komentarz
+                </a>
                 <a
-                  class="font-weight-bold"
-                  v-if="isAuthenticated"
-                  style="cursor: pointer"
-                  @click="editCommentIndex=index; showCommentModal = true"
-                >(Edytuj Komentarz)</a>
-              </span>
+                  v-else-if="isYour(item.name)"
+                  class="small text-primary"
+                  @click="editCommentIndex=index; showCommentModal = true; showCommentIndex = index"
+                >
+                  <i class="fas fa-comment-medical fa-fw"></i>Edytuj komentarz
+                </a>
+              </h5>
+              <span v-if="showCommentIndex==index">{{item.comment}}</span>
             </td>
             <td class="text-right pr-1">
               <div
@@ -133,7 +134,7 @@
                 data-placement="auto"
                 v-b-tooltip.hover
                 title="Zapłacone"
-                v-if="isAuthenticated && !item.paid && !item.accepted && isEnded && !isAdmin"
+                v-if="isYour(item.name) && !item.paid && !item.accepted && isEnded && !isAdmin"
                 @click="pay(index)"
               >
                 <i class="fas fa-vote-yea fa-fw"></i>
@@ -148,7 +149,7 @@
                 data-placement="auto"
                 v-b-tooltip.hover
                 title="Usuń uczestnika"
-                v-if="(isAdmin || isAuthenticated) && !isEnded"
+                v-if="(isAdmin || isYour(item.name)) && !isEnded"
                 @click="showRemoveModal = true; removeIndex=index"
               >
                 <i class="fas fa-trash-alt fa-fw"></i>
@@ -179,10 +180,7 @@
             v-model.trim="newComment"
             required
             placeholder="Wpisz komentarz"
-            maxlength="30"
-            :state="newComment.length > 0"
           ></b-form-input>
-          <b-form-invalid-feedback>Wpisz swój komentarz</b-form-invalid-feedback>
         </b-form-row>
       </form>
       <div slot="modal-footer" class="w-100">
@@ -256,9 +254,9 @@ export default {
   },
   methods: {
     saveComment(index) {
+      this.list[this.editCommentIndex].comment = this.newComment;
+      this.showCommentModal = false;
       if (this.newComment.length) {
-        this.list[this.editCommentIndex].comment = this.newComment;
-        this.showCommentModal = false;
       }
     },
     addNew() {
@@ -338,7 +336,10 @@ export default {
       return this.name.length >= 3;
     },
     isAuthenticated() {
-      return this.list.find(item => item.name == localStorage.getItem("login")) != null || this.isAdmin;
+      return this.list.find(item => item.name == localStorage.getItem("login")) != null;
+    },
+    isYour(name) {
+      return name == localStorage.getItem("login");
     }
   },
   components: {
@@ -353,5 +354,15 @@ ul {
   -webkit-overflow-scrolling: touch;
   border-color: #ced4da;
   padding: 0 1rem;
+}
+.acceptedBar {
+  box-shadow: inset 6px 0px 0px 0px #28a745 !important;
+}
+.paidBar {
+  box-shadow: inset 6px 0px 0px 0px #007bff !important;
+}
+a {
+  text-decoration: underline;
+  cursor: pointer;
 }
 </style>
