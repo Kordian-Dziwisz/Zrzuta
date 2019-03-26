@@ -13,7 +13,7 @@
         <div class="d-inline">
           <span>Cele zbiórki</span>
           <b-button
-            v-if="!this.ended"
+            v-if="!this.ended && canAdd"
             type="submit"
             class="btn-outline-success btn-light ml-2 mb-1"
             data-toggle="tooltip"
@@ -209,7 +209,8 @@ export default {
     list: Array,
     isAdmin: Boolean,
     ended: Boolean,
-    numOfParticipants: Number
+    numOfParticipants: Number,
+    canAdd: Boolean
   },
   data() {
     return {

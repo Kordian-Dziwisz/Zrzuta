@@ -45,7 +45,7 @@
           :ended="fundraisInfo.ended"
           :list="listOfPropositions"
           @list="updatePropositions"
-          v-if="authenticate"
+          :canAdd="authenticate"
         />
       </div>
     </div>
