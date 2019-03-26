@@ -73,9 +73,13 @@
         </div>
       </form>
       <div class="h5 row" v-else-if="list.length">
-        <div class="text-success col">Zapłacone: {{paidAcceptedAndNot.accepted}}</div>
-        <div class="text-primary col text-center">Wpłacone: {{paidAcceptedAndNot.paid}}</div>
-        <div class="col text-right">Pozostało: {{paidAcceptedAndNot.not}}</div>
+        <div
+          class="text-success text-center col-12 col-lg-4"
+        >Zapłacone: {{paidAcceptedAndNot.accepted}}</div>
+        <div
+          class="text-muted col text-center col-12 col-lg-4"
+        >Wpłacone: {{paidAcceptedAndNot.paid}}</div>
+        <div class="col text-center col-12 col-lg-4">Pozostało: {{paidAcceptedAndNot.not}}</div>
       </div>
       <b-alert variant="warning" class="text-dark mt-2" v-if="list.length==0">
         Nie zapisano żadnego uczestnika,
@@ -83,29 +87,30 @@
           v-if="!this.isEnded && isAdmin"
         >dopisz go w polu powyżej.</span>
       </b-alert>
-      <table v-else class="table table-striped border mt-2">
+      <table v-else class="table table-striped border mt-2 mb-0">
         <tbody>
           <tr v-for="(item, index) in list" :key="index">
-            <td class="pl-2" :class="{'acceptedBar':item.accepted, 'paidBar':item.paid}">
-              <h5>
+            <td class="pl-3" :class="{'acceptedBar':item.accepted, 'paidBar':item.paid}">
+              <div>
                 {{item.name}}
                 <a
                   @click="showCommentIndex=index"
                   v-if="item.comment && showCommentIndex != index"
-                  class="small text-primary"
+                  class="small text-muted d-block d-lg-inline"
                 >
-                  <i class="fas fa-comment-dots fa-fw"></i>Komentarz
+                  <i class="fas fa-comment-dots fa-fw"></i>
                 </a>
                 <a
                   v-else-if="isYour(item.name)"
-                  class="small text-primary"
+                  class="small text-muted d-block"
+                  h
                   @click="editComment(index)"
                 >
                   <i class="fas fa-comment-medical fa-fw"></i>
                   {{item.comment ? 'Edytuj' : 'Dodaj komentarz'}}
                 </a>
-              </h5>
-              <span v-if="showCommentIndex==index">{{item.comment}}</span>
+              </div>
+              <span v-if="showCommentIndex==index" class="text-muted">{{item.comment}}</span>
             </td>
             <td class="text-right pr-1">
               <div

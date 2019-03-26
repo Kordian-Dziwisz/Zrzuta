@@ -17,12 +17,12 @@
       :show="fundraisInfo.ended"
       v-else
     >Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę</b-alert>-->
-    <div class="row m-3">
+    <div class="row m-lg-3">
       <b-col>
         <info v-if="fundraisInfo" :info="fundraisInfo" :isAdmin="isAdmin" @info="updateInfo"/>
       </b-col>
     </div>
-    <div class="row m-3">
+    <div class="row m-lg-3">
       <div class="col col-lg-6">
         <participants
           :isAdmin="isAdmin"
