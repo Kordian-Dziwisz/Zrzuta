@@ -34,7 +34,6 @@
               id="userNameValidation"
               type="text"
               placeholder="Nazwa/Imię/Ksywka"
-              maxlength="30"
               v-model="name"
               :state="dirty ? validation : null"
               @update="name.length ? dirty=true : dirty=false"
@@ -77,7 +76,7 @@
           class="text-success text-center col-12 col-lg-4"
         >Zapłacone: {{paidAcceptedAndNot.accepted}}</div>
         <div
-          class="text-muted col text-center col-12 col-lg-4"
+          class="text-primary col text-center col-12 col-lg-4"
         >Wpłacone: {{paidAcceptedAndNot.paid}}</div>
         <div class="col text-center col-12 col-lg-4">Pozostało: {{paidAcceptedAndNot.not}}</div>
       </div>
@@ -90,7 +89,10 @@
       <table v-else class="table table-striped border mt-2 mb-0">
         <tbody>
           <tr v-for="(item, index) in list" :key="index">
-            <td class="pl-3" :class="{'acceptedBar':item.accepted, 'paidBar':item.paid}">
+            <td
+              class="pl-3"
+              :class="{'acceptedBar':item.accepted, 'paidBar':item.paid&&!item.accepted}"
+            >
               <div>
                 {{item.name}}
                 <a
@@ -115,7 +117,7 @@
             <td class="text-right pr-1">
               <div
                 class="d-inline"
-                :class="{'text-success': item.accepted, 'text-primary': item.paid}"
+                :class="{'text-primary': item.paid, 'text-success': item.accepted}"
               >{{item.accepted ? "zapłacił/a " : item.paid ? "wpłacił/a " : ""}}</div>
 
               <!-- accept -->
