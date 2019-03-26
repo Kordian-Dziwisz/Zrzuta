@@ -184,6 +184,19 @@
             v-model.trim="editObject.name"
             required
             placeholder="Wpisz nazwę"
+            maxlength="30"
+          ></b-form-input>
+          <b-form-invalid-feedback :state="validationName">Wpisz nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
+          <label for="editNumberInput">Ilość:</label>
+          <b-form-input
+            id="editNumberInput"
+            type="number"
+            name="quantity"
+            v-model="editObject.number"
+            required
+            placeholder="Wpisz ilość"
+            max="9999"
+            step="1"
           ></b-form-input>
           <b-form-invalid-feedback :state="validationName">Nazwa produktu nie może być pusta</b-form-invalid-feedback>
         </b-form-row>
