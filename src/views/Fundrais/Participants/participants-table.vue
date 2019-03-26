@@ -94,14 +94,15 @@
                   v-if="item.comment && showCommentIndex != index"
                   class="small text-primary"
                 >
-                  <i class="fas fa-comment-dots fa-fw"></i>Pokaż komentarz
+                  <i class="fas fa-comment-dots fa-fw"></i>Komentarz
                 </a>
                 <a
                   v-else-if="isYour(item.name)"
                   class="small text-primary"
-                  @click="editCommentIndex=index; showCommentModal = true; showCommentIndex = index"
+                  @click="editComment(index)"
                 >
-                  <i class="fas fa-comment-medical fa-fw"></i>Edytuj komentarz
+                  <i class="fas fa-comment-medical fa-fw"></i>
+                  {{item.comment ? 'Edytuj' : 'Dodaj komentarz'}}
                 </a>
               </h5>
               <span v-if="showCommentIndex==index">{{item.comment}}</span>
@@ -166,7 +167,7 @@
       @hide="showCommentModal = false"
       :hide-header-close="true"
       :lazy="true"
-      title="edytuj komentarz"
+      :title="editCommentIndex==null ? '' : list[editCommentIndex].comment ? 'Edytuj komentarz' : 'Dodaj komentarz' "
       v-model="showCommentModal"
     >
       <form @submit.prevent="saveComment()">
@@ -253,6 +254,12 @@ export default {
     };
   },
   methods: {
+    editComment(index) {
+      this.newComment = this.list[index].comment;
+      this.editCommentIndex = index;
+      this.showCommentModal = true;
+      this.showCommentIndex = index;
+    },
     saveComment(index) {
       this.list[this.editCommentIndex].comment = this.newComment;
       this.showCommentModal = false;
