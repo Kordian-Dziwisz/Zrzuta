@@ -126,9 +126,8 @@
             v-model.trim="editObject.name"
             required
             placeholder="Wpisz nazwę"
-            maxlength="30"
           ></b-form-input>
-          <b-form-invalid-feedback :state="validationName">Wpisz nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="validationName">Wpisz nazwę produktu</b-form-invalid-feedback>
         </b-form-row>
         <b-form-row>
           <div class="col">

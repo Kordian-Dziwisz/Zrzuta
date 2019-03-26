@@ -6,11 +6,10 @@
         v-model.lazy.trim="login"
         placeholder="Wpisz login"
         type="text"
-        maxlength="30"
         :state="validation"
         autocomplete="off"
       />
-      <b-form-invalid-feedback :state="validation">Login musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
+      <b-form-invalid-feedback :state="validation">Login musi mieć minimum 3 znaki!</b-form-invalid-feedback>
       <b-form-valid-feedback :state="validation"></b-form-valid-feedback>
       <b-button type="submit" size="sm" class="my-1 float-right">Zaloguj się</b-button>
     </form>
