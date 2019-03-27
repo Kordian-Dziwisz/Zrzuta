@@ -55,7 +55,7 @@
           <tr
             :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
             class="text-center"
-            v-for="(item, index) in list"
+            v-for="(item, index) in sortedList"
             :key="index"
           >
             <template v-if="item.accepted == true || !ended">
@@ -323,6 +323,7 @@ export default {
   //     }
   //   },
   computed: {
+    sortedList: {},
     priceSum: {
       get() {
         if (this.list.length > 0) {
