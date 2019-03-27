@@ -65,7 +65,6 @@ export default {
         });
         if (await newFundrais.id) {
           this.isClicked = false;
-          location.reload();
         }
       }
     },

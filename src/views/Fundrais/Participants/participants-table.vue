@@ -8,6 +8,10 @@
           pill
           variant="primary"
           class="float-right"
+          data-toggle="tooltip"
+          data-placement="auto"
+          v-b-tooltip.hover
+          title="Liczba uczestników"
           v-if="list.length && alreadyAdded"
         >{{list.length}}</b-badge>
         <b-button
@@ -184,15 +188,14 @@
       <form @submit.prevent="saveComment()">
         <b-form-row>
           <label for="editCommentInput">Komentarz:</label>
-          <b-form-input
+          <b-form-textarea
             id="editCommentInput"
-            class="mb-1"
-            type="text"
             name="name"
             v-model.trim="newComment"
-            required
+            novalidate
+            max-rows="6"
             placeholder="Wpisz komentarz"
-          ></b-form-input>
+          ></b-form-textarea>
         </b-form-row>
       </form>
       <div slot="modal-footer" class="w-100">

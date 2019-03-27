@@ -1,6 +1,6 @@
 <template>
   <div>
-    <fundraising-list :list="list" @remove="removeFundrais"></fundraising-list>
+    <fundraising-list :list="list" @remove="removeFundrais" @new="addFundrais"></fundraising-list>
   </div>
 </template>
 <script>
@@ -15,7 +15,17 @@ export default {
       login: "",
       db: firebase.firestore().collection("Zrzuty-develop"),
       list: [],
-      guid: ""
+      guid: "",
+      newFundrais: {
+        guid: "",
+        accountNumber: "",
+        creator: "",
+        title: "Nowa Zbiórka",
+        description: "",
+        creationDate: new Date(Date.now()).toJSON(),
+        endDate: new Date(Date.now() + 86400000).toJSON(),
+        ended: false
+      }
     };
   },
   mounted() {
@@ -43,6 +53,23 @@ export default {
     },
     async removeFundrais(docID) {
       await this.db.doc(docID).delete();
+    },
+    async addFundrais(event) {
+      console.log("newFundrais");
+      this.newFundrais.title = event.title;
+      this.newFundrais.description = event.description;
+      this.newFundrais.creator = localStorage.getItem("login");
+      this.newFundrais.guid = localStorage.getItem("guid");
+      let newFundrais = await this.db.add({
+        fundraisInfo: { ...this.newFundrais },
+        listOfParticipants: [],
+        listOfProducts: [],
+        listOfPropositions: []
+      });
+      await this.$router.push({
+        name: "Fundrais",
+        params: { id: newFundrais.id }
+      });
     }
   },
   components: {
