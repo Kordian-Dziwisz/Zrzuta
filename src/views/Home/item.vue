@@ -43,20 +43,10 @@
         </span>
       </div>
     </div>
-    <!-- v-if="item.description.length > 80 && !descriptionShow" -->
-    <!-- <b-collapse v-model="click" id>{{item.description}}</b-collapse>
-          <b-button
-            class="btn-outline-secondary btn-light text-center"
-            @click="click = !click"
-            size="sm"
-          >
-            <span v-if="!click">Pokaż opis</span>
-            <span v-else>Ukryj opis</span>
-    </b-button>-->
     <div class="row">
       <div class="col pl-1">
         <div v-if="item.description.length > 80 && !descriptionShow">
-          <h6 class="d-inline">{{ellipsis(item.description, 80).slice(0, -3)}}</h6>
+          <p class="d-inline">{{ellipsis(item.description, 80).slice(0, -3)}}</p>
           <b-button
             class="d-inline btn-light btn-outline-secondary mx-1"
             @click="descriptionShow=!descriptionShow"
