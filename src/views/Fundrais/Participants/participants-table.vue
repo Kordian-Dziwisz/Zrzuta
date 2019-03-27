@@ -76,13 +76,21 @@
         </div>
       </form>
       <div class="h5 row" v-else-if="list.length">
-        <div
-          class="text-success text-center col-12 col-lg-4"
-        >Zapłacone: {{paidAcceptedAndNot.accepted}}</div>
-        <div
-          class="text-primary col text-center col-12 col-lg-4"
-        >Wpłacone: {{paidAcceptedAndNot.paid}}</div>
-        <div class="col text-center col-12 col-lg-4">Pozostało: {{paidAcceptedAndNot.not}}</div>
+        <div class="text-success text-center col-12 col-lg-4">
+          <a
+            @click="filter == 'zapłacone' ? filter = 'none' : filter = 'zapłacone'"
+          >Zapłacone: {{paidAcceptedAndNot.accepted}}</a>
+        </div>
+        <div class="text-primary col text-center col-12 col-lg-4">
+          <a
+            @click="filter == 'wpłacone' ? filter = 'none' : filter = 'wpłacone'"
+          >Wpłacone: {{paidAcceptedAndNot.paid}}</a>
+        </div>
+        <div class="col text-center col-12 col-lg-4">
+          <a
+            @click="filter == 'pozostało' ? filter = 'none' : filter = 'pozostało'"
+          >Pozostało: {{paidAcceptedAndNot.not}}</a>
+        </div>
       </div>
       <b-alert variant="warning" class="text-dark mt-2" v-if="list.length==0">
         Nie zapisano żadnego uczestnika,
@@ -92,7 +100,7 @@
       </b-alert>
       <table v-else class="table table-striped border mt-2 mb-0">
         <tbody>
-          <tr v-for="(item, index) in list" :key="index">
+          <tr v-for="(item, index) in filteredList" :key="index">
             <td
               class="pl-3"
               :class="{'acceptedBar':item.accepted, 'paidBar':item.paid&&!item.accepted}"
@@ -260,7 +268,8 @@ export default {
       newComment: "",
       showRemoveModal: false,
       showCommentModal: false,
-      showCommentIndex: null
+      showCommentIndex: null,
+      filter: "none"
     };
   },
   methods: {
@@ -331,33 +340,57 @@ export default {
     filteredList() {
       switch (this.filter) {
         case "none":
-          return this.list.sort(item => {
-            return item.name;
+          return this.list.sort((a, b) => {
+            if (a.name > b.name) {
+              return 1;
+            }
+            if (a.name < b.name) {
+              return -1;
+            }
+            return 0;
           });
         case "zapłacone":
           return this.list
             .filter(item => {
-              return item.paid && !item.accepted;
+              return item.accepted;
             })
-            .sort(item => {
-              return item.name;
+            .sort((a, b) => {
+              if (a.name > b.name) {
+                return 1;
+              }
+              if (a.name < b.name) {
+                return -1;
+              }
+              return 0;
             });
         case "wpłacone":
           return this.list
             .filter(item => {
-              return item.accepted;
+              return item.paid && !item.accepted;
             })
-            .sort(item => {
-              return item.name;
+            .sort((a, b) => {
+              if (a.name > b.name) {
+                return 1;
+              }
+              if (a.name < b.name) {
+                return -1;
+              }
+              return 0;
             });
           break;
         case "pozostało":
           return this.list
             .filter(item => {
-              return item.paid && item.accepted;
+              return !item.paid && !item.accepted;
             })
-            .sort(item => {
-              return item.name;
+            .sort((a, b) => {
+              if (a.name > b.name) {
+                return 1;
+              }
+              if (a.name < b.name) {
+                return -1;
+              }
+              return 0;
             });
           break;
         default:
