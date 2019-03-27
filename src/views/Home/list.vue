@@ -33,13 +33,13 @@ export default {
         return 0;
       });
       let endedItems = tmpList.filter(item => {
-        item.ended && item.endDate.getTime() < Date.now();
+        return item.ended && new Date(item.endDate).getTime() > Date.now();
       });
       let afterDateItems = tmpList.filter(item => {
-        item.endDate.getTime() > Date.now();
+        return new Date(item.endDate).getTime() < Date.now();
       });
       let otherItems = tmpList.filter(item => {
-        !item.ended && !item.endDate.getTime() < Date.now();
+        return !item.ended && new Date(item.endDate).getTime() > Date.now();
       });
       return endedItems.concat(otherItems.concat(afterDateItems));
     }
