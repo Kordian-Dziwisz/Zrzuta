@@ -55,6 +55,7 @@
         <b-form-textarea
           rows="0"
           max-rows="6"
+          maxlength="400"
           v-model.trim="item.comment"
           placeholder="Tutaj wpisz swój komentarz"
         ></b-form-textarea>

@@ -65,52 +65,50 @@
               <td
                 class="text-right"
               >{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}}</td>
-              <div class="text-right mt-1">
-                <b-button
-                  class="btn"
-                  size="sm"
-                  data-toggle="tooltip"
-                  data-placement="auto"
-                  v-b-tooltip.hover
-                  title="Zagłosuj"
-                  variant="primary"
-                  :class="{'btn-primary': isLiked(index), 'btn-outline-primary btn-light': !isLiked(index)}"
-                  @click="like(index)"
+              <b-button
+                class="btn"
+                size="sm"
+                data-toggle="tooltip"
+                data-placement="auto"
+                v-b-tooltip.hover
+                title="Zagłosuj"
+                variant="primary"
+                :class="{'btn-primary': isLiked(index), 'btn-outline-primary btn-light': !isLiked(index)}"
+                @click="like(index)"
+              >
+                <i class="fas fa-thumbs-up fa-fw"></i>
+                <span class="ml-1">{{item.likes.length}}</span>
+              </b-button>
+              <b-dropdown
+                split
+                text="Edytuj"
+                class="m-1"
+                size="sm"
+                v-if="isAuthenticated(index) || isAdmin"
+                @click="edit(index)"
+              >
+                <b-dropdown-item-button
+                  size
+                  :class="{'btn-outline-success btn-light': !item.accepted, 'btn-success': item.accepted}"
+                  text="Zatwierdź"
+                  class="text-success"
+                  v-if="isAdmin && !item.accepted"
+                  @click="accept(index)"
                 >
-                  <i class="fas fa-thumbs-up fa-fw"></i>
-                  <span class="ml-1">{{item.likes.length}}</span>
-                </b-button>
-                <b-dropdown
-                  split
-                  text="Edytuj"
-                  class="m-1"
+                  <i class="fas fa-check fa-fw"></i>
+                  <span>Akceptuj</span>
+                </b-dropdown-item-button>
+                <b-dropdown-item-button
                   size="sm"
+                  title="Usuń"
+                  class="btn-outline-danger btn-light text-danger"
                   v-if="isAuthenticated(index) || isAdmin"
-                  @click="edit(index)"
+                  @click="remove(index)"
                 >
-                  <b-dropdown-item-button
-                    size
-                    :class="{'btn-outline-success btn-light': !item.accepted, 'btn-success': item.accepted}"
-                    text="Zatwierdź"
-                    class="text-success"
-                    v-if="isAdmin && !item.accepted"
-                    @click="accept(index)"
-                  >
-                    <i class="fas fa-check fa-fw"></i>
-                    <span>Akceptuj</span>
-                  </b-dropdown-item-button>
-                  <b-dropdown-item-button
-                    size="sm"
-                    title="Usuń"
-                    class="btn-outline-danger btn-light text-danger"
-                    v-if="isAuthenticated(index) || isAdmin"
-                    @click="remove(index)"
-                  >
-                    <i class="fas fa-trash-alt fa-fw"></i>
-                    <span>Usuń</span>
-                  </b-dropdown-item-button>
-                </b-dropdown>
-              </div>
+                  <i class="fas fa-trash-alt fa-fw"></i>
+                  <span>Usuń</span>
+                </b-dropdown-item-button>
+              </b-dropdown>
             </template>
           </tr>
         </tbody>
@@ -128,8 +126,9 @@
             v-model.trim="editObject.name"
             required
             placeholder="Wpisz nazwę"
+            maxlength="30"
           ></b-form-input>
-          <b-form-invalid-feedback :state="validationName">Wpisz nazwę produktu</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="validationName">Wpisz nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
         </b-form-row>
         <b-form-row>
           <div class="col">
@@ -152,7 +151,7 @@
             <b-input
               class="float-right text-right"
               id="editPriceInput"
-              type="number"
+              type="text"
               name="price"
               v-model="editObject.price"
               placeholder="Wpisz cenę"
@@ -245,7 +244,7 @@ export default {
           creator: localStorage.getItem("login"),
           name: "",
           number: null,
-          price: null,
+          price: "",
           accepted: false,
           likes: [],
           dislikes: []
@@ -262,16 +261,15 @@ export default {
       if (this.validationName && this.validationNumber && this.validationPrice) {
         //   w wypadku kiedy tworzysz nowy obiekt
         if (this.editIndex === null) {
+          this.editObject.price = parseFloat(this.editObject.price.replace(",", /[.]/)).toFixed(2);
           this.list.push({ ...this.editObject });
-          console.log(this.editObject);
           this.$emit("list", this.list);
           this.editShow = false;
         } else {
           this.editShow = false;
-
           this.list[this.editIndex].name = this.editObject.name;
           this.list[this.editIndex].number = parseInt(this.editObject.number);
-          this.list[this.editIndex].price = parseFloat(this.editObject.price).toFixed(2);
+          this.list[this.editIndex].price = parseFloat(this.editObject.price.replace(",", /[.]/)).toFixed(2);
           this.editIndex = null;
           this.$emit("list", this.list);
         }
@@ -364,7 +362,9 @@ export default {
     },
     validationPrice: {
       get() {
-        return this.editObject.price > 0;
+        return (
+          this.editObject.price.length > 0 && parseFloat(this.editObject.price.replace(",", /[.]/)).toFixed(2) > 0.01
+        );
       }
     }
   }
