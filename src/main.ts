@@ -20,7 +20,10 @@ import {
   faCogs,
   faPlus,
   faCommentDots,
-  faCommentMedical
+  faCommentMedical,
+  faListOl,
+  faDollarSign,
+  faLock
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { dom } from "@fortawesome/fontawesome-svg-core";
@@ -43,7 +46,10 @@ library.add(
   faCogs,
   faPlus,
   faCommentDots,
-  faCommentMedical
+  faCommentMedical,
+  faListOl,
+  faDollarSign,
+  faLock
 );
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.config.productionTip = false;
