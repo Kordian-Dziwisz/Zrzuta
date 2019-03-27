@@ -10,7 +10,7 @@
     <!-- </b-card-header> -->
     <b-card-title class="p-2 mb-0">
       <h3>
-        <div class="d-inline">
+        <div class="d-block d-lg-inline">
           <span>Cele zbiórki</span>
           <b-button
             v-if="!this.ended && canAdd"
@@ -27,9 +27,9 @@
             Dodaj
           </b-button>
         </div>
-        <span class="float-right text-right" v-if="priceSum > 0 && numOfParticipants">
+        <span class="float-lg-right text-lg-right" v-if="priceSum > 0 && numOfParticipants">
           Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł
-          <div class="text-right small" v-if="numOfParticipants > 1">
+          <div class="text-lg-right small" v-if="numOfParticipants > 1">
             {{priceSum.toFixed(2).toString().replace(/[.]/, ',')}}
             zł
           </div>
@@ -43,7 +43,7 @@
         variant="warning"
         class="text-dark"
       >Nie zgłoszono żadnych propozycji</b-alert>
-      <table v-else class="table table-striped border mb-0">
+      <table v-else class="table table-responsive table-striped border mb-0">
         <thead>
           <th class="text-left">Nazwa</th>
           <th class="text-right">Ilość</th>
@@ -117,18 +117,20 @@
     <b-modal id @hide="editShow = false" :lazy="true" :title="editModalTitle" v-model="editShow">
       <form v-if="editObject" @submit.prevent="editSave">
         <b-form-row>
-          <label for="editNameInput">Nazwa:</label>
-          <b-form-input
-            id="editNameInput"
-            class="mb-1"
-            type="text"
-            name="name"
-            v-model.trim="editObject.name"
-            required
-            placeholder="Wpisz nazwę"
-            maxlength="30"
-          ></b-form-input>
-          <b-form-invalid-feedback :state="validationName">Wpisz nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
+          <div class="col">
+            <label for="editNameInput">Nazwa:</label>
+            <b-form-input
+              id="editNameInput"
+              class="mb-1"
+              type="text"
+              name="name"
+              v-model.trim="editObject.name"
+              required
+              placeholder="Wpisz nazwę"
+              maxlength="30"
+            ></b-form-input>
+            <b-form-invalid-feedback :state="validationName">Wpisz nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
+          </div>
         </b-form-row>
         <b-form-row>
           <div class="col">
