@@ -152,7 +152,7 @@
             <b-input
               class="float-right text-right"
               id="editPriceInput"
-              type="number"
+              type="text"
               name="price"
               v-model="editObject.price"
               placeholder="Wpisz cenę"
@@ -245,7 +245,7 @@ export default {
           creator: localStorage.getItem("login"),
           name: "",
           number: null,
-          price: null,
+          price: "",
           accepted: false,
           likes: [],
           dislikes: []
@@ -262,16 +262,15 @@ export default {
       if (this.validationName && this.validationNumber && this.validationPrice) {
         //   w wypadku kiedy tworzysz nowy obiekt
         if (this.editIndex === null) {
+          this.editObject.price = parseFloat(this.editObject.price.replace(",", /[.]/)).toFixed(2);
           this.list.push({ ...this.editObject });
-          console.log(this.editObject);
           this.$emit("list", this.list);
           this.editShow = false;
         } else {
           this.editShow = false;
-
           this.list[this.editIndex].name = this.editObject.name;
           this.list[this.editIndex].number = parseInt(this.editObject.number);
-          this.list[this.editIndex].price = parseFloat(this.editObject.price).toFixed(2);
+          this.list[this.editIndex].price = parseFloat(this.editObject.price.replace(",", /[.]/)).toFixed(2);
           this.editIndex = null;
           this.$emit("list", this.list);
         }
@@ -358,7 +357,9 @@ export default {
     },
     validationPrice: {
       get() {
-        return this.editObject.price > 0;
+        return (
+          this.editObject.price.length > 0 && parseFloat(this.editObject.price.replace(",", /[.]/)).toFixed(2) > 0.01
+        );
       }
     }
   }

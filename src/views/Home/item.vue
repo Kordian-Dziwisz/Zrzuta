@@ -1,83 +1,64 @@
 <template>
-  <div class="container-fluid w-100 my-1 bg-white">
+  <div class="bg-white">
     <div class="row">
-      <div class="col-sm-5 ml-1">
-        <router-link class="text-dark" :to="{name: 'Fundrais', params: {id: item.id}}">
-          <div class="row">
-            <h4>{{item.title}}</h4>
-          </div>
-        </router-link>
-      </div>
-      <div class="col text-lg-right pr-1">
-        <b-button
-          class="btn-outline-danger btn-light"
-          size="sm"
-          data-toggle="tooltip"
-          data-placement="auto"
-          title="Usuń"
-          v-if="isYour"
-          v-b-tooltip.hover
-          @click="showModal = true"
-        >
-          <i class="fas fa-trash-alt fa-fw"></i>
-          Usuń
-        </b-button>
+      <div class="col p-0">
+        <span class="h5">
+          <router-link class="text-dark" :to="{name: 'Fundrais', params: {id: item.id}}">
+            <h4 class="d-inline">{{item.title}}</h4>
+          </router-link>
+        </span>
+        <span class="float-right">
+          <b-button
+            class="btn-outline-danger btn-light"
+            size="sm"
+            data-toggle="tooltip"
+            data-placement="auto"
+            title="Usuń"
+            v-if="isYour"
+            v-b-tooltip.hover
+            @click="showModal = true"
+          >
+            <i class="fas fa-trash-alt fa-fw"></i>
+            <span class="d-none d-lg-inline">Usuń</span>
+          </b-button>
+        </span>
       </div>
     </div>
     <div class="row" :class="{'border-bottom': item.description.length}">
-      <div class="col pl-1">
-        <span>
+      <div class="col p-0">
+        <div class="d-lg-inline">
           twórca:
-          <strong class="d-inline">{{item.creator}}</strong>
-        </span>
-      </div>
-      <div class="col text-right pr-1">
-        <span class="text-dark" v-if="isAfterDate">Zbiórka zakończona</span>
-        <span
-          class="text-danger"
-          v-else-if="item.ended"
-        >Dokonaj zapłaty, jeśli jeszcze tego nie zrobiłeś/aś</span>
-        <span v-else>
-          Zbiórka trwa do
-          <strong class="text-danger">{{ item.endDate | moment("LL")}}</strong>
-        </span>
+          <strong>{{item.creator}}</strong>
+        </div>
+        <div class="float-lg-right d-lg-inline">
+          <span v-if="item.endDate < new Date(Date.now())">Zbiórka zakończona</span>
+          <span
+            class="text-danger"
+            v-else-if="item.ended"
+          >Dokonaj zapłaty, jeśli jeszcze tego nie zrobiłeś/aś</span>
+          <span v-else>
+            Zbiórka trwa do
+            <strong class="text-danger">{{ item.endDate | moment("LL")}}</strong>
+          </span>
+        </div>
       </div>
     </div>
-    <!-- v-if="item.description.length > 80 && !descriptionShow" -->
-    <!-- <b-collapse v-model="click" id>{{item.description}}</b-collapse>
-          <b-button
-            class="btn-outline-secondary btn-light text-center"
-            @click="click = !click"
-            size="sm"
-          >
-            <span v-if="!click">Pokaż opis</span>
-            <span v-else>Ukryj opis</span>
-    </b-button>-->
     <div class="row">
-      <div class="col pl-1">
+      <div class="col p-0">
         <div v-if="item.description.length > 80 && !descriptionShow">
-          <h6 class="d-inline">{{ellipsis(item.description, 80).slice(0, -3)}}</h6>
-          <b-button
-            class="d-inline btn-light btn-outline-secondary mx-1"
+          <p class="d-inline">{{ellipsis(item.description, 80).slice(0, -3)}}</p>&nbsp;
+          <a
+            class="text-muted"
             @click="descriptionShow=!descriptionShow"
-            size="sm"
             data-toggle="tooltip"
             data-placement="auto"
             v-b-tooltip.hover
             title="Pokaż opis"
-          >Pokaż opis</b-button>
+          >(...)</a>
         </div>
         <div v-else-if="item.description.length > 80">
-          <h6 class="d-inline">{{item.description}}</h6>
-          <b-button
-            class="d-inline text-dark btn-light btn-outline-secondary mx-1"
-            @click="descriptionShow=!descriptionShow"
-            size="sm"
-            data-toggle="tooltip"
-            data-placement="auto"
-            v-b-tooltip.hover
-            title="Ukryj opis"
-          >Ukryj opis</b-button>
+          <p class="d-inline">{{item.description}}</p>&nbsp;
+          <a @click="descriptionShow=!descriptionShow" title="Ukryj opis">(Ukryj opis)</a>
         </div>
         <div v-else>
           <h6>{{item.description}}</h6>
@@ -157,5 +138,8 @@ b-collapse {
 }
 strong {
   word-break: normal;
+}
+a {
+  cursor: pointer;
 }
 </style>
