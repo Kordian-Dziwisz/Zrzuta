@@ -48,12 +48,11 @@
           id="titleName"
           type="text"
           placeholder="Wpisz tytuł zbiórki"
-          maxlength="50"
           v-model.trim="newInfo.title"
           :state="dirty ? validation : null"
           @update="dirty=true"
         />
-        <b-form-invalid-feedback :state="validation">Tytuł musi mieć od 3 do 50 znaków!</b-form-invalid-feedback>
+        <b-form-invalid-feedback :state="validation">Tytuł musi mieć minimum 3 znaki!</b-form-invalid-feedback>
       </div>
       <div class="col">
         <label class="h6 font-weight-normal">Data zakończenia:</label>
@@ -106,7 +105,6 @@
             <label>Opis:</label>
             <b-form-textarea
               placeholder="Wpisz opis zbiórki"
-              maxlength="500"
               max-rows="10"
               v-model="newInfo.description"
             ></b-form-textarea>
@@ -115,7 +113,6 @@
             <label>Informacje o płatności:</label>
             <b-form-textarea
               type="text"
-              maxlength="150"
               max-rows="10"
               placeholder="Wpisz informacje o płatności: dane odbiorcy, rodzaj (przelew lub płatność gotówką)"
               v-model.lazy.trim="newInfo.accountNumber"
@@ -206,7 +203,7 @@ export default {
   },
   computed: {
     validation() {
-      return this.newInfo.title.length >= 3 && this.newInfo.title.length <= 50;
+      return this.newInfo.title.length >= 3;
     },
     isAfterDate() {
       return this.info.endDate < new Date(Date.now());
