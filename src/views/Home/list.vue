@@ -4,7 +4,7 @@
     <h5
       v-if="list.length === 0"
     >Brak aktywnych zbiórek - utwórz nową lub poproś o zaproszenie do obecnej.</h5>
-    <ul class="list-group" v-for="(item, index) in list" :key="index">
+    <ul class="list-group" v-for="(item, index) in sortedList" :key="index">
       <Item class="list-group-item" :item="{index: index, ...item}" @remove="remove"/>
     </ul>
   </div>
@@ -19,6 +19,29 @@ export default {
     remove(event) {
       this.list.splice(event.index, 1);
       this.$emit("remove", event.id);
+    }
+  },
+  computed: {
+    sortedList() {
+      let tmpList = this.list.sort((a, b) => {
+        if (a.title > b.title) {
+          return 1;
+        }
+        if (a.title < b.title) {
+          return -1;
+        }
+        return 0;
+      });
+      let endedItems = tmpList.filter(item => {
+        item.ended && item.endDate.getTime() < Date.now();
+      });
+      let afterDateItems = tmpList.filter(item => {
+        item.endDate.getTime() > Date.now();
+      });
+      let otherItems = tmpList.filter(item => {
+        !item.ended && !item.endDate.getTime() < Date.now();
+      });
+      return endedItems.concat(otherItems.concat(afterDateItems));
     }
   },
   components: {
