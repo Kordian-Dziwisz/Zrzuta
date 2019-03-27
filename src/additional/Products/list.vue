@@ -4,13 +4,20 @@
       <h3>Dodaj cel zbiórki</h3>
       <b-form-row>
         <div class="col-lg-5">
-          <b-input type="text" placeholder="Nazwa" v-model="newItem.name"/>
+          <b-input type="text" placeholder="Nazwa" maxlength="30" v-model="newItem.name"/>
         </div>
         <div class="col-lg-2">
-          <b-input type="number" placeholder="Ilość" min="0" v-model="newItem.number"/>
+          <b-input type="number" placeholder="Ilość" min="0" max="99999" v-model="newItem.number"/>
         </div>
         <div class="col-lg-2">
-          <b-input type="number" placeholder="Cena" min="0" step="0.01" v-model="newItem.price"/>
+          <b-input
+            type="number"
+            placeholder="Cena"
+            min="0"
+            max="99999"
+            step="0.01"
+            v-model="newItem.price"
+          />
         </div>
         <div class="col-lg-3">
           <b-button type="submit" class="btn btn-outline-success btn-light">
@@ -77,6 +84,7 @@
               v-model.trim="editObject.name"
               required
               placeholder="Wpisz nową nazwę"
+              maxlength="30"
             ></b-input>
             <b-input
               type="number"
@@ -84,6 +92,7 @@
               v-model="editObject.number"
               required
               placeholder="Wpisz nową ilość"
+              max="9999"
               step="0.01"
               min="0"
             ></b-input>
@@ -94,6 +103,7 @@
               v-model="editObject.price"
               required
               placeholder="Wpisz nową cenę"
+              max="9999"
               step="0.01"
               min="0"
             ></b-input>
