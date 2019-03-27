@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="font-weight-light px-1 px-lg-2">
+    <div class="font-weight-light px-1 pb-2 px-lg-4">
       <span class="h2">Lista zbiórek</span>
       <b-button variant="outline-success" class="float-right" @click="showModal=true">
         <i class="fas fa-plus fa-fw"></i>
@@ -11,7 +11,7 @@
       variant="warning"
       :show="list.length === 0"
     >Brak aktywnych zbiórek - utwórz nową lub poproś o zaproszenie do obecnej.</b-alert>
-    <ul class="list-group" v-for="(item, index) in list" :key="index">
+    <ul class="list-group px-0 px-lg-4" v-for="(item, index) in list" :key="index">
       <Item class="list-group-item" :item="{index: index, ...item}" @remove="remove"/>
     </ul>
     <!-- new fundrais modal -->
