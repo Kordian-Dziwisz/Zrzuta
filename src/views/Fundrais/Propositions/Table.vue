@@ -244,7 +244,7 @@ export default {
           creator: localStorage.getItem("login"),
           name: "",
           number: null,
-          price: null,
+          price: "",
           accepted: false,
           likes: [],
           dislikes: []
@@ -261,8 +261,8 @@ export default {
       if (this.validationName && this.validationNumber && this.validationPrice) {
         //   w wypadku kiedy tworzysz nowy obiekt
         if (this.editIndex === null) {
+          this.editObject.price = parseFloat(this.editObject.price.replace(",", /[.]/)).toFixed(2);
           this.list.push({ ...this.editObject });
-          console.log(this.editObject);
           this.$emit("list", this.list);
           this.editShow = false;
         } else {
