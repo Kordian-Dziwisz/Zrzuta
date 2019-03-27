@@ -1,10 +1,9 @@
 <template>
   <div>
-    <div class="font-weight-light px-1 pb-2 px-lg-4">
-      <span class="h2">Lista zbiórek</span>
-      <b-button variant="outline-success" class="float-right" @click="showModal=true">
+    <div class="font-weight-light pb-2 px-4 d-none d-lg-block">
+      <b-button variant="outline-success" class="bg-light" @click="showModal=true">
         <i class="fas fa-plus fa-fw"></i>
-        <span class="d-none d-lg-inline">Nowa zbiórka</span>
+        <span>Stwórz zbiórkę</span>
       </b-button>
     </div>
     <b-alert
