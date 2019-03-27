@@ -260,8 +260,7 @@ export default {
       newComment: "",
       showRemoveModal: false,
       showCommentModal: false,
-      showCommentIndex: null,
-      editCommentIndex: null
+      showCommentIndex: null
     };
   },
   methods: {
@@ -329,6 +328,43 @@ export default {
     }
   },
   computed: {
+    filteredList() {
+      switch (this.filter) {
+        case "none":
+          return this.list.sort(item => {
+            return item.name;
+          });
+        case "zapłacone":
+          return this.list
+            .filter(item => {
+              return item.paid && !item.accepted;
+            })
+            .sort(item => {
+              return item.name;
+            });
+        case "wpłacone":
+          return this.list
+            .filter(item => {
+              return item.accepted;
+            })
+            .sort(item => {
+              return item.name;
+            });
+          break;
+        case "pozostało":
+          return this.list
+            .filter(item => {
+              return item.paid && item.accepted;
+            })
+            .sort(item => {
+              return item.name;
+            });
+          break;
+        default:
+          return this.list;
+          break;
+      }
+    },
     alreadyAdded() {
       let flag = false;
       this.list.forEach(item => {
