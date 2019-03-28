@@ -13,7 +13,7 @@
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
           <b-nav-item to="/" exact>Strona główna</b-nav-item>
-          <b-nav-item @click="addFundrais">Nowa zbiórka</b-nav-item>
+          <b-nav-item class="d-block d-lg-none" @click="addFundrais">Nowa zbiórka</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-navbar-nav is-nav id="nav-collapse" right>
