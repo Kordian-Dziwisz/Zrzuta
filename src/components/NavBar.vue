@@ -30,6 +30,7 @@
 </template>
 <script>
 import firebase from "firebase";
+import { firebaseMixin } from "@/mixins/firebase-doc.js";
 
 export default {
   data() {

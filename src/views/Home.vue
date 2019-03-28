@@ -39,7 +39,7 @@ export default {
     },
     mapItem(item) {
       if (
-        this.shared(
+        this.isShared(
           Object.values(item.data().listOfParticipants)
             .map(x => x.name)
             .concat(item.data().fundraisInfo.creator)
@@ -48,7 +48,7 @@ export default {
         return { ...item.data().fundraisInfo, id: item.id };
       } else return null;
     },
-    shared(list) {
+    isShared(list) {
       return list.includes(localStorage.getItem("login"));
     },
     async removeFundrais(docID) {
