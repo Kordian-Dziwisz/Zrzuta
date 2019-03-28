@@ -57,6 +57,7 @@ var config = {
   messagingSenderId: "341829487916"
 };
 firebase.initializeApp(config);
+
 Vue.use(BootstrapVue);
 
 Vue.use(require("vue-shortkey"));
