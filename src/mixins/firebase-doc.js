@@ -15,6 +15,15 @@ export const firebaseMixin = {
           participants: [],
           products: []
         },
+        docID: "",
+        get db() {
+          return this.docID
+            ? firebase.firestore().collection("Zrzuty-develop")
+            : firebase
+                .firestore()
+                .collection("Zrzuty-develop")
+                .doc(this.docID);
+        },
 
         async addNew(title, description) {
           this.doc.info.title = title;
@@ -36,10 +45,9 @@ export const firebaseMixin = {
         },
 
         async update(docID) {
-          if ( this.fundraises.info.endDate.getYear() > 118 && this.fundraises.info.title.length > 0 ){
-            await this.db.set(this.doc)
-            }
-          },
+          if (this.fundraises.info.endDate.getYear() > 118 && this.fundraises.info.title.length > 0) {
+            await this.db.doc(docID).set(this.doc);
+          }
         },
 
         async update() {
@@ -47,23 +55,11 @@ export const firebaseMixin = {
             this.docID
               ? this.db.set(this.doc)
               : console.log("no docID detected, use update(docID) or set it using fundraises.docID = <String>");
-            }
-      },
+          }
+        },
 
-          async remove( docID )
-          {
-            await this.db.doc(odcID).delete();
-
-      },
-
-        docID: "",
-        get db() {
-          return this.docID
-            ? firebase.firestore().collection("Zrzuty-develop")
-            : firebase
-                .firestore()
-                .collection("Zrzuty-develop")
-                .doc(this.docID);
+        async remove(docID) {
+          await this.db.doc(docID).delete();
         }
       }
     };
