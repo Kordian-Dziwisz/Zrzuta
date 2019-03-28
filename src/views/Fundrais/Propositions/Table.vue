@@ -55,7 +55,7 @@
           <tr
             :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
             class="text-center"
-            v-for="(item, index) in list"
+            v-for="(item, index) in sortedList"
             :key="index"
           >
             <template v-if="item.accepted == true || !ended">
@@ -114,6 +114,7 @@
         </tbody>
       </table>
     </b-card-body>
+
     <b-modal id @hide="editShow = false" :lazy="true" :title="editModalTitle" v-model="editShow">
       <form v-if="editObject" @submit.prevent="editSave">
         <b-form-row>
@@ -306,24 +307,18 @@ export default {
       return this.list[index].creator == localStorage.getItem("login");
     }
   },
-  //   validations: {
-  //     editInfo: {
-  //       name: {
-  //         required: required(),
-  //         minLength: minLenght(4),
-  //         maxLength: maxLength(80)
-  //       },
-  //       number: {
-  //         between: between(20, 30),
-  //         integer: integer()
-  //       },
-  //       price: {
-  //         between: between(20, 30),
-  //         numeric: numeric()
-  //       }
-  //     }
-  //   },
   computed: {
+    sortedList() {
+      return this.list.sort((a, b) => {
+        if (a.name > b.name) {
+          return 1;
+        }
+        if (a.name < b.name) {
+          return -1;
+        }
+        return 0;
+      });
+    },
     priceSum: {
       get() {
         if (this.list.length > 0) {

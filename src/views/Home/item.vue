@@ -124,6 +124,9 @@ export default {
   computed: {
     isYour() {
       return this.item.creator == localStorage.getItem("login");
+    },
+    isAfterDate() {
+      return new Date(this.item.endDate).getTime() < Date.now();
     }
   }
 };
