@@ -1,9 +1,9 @@
 <template>
-  <b-card>
+  <b-card no-body class="p-2">
     <b-card-title title-tag="div">
       <div class="row">
         <div class="col-12 col-lg-5 text-lg-left text-center">
-          <h4 class="d-inline">{{info.title}}</h4>
+          <h2 class="d-inline">{{info.title}}</h2>
           <p>Trwa do: {{ info.endDate | moment("LL")}}</p>
         </div>
         <div class="col-12 col-lg-7 text-lg-right text-center">
@@ -11,25 +11,21 @@
         </div>
       </div>
     </b-card-title>
-    <b-card-body class="px-0" v-if="info.description.length || info.accountNumber">
-      <div class="row py-2">
+    <b-card-body class="px-0 pt-0" v-if="info.description.length || info.accountNumber">
+      <div class="row">
         <div class="col-6 col-lg-6" v-if="info.description.length">
-          <label>
-            <strong>Opis:</strong>
-          </label>
+          <label>Opis:</label>
           <p>{{info.description}}</p>
         </div>
         <div class="col-6 col-lg-6" v-if="info.accountNumber">
-          <label>
-            <strong>Informacje o płatności:</strong>
-          </label>
+          <label>Informacje o płatności:</label>
           <p>{{info.accountNumber}}</p>
         </div>
       </div>
     </b-card-body>
     <b-card-footer class="text-right footer-style p-0" v-if="isAdmin">
       <b-button
-        class="mb-1 ml-2 btn-outline-secondary"
+        class="ml-2 btn-outline-secondary"
         type="button"
         variant="light"
         @click="openEditing()"

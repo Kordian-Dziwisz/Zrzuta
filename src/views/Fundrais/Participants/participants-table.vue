@@ -1,33 +1,30 @@
 <template>
   <b-card class="border rounded" no-body>
-    <!-- <b-card-header class="w-100 shadow-sm h4"></b-card-header> -->
-    <b-card-title class="p-2">
-      <h3>
-        <span>Uczestnicy</span>
-        <b-badge
-          pill
-          variant="primary"
-          class="float-right"
-          data-toggle="tooltip"
-          data-placement="auto"
-          v-b-tooltip.hover
-          title="Liczba uczestników"
-          v-if="list.length && alreadyAdded"
-        >{{list.length}}</b-badge>
-        <b-button
-          class="btn-outline-success btn-light ml-1 float-right"
-          data-toggle="tooltip"
-          data-placement="auto"
-          v-b-tooltip.hover
-          title="Dodaj siebie"
-          v-else-if="!alreadyAdded && !isAdmin"
-          @click="addMe"
-          size="sm"
-        >
-          <i class="fas fa-plus fa-fw"></i>
-          Dodaj mnie
-        </b-button>
-      </h3>
+    <b-card-title class="p-2 mb-0">
+      <h4 class="d-inline">Uczestnicy</h4>
+      <b-badge
+        pill
+        variant="primary"
+        class="float-right"
+        data-toggle="tooltip"
+        data-placement="auto"
+        v-b-tooltip.hover
+        title="Liczba uczestników"
+        v-if="list.length && alreadyAdded"
+      >{{list.length}}</b-badge>
+      <b-button
+        class="btn-outline-success btn-light ml-1 float-right"
+        data-toggle="tooltip"
+        data-placement="auto"
+        v-b-tooltip.hover
+        title="Dodaj siebie"
+        v-else-if="!alreadyAdded && !isAdmin"
+        @click="addMe"
+        size="sm"
+      >
+        <i class="fas fa-plus fa-fw"></i>
+        Dodaj mnie
+      </b-button>
     </b-card-title>
     <b-card-body>
       <form
@@ -49,7 +46,6 @@
               @focus="name.length ? dirty = true : dirty = false"
               required
             />
-            <b-form-invalid-feedback>Nazwa uczestnika musi mieć powyżej 3 znaków!</b-form-invalid-feedback>
             <b-button
               type="submit"
               class="btn-outline-success btn-light mx-1"
@@ -78,6 +74,9 @@
             Dodaj mnie
           </b-button>
         </div>
+        <b-form-invalid-feedback
+          :state="dirty ? validation : null"
+        >Nazwa uczestnika musi mieć powyżej 3 znaków!</b-form-invalid-feedback>
       </form>
       <div class="h5 row" v-else-if="list.length">
         <div class="text-success text-center col-12 col-lg-4">

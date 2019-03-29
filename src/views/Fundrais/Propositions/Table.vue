@@ -1,40 +1,30 @@
 <template>
   <b-card class="border rounded" no-body>
-    <!-- <b-card-header class="w-100"> -->
-    <!-- <div class="float-right text-success">Otwarte</div> -->
-    <!-- <b-row> -->
-    <!--  -->
-    <!-- <b-col class="h4">Cele zbiórki</b-col> -->
-    <!-- <b-col class="text-right text-success">Otwarte</b-col> -->
-    <!-- </b-row> -->
-    <!-- </b-card-header> -->
     <b-card-title class="p-2 mb-0">
-      <h3>
-        <div class="d-block d-lg-inline">
-          <span>Cele zbiórki</span>
-          <b-button
-            v-if="!this.ended && canAdd"
-            type="submit"
-            class="btn-outline-success btn-light ml-2 mb-1"
-            data-toggle="tooltip"
-            data-placement="auto"
-            v-b-tooltip.hover
-            title="Dodaj nową propozycję"
-            size="sm"
-            @click="addNew"
-          >
-            <i class="fas fa-plus fa-fw"></i>
-            Dodaj
-          </b-button>
+      <div class="d-block d-lg-inline">
+        <h4 class="d-lg-inline">Cele zbiórki</h4>
+        <b-button
+          v-if="!this.ended && canAdd"
+          type="submit"
+          class="btn-outline-success btn-light ml-2 mb-1"
+          data-toggle="tooltip"
+          data-placement="auto"
+          v-b-tooltip.hover
+          title="Dodaj nową propozycję"
+          size="sm"
+          @click="addNew"
+        >
+          <i class="fas fa-plus fa-fw"></i>
+          Dodaj
+        </b-button>
+      </div>
+      <span class="float-lg-right text-lg-right" v-if="priceSum > 0 && numOfParticipants">
+        Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł
+        <div class="text-lg-right small" v-if="numOfParticipants > 1">
+          {{priceSum.toFixed(2).toString().replace(/[.]/, ',')}}
+          zł
         </div>
-        <span class="float-lg-right text-lg-right" v-if="priceSum > 0 && numOfParticipants">
-          Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł
-          <div class="text-lg-right small" v-if="numOfParticipants > 1">
-            {{priceSum.toFixed(2).toString().replace(/[.]/, ',')}}
-            zł
-          </div>
-        </span>
-      </h3>
+      </span>
     </b-card-title>
     <b-card-body>
       <b-alert
@@ -43,7 +33,7 @@
         variant="warning"
         class="text-dark"
       >Nie zgłoszono żadnych propozycji</b-alert>
-      <table v-else class="table table-responsive table-striped border mb-0">
+      <table v-else class="table table-sm-responsive table-striped border mb-0">
         <thead>
           <th class="text-left">Nazwa</th>
           <th class="text-right">Ilość</th>
