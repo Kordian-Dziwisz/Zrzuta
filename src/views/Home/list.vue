@@ -10,7 +10,7 @@
       variant="warning"
       :show="list.length === 0"
     >Brak aktywnych zbiórek - utwórz nową lub poproś o zaproszenie do obecnej.</b-alert>
-    <ul class="list-group px-0 px-lg-4" v-for="(item, index) in list" :key="index">
+    <ul class="list-group px-0 px-lg-4" v-for="(item, index) in sortedList" :key="index">
       <Item class="list-group-item" :item="{index: index, ...item}" @remove="remove"/>
     </ul>
     <!-- new fundrais modal -->
