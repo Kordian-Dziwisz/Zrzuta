@@ -1,6 +1,7 @@
 <template>
   <div>
     <b-navbar
+      id="navbar"
       class="fixed-top border-bottom shadow bg-white"
       toggleable="md"
       v-shortkey="['alt', 'n']"
@@ -80,11 +81,24 @@ export default {
     }
   }
 };
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementById("navbar").style.top = "0";
+  } else {
+    document.getElementById("navbar").style.top = "-150px";
+  }
+  prevScrollpos = currentScrollPos;
+};
 </script>
 <style scoped>
 a:hover,
 a.router-link-active,
 a.router-link-exact-active {
   color: #990000 !important;
+}
+#navbar {
+  transition: top 0.4s;
 }
 </style>
