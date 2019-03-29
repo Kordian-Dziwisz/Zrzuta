@@ -141,7 +141,7 @@
           <span>Edytuj</span>
         </b-button>
   </b-card-footer>-->
-  <div>
+  <div v-if="newInfo">
     <info-main
       v-if="!isEditing"
       :info="newInfo"
@@ -174,7 +174,7 @@ export default {
   data() {
     return {
       isEditing: false,
-      newInfo: Object
+      newInfo: false
     };
   },
   methods: {
@@ -186,7 +186,7 @@ export default {
       this.newInfo.ended = !this.newInfo.ended;
       if (this.isAfterDate) {
         this.notifyEnded();
-      } else if (this.info.ended) {
+      } else if (this.newInfo.ended) {
         this.notifyClosed();
       }
     },
