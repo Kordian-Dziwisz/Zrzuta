@@ -55,7 +55,6 @@ export default {
       await this.db.doc(docID).delete();
     },
     async addFundrais(event) {
-      console.log("newFundrais");
       this.newFundrais.title = event.title;
       this.newFundrais.description = event.description;
       this.newFundrais.creator = localStorage.getItem("login");

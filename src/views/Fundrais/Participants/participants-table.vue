@@ -271,6 +271,7 @@ export default {
       showRemoveModal: false,
       showCommentModal: false,
       showCommentIndex: null,
+      editCommentIndex: null,
       filter: "none"
     };
   },
