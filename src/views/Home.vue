@@ -3,7 +3,7 @@
     <fundraising-list
       :list="list ? list : []"
       @remove="fundraises.remove()"
-      @new="fundraises.addNew()"
+      @new="fundraises.addNew($event)"
     ></fundraising-list>
   </div>
 </template>
@@ -11,6 +11,7 @@
 import Vue from "vue";
 import Login from "@/components/Login.vue";
 import FundraisingList from "@/views/Home/list.vue";
+import { firebase } from "firebase";
 import { firebaseMixin } from "@/mixins/firebase-doc";
 
 export default {

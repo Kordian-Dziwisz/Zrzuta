@@ -2,8 +2,7 @@ export const firebaseMixin = {
   data() {
     return {
       fundraises: {
-        // firebase: import(firebase),
-
+        firebase: require("firebase"),
         doc: {
           info: {
             accountNumber: "",
@@ -21,15 +20,12 @@ export const firebaseMixin = {
 
         get db() {
           if (this.firebase) {
-            this.creationDate = new Date(Date.now()).toJSON();
-            this.endDate = new Date(Date.now() + 86400000).toJSON();
-            this.creator = localStorage.getItem("login");
             return this.docID
-              ? this.firebase.firestore().collection("Zrzuty-develop")
-              : this.firebase
+              ? this.firebase
                   .firestore()
                   .collection("Zrzuty-develop")
-                  .doc(this.docID);
+                  .doc(this.docID)
+              : this.firebase.firestore().collection("Zrzuty-develop");
           } else {
             console.log(
               "firebase not imported, import it using import firebase from 'firebase' in your main component"
@@ -37,9 +33,14 @@ export const firebaseMixin = {
           }
         },
 
-        async addNew(title, description) {
-          this.doc.info.title = title;
-          this.doc.info.description = description;
+        async addNew(input) {
+          this.doc.info.creationDate = new Date(Date.now()).toJSON();
+          this.doc.info.endDate = new Date(Date.now() + 86400000).toJSON();
+          this.doc.info.creator = localStorage.getItem("login");
+          this.doc.info.title = input.title;
+          this.doc.info.description = input.description;
+
+          this.docID = "";
           let newFundrais = await this.db.add(this.doc);
           await this.$router.push({
             name: "Fundrais",
@@ -48,8 +49,8 @@ export const firebaseMixin = {
         },
 
         async get(docID) {
-          this.docID = null;
-          let tmpDoc = await this.db.get({ source: "default" });
+          this.docID = docID;
+          let tmpDoc = await this.db.doc(docID).get({ source: "default" });
           //converting from JSON date format to object
           this.tmpDoc.info.creationDate = new Date(this.tmpDoc.info.creationDate);
           this.tmpDoc.info.endDate = new Date(this.tmpDoc.info.endDate);
@@ -57,7 +58,7 @@ export const firebaseMixin = {
         },
 
         async getList() {
-          this.docID = null;
+          this.docID = "";
           return await this.db
             .get()
             .docs.map(item => this.mapItem(item))
@@ -78,34 +79,24 @@ export const firebaseMixin = {
           return list.includes(localStorage.getItem("login"));
         },
 
-        async addNew(title) {
-          this.docID = null;
-          this.doc.info.title = title;
-          let newFundrais = await this.db.add(this.doc);
-          await this.$router.push({
-            name: "Fundrais",
-            params: { id: newFundrais.id }
-          });
-        },
-
         async update(docID) {
           this.docID = docID;
-          await this.db.set(this.doc);
+          await this.db.set({ ...this.doc });
         },
 
         async update() {
           this.docID
-            ? this.db.set(this.doc)
+            ? this.db.set({ ...this.doc })
             : console.log("no docID detected, use update(docID) or set it using fundraises.docID = <String>");
         },
         async remove(docID) {
           this.docID = docID;
-          await this.db.doc(docID).delete();
+          await this.db.delete();
         }
       }
     };
   },
-  created() {
+  async created() {
     console.log("mixin activated");
     console.log(this.fundraises);
   }
