@@ -34,7 +34,7 @@
         class="text-dark"
       >Nie zgłoszono żadnych propozycji</b-alert>
       <table
-        v-else-if="list.some(item=>{item.accepted}) || !ended"
+        v-else-if="list.some(item=>{item.accepted}) || list.every(item=>{!item.accepted}) || !ended"
         class="table table-responsive table-striped border mb-0"
       >
         <thead>
@@ -51,7 +51,9 @@
             v-for="(item, index) in sortedList"
             :key="index"
           >
-            <template v-if="item.accepted == true || !ended">
+            <template
+              v-if=" list.every(itemm=>{!itemm.accepted}) || item.accepted == true || !ended"
+            >
               <td class="text-left">{{item.name}}</td>
               <td class="text-right">{{item.number}}</td>
               <td class="text-right">{{item.price.toString().replace(/[.]/, ',')}}</td>

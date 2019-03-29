@@ -1,20 +1,41 @@
 <template>
-  <b-card class="w-50 mx-auto">
-    <b-card-title>Zaloguj się</b-card-title>
-    <form class="w-75 mx-auto mt-3" @submit.prevent="returnLogin">
-      <b-input
-        v-model.lazy.trim="login"
-        placeholder="Wpisz login"
-        type="text"
-        maxlength="30"
-        :state="validation"
-        autocomplete="off"
-      />
-      <b-form-invalid-feedback :state="validation">Login musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
-      <b-form-valid-feedback :state="validation"></b-form-valid-feedback>
-      <b-button type="submit" size="sm" class="my-1 float-right">Zaloguj się</b-button>
-    </form>
-  </b-card>
+  <div>
+    <b-card class="d-none d-lg-block w-50 mx-auto">
+      <b-card-title>Zaloguj się</b-card-title>
+      <b-card-text>
+        <form class="w-75 mx-auto" @submit.prevent="returnLogin">
+          <b-input
+            v-model.lazy.trim="login"
+            placeholder="Wpisz login"
+            type="text"
+            maxlength="30"
+            :state="validation"
+            autocomplete="off"
+          />
+
+          <b-button type="submit" size="sm" class="d-block float-right mb-3">Zaloguj się</b-button>
+          <b-form-invalid-feedback :state="validation">Login musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
+          <b-form-valid-feedback :state="validation"></b-form-valid-feedback>
+        </form>
+      </b-card-text>
+    </b-card>
+    <b-card class="d-block d-lg-none w-100 mx-auto">
+      <b-card-title>Zaloguj się</b-card-title>
+      <form class="w-75 mx-auto mt-3" @submit.prevent="returnLogin">
+        <b-input
+          v-model.lazy.trim="login"
+          placeholder="Wpisz login"
+          type="text"
+          maxlength="30"
+          :state="validation"
+          autocomplete="off"
+        />
+        <b-form-invalid-feedback :state="validation">Login musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
+        <b-form-valid-feedback :state="validation"></b-form-valid-feedback>
+        <b-button type="submit" size="sm" class="my-1 float-right">Zaloguj się</b-button>
+      </form>
+    </b-card>
+  </div>
 </template>
 <script>
 export default {
