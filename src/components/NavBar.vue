@@ -2,7 +2,6 @@
   <div>
     <b-navbar
       class="fixed-top border-bottom shadow bg-white"
-      @click="like(index)"
       toggleable="md"
       v-shortkey="['alt', 'n']"
       @shortkey="addFundrais"
@@ -14,7 +13,7 @@
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
           <b-nav-item to="/" exact>Strona główna</b-nav-item>
-          <b-nav-item @click="addFundrais">Nowa zbiórka</b-nav-item>
+          <b-nav-item class="d-block d-lg-none" @click="addFundrais">Nowa zbiórka</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-navbar-nav is-nav id="nav-collapse" right>
@@ -31,6 +30,7 @@
 </template>
 <script>
 import firebase from "firebase";
+import { firebaseMixin } from "@/mixins/firebase-doc.js";
 
 export default {
   data() {
@@ -66,7 +66,6 @@ export default {
         });
         if (await newFundrais.id) {
           this.isClicked = false;
-          location.reload();
         }
       }
     },

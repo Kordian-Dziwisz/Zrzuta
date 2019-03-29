@@ -8,6 +8,10 @@
           pill
           variant="primary"
           class="float-right"
+          data-toggle="tooltip"
+          data-placement="auto"
+          v-b-tooltip.hover
+          title="Liczba uczestników"
           v-if="list.length && alreadyAdded"
         >{{list.length}}</b-badge>
         <b-button
@@ -26,7 +30,11 @@
       </h3>
     </b-card-title>
     <b-card-body>
-      <form autocomplete="off" @submit.prevent="addNew" v-if="!this.isEnded && isAuthenticated">
+      <form
+        autocomplete="off"
+        @submit.prevent="addNew"
+        v-if="!this.isEnded && (isAuthenticated || isAdmin)"
+      >
         <label for="userNameValidation" v-if="isAdmin">Dodaj nowego uczestnika:</label>
         <div class="input-group">
           <template v-if="isAdmin">
@@ -72,13 +80,21 @@
         </div>
       </form>
       <div class="h5 row" v-else-if="list.length">
-        <div
-          class="text-success text-center col-12 col-lg-4"
-        >Zapłacone: {{paidAcceptedAndNot.accepted}}</div>
-        <div
-          class="text-primary col text-center col-12 col-lg-4"
-        >Wpłacone: {{paidAcceptedAndNot.paid}}</div>
-        <div class="col text-center col-12 col-lg-4">Pozostało: {{paidAcceptedAndNot.not}}</div>
+        <div class="text-success text-center col-12 col-lg-4">
+          <a
+            @click="filter == 'zapłacone' ? filter = 'none' : filter = 'zapłacone'"
+          >Zapłacone: {{paidAcceptedAndNot.accepted}}</a>
+        </div>
+        <div class="text-primary col text-center col-12 col-lg-4">
+          <a
+            @click="filter == 'wpłacone' ? filter = 'none' : filter = 'wpłacone'"
+          >Wpłacone: {{paidAcceptedAndNot.paid}}</a>
+        </div>
+        <div class="col text-center col-12 col-lg-4">
+          <a
+            @click="filter == 'pozostało' ? filter = 'none' : filter = 'pozostało'"
+          >Pozostało: {{paidAcceptedAndNot.not}}</a>
+        </div>
       </div>
       <b-alert variant="warning" class="text-dark mt-2" v-if="list.length==0">
         Nie zapisano żadnego uczestnika,
@@ -88,7 +104,7 @@
       </b-alert>
       <table v-else class="table table-striped border mt-2 mb-0">
         <tbody>
-          <tr v-for="(item, index) in list" :key="index">
+          <tr v-for="(item, index) in filteredList" :key="index">
             <td
               class="pl-3"
               :class="{'acceptedBar':item.accepted, 'paidBar':item.paid&&!item.accepted}"
@@ -180,15 +196,14 @@
       <form @submit.prevent="saveComment()">
         <b-form-row>
           <label for="editCommentInput">Komentarz:</label>
-          <b-form-input
+          <b-form-textarea
             id="editCommentInput"
-            class="mb-1"
-            type="text"
             name="name"
             v-model.trim="newComment"
-            required
+            novalidate
+            max-rows="6"
             placeholder="Wpisz komentarz"
-          ></b-form-input>
+          ></b-form-textarea>
         </b-form-row>
       </form>
       <div slot="modal-footer" class="w-100">
@@ -257,7 +272,7 @@ export default {
       showRemoveModal: false,
       showCommentModal: false,
       showCommentIndex: null,
-      editCommentIndex: null
+      filter: "none"
     };
   },
   methods: {
@@ -325,6 +340,67 @@ export default {
     }
   },
   computed: {
+    filteredList() {
+      switch (this.filter) {
+        case "none":
+          return this.list.sort((a, b) => {
+            if (a.name > b.name) {
+              return 1;
+            }
+            if (a.name < b.name) {
+              return -1;
+            }
+            return 0;
+          });
+        case "zapłacone":
+          return this.list
+            .filter(item => {
+              return item.accepted;
+            })
+            .sort((a, b) => {
+              if (a.name > b.name) {
+                return 1;
+              }
+              if (a.name < b.name) {
+                return -1;
+              }
+              return 0;
+            });
+        case "wpłacone":
+          return this.list
+            .filter(item => {
+              return item.paid && !item.accepted;
+            })
+            .sort((a, b) => {
+              if (a.name > b.name) {
+                return 1;
+              }
+              if (a.name < b.name) {
+                return -1;
+              }
+              return 0;
+            });
+          break;
+        case "pozostało":
+          return this.list
+            .filter(item => {
+              return !item.paid && !item.accepted;
+            })
+            .sort((a, b) => {
+              if (a.name > b.name) {
+                return 1;
+              }
+              if (a.name < b.name) {
+                return -1;
+              }
+              return 0;
+            });
+          break;
+        default:
+          return this.list;
+          break;
+      }
+    },
     alreadyAdded() {
       let flag = false;
       this.list.forEach(item => {

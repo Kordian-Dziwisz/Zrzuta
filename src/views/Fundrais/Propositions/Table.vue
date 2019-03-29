@@ -10,7 +10,7 @@
     <!-- </b-card-header> -->
     <b-card-title class="p-2 mb-0">
       <h3>
-        <div class="d-inline">
+        <div class="d-block d-lg-inline">
           <span>Cele zbiórki</span>
           <b-button
             v-if="!this.ended && canAdd"
@@ -27,9 +27,9 @@
             Dodaj
           </b-button>
         </div>
-        <span class="float-right text-right" v-if="priceSum > 0 && numOfParticipants">
+        <span class="float-lg-right text-lg-right" v-if="priceSum > 0 && numOfParticipants">
           Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł
-          <div class="text-right small" v-if="numOfParticipants > 1">
+          <div class="text-lg-right small" v-if="numOfParticipants > 1">
             {{priceSum.toFixed(2).toString().replace(/[.]/, ',')}}
             zł
           </div>
@@ -43,7 +43,7 @@
         variant="warning"
         class="text-dark"
       >Nie zgłoszono żadnych propozycji</b-alert>
-      <table v-else class="table table-striped border mb-0">
+      <table v-else class="table table-responsive table-striped border mb-0">
         <thead>
           <th class="text-left">Nazwa</th>
           <th class="text-right">Ilość</th>
@@ -55,7 +55,7 @@
           <tr
             :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
             class="text-center"
-            v-for="(item, index) in list"
+            v-for="(item, index) in sortedList"
             :key="index"
           >
             <template v-if="item.accepted == true || !ended">
@@ -114,21 +114,24 @@
         </tbody>
       </table>
     </b-card-body>
+
     <b-modal id @hide="editShow = false" :lazy="true" :title="editModalTitle" v-model="editShow">
       <form v-if="editObject" @submit.prevent="editSave">
         <b-form-row>
-          <label for="editNameInput">Nazwa:</label>
-          <b-form-input
-            id="editNameInput"
-            class="mb-1"
-            type="text"
-            name="name"
-            v-model.trim="editObject.name"
-            required
-            placeholder="Wpisz nazwę"
-            maxlength="30"
-          ></b-form-input>
-          <b-form-invalid-feedback :state="validationName">Wpisz nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
+          <div class="col">
+            <label for="editNameInput">Nazwa:</label>
+            <b-form-input
+              id="editNameInput"
+              class="mb-1"
+              type="text"
+              name="name"
+              v-model.trim="editObject.name"
+              required
+              placeholder="Wpisz nazwę"
+              maxlength="30"
+            ></b-form-input>
+            <b-form-invalid-feedback :state="validationName">Wpisz nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
+          </div>
         </b-form-row>
         <b-form-row>
           <div class="col">
@@ -151,7 +154,7 @@
             <b-input
               class="float-right text-right"
               id="editPriceInput"
-              type="number"
+              type="text"
               name="price"
               v-model="editObject.price"
               placeholder="Wpisz cenę"
@@ -244,7 +247,7 @@ export default {
           creator: localStorage.getItem("login"),
           name: "",
           number: null,
-          price: null,
+          price: "",
           accepted: false,
           likes: [],
           dislikes: []
@@ -261,16 +264,15 @@ export default {
       if (this.validationName && this.validationNumber && this.validationPrice) {
         //   w wypadku kiedy tworzysz nowy obiekt
         if (this.editIndex === null) {
+          this.editObject.price = parseFloat(this.editObject.price.replace(",", /[.]/)).toFixed(2);
           this.list.push({ ...this.editObject });
-          console.log(this.editObject);
           this.$emit("list", this.list);
           this.editShow = false;
         } else {
           this.editShow = false;
-
           this.list[this.editIndex].name = this.editObject.name;
           this.list[this.editIndex].number = parseInt(this.editObject.number);
-          this.list[this.editIndex].price = parseFloat(this.editObject.price).toFixed(2);
+          this.list[this.editIndex].price = parseFloat(this.editObject.price.replace(",", /[.]/)).toFixed(2);
           this.editIndex = null;
           this.$emit("list", this.list);
         }
@@ -305,24 +307,18 @@ export default {
       return this.list[index].creator == localStorage.getItem("login");
     }
   },
-  //   validations: {
-  //     editInfo: {
-  //       name: {
-  //         required: required(),
-  //         minLength: minLenght(4),
-  //         maxLength: maxLength(80)
-  //       },
-  //       number: {
-  //         between: between(20, 30),
-  //         integer: integer()
-  //       },
-  //       price: {
-  //         between: between(20, 30),
-  //         numeric: numeric()
-  //       }
-  //     }
-  //   },
   computed: {
+    sortedList() {
+      return this.list.sort((a, b) => {
+        if (a.name > b.name) {
+          return 1;
+        }
+        if (a.name < b.name) {
+          return -1;
+        }
+        return 0;
+      });
+    },
     priceSum: {
       get() {
         if (this.list.length > 0) {
@@ -363,7 +359,9 @@ export default {
     },
     validationPrice: {
       get() {
-        return this.editObject.price > 0;
+        return (
+          this.editObject.price.length > 0 && parseFloat(this.editObject.price.replace(",", /[.]/)).toFixed(2) > 0.01
+        );
       }
     }
   }
