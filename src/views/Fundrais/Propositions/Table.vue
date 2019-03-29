@@ -152,7 +152,7 @@
           <div class="col">
             <label for="editPriceInput">Cena:</label>
             <b-input
-              class="float-right text-right"
+              class="text-right"
               id="editPriceInput"
               type="text"
               name="price"
@@ -161,8 +161,10 @@
               step="0.01"
               min="0"
             ></b-input>
+            <b-form-invalid-feedback
+              :state="validationPrice"
+            >Cena produktu musi być większa niż 0 zł</b-form-invalid-feedback>
           </div>
-          <b-form-invalid-feedback :state="validationPrice">Cena produktu musi być większa niż 0 zł</b-form-invalid-feedback>
         </b-form-row>
       </form>
       <div slot="modal-footer" class="w-100">

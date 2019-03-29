@@ -46,7 +46,7 @@
             v-model.trim="description"
             novalidate
             max-rows="6"
-            placeholder="Opcjonalnie wpisz komentarz"
+            placeholder="Wpisz opis (opcjonalne)"
           ></b-form-textarea>
         </b-form-row>
       </form>
