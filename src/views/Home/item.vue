@@ -1,11 +1,14 @@
 <template>
   <div class="bg-white">
     <div class="row">
-      <div class="col p-0">
-        <span class="h5">
+      <div class="col text-center p-0">
+        <span class="h5 float-left">
           <router-link class="text-dark" :to="{name: 'Fundrais', params: {id: item.id}}">
             <h4 class="d-inline">{{item.title}}</h4>
           </router-link>
+        </span>
+        <span>
+          <wizard :inStage="wizardStage" :isEditing="false"/>
         </span>
         <span class="float-right">
           <b-button
@@ -32,10 +35,6 @@
         </div>
         <div class="float-lg-right d-lg-inline">
           <span v-if="item.endDate < new Date(Date.now())">Zbiórka zakończona</span>
-          <span
-            class="text-danger"
-            v-else-if="item.ended"
-          >Dokonaj zapłaty, jeśli jeszcze tego nie zrobiłeś/aś</span>
           <span v-else>
             Zbiórka trwa do
             <strong class="text-danger">{{ item.endDate | moment("LL")}}</strong>
@@ -97,6 +96,7 @@
   </div>
 </template>
 <script>
+import Wizard from "@/components/wizard.vue";
 export default {
   data() {
     return {
@@ -127,7 +127,21 @@ export default {
     },
     isAfterDate() {
       return new Date(this.item.endDate).getTime() < Date.now();
+    },
+    wizardStage() {
+      if (!this.isAfterDate) {
+        if (this.item.ended) {
+          return 2;
+        } else {
+          return 1;
+        }
+      } else {
+        return 3;
+      }
     }
+  },
+  components: {
+    Wizard
   }
 };
 </script>
