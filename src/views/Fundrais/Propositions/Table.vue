@@ -1,6 +1,6 @@
 <template>
   <b-card class="border rounded" no-body>
-    <b-card-title class="p-2 mb-0">
+    <b-card-title class="p-2 mb-0 text-center text-lg-left">
       <div class="d-block d-lg-inline">
         <h4 class="d-lg-inline">Cele zbiórki</h4>
         <b-button
@@ -33,81 +33,84 @@
         variant="warning"
         class="text-dark"
       >Nie zgłoszono żadnych propozycji</b-alert>
-      <table
-        v-else-if="list.some(item=>{item.accepted}) || list.every(item=>{!item.accepted}) || !ended"
-        class="table table-responsive table-striped border mb-0"
+      <div
+        class="table-responsive"
+        v-else-if="list.some(item=>{return item.accepted}) || list.every(item=>{return !item.accepted}) || !ended"
       >
-        <thead>
-          <th class="text-left">Nazwa</th>
-          <th class="text-right">Ilość</th>
-          <th class="text-right">Cena (zł)</th>
-          <th class="text-right">Koszt (zł)</th>
-          <th class="text-right"></th>
-        </thead>
-        <tbody>
-          <tr
-            :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
-            class="text-center"
-            v-for="(item, index) in sortedList"
-            :key="index"
-          >
-            <template
-              v-if=" list.every(itemm=>{!itemm.accepted}) || item.accepted == true || !ended"
+        <table class="table table-striped border mb-0">
+          <thead>
+            <th class="text-left">Nazwa</th>
+            <th class="text-right">Ilość</th>
+            <th class="text-right">Cena (zł)</th>
+            <th class="text-right">Koszt (zł)</th>
+            <th class="text-right"></th>
+          </thead>
+          <tbody>
+            <tr
+              :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
+              class="text-center"
+              v-for="(item, index) in sortedList"
+              :key="index"
             >
-              <td class="text-left">{{item.name}}</td>
-              <td class="text-right">{{item.number}}</td>
-              <td class="text-right">{{item.price.toString().replace(/[.]/, ',')}}</td>
-              <td
-                class="text-right"
-              >{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}}</td>
-              <b-button
-                class="btn"
-                size="sm"
-                data-toggle="tooltip"
-                data-placement="auto"
-                v-b-tooltip.hover
-                title="Zagłosuj"
-                variant="primary"
-                :class="{'btn-primary': isLiked(index), 'btn-outline-primary btn-light': !isLiked(index)}"
-                @click="like(index)"
+              <template
+                v-if=" list.every(itemm=>{return !itemm.accepted}) || item.accepted == true || !ended"
               >
-                <i class="fas fa-thumbs-up fa-fw"></i>
-                <span class="ml-1">{{item.likes.length}}</span>
-              </b-button>
-              <b-dropdown
-                split
-                text="Edytuj"
-                class="m-1"
-                size="sm"
-                v-if="isAuthenticated(index) || isAdmin"
-                @click="edit(index)"
-              >
-                <b-dropdown-item-button
-                  size
-                  :class="{'btn-outline-success btn-light': !item.accepted, 'btn-success': item.accepted}"
-                  text="Zatwierdź"
-                  class="text-success"
-                  v-if="isAdmin && !item.accepted"
-                  @click="accept(index)"
-                >
-                  <i class="fas fa-check fa-fw"></i>
-                  <span>Akceptuj</span>
-                </b-dropdown-item-button>
-                <b-dropdown-item-button
-                  size="sm"
-                  title="Usuń"
-                  class="btn-outline-danger btn-light text-danger"
-                  v-if="isAuthenticated(index) || isAdmin"
-                  @click="remove(index)"
-                >
-                  <i class="fas fa-trash-alt fa-fw"></i>
-                  <span>Usuń</span>
-                </b-dropdown-item-button>
-              </b-dropdown>
-            </template>
-          </tr>
-        </tbody>
-      </table>
+                <td class="text-left">{{item.name}}</td>
+                <td class="text-right">{{item.number}}</td>
+                <td class="text-right">{{item.price.toString().replace(/[.]/, ',')}}</td>
+                <td
+                  class="text-right"
+                >{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}}</td>
+                <td class="text-right">
+                  <b-button
+                    class="mr-1 d-block d-lg-inline"
+                    size="sm"
+                    data-toggle="tooltip"
+                    data-placement="auto"
+                    v-b-tooltip.hover
+                    title="Zagłosuj"
+                    variant="primary"
+                    :class="{'btn-primary': isLiked(index), 'btn-outline-primary btn-light': !isLiked(index)}"
+                    @click="like(index)"
+                  >
+                    <i class="fas fa-thumbs-up fa-fw"></i>
+                    <span class="ml-1">{{item.likes.length}}</span>
+                  </b-button>
+                  <b-dropdown
+                    split
+                    text="Edytuj"
+                    size="sm"
+                    v-if="isAuthenticated(index) || isAdmin"
+                    @click="edit(index)"
+                  >
+                    <b-dropdown-item-button
+                      size
+                      :class="{'btn-outline-success btn-light': !item.accepted, 'btn-success': item.accepted}"
+                      text="Zatwierdź"
+                      class="text-success"
+                      v-if="isAdmin && !item.accepted"
+                      @click="accept(index)"
+                    >
+                      <i class="fas fa-check fa-fw"></i>
+                      <span>Akceptuj</span>
+                    </b-dropdown-item-button>
+                    <b-dropdown-item-button
+                      size="sm"
+                      title="Usuń"
+                      class="btn-outline-danger btn-light text-danger"
+                      v-if="isAuthenticated(index) || isAdmin"
+                      @click="remove(index)"
+                    >
+                      <i class="fas fa-trash-alt fa-fw"></i>
+                      <span>Usuń</span>
+                    </b-dropdown-item-button>
+                  </b-dropdown>
+                </td>
+              </template>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </b-card-body>
 
     <b-modal id @hide="editShow = false" :lazy="true" :title="editModalTitle" v-model="editShow">

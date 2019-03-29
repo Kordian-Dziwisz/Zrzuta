@@ -2,7 +2,7 @@
   <b-card no-body class="p-2">
     <b-card-title title-tag="div">
       <div class="row">
-        <div class="col-6">
+        <div class="col-12 col-lg-6">
           <label>Tytuł:</label>
           <b-input
             id="titleName"
@@ -15,9 +15,9 @@
           />
           <b-form-invalid-feedback :state="validation">Tytuł musi mieć od 3 do 50 znaków!</b-form-invalid-feedback>
         </div>
-        <div class="col">
+        <div class="col-12 col-lg-6 text-center mt-2 mt-lg-0">
           <wizard
-            class="pt-5px"
+            class="pt-5px float-lg-right"
             @updateStage="updateWizardStage"
             :inStage="wizardStage"
             :isEditing="isEditing"
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12 float-left">
+        <div class="col-12 float-left mt-0 mt-lg-2">
           <label class="h6 font-weight-normal">Data zakończenia:</label>
           <br>
           <date-picker
@@ -39,9 +39,9 @@
         </div>
       </div>
     </b-card-title>
-    <b-card-body class="px-0">
+    <b-card-body class="px-0 pt-0">
       <div class="row">
-        <div class="col">
+        <div class="col-12 col-lg-6">
           <label>Opis:</label>
           <b-form-textarea
             placeholder="Wpisz opis zbiórki"
@@ -50,7 +50,7 @@
             v-model="newInfo.description"
           ></b-form-textarea>
         </div>
-        <div class="col">
+        <div class="col-12 col-lg-6 mt-2 mt-lg-0">
           <label>Informacje o płatności:</label>
           <b-form-textarea
             type="text"

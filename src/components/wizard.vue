@@ -1,5 +1,5 @@
 <template>
-  <div class="float-right wizard-container">
+  <div class="d-inline wizard-container">
     <template>
       <a :class="{'cursorPointer': isEditing}" @click="isEditing ? stage = 1 : null">
         <div class="mr-4 text-center" :class="{'after': stage != 1}">

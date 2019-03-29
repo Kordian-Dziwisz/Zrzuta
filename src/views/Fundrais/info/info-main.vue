@@ -6,18 +6,18 @@
           <h2 class="d-inline">{{info.title}}</h2>
           <p>Trwa do: {{ info.endDate | moment("LL")}}</p>
         </div>
-        <div class="col-12 col-lg-7 text-lg-right text-center">
-          <wizard class="pt-5px" :inStage="wizardStage" :isEditing="isEditing"/>
+        <div class="col-12 col-lg-7 text-center mt-2 mt-lg-0">
+          <wizard class="pt-5px float-lg-right" :inStage="wizardStage" :isEditing="isEditing"/>
         </div>
       </div>
     </b-card-title>
     <b-card-body class="px-0 pt-0" v-if="info.description.length || info.accountNumber">
       <div class="row">
-        <div class="col-6 col-lg-6" v-if="info.description.length">
+        <div class="col-12 col-lg-6" v-if="info.description.length">
           <label>Opis:</label>
           <p>{{info.description}}</p>
         </div>
-        <div class="col-6 col-lg-6" v-if="info.accountNumber">
+        <div class="col-12 col-lg-6 mt-2 mt-lg-0" v-if="info.accountNumber">
           <label>Informacje o płatności:</label>
           <p>{{info.accountNumber}}</p>
         </div>
