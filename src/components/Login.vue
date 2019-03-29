@@ -3,7 +3,7 @@
     <b-card class="d-none d-lg-block w-50 mx-auto">
       <b-card-title>Zaloguj się</b-card-title>
       <b-card-text>
-        <form class="w-75 mx-auto" @submit.prevent="returnLogin">
+        <form class="w-75 mx-auto mb-3" @submit.prevent="returnLogin">
           <b-input
             v-model.lazy.trim="login"
             placeholder="Wpisz login"
@@ -14,8 +14,7 @@
           />
 
           <b-button type="submit" size="sm" class="d-block float-right mb-3">Zaloguj się</b-button>
-          <b-form-invalid-feedback :state="validation">Login musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
-          <b-form-valid-feedback :state="validation"></b-form-valid-feedback>
+          <b-form-invalid-feedback>Login musi mieć od 3 do 30 znaków!</b-form-invalid-feedback>
         </form>
       </b-card-text>
     </b-card>
