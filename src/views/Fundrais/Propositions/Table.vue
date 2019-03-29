@@ -1,13 +1,5 @@
 <template>
   <b-card class="border rounded" no-body>
-    <!-- <b-card-header class="w-100"> -->
-    <!-- <div class="float-right text-success">Otwarte</div> -->
-    <!-- <b-row> -->
-    <!--  -->
-    <!-- <b-col class="h4">Cele zbiórki</b-col> -->
-    <!-- <b-col class="text-right text-success">Otwarte</b-col> -->
-    <!-- </b-row> -->
-    <!-- </b-card-header> -->
     <b-card-title class="p-2 mb-0">
       <h3>
         <div class="d-block d-lg-inline">
@@ -43,7 +35,10 @@
         variant="warning"
         class="text-dark"
       >Nie zgłoszono żadnych propozycji</b-alert>
-      <table v-else class="table table-responsive table-striped border mb-0">
+      <table
+        v-else-if="list.some(item=>{item.accepted}) || !ended"
+        class="table table-responsive table-striped border mb-0"
+      >
         <thead>
           <th class="text-left">Nazwa</th>
           <th class="text-right">Ilość</th>
