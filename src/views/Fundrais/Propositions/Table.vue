@@ -1,40 +1,30 @@
 <template>
-  <b-card class="border rounded">
-    <!-- <b-card-header class="w-100"> -->
-    <!-- <div class="float-right text-success">Otwarte</div> -->
-    <!-- <b-row> -->
-    <!--  -->
-    <!-- <b-col class="h4">Cele zbiórki</b-col> -->
-    <!-- <b-col class="text-right text-success">Otwarte</b-col> -->
-    <!-- </b-row> -->
-    <!-- </b-card-header> -->
-    <b-card-title>
-      <h3>
-        <div class="d-inline">
-          <span>Cele zbiórki</span>
-          <b-button
-            v-if="!this.ended"
-            type="submit"
-            class="btn-outline-success btn-light ml-2 mb-1"
-            data-toggle="tooltip"
-            data-placement="auto"
-            v-b-tooltip.hover
-            title="Dodaj nową propozycję"
-            size="sm"
-            @click="addNew"
-          >
-            <i class="fas fa-plus fa-fw"></i>
-            Dodaj
-          </b-button>
+  <b-card class="border rounded" no-body>
+    <b-card-title class="p-2 mb-0 text-center text-lg-left">
+      <div class="d-block d-lg-inline">
+        <h4 class="d-lg-inline">Cele zbiórki</h4>
+        <b-button
+          v-if="!this.ended && canAdd"
+          type="submit"
+          class="btn-outline-success btn-light ml-2 mb-1"
+          data-toggle="tooltip"
+          data-placement="auto"
+          v-b-tooltip.hover
+          title="Dodaj nową propozycję"
+          size="sm"
+          @click="addNew"
+        >
+          <i class="fas fa-plus fa-fw"></i>
+          Dodaj
+        </b-button>
+      </div>
+      <span class="float-lg-right text-lg-right" v-if="priceSum > 0 && numOfParticipants">
+        Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł
+        <div class="text-lg-right small" v-if="numOfParticipants > 1">
+          {{priceSum.toFixed(2).toString().replace(/[.]/, ',')}}
+          zł
         </div>
-        <span class="float-right text-right" v-if="priceSum > 0 && numOfParticipants">
-          Na osobę: {{parseFloat(pricePerUser).toFixed(2).toString().replace(/[.]/, ',') }} zł
-          <div class="text-right small" v-if="numOfParticipants > 1">
-            {{priceSum.toFixed(2).toString().replace(/[.]/, ',')}}
-            zł
-          </div>
-        </span>
-      </h3>
+      </span>
     </b-card-title>
     <b-card-body>
       <b-alert
@@ -43,30 +33,37 @@
         variant="warning"
         class="text-dark"
       >Nie zgłoszono żadnych propozycji</b-alert>
-      <table v-else class="table table-striped border">
-        <thead class="text-center">
-          <th>Nazwa</th>
-          <th>Ilość</th>
-          <th>Cena (zł)</th>
-          <th>Koszt (zł)</th>
-          <th></th>
-        </thead>
-        <tbody>
-          <tr class="text-center" v-for="(item, index) in list" :key="index">
-            <template v-if="item.accepted == true || !ended">
-              <td
-                class="text-left"
-                :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
-              >{{item.name}}</td>
-              <td class="text-right">{{item.number}}</td>
-              <td class="text-right">{{item.price.toString().replace(/[.]/, ',')}}</td>
-              <td
-                class="text-right"
-              >{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}}</td>
-              <td class="text-right">
-                <b-button-group v-if="!ended">
+      <div
+        class="table-responsive"
+        v-else-if="list.some(item=>{return item.accepted}) || list.every(item=>{return !item.accepted}) || !ended"
+      >
+        <table class="table table-striped border mb-0">
+          <thead>
+            <th class="text-left">Nazwa</th>
+            <th class="text-right">Ilość</th>
+            <th class="text-right">Cena (zł)</th>
+            <th class="text-right">Koszt (zł)</th>
+            <th class="text-right"></th>
+          </thead>
+          <tbody>
+            <tr
+              :class="{'votedBar': item.likes.length > numOfParticipants / 2, 'acceptedBar': item.accepted}"
+              class="text-center"
+              v-for="(item, index) in sortedList"
+              :key="index"
+            >
+              <template
+                v-if=" list.every(itemm=>{return !itemm.accepted}) || item.accepted == true || !ended"
+              >
+                <td class="text-left">{{item.name}}</td>
+                <td class="text-right">{{item.number}}</td>
+                <td class="text-right">{{item.price.toString().replace(/[.]/, ',')}}</td>
+                <td
+                  class="text-right"
+                >{{(item.number * item.price).toFixed(2).toString().replace(/[.]/, ',')}}</td>
+                <td class="text-right">
                   <b-button
-                    class="btn"
+                    class="mr-1 d-block d-lg-inline"
                     size="sm"
                     data-toggle="tooltip"
                     data-placement="auto"
@@ -79,94 +76,93 @@
                     <i class="fas fa-thumbs-up fa-fw"></i>
                     <span class="ml-1">{{item.likes.length}}</span>
                   </b-button>
-                  <b-button
+                  <b-dropdown
+                    split
+                    text="Edytuj"
                     size="sm"
-                    :class="{'btn-outline-success btn-light': !item.accepted, 'btn-success': item.accepted}"
-                    data-toggle="tooltip"
-                    data-placement="auto"
-                    v-b-tooltip.hover
-                    title="Zatwierdź"
-                    v-if="isAdmin"
-                    @click="accept(index)"
-                  >
-                    <i class="fas fa-check fa-fw"></i>
-                    <span class="d-none">Akceptuj</span>
-                  </b-button>
-                  <b-button
-                    size="sm"
-                    class="btn-outline-danger btn-light"
-                    data-toggle="tooltip"
-                    data-placement="auto"
-                    v-b-tooltip.hover
-                    title="Usuń"
-                    v-if="isAuthenticated(index) || isAdmin"
-                    @click="remove(index)"
-                  >
-                    <i class="fas fa-trash-alt fa-fw"></i>
-                    <span class="d-none">Usuń</span>
-                  </b-button>
-                  <b-button
-                    size="sm"
-                    class="btn-outline-secondary btn-light"
-                    data-toggle="tooltip"
-                    data-placement="auto"
-                    v-b-tooltip.hover
-                    title="Edytuj"
                     v-if="isAuthenticated(index) || isAdmin"
                     @click="edit(index)"
                   >
-                    <i class="fas fa-edit fa-fw"></i>
-                    <span class="d-none">Edytuj</span>
-                  </b-button>
-                </b-button-group>
-                <!-- <b-dropdown text="akcje" size="sm"></b-dropdown> -->
-              </td>
-            </template>
-          </tr>
-        </tbody>
-      </table>
+                    <b-dropdown-item-button
+                      size
+                      :class="{'btn-outline-success btn-light': !item.accepted, 'btn-success': item.accepted}"
+                      text="Zatwierdź"
+                      class="text-success"
+                      v-if="isAdmin && !item.accepted"
+                      @click="accept(index)"
+                    >
+                      <i class="fas fa-check fa-fw"></i>
+                      <span>Akceptuj</span>
+                    </b-dropdown-item-button>
+                    <b-dropdown-item-button
+                      size="sm"
+                      title="Usuń"
+                      class="btn-outline-danger btn-light text-danger"
+                      v-if="isAuthenticated(index) || isAdmin"
+                      @click="remove(index)"
+                    >
+                      <i class="fas fa-trash-alt fa-fw"></i>
+                      <span>Usuń</span>
+                    </b-dropdown-item-button>
+                  </b-dropdown>
+                </td>
+              </template>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </b-card-body>
+
     <b-modal id @hide="editShow = false" :lazy="true" :title="editModalTitle" v-model="editShow">
       <form v-if="editObject" @submit.prevent="editSave">
         <b-form-row>
-          <label for="editNameInput">Nazwa:</label>
-          <b-form-input
-            id="editNameInput"
-            class="mb-1"
-            type="text"
-            name="name"
-            v-model.trim="editObject.name"
-            required
-            placeholder="Wpisz nazwę"
-            maxlength="30"
-          ></b-form-input>
-          <b-form-invalid-feedback :state="validationName">Wpisz nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
-          <label for="editNumberInput">Ilość:</label>
-          <b-form-input
-            id="editNumberInput"
-            type="number"
-            name="quantity"
-            v-model="editObject.number"
-            required
-            placeholder="Wpisz ilość"
-            max="9999"
-            step="1"
-            min="0"
-          ></b-form-input>
-          <b-form-invalid-feedback :state="validationNumber">Wpisz ilość (0-9999 szt.)</b-form-invalid-feedback>
-          <label for="editPriceInput">Cena:</label>
-          <b-input
-            id="editPriceInput"
-            class="my-1"
-            type="number"
-            name="price"
-            v-model="editObject.price"
-            placeholder="Wpisz cenę"
-            max="9999"
-            step="0.01"
-            min="0"
-          ></b-input>
-          <b-form-invalid-feedback :state="validationPrice">Wpisz cenę (0-9999 zł)</b-form-invalid-feedback>
+          <div class="col">
+            <label for="editNameInput">Nazwa:</label>
+            <b-form-input
+              id="editNameInput"
+              class="mb-1"
+              type="text"
+              name="name"
+              v-model.trim="editObject.name"
+              required
+              placeholder="Wpisz nazwę"
+              maxlength="30"
+            ></b-form-input>
+            <b-form-invalid-feedback :state="validationName">Wpisz nazwę produktu (max. 50 znaków)</b-form-invalid-feedback>
+          </div>
+        </b-form-row>
+        <b-form-row>
+          <div class="col">
+            <label for="editNumberInput">Ilość:</label>
+            <b-form-input
+              id="editNumberInput"
+              type="number"
+              name="quantity"
+              v-model="editObject.number"
+              required
+              placeholder="Wpisz ilość"
+              step="1"
+              min="0"
+              class="text-right"
+            ></b-form-input>
+            <b-form-invalid-feedback :state="validationNumber">Ilość musi być większa niż 0</b-form-invalid-feedback>
+          </div>
+          <div class="col">
+            <label for="editPriceInput">Cena:</label>
+            <b-input
+              class="text-right"
+              id="editPriceInput"
+              type="text"
+              name="price"
+              v-model="editObject.price"
+              placeholder="Wpisz cenę"
+              step="0.01"
+              min="0"
+            ></b-input>
+            <b-form-invalid-feedback
+              :state="validationPrice"
+            >Cena produktu musi być większa niż 0 zł</b-form-invalid-feedback>
+          </div>
         </b-form-row>
       </form>
       <div slot="modal-footer" class="w-100">
@@ -186,7 +182,6 @@
       header-bg-variant="danger"
       header-text-variant="light"
       title="Potwierdzenie usunięcia"
-      size="lg"
     >
       <div class="container fluid">
         <div class="row text-center">
@@ -217,7 +212,8 @@ export default {
     list: Array,
     isAdmin: Boolean,
     ended: Boolean,
-    numOfParticipants: Number
+    numOfParticipants: Number,
+    canAdd: Boolean
   },
   data() {
     return {
@@ -251,7 +247,7 @@ export default {
           creator: localStorage.getItem("login"),
           name: "",
           number: null,
-          price: null,
+          price: "",
           accepted: false,
           likes: [],
           dislikes: []
@@ -268,16 +264,15 @@ export default {
       if (this.validationName && this.validationNumber && this.validationPrice) {
         //   w wypadku kiedy tworzysz nowy obiekt
         if (this.editIndex === null) {
+          this.editObject.price = parseFloat(this.editObject.price.replace(",", /[.]/)).toFixed(2);
           this.list.push({ ...this.editObject });
-          console.log(this.editObject);
           this.$emit("list", this.list);
           this.editShow = false;
         } else {
           this.editShow = false;
-
           this.list[this.editIndex].name = this.editObject.name;
           this.list[this.editIndex].number = parseInt(this.editObject.number);
-          this.list[this.editIndex].price = parseFloat(this.editObject.price).toFixed(2);
+          this.list[this.editIndex].price = parseFloat(this.editObject.price.replace(",", /[.]/)).toFixed(2);
           this.editIndex = null;
           this.$emit("list", this.list);
         }
@@ -312,24 +307,18 @@ export default {
       return this.list[index].creator == localStorage.getItem("login");
     }
   },
-  //   validations: {
-  //     editInfo: {
-  //       name: {
-  //         required: required(),
-  //         minLength: minLenght(4),
-  //         maxLength: maxLength(80)
-  //       },
-  //       number: {
-  //         between: between(20, 30),
-  //         integer: integer()
-  //       },
-  //       price: {
-  //         between: between(20, 30),
-  //         numeric: numeric()
-  //       }
-  //     }
-  //   },
   computed: {
+    sortedList() {
+      return this.list.sort((a, b) => {
+        if (a.name > b.name) {
+          return 1;
+        }
+        if (a.name < b.name) {
+          return -1;
+        }
+        return 0;
+      });
+    },
     priceSum: {
       get() {
         if (this.list.length > 0) {
@@ -360,17 +349,19 @@ export default {
     },
     validationName: {
       get() {
-        return this.editObject.name.length > 0 && this.editObject.name.length <= 50;
+        return this.editObject.name.length > 0;
       }
     },
     validationNumber: {
       get() {
-        return this.editObject.number > 0 && this.editObject.number <= 9999 && this.editObject.number % 1 == 0;
+        return this.editObject.number > 0 && this.editObject.number % 1 == 0;
       }
     },
     validationPrice: {
       get() {
-        return this.editObject.price > 0 && this.editObject.price <= 9999;
+        return (
+          this.editObject.price.length > 0 && parseFloat(this.editObject.price.replace(",", /[.]/)).toFixed(2) > 0.01
+        );
       }
     }
   }
@@ -391,12 +382,10 @@ thead {
   white-space: none;
 }
 .acceptedBar {
-  border-left: 6px solid #28a745 !important;
-  box-sizing: border-box;
+  box-shadow: inset 6px 0px 0px 0px #28a745 !important;
 }
 .votedBar {
-  border-left: 6px solid #007bff;
-  box-sizing: border-box;
+  box-shadow: inset 6px 0px 0px 0px #007bff !important;
 }
 </style>
 

@@ -1,6 +1,7 @@
 <template>
   <div>
     <b-navbar
+      id="navbar"
       class="fixed-top border-bottom shadow bg-white"
       toggleable="md"
       v-shortkey="['alt', 'n']"
@@ -12,15 +13,15 @@
       </b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
-          <b-nav-item :to="{ name: 'home'}">Strona główna</b-nav-item>
-          <b-nav-item @click="addFundrais">Nowa zbiórka</b-nav-item>
+          <b-nav-item to="/" exact>Strona główna</b-nav-item>
+          <b-nav-item class="d-block d-lg-none" @click="addFundrais">Nowa zbiórka</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-navbar-nav is-nav id="nav-collapse" right>
             <b-navbar-brand>{{returnLogin}}</b-navbar-brand>
             <b-nav-item @click="changeLogin">
               Wyloguj
-              <i class="fas fa-sign-out-alt"></i>
+              <i class="fas fa-sign-out-alt fa-fw"></i>
             </b-nav-item>
           </b-navbar-nav>
         </b-navbar-nav>
@@ -30,11 +31,12 @@
 </template>
 <script>
 import firebase from "firebase";
+import { firebaseMixin } from "@/mixins/firebase-doc.js";
 
 export default {
   data() {
     return {
-      db: firebase.firestore().collection("Zrzuty"),
+      db: firebase.firestore().collection("Zrzuty-develop"),
       isClicked: false,
       newFundrais: {
         guid: "",
@@ -65,7 +67,6 @@ export default {
         });
         if (await newFundrais.id) {
           this.isClicked = false;
-          location.reload();
         }
       }
     },
@@ -80,4 +81,24 @@ export default {
     }
   }
 };
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementById("navbar").style.top = "0";
+  } else {
+    document.getElementById("navbar").style.top = "-150px";
+  }
+  prevScrollpos = currentScrollPos;
+};
 </script>
+<style scoped>
+a:hover,
+a.router-link-active,
+a.router-link-exact-active {
+  color: #990000 !important;
+}
+#navbar {
+  transition: top 0.4s;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <fundraising-list :list="list" @remove="removeFundrais"></fundraising-list>
+    <fundraising-list :list="list" @remove="removeFundrais" @new="addFundrais"></fundraising-list>
   </div>
 </template>
 <script>
@@ -13,9 +13,19 @@ export default {
   data() {
     return {
       login: "",
-      db: firebase.firestore().collection("Zrzuty"),
+      db: firebase.firestore().collection("Zrzuty-develop"),
       list: [],
-      guid: ""
+      guid: "",
+      newFundrais: {
+        guid: "",
+        accountNumber: "",
+        creator: "",
+        title: "Nowa Zbiórka",
+        description: "",
+        creationDate: new Date(Date.now()).toJSON(),
+        endDate: new Date(Date.now() + 86400000).toJSON(),
+        ended: false
+      }
     };
   },
   mounted() {
@@ -29,7 +39,7 @@ export default {
     },
     mapItem(item) {
       if (
-        this.shared(
+        this.isShared(
           Object.values(item.data().listOfParticipants)
             .map(x => x.name)
             .concat(item.data().fundraisInfo.creator)
@@ -38,11 +48,27 @@ export default {
         return { ...item.data().fundraisInfo, id: item.id };
       } else return null;
     },
-    shared(list) {
+    isShared(list) {
       return list.includes(localStorage.getItem("login"));
     },
     async removeFundrais(docID) {
       await this.db.doc(docID).delete();
+    },
+    async addFundrais(event) {
+      this.newFundrais.title = event.title;
+      this.newFundrais.description = event.description;
+      this.newFundrais.creator = localStorage.getItem("login");
+      this.newFundrais.guid = localStorage.getItem("guid");
+      let newFundrais = await this.db.add({
+        fundraisInfo: { ...this.newFundrais },
+        listOfParticipants: [],
+        listOfProducts: [],
+        listOfPropositions: []
+      });
+      await this.$router.push({
+        name: "Fundrais",
+        params: { id: newFundrais.id }
+      });
     }
   },
   components: {

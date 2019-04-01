@@ -17,12 +17,12 @@
       :show="fundraisInfo.ended"
       v-else
     >Zbiórka jest w fazie wpłat, proszę wpłacić daną kwotę</b-alert>-->
-    <div class="row m-3">
+    <div class="row m-lg-3">
       <b-col>
         <info v-if="fundraisInfo" :info="fundraisInfo" :isAdmin="isAdmin" @info="updateInfo"/>
       </b-col>
     </div>
-    <div class="row m-3">
+    <div class="row m-lg-3">
       <div class="col col-lg-6">
         <participants
           :isAdmin="isAdmin"
@@ -45,7 +45,7 @@
           :ended="fundraisInfo.ended"
           :list="listOfPropositions"
           @list="updatePropositions"
-          v-if="authenticate"
+          :canAdd="authenticate"
         />
       </div>
     </div>
@@ -53,7 +53,7 @@
 </template>
 <script>
 import Info from "@/views/Fundrais/Info.vue";
-import Participants from "@/views/Fundrais/Participants/list.vue";
+import Participants from "@/views/Fundrais/Participants/participants-table.vue";
 import Propositions from "@/views/Fundrais/Propositions/Table.vue";
 import firebase from "firebase";
 
@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       docID: "",
-      db: firebase.firestore().collection("Zrzuty"),
+      db: firebase.firestore().collection("Zrzuty-develop"),
       fundraisInfo: undefined,
       listOfParticipants: [],
       listOfProducts: [],
