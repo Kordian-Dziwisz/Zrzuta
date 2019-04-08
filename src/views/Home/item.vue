@@ -7,7 +7,7 @@
         </router-link>
       </div>
       <div class="col text-center p-0">
-        <wizard :inStage="item.stage" :isEditing="false"/>
+        <wizard :inStage="wizardStage" :isEditing="false"/>
       </div>
       <div class="col text-right p-0">
         <b-button
@@ -123,6 +123,17 @@ export default {
     },
     isAfterDate() {
       return new Date(this.item.endDate).getTime() < Date.now();
+    },
+    wizardStage() {
+      if (!this.isAfterDate) {
+        if (this.item.ended) {
+          return 2;
+        } else {
+          return 1;
+        }
+      } else {
+        return 3;
+      }
     }
   },
   components: {
