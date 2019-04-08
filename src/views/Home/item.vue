@@ -1,45 +1,41 @@
 <template>
   <div class="bg-white">
     <div class="row">
+      <div class="col text-left p-0">
+        <router-link class="text-dark h5" :to="{name: 'Fundrais', params: {id: item.id}}">
+          <span>{{item.title}}</span>
+        </router-link>
+      </div>
       <div class="col text-center p-0">
-        <span class="h5 float-left">
-          <router-link class="text-dark" :to="{name: 'Fundrais', params: {id: item.id}}">
-            <h4 class="d-inline">{{item.title}}</h4>
-          </router-link>
-        </span>
-        <span>
-          <wizard :inStage="wizardStage" :isEditing="false"/>
-        </span>
-        <span class="float-right">
-          <b-button
-            class="btn-outline-danger btn-light"
-            size="sm"
-            data-toggle="tooltip"
-            data-placement="auto"
-            title="Usuń"
-            v-if="isYour"
-            v-b-tooltip.hover
-            @click="showModal = true"
-          >
-            <i class="fas fa-trash-alt fa-fw"></i>
-            <span class="d-none d-lg-inline">Usuń</span>
-          </b-button>
-        </span>
+        <wizard :inStage="item.stage" :isEditing="false"/>
+      </div>
+      <div class="col text-right p-0">
+        <b-button
+          class="btn-outline-danger btn-light"
+          size="sm"
+          data-toggle="tooltip"
+          data-placement="auto"
+          title="Usuń"
+          v-if="isYour"
+          v-b-tooltip.hover
+          @click="showModal = true"
+        >
+          <i class="fas fa-trash-alt fa-fw"></i>
+          <span class="d-none d-lg-inline">Usuń</span>
+        </b-button>
       </div>
     </div>
     <div class="row" :class="{'border-bottom': item.description.length}">
-      <div class="col p-0">
-        <div class="d-lg-inline">
-          twórca:
-          <strong>{{item.creator}}</strong>
-        </div>
-        <div class="float-lg-right d-lg-inline">
-          <span v-if="item.endDate < new Date(Date.now())">Zbiórka zakończona</span>
-          <span v-else>
-            Zbiórka trwa do
-            <strong class="text-danger">{{ item.endDate | moment("LL")}}</strong>
-          </span>
-        </div>
+      <div class="col p-0 text-left">
+        twórca:
+        <strong>{{item.creator}}</strong>
+      </div>
+      <div class="col p-0 text-right">
+        <span v-if="item.endDate < new Date(Date.now())">Zbiórka zakończona</span>
+        <span v-else>
+          Zbiórka trwa do
+          <strong class="text-danger">{{ item.endDate | moment("LL")}}</strong>
+        </span>
       </div>
     </div>
     <div class="row">
@@ -127,17 +123,6 @@ export default {
     },
     isAfterDate() {
       return new Date(this.item.endDate).getTime() < Date.now();
-    },
-    wizardStage() {
-      if (!this.isAfterDate) {
-        if (this.item.ended) {
-          return 2;
-        } else {
-          return 1;
-        }
-      } else {
-        return 3;
-      }
     }
   },
   components: {
